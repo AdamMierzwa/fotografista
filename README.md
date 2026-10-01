@@ -5,6 +5,8 @@
 A high-performance desktop image editor written entirely in Object Pascal, with
 direct access to the rendering pipeline and no web-framework overhead.
 
+![Fotografista](screenshot.png)
+
 ---
 
 ## Requirements
@@ -36,6 +38,23 @@ only path the project adds to the IDE defaults. Do not remove it.
 > **Note:** `Fotografista.dproj` carries `<ProjectVersion>20.3</ProjectVersion>`
 > from an older IDE generation. This is stale metadata; the project builds and
 > runs on RAD Studio 13.1. It is left untouched to avoid unrelated churn.
+
+---
+
+## Usage
+
+1. **Open an image** — `File → Open...` (`Ctrl+O`), or drop a file onto the
+   window. On read the editor accepts BMP, JPEG, PNG, GIF, TIFF, WebP, HEIC,
+   HEIF, AVIF and Amiga IFF ILBM.
+2. **Edit** — colour and geometry live under **Adjust**, effects under
+   **Effects**. The `W` Launcher and `R` Retouch panels give quick access to
+   zoom, undo and the painting, cloning, dodging, focusing and masking brushes.
+3. **Select and crop** — open the **Selection** panel from **Tools**, drag a
+   rectangular (or elliptical, lasso or magic-wand) selection on the canvas,
+   then crop to it with `Ctrl+X`.
+4. **Save or export** — `File → Save as...` (`Ctrl+S`) writes PNG, JPEG, BMP,
+   GIF, TIFF or WebP; **Export PDF**, **Export comparison** and **Timelapse**
+   produce the additional outputs described under Capabilities.
 
 ---
 
