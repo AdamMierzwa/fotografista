@@ -58,8 +58,17 @@ CHANGELOG.md                change history
 
 Every entry below is a menu command in the running program.
 
-**File** — open, save as, export PDF (A4, image scaled to fill the page), export
-comparison (two images side by side with a divider), image info, recent files,
+Three commands open non-modal panels that stay on top of the main window:
+**Launcher** (`W`) and **Retouch** (`R`) toggle open and closed when invoked
+again, while **Selection** opens its panel (or raises it if already open). They
+gather the controls used constantly while editing — the Launcher holds quick
+toolbar, zoom and edit buttons, and the Retouch panel holds the painting,
+cloning, retouching and masking brushes.
+
+**File** — open, save as, export PDF (the image is scaled to fill an A4 page as
+far as it can, ignoring DPI — useful when the system or printer adds unwanted
+margins), export comparison (the original image next to the current one,
+separated by a divider line and saved as a PNG), image info, recent files,
 close, quit.
 
 **Edit** — undo, redo, copy, paste, revert to original, clear history.
@@ -105,9 +114,10 @@ chosen corner with tolerance, timelapse with video export, retouch panel,
 protection mask (protect and unprotect selection, show, clear).
 
 **Retouch panel** — eraser and brushes for painting, cloning, brightness,
-focus, colour replacement, bucket fill and colour sampling. Each takes a brush
-size, strength and tolerance, with a fill and replacement colour. `R` shows or
-hides the panel.
+focus, colour replacement, bucket fill and colour sampling (eyedropper), plus a
+protection mask brush that covers or uncovers areas so edits skip them. Each
+takes a brush size, strength and tolerance, with a fill and replacement colour.
+`R` shows or hides the panel.
 
 Keyboard shortcuts: `W` launcher, `R` retouch panel, `Ctrl+O` open, `Ctrl+S`
 save as, `Ctrl+W` close, `Ctrl+Q` quit, `Ctrl+Z` undo, `Ctrl+Y` redo, `Ctrl+C`
@@ -131,9 +141,8 @@ size and position), performance.
 documentation.
 
 Formats on read: BMP, JPEG, PNG, GIF, TIFF, WebP, HEIC, HEIF, AVIF and Amiga
-IFF ILBM. Formats on write: PNG, JPEG, BMP, GIF, TIFF and WebP. Video frame
-output encodes H.264 or WMV, and an image can be exported to PDF or as a
-side-by-side comparison.
+IFF ILBM. Formats on write: PNG, JPEG, BMP, GIF, TIFF and WebP. Timelapse
+export writes an MP4 video using H.264.
 
 The interface ships with 35 Embarcadero VCL themes, loaded at startup from the
 `Styles` folder, and is available in 9 languages: Afrikaans, Czech, English,
