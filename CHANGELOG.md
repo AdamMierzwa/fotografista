@@ -446,11 +446,4 @@ Delphi — przebudowa aplikacji, niezależna od wcześniejszej wersji Hollywood.
   neutralnego odcienia zamiast pełnego wyrównania, wartości suwaków
   wyliczane logarytmicznie
 
----
-
-## Uwagi
-
-- Rejestr commitów: `git log` w katalogu `Delphi/`.
-- Plan rozwoju: `ROADMAP.md`.
-
 

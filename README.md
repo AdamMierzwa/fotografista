@@ -49,7 +49,6 @@ uI18n.pas                   generated translation unit (do not edit by hand)
 i18n/                       9 translation catalogues (.tsv source, .txt compiled)
 Styles/                     35 Embarcadero VCL theme files, loaded at runtime
 Lib/Graphics32/             the single external dependency
-obrazki/                    interface artwork
 tools/                      translation and QA scripts (PowerShell)
 vendor/                     pinned dependency versions
 CHANGELOG.md                change history
@@ -57,28 +56,90 @@ CHANGELOG.md                change history
 
 ### Capabilities
 
-Organised by the units that implement them:
+Every entry below is a menu command in the running program.
 
-- **Adjustments** - brightness, contrast, gamma, levels, curves, HSB, sepia,
-  solarize, BW, sharpening, blur, edge, emboss
-- **Print and process simulation** - risograph (two engines), halftone,
-  engraving, linocut, lithograph, screen print, stencil, crosshatch, stipple,
-  CMYK separation, Agony, Amiga Deluxe Paint-style backgrounds and gradients
-- **Filters and stylisation** - duotone, colourise, quantise, glow, bokeh,
-  vignette, film grain, glitch, chromatic aberration, pixelate, tile, tileable
-- **Geometry** - rotate, straighten, flip, crop, resize, perspective
-  corrections, mip-mapped preview
-- **Retouching** - selection tools, local brush, clone, watermark, cut-out
-- **Colour** - palette extraction and mapping, batch colour conversion
-- **Depth effects** - bas-relief from image luminance, stereogram
-- **Document** - undo/redo history, macro recording and playback, PDF export,
-  video frame output
-- **Interface** - 35 VCL themes, 9 interface languages, resizable UI
+**File** — open, save as, export PDF (A4, image scaled to fill the page), export
+comparison (two images side by side with a divider), image info, recent files,
+close, quit.
+
+**Edit** — undo, redo, copy, paste, revert to original, clear history.
+
+**View** — zoom in, zoom out, fit to window, and fixed steps 25%, 50%, 100%,
+200%, 400%.
+
+**Adjust** — straightening scans, histogram, contrast, brightness, gamma,
+levels, white balance, HSB balance, sharpen, Vivid, photo enhancement, Emergo,
+resize, fit to size with crop, mirror horizontally and vertically, rotate left,
+right and by 180°.
+
+**Effects → Photographic processes** — colourise, duotone, tritone, quad-tone
+(with saveable presets), sepia, cyanotype, salt print, X-Ray, false-colour
+infrared, night vision, thermal, incorrect development (C-41/E-6), Orton,
+film grain, solarize, grayscale, negative.
+
+**Effects → Artistic** — black & white, oil paint, charcoal, outline, edge
+detection, blur, emboss, relief, glow, posterize, pixelate, vignette, fake
+bokeh, tilt-shift, glitch.
+
+**Effects → Distortions** — barrel, arc, swirl, water ripple, polar
+distortion. Polar offers twelve modes including full and half angle, ring,
+smooth, tunnel, fisheye, outer stretch, inverted tunnel and 30° slice.
+
+**Effects → Blend** — applies two chosen effects and mixes between the two
+results with a single 0–100 slider.
+
+**Print** — CMYK misregistration, raster CMYK, linocut, mimeograph, engraving,
+crosshatch, halftone, stipple, dice, screen print, a risograph-inspired halftone
+in three versions (v1, v2, and a multi-layer v3 where each layer gets its own
+ink colour), and T-Shirt Design — which reproduces the preparation of a
+screen-printed garment image in four stages: posterization, mapping the colours
+onto inks, removing stray detail, and rendering the screenprint raster.
+
+**Macro** — start recording, stop and save, cancel, batch processing over a
+source folder, manage macros.
+
+**Tools** — selection panel with outline and mask tolerance, set selection
+size numerically, crop to selection, tiling to fill target dimensions,
+stereogram (including anaglyph for red-cyan glasses), remove background from a
+chosen corner with tolerance, timelapse with video export, retouch panel,
+protection mask (protect and unprotect selection, show, clear).
+
+**Retouch panel** — eraser and brushes for painting, cloning, brightness,
+focus, colour replacement, bucket fill and colour sampling. Each takes a brush
+size, strength and tolerance, with a fill and replacement colour. `R` shows or
+hides the panel.
+
+Keyboard shortcuts: `W` launcher, `R` retouch panel, `Ctrl+O` open, `Ctrl+S`
+save as, `Ctrl+W` close, `Ctrl+Q` quit, `Ctrl+Z` undo, `Ctrl+Y` redo, `Ctrl+C`
+copy, `Ctrl+V` paste, `Ctrl+X` crop to selection, `Ctrl+Shift+R` set selection
+size, `Ctrl+P` zoom in, `Ctrl+M` zoom out, `Ctrl+0` fit to window, `Ctrl+1`
+actual size.
+
+**Amiga** — Workbench 1.x (OCS) and 2.x/3.x palettes, OCS 32, EHB 64, AGA 256,
+Workbench 256 and MagicWB 8 palettes, HAM6 and HAM8, Amiga gradient, Amiga
+gradient in Agony style, Amiga background, and a stretched background using
+MagicWB.
+
+**Other retro computers** — C64 (Pepto / Colodore), ZX Spectrum, Game Boy
+(DMG / Pocket), NES (Nestopia).
+
+**Settings** — language, export quality, interface (canvas background colour,
+interface font size 8–12 pt, number of recent files, theme, remember window
+size and position), performance.
+
+**Help** — launcher, about, keyboard shortcuts, performance measurement, online
+documentation.
+
+Formats on read: BMP, JPEG, PNG, GIF, TIFF, WebP, HEIC, HEIF, AVIF and Amiga
+IFF ILBM. Formats on write: PNG, JPEG, BMP, GIF, TIFF and WebP. Video frame
+output encodes H.264 or WMV, and an image can be exported to PDF or as a
+side-by-side comparison.
+
+The interface ships with 35 Embarcadero VCL themes, loaded at startup from the
+`Styles` folder, and is available in 9 languages: Afrikaans, Czech, English,
+French, German, Italian, Polish, Portuguese and Spanish.
 
 ### Translations
-
-Nine languages are present: Afrikaans, Czech, English, French, German,
-Italian, Polish, Portuguese, Spanish.
 
 `i18n/*.tsv` are the sources. `tools\gen_i18n.ps1` regenerates `uI18n.pas` from
 them. `uI18n.pas` is generated output and should not be edited directly.
