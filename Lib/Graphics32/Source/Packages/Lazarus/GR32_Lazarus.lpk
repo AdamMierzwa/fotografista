@@ -1,0 +1,460 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CONFIG>
+  <Package Version="5">
+    <PathDelim Value="\"/>
+    <Name Value="GR32_Lazarus"/>
+    <Author Value="Team Graphics32"/>
+    <AutoUpdate Value="Manually"/>
+    <CompilerOptions>
+      <Version Value="11"/>
+      <PathDelim Value="\"/>
+      <SearchPaths>
+        <IncludeFiles Value="..\.."/>
+        <OtherUnitFiles Value="..\.."/>
+        <UnitOutputDirectory Value="Lib\$(TargetCPU)-$(TargetOS)\$(LCLWidgetType)"/>
+      </SearchPaths>
+      <Parsing>
+        <SyntaxOptions>
+          <SyntaxMode Value="Delphi"/>
+          <CStyleOperator Value="False"/>
+          <UseAnsiStrings Value="False"/>
+        </SyntaxOptions>
+      </Parsing>
+      <Other>
+        <CustomOptions Value="-Ur"/>
+      </Other>
+    </CompilerOptions>
+    <Description Value="Graphics32 is a library designed for fast 32-bit graphics handling on Delphi and Lazarus."/>
+    <License Value="GNU Library or Lesser General Public License (LGPL 2.1 with linking exception)
+Mozilla Public License 1.1 (MPL 1.1)"/>
+    <Version Major="3"/>
+    <Files Count="100">
+      <Item1>
+        <Filename Value="..\..\GR32.pas"/>
+        <UnitName Value="GR32"/>
+      </Item1>
+      <Item2>
+        <Filename Value="..\..\GR32.inc"/>
+        <Type Value="Include"/>
+      </Item2>
+      <Item3>
+        <Filename Value="..\..\GR32.Blend.Assembler.pas"/>
+        <AddToUsesPkgSection Value="False"/>
+        <UnitName Value="GR32.Blend.Assembler"/>
+      </Item3>
+      <Item4>
+        <Filename Value="..\..\GR32.Blend.Pascal.pas"/>
+        <UnitName Value="GR32.Blend.Pascal"/>
+      </Item4>
+      <Item5>
+        <Filename Value="..\..\GR32.Blur.pas"/>
+        <UnitName Value="GR32.Blur"/>
+      </Item5>
+      <Item6>
+        <Filename Value="..\..\GR32.Blur.RecursiveGaussian.pas"/>
+        <UnitName Value="GR32.Blur.RecursiveGaussian"/>
+      </Item6>
+      <Item7>
+        <Filename Value="..\..\GR32.Blur.SelectiveGaussian.pas"/>
+        <UnitName Value="GR32.Blur.SelectiveGaussian"/>
+      </Item7>
+      <Item8>
+        <Filename Value="..\..\GR32.Text.Types.pas"/>
+        <UnitName Value="GR32.Text.Types"/>
+      </Item8>
+      <Item9>
+        <Filename Value="..\..\GR32.Text.Win.pas"/>
+        <AddToUsesPkgSection Value="False"/>
+        <UnitName Value="GR32.Text.Win"/>
+      </Item9>
+      <Item10>
+        <Filename Value="..\..\GR32_ArrowHeads.pas"/>
+        <UnitName Value="GR32_ArrowHeads"/>
+      </Item10>
+      <Item11>
+        <Filename Value="..\..\GR32_Backends.pas"/>
+        <UnitName Value="GR32_Backends"/>
+      </Item11>
+      <Item12>
+        <Filename Value="..\..\GR32_Backends_Generic.pas"/>
+        <UnitName Value="GR32_Backends_Generic"/>
+      </Item12>
+      <Item13>
+        <Filename Value="..\..\GR32_Backends_LCL_Carbon.pas"/>
+        <AddToUsesPkgSection Value="False"/>
+        <UnitName Value="GR32_Backends_LCL_Carbon"/>
+      </Item13>
+      <Item14>
+        <Filename Value="..\..\GR32_Backends_LCL_CustomDrawn.pas"/>
+        <AddToUsesPkgSection Value="False"/>
+        <UnitName Value="GR32_Backends_LCL_CustomDrawn"/>
+      </Item14>
+      <Item15>
+        <Filename Value="..\..\GR32_Backends_LCL_Gtk.pas"/>
+        <AddToUsesPkgSection Value="False"/>
+        <UnitName Value="GR32_Backends_LCL_Gtk"/>
+      </Item15>
+      <Item16>
+        <Filename Value="..\..\GR32_Backends_LCL_Win.pas"/>
+        <AddToUsesPkgSection Value="False"/>
+        <UnitName Value="GR32_Backends_LCL_Win"/>
+      </Item16>
+      <Item17>
+        <Filename Value="..\..\GR32_Bindings.pas"/>
+        <UnitName Value="GR32_Bindings"/>
+      </Item17>
+      <Item18>
+        <Filename Value="..\..\GR32_Blend.pas"/>
+        <UnitName Value="GR32_Blend"/>
+      </Item18>
+      <Item19>
+        <Filename Value="..\..\GR32_Blurs.pas"/>
+        <UnitName Value="GR32_Blurs"/>
+      </Item19>
+      <Item20>
+        <Filename Value="..\..\GR32_Brushes.pas"/>
+        <UnitName Value="GR32_Brushes"/>
+      </Item20>
+      <Item21>
+        <Filename Value="..\..\GR32_Clipper.pas"/>
+        <UnitName Value="GR32_Clipper"/>
+      </Item21>
+      <Item22>
+        <Filename Value="..\..\GR32_ColorGradients.pas"/>
+        <UnitName Value="GR32_ColorGradients"/>
+      </Item22>
+      <Item23>
+        <Filename Value="..\..\GR32_ColorPicker.pas"/>
+        <UnitName Value="GR32_ColorPicker"/>
+      </Item23>
+      <Item24>
+        <Filename Value="..\..\GR32_ColorSwatch.pas"/>
+        <UnitName Value="GR32_ColorSwatch"/>
+      </Item24>
+      <Item25>
+        <Filename Value="..\..\GR32_Containers.pas"/>
+        <UnitName Value="GR32_Containers"/>
+      </Item25>
+      <Item26>
+        <Filename Value="..\..\GR32_ExtImage.pas"/>
+        <UnitName Value="GR32_ExtImage"/>
+      </Item26>
+      <Item27>
+        <Filename Value="..\..\GR32_Filters.pas"/>
+        <UnitName Value="GR32_Filters"/>
+      </Item27>
+      <Item28>
+        <Filename Value="..\..\GR32_Gamma.pas"/>
+        <UnitName Value="GR32_Gamma"/>
+      </Item28>
+      <Item29>
+        <Filename Value="..\..\GR32_Geometry.pas"/>
+        <UnitName Value="GR32_Geometry"/>
+      </Item29>
+      <Item30>
+        <Filename Value="..\..\GR32_Image.pas"/>
+        <UnitName Value="GR32_Image"/>
+      </Item30>
+      <Item31>
+        <Filename Value="..\..\GR32_Layers.pas"/>
+        <UnitName Value="GR32_Layers"/>
+      </Item31>
+      <Item32>
+        <Filename Value="..\..\GR32_LowLevel.pas"/>
+        <UnitName Value="GR32_LowLevel"/>
+      </Item32>
+      <Item33>
+        <Filename Value="..\..\GR32_Math.pas"/>
+        <UnitName Value="GR32_Math"/>
+      </Item33>
+      <Item34>
+        <Filename Value="..\..\GR32_MicroTiles.pas"/>
+        <UnitName Value="GR32_MicroTiles"/>
+      </Item34>
+      <Item35>
+        <Filename Value="..\..\GR32_OrdinalMaps.pas"/>
+        <UnitName Value="GR32_OrdinalMaps"/>
+      </Item35>
+      <Item36>
+        <Filename Value="..\..\GR32_Png.pas"/>
+        <UnitName Value="GR32_PNG"/>
+      </Item36>
+      <Item37>
+        <Filename Value="..\..\GR32_Polygons.pas"/>
+        <UnitName Value="GR32_Polygons"/>
+      </Item37>
+      <Item38>
+        <Filename Value="..\..\GR32_RangeBars.pas"/>
+        <UnitName Value="GR32_RangeBars"/>
+      </Item38>
+      <Item39>
+        <Filename Value="..\..\GR32_Rasterizers.pas"/>
+        <UnitName Value="GR32_Rasterizers"/>
+      </Item39>
+      <Item40>
+        <Filename Value="..\..\GR32_RepaintOpt.pas"/>
+        <UnitName Value="GR32_RepaintOpt"/>
+      </Item40>
+      <Item41>
+        <Filename Value="..\..\GR32_Resamplers.pas"/>
+        <UnitName Value="GR32_Resamplers"/>
+      </Item41>
+      <Item42>
+        <Filename Value="..\..\GR32_System.pas"/>
+        <UnitName Value="GR32_System"/>
+      </Item42>
+      <Item43>
+        <Filename Value="..\..\GR32_Transforms.pas"/>
+        <UnitName Value="GR32_Transforms"/>
+      </Item43>
+      <Item44>
+        <Filename Value="..\..\GR32_VectorMaps.pas"/>
+        <UnitName Value="GR32_VectorMaps"/>
+      </Item44>
+      <Item45>
+        <Filename Value="..\..\GR32_VectorUtils.pas"/>
+        <UnitName Value="GR32_VectorUtils"/>
+      </Item45>
+      <Item46>
+        <Filename Value="..\..\GR32_VectorUtils.Reference.pas"/>
+        <UnitName Value="GR32_VectorUtils.Reference"/>
+      </Item46>
+      <Item47>
+        <Filename Value="..\..\GR32_VPR.pas"/>
+        <UnitName Value="GR32_VPR"/>
+      </Item47>
+      <Item48>
+        <Filename Value="..\..\GR32_VPR2.pas"/>
+        <UnitName Value="GR32_VPR2"/>
+      </Item48>
+      <Item49>
+        <Filename Value="..\..\GR32.Text.Cache.pas"/>
+        <UnitName Value="GR32.Text.Cache"/>
+      </Item49>
+      <Item50>
+        <Filename Value="..\..\GR32.Text.FontFace.pas"/>
+        <UnitName Value="GR32.Text.FontFace"/>
+      </Item50>
+      <Item51>
+        <Filename Value="..\..\GR32.Text.Layout.pas"/>
+        <UnitName Value="GR32.Text.Layout"/>
+      </Item51>
+      <Item52>
+        <Filename Value="..\..\GR32.Text.Unicode.pas"/>
+        <UnitName Value="GR32.Text.Unicode"/>
+      </Item52>
+      <Item53>
+        <Filename Value="..\..\GR32_PortableNetworkGraphic.Chunks.zTXt.pas"/>
+        <UnitName Value="GR32_PortableNetworkGraphic.Chunks.zTXt"/>
+      </Item53>
+      <Item54>
+        <Filename Value="..\..\GR32_PortableNetworkGraphic.Encoding.pas"/>
+        <UnitName Value="GR32_PortableNetworkGraphic.Encoding"/>
+      </Item54>
+      <Item55>
+        <Filename Value="..\..\GR32_PortableNetworkGraphic.Transcoding.pas"/>
+        <UnitName Value="GR32_PortableNetworkGraphic.Transcoding"/>
+      </Item55>
+      <Item56>
+        <Filename Value="..\..\GR32_PortableNetworkGraphic.Types.pas"/>
+        <UnitName Value="GR32_PortableNetworkGraphic.Types"/>
+      </Item56>
+      <Item57>
+        <Filename Value="..\..\GR32_PortableNetworkGraphic.ZLib.pas"/>
+        <UnitName Value="GR32_PortableNetworkGraphic.ZLib"/>
+      </Item57>
+      <Item58>
+        <Filename Value="..\..\GR32_PortableNetworkGraphic.Chunks.bKGD.pas"/>
+        <UnitName Value="GR32_PortableNetworkGraphic.Chunks.bKGD"/>
+      </Item58>
+      <Item59>
+        <Filename Value="..\..\GR32_PortableNetworkGraphic.Chunks.cHRM.pas"/>
+        <UnitName Value="GR32_PortableNetworkGraphic.Chunks.cHRM"/>
+      </Item59>
+      <Item60>
+        <Filename Value="..\..\GR32_PortableNetworkGraphic.Chunks.gAMA.pas"/>
+        <UnitName Value="GR32_PortableNetworkGraphic.Chunks.gAMA"/>
+      </Item60>
+      <Item61>
+        <Filename Value="..\..\GR32_PortableNetworkGraphic.Chunks.hIST.pas"/>
+        <UnitName Value="GR32_PortableNetworkGraphic.Chunks.hIST"/>
+      </Item61>
+      <Item62>
+        <Filename Value="..\..\GR32_PortableNetworkGraphic.Chunks.iCCP.pas"/>
+        <UnitName Value="GR32_PortableNetworkGraphic.Chunks.iCCP"/>
+      </Item62>
+      <Item63>
+        <Filename Value="..\..\GR32_PortableNetworkGraphic.Chunks.IDAT.pas"/>
+        <UnitName Value="GR32_PortableNetworkGraphic.Chunks.IDAT"/>
+      </Item63>
+      <Item64>
+        <Filename Value="..\..\GR32_PortableNetworkGraphic.Chunks.iTXt.pas"/>
+        <UnitName Value="GR32_PortableNetworkGraphic.Chunks.iTXt"/>
+      </Item64>
+      <Item65>
+        <Filename Value="..\..\GR32_PortableNetworkGraphic.Chunks.oFFs.pas"/>
+        <UnitName Value="GR32_PortableNetworkGraphic.Chunks.oFFs"/>
+      </Item65>
+      <Item66>
+        <Filename Value="..\..\GR32_PortableNetworkGraphic.Chunks.pas"/>
+        <UnitName Value="GR32_PortableNetworkGraphic.Chunks"/>
+      </Item66>
+      <Item67>
+        <Filename Value="..\..\GR32_PortableNetworkGraphic.Chunks.pCAL.pas"/>
+        <UnitName Value="GR32_PortableNetworkGraphic.Chunks.pCAL"/>
+      </Item67>
+      <Item68>
+        <Filename Value="..\..\GR32_PortableNetworkGraphic.Chunks.pHYs.pas"/>
+        <UnitName Value="GR32_PortableNetworkGraphic.Chunks.pHYs"/>
+      </Item68>
+      <Item69>
+        <Filename Value="..\..\GR32_PortableNetworkGraphic.Chunks.PLTE.pas"/>
+        <UnitName Value="GR32_PortableNetworkGraphic.Chunks.PLTE"/>
+      </Item69>
+      <Item70>
+        <Filename Value="..\..\GR32_PortableNetworkGraphic.Chunks.sBIT.pas"/>
+        <UnitName Value="GR32_PortableNetworkGraphic.Chunks.sBIT"/>
+      </Item70>
+      <Item71>
+        <Filename Value="..\..\GR32_PortableNetworkGraphic.Chunks.sCAL.pas"/>
+        <UnitName Value="GR32_PortableNetworkGraphic.Chunks.sCAL"/>
+      </Item71>
+      <Item72>
+        <Filename Value="..\..\GR32_PortableNetworkGraphic.Chunks.sPLT.pas"/>
+        <UnitName Value="GR32_PortableNetworkGraphic.Chunks.sPLT"/>
+      </Item72>
+      <Item73>
+        <Filename Value="..\..\GR32_PortableNetworkGraphic.Chunks.sRGB.pas"/>
+        <UnitName Value="GR32_PortableNetworkGraphic.Chunks.sRGB"/>
+      </Item73>
+      <Item74>
+        <Filename Value="..\..\GR32_PortableNetworkGraphic.Chunks.tEXt.pas"/>
+        <UnitName Value="GR32_PortableNetworkGraphic.Chunks.tEXt"/>
+      </Item74>
+      <Item75>
+        <Filename Value="..\..\GR32_PortableNetworkGraphic.Chunks.tIME.pas"/>
+        <UnitName Value="GR32_PortableNetworkGraphic.Chunks.tIME"/>
+      </Item75>
+      <Item76>
+        <Filename Value="..\..\GR32_PortableNetworkGraphic.Chunks.tRNS.pas"/>
+        <UnitName Value="GR32_PortableNetworkGraphic.Chunks.tRNS"/>
+      </Item76>
+      <Item77>
+        <Filename Value="..\..\GR32_PortableNetworkGraphic.Chunks.Unknown.pas"/>
+        <UnitName Value="GR32_PortableNetworkGraphic.Chunks.Unknown"/>
+      </Item77>
+      <Item78>
+        <Filename Value="..\..\GR32.Examples.pas"/>
+        <UnitName Value="GR32.Examples"/>
+      </Item78>
+      <Item79>
+        <Filename Value="..\..\GR32.ImageFormats.pas"/>
+        <UnitName Value="GR32.ImageFormats"/>
+      </Item79>
+      <Item80>
+        <Filename Value="..\..\GR32.ImageFormats.Default.pas"/>
+        <UnitName Value="GR32.ImageFormats.Default"/>
+      </Item80>
+      <Item81>
+        <Filename Value="..\..\GR32.ImageFormats.BMP.pas"/>
+        <UnitName Value="GR32.ImageFormats.BMP"/>
+      </Item81>
+      <Item82>
+        <Filename Value="..\..\GR32.ImageFormats.GIF.pas"/>
+        <UnitName Value="GR32.ImageFormats.GIF"/>
+      </Item82>
+      <Item83>
+        <Filename Value="..\..\GR32.ImageFormats.JPG.pas"/>
+        <UnitName Value="GR32.ImageFormats.JPG"/>
+      </Item83>
+      <Item84>
+        <Filename Value="..\..\GR32.ImageFormats.PNG.pas"/>
+        <UnitName Value="GR32.ImageFormats.PNG"/>
+      </Item84>
+      <Item85>
+        <Filename Value="..\..\GR32.ImageFormats.PNG32.pas"/>
+        <UnitName Value="GR32.ImageFormats.PNG32"/>
+      </Item85>
+      <Item86>
+        <Filename Value="..\..\GR32.ImageFormats.PSD.pas"/>
+        <UnitName Value="GR32.ImageFormats.PSD"/>
+      </Item86>
+      <Item87>
+        <Filename Value="..\..\GR32.ImageFormats.PSD.Model.pas"/>
+        <UnitName Value="GR32.ImageFormats.PSD.Model"/>
+      </Item87>
+      <Item88>
+        <Filename Value="..\..\GR32.ImageFormats.PSD.Types.pas"/>
+        <UnitName Value="GR32.ImageFormats.PSD.Types"/>
+      </Item88>
+      <Item89>
+        <Filename Value="..\..\GR32.ImageFormats.PSD.Writer.pas"/>
+        <UnitName Value="GR32.ImageFormats.PSD.Writer"/>
+      </Item89>
+      <Item90>
+        <Filename Value="..\..\GR32.ImageFormats.PSD.Reader.pas"/>
+        <UnitName Value="GR32.ImageFormats.PSD.Reader"/>
+      </Item90>
+      <Item91>
+        <Filename Value="..\..\GR32.ImageFormats.TBitmap.pas"/>
+        <UnitName Value="GR32.ImageFormats.TBitmap"/>
+      </Item91>
+      <Item92>
+        <Filename Value="..\..\GR32.ImageFormats.TClipboard.pas"/>
+        <UnitName Value="GR32.ImageFormats.TClipboard"/>
+      </Item92>
+      <Item93>
+        <Filename Value="..\..\GR32.ImageFormats.TGraphic.pas"/>
+        <UnitName Value="GR32.ImageFormats.TGraphic"/>
+      </Item93>
+      <Item94>
+        <Filename Value="..\..\GR32.ImageFormats.TIcon.pas"/>
+        <UnitName Value="GR32.ImageFormats.TIcon"/>
+      </Item94>
+      <Item95>
+        <Filename Value="..\..\GR32.ImageFormats.TMetaFile.pas"/>
+        <UnitName Value="GR32.ImageFormats.TMetaFile"/>
+      </Item95>
+      <Item96>
+        <Filename Value="..\..\GR32.ImageFormats.TPicture.pas"/>
+        <UnitName Value="GR32.ImageFormats.TPicture"/>
+      </Item96>
+      <Item97>
+        <Filename Value="..\..\GR32.ImageFormats.TWICImage.pas"/>
+        <UnitName Value="GR32.ImageFormats.TWICImage"/>
+      </Item97>
+      <Item98>
+        <Filename Value="..\..\GR32_Polygons.GDI.pas"/>
+        <UnitName Value="GR32_Polygons.GDI"/>
+      </Item98>
+      <Item99>
+        <Filename Value="..\..\GR32_Polygons.AggLite.pas"/>
+        <UnitName Value="GR32_Polygons.AggLite"/>
+      </Item99>
+      <Item100>
+        <Filename Value="..\..\GR32.Noise.Simplex.pas"/>
+        <UnitName Value="GR32.Noise.Simplex"/>
+      </Item100>
+    </Files>
+    <CompatibilityMode Value="True"/>
+    <RequiredPkgs Count="2">
+      <Item1>
+        <PackageName Value="IDEIntf"/>
+      </Item1>
+      <Item2>
+        <PackageName Value="LCL"/>
+        <MinVersion Major="1" Valid="True"/>
+      </Item2>
+    </RequiredPkgs>
+    <UsageOptions>
+      <UnitPath Value="$(PkgOutDir)"/>
+    </UsageOptions>
+    <PublishOptions>
+      <Version Value="2"/>
+      <DestinationDirectory Value="$(TestDir)\publishedpackage\"/>
+    </PublishOptions>
+    <CustomOptions Items="ExternHelp" Version="2">
+      <_ExternHelp Items="Count"/>
+    </CustomOptions>
+  </Package>
+</CONFIG>

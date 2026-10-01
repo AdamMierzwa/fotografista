@@ -1,0 +1,66 @@
+# --- Build output -------------------------------------------------------
+Win32/
+Win64/
+*.dcu
+*.exe
+*.map
+*.stat
+*.drc
+*.rsm
+*.local
+*.identcache
+*.tvsconfig
+*.~*
+*.bak
+*.orig
+
+# --- IDE scratch --------------------------------------------------------
+__history/
+__recovery/
+*.dproj.local
+
+# --- Tooling output -----------------------------------------------------
+tools/tmp/
+tools/*.txt
+
+# --- Reference material that must never be published --------------------
+# Third-party books and vendor documentation. Not redistributable.
+# See the last section of THIRD_PARTY_NOTICES.md.
+doc/
+
+# --- Bundled dependencies: only the compiled subset is tracked ----------
+# Graphics32 also ships examples, tests and documentation (~27 MB) that the
+# project does not compile against. Re-extract them locally if needed.
+Lib/Graphics32/Examples/
+Lib/Graphics32/Tests/
+Lib/Graphics32/Documentation/
+Lib/Graphics32/Benchmarks/
+Lib/Graphics32/DocProcessor/
+
+# Not on the unit search path, not compiled, no usable licence terms.
+Lib/GraphicEx-master/
+Lib/DelphiZlib/
+Lib/*.pas
+Lib/*.inc
+
+# --- Unused assets ------------------------------------------------------
+# FireMonkey styles. The application loads only Styles\*.vsf (fMain.pas).
+Styles/*.Style
+Styles/*.style
+Styles/*.png
+benchmark.bmp
+test_gradient_riso.png
+moire_sim_*.png
+
+# --- Packaging artefacts ------------------------------------------------
+packaging/
+dist*/
+dist1/
+dist2/
+_0/
+0/
+sklep/
+certyfikat/
+wz*/ paczki/
+rozpakowane msix/
+*_src.zip

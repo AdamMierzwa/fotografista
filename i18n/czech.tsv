@@ -1,0 +1,1048 @@
+﻿1	Soubor
+2	Úpravy
+3	Míchání efektů
+4	Zobrazení
+5	Analýza
+6	Úpravy
+7	Barvy
+8	Efekty
+9	Tisk
+10	Experimentální
+11	Zkreslení
+12	Amiga
+13	Pomoc
+14	Otevřít...
+15	Uložit jako...
+16	Informace o obrázku
+17	(žádný)
+18	Zavřít
+19	Předvolby...
+20	Konec
+21	Zpět
+22	Znovu
+23	Kopírovat
+24	Vložit
+25	Obnovit originál
+26	Vymazat historii
+27	Míchání efektů...
+28	Míchání (0=A, 100=B):
+29	Sloučit viditelné
+30	Smazat vše
+31	Přiblížit
+32	Oddálit
+33	Přizpůsobit oknu
+34	100%
+35	50%
+36	25%
+37	200%
+38	400%
+39	Histogram...
+40	Vyrovnat histogram...
+41	Zrcadlit vodorovně
+42	Zrcadlit svisle
+43	Otočit doleva
+44	Otočit doprava
+46	Narovnat sken...
+47	Kontrast...
+48	Jas...
+49	Korekce gama...
+50	Úrovně...
+51	Vyvážení bílé...
+52	Doostřit...
+53	Živé barvy...
+54	Vylepšení fotografie...
+55	Oříznout...
+56	Změnit velikost...
+57	Kolorovat...
+58	HSB vyvážení...
+59	Solarizace...
+60	Duotón...
+61	Sépie...
+62	Kyanotypie
+63	Sůl-tisk
+64	Rentgen
+65	Falešné barvy IR
+66	Noční vidění
+68	Orton
+69	Černobíle...
+70	Odstíny šedi
+71	Negativ
+72	Zrno filmu...
+73	Olejomalba...
+74	Uhel...
+75	Rozmazání...
+76	Reliéf...
+77	Pixelace...
+78	Vinětace...
+79	Posterizace...
+80	Detekce hran...
+81	Linoryt...
+82	Rytina...
+83	Křížové šrafování...
+84	Půltón...
+85	Tečkování...
+86	Kostky...
+87	Risograf v1...
+88	Sítotisk...
+89	Soudkové zkreslení...
+90	Obloukové zkreslení...
+91	Víření...
+92	Vodní vlnění...
+93	Polární zkreslení...
+94	Paleta Workbench 1.x (OCS)
+95	Paleta Workbench 2.x/3.x
+96	OCS 32barevná paleta...
+97	EHB 64barevná paleta...
+98	AGA 256barevná paleta...
+99	Workbench 256barevná paleta...
+100	MagicWB paleta (8 barev)...
+101	O programu
+102	Otevřít soubor s obrázkem
+103	Uložit obrázek pod novým názvem
+104	Zobrazit podrobnosti obrázku
+105	Zavřít aktuální obrázek
+106	Nastavení programu
+107	Ukončit program
+108	Zpět poslední operaci
+109	Znovu vrácenou operaci
+110	Kopírovat obrázek do schránky
+111	Vložit obrázek ze schránky jako novou vrstvu
+112	Obnovit původní stav obrázku
+113	Vymazat historii operací - nevratné
+114	Míchání dvou efektů posuvníkem
+115	Čeština
+116	Português (Portugalština)
+117	Afrikaans
+118	Přiblížit zobrazení
+119	Oddálit zobrazení
+120	Přizpůsobit obrázek oknu
+121	Zobrazit v měřítku 1:1
+122	Zobrazit v měřítku 50%
+123	Zobrazit v měřítku 25%
+124	Zobrazit v měřítku 200%
+125	Zobrazit v měřítku 400%
+126	Zobrazit barevný histogram
+127	Vyrovnat histogram - zlepšit kontrast
+128	Převrátit obrázek vodorovně
+129	Převrátit obrázek svisle
+130	Otočit obrázek o 90° doleva
+131	Otočit obrázek o 90° doprava
+132	Otočit obrázek o 180°
+133	Narovnat sken - otočení až +/-10° s auto-oříznutím
+134	Upravit kontrast
+135	Upravit jas
+136	Korekce gama
+137	Nastavit černý bod, gama a bílý bod - plná tonální kontrola
+138	Vyvážení bílé - korekce barevné teploty
+139	Doostřit obrázek
+140	Živé barvy - syté, zářivé barvy
+141	Vylepšení fotografie (Násobení)
+142	Oříznout obrázek
+143	Změnit velikost obrázku
+144	Obarvit obrázek vybranou barvou
+145	Upravit jas, sytost a odstín
+146	Solarizace - invertovat světlé tóny
+147	Dvoubarevný efekt - stíny a světla
+148	Sépie - teplá hnědá monochromie
+149	Kyanotypie - modrá monochromie
+150	Sůl-tisk - teplá hnědá
+151	Rentgen - invertované barvy
+152	Falešné barvy IR - prohození kanálů, červené rostliny, modrá obloha
+153	Noční vidění - šedá + zelený fosfor
+154	Termální - falešné barvy
+155	Orton - rozmazaná záře, snová nálada
+156	Převést na ČB s možností ditheringu
+157	Převést na odstíny šedi
+158	Invertovat barvy - negativ
+159	Přidat zrno filmu - náhodný šum
+160	Olejomalba - simulace štětce
+161	Uhel - simulace kresby uhlem
+162	Rozmazat obrázek
+163	Reliéf
+164	Pixelace - mozaikový efekt
+165	Vinětace - ztmavení okrajů
+166	Posterizace - snížit počet barev
+167	Detekce hran - efekt skici
+168	Linoryt - ostrý ČB kontrast
+169	Rytina - simulace rytiny
+170	Křížové šrafování pod dvěma úhly
+171	Půltón - rostoucí body podle jasu
+172	Tečkování - hustota bodů podle jasu
+173	Kostky - vzor ok kostek
+174	Risograf - vrstvený tisk s posunem barev
+175	Jednobarevný sítotisk - šedá + půltón na pozadí
+176	Soudkové / poduškové zkreslení
+177	Obloukové zkreslení - prohnout obrázek
+178	Víření - zkroutit obrázek
+179	Vodní vlnění
+180	Polární zkreslení - tunel, rybí oko
+181	4barevná paleta - Workbench 1.x (OCS)
+182	4barevná paleta - Workbench 2.x/3.x
+183	32barevná paleta (4x4x2) - OCS
+184	64barevná paleta (4x4x4) - EHB
+185	256barevná paleta - AGA
+186	256barevná paleta - Workbench 3.x
+187	8barevná paleta - MagicWB (MUI)
+188	Fotografista
+189	Žádný obrázek
+190	OK
+191	Zrušit
+192	Náhled
+193	Zobrazit náhled
+194	Použít a zavřít
+195	Zavřít bez použití
+197	Fotografický editor
+198	Build
+199	Šířka (px):
+200	Výška (px):
+201	Použít změnu velikosti
+202	Zrušit změny
+203	X (px):
+204	Y (px):
+205	Použít oříznutí
+206	Zrušit oříznutí
+207	Vybrat barvu
+208	Barva textu
+209	Písmo...
+210	Směr
+211	Zvýšit
+212	Snížit
+213	Dithering
+214	S ditheringem (lepší kvalita)
+216	S ditheringem
+217	Bez ditheringu
+218	Povoleno
+219	Zakázáno
+220	Intenzita (1-10):
+221	Jas (0-200, výchozí 100):
+222	Gama (100 = beze změny):
+223	Červená (100 = beze změny):
+224	Zelená (100 = beze změny):
+225	Modrá (100 = beze změny):
+226	Intenzita (1-100):
+227	Intenzita (0-100):
+228	Poloměr (1-5):
+229	Intenzita (1-50):
+230	Velikost buňky (1-100):
+231	Úhel (0-179°):
+232	Velikost buňky (4-16 px):
+233	Max. tloušťka čáry (1-8):
+234	Velikost buňky (4-64 px):
+235	Velikost bodu v buňce (3-8 px):
+236	Práh (1-100):
+237	Množství inkoustu (světlejší = méně):
+238	Síla (0-100):
+239	Sytost (0-100):
+240	Kontrast (0-100):
+241	Křivka (1-5):
+242	Chytré křivky (0-100):
+243	Černý bod (0-255):
+244	Bílý bod (0-255):
+245	Úhel narovnání (-10 až +10°):
+248	Použít narovnání a zavřít
+249	Použít změny vrstev a zavřít
+250	Zavřít bez uložení
+255	Barva stínů
+256	Barva světel
+257	Barva inkoustu
+258	Barva papíru
+259	Název předvolby:
+260	Načíst
+261	Smazat
+263	Nastavení
+264	Jas
+266	Doostřit
+267	Solarizace
+268	Sépie
+269	Olejomalba
+270	Uhel
+271	Rozmazání
+273	Pixelace
+274	Vinětace
+275	Detekce hran
+276	Zrno filmu
+277	Uložit předvolbu duotónu
+278	Načíst předvolbu duotónu
+279	Kontrast
+280	Oříznutí
+281	Změna velikosti
+282	Vyvážení bílé
+283	Úrovně
+284	Živé barvy
+285	Vylepšení fotografie
+286	Vrstvy
+287	Narovnat sken
+288	Kolorovat
+289	HSB vyvážení
+290	Černobíle
+291	Posterizace
+292	Rytina
+293	Křížové šrafování
+294	Půltón
+295	Tečkování
+296	Kostky
+297	Linoryt
+298	Risograf
+299	Sítotisk
+300	OCS 32barevná paleta
+301	EHB 64barevná paleta
+302	AGA 256barevná paleta
+303	Workbench 256barevná paleta
+304	MagicWB 8barevná paleta
+305	Soudkové zkreslení
+306	Obloukové zkreslení
+307	Víření
+308	Vodní vlnění
+309	Polární zkreslení
+310	Předvolby
+311	Sytost (0-200, výchozí 100):
+312	Odstín (0-200, výchozí 100):
+313	Kontrast (0-10):
+314	Počet barev (2-64):
+315	Krytí:
+316	Režim:
+317	Vybrat barvu...
+320	Vyberte typ:
+321	Vyberte úhel oblouku:
+322	Vyberte intenzitu:
+323	Vyberte variantu:
+324	Slabý soudek
+325	Střední soudek
+326	Silný soudek
+327	Slabá poduška
+328	Střední poduška
+329	Silná poduška
+330	45°
+331	90°
+332	180°
+333	360°
+334	90° + otočit
+335	180° + otočit
+336	Slabé (45°)
+337	Střední (90°)
+338	Silné (180°)
+339	Velmi silné (270°)
+340	Plné (360°)
+341	Obrátit
+342	Světlé
+343	Střední
+344	Silné
+345	Soustředné
+346	Z rohu
+347	Husté
+348	Plné
+349	Poloviční úhel
+350	Čtvrtinový úhel
+351	Prstenec
+352	Malý poloměr
+353	Hladké
+354	Tunel
+356	Rybí oko
+357	Vnější roztažení
+358	Chyba
+359	Nepodporovaný formát souboru.
+360	Snímek
+361	Originál
+362	Gama (10-500, 100=1,0):
+363	Přidat vrstvu
+364	Sloučit vrstvy
+365	Vyrovnání histogramu
+368	Zpět:
+369	Znovu:
+371	HDR 2
+372	WB 1.x
+373	WB 2.x
+374	OCS 32
+375	EHB
+376	AGA 256
+377	WB 256
+378	MagicWB
+379	Převrátit vodorovně
+380	Převrátit svisle
+383	Otočit 180
+384	Narovnat
+390	Falešné barvy IR
+392	Termální
+394	Reliéf
+396	Duotón
+397	Kontrast (před převodem)
+398	Červená
+399	Zelená
+403	Odstín
+404	Sytost
+405	Gama
+406	Síla
+407	Práh
+408	Úhel
+409	Velikost buňky
+410	Tloušťka
+411	Velikost bodu
+413	Poloměr
+414	Neznámé
+415	Informace
+417	Název:
+419	Alfa kanál:
+420	Šířka:
+421	Výška:
+422	Velikost:
+423	Datum:
+424	Čas:
+425	Ano
+426	Ne
+428	Náhled
+429	Vyberte velikost:
+430	100 px
+431	200 px
+432	320 x 240
+433	640 x 480
+434	Hotovo
+435	Náhled uložen.
+436	Uložit náhled jako
+437	Kvalita komprese JPEG (0-100):
+438	Normální
+439	Násobení
+440	Obrazovka
+441	Překrytí
+442	Měkké světlo
+443	Tmavší
+444	Světlejší
+445	Pozadí (originál)
+446	Karmínová + Azurová
+447	Černá + Žlutá
+448	Modrá + Oranžová
+449	Karmínová + Azurová + Žlutá
+450	Černá + Karmínová + Žlutá
+451	CMYK (4 barvy)
+453	Vyberte režim vyrovnání:
+454	Jas
+455	Vše
+457	Histogram
+458	Klávesové zkratky
+459	Makro
+460	Spustit nahrávání
+461	Zastavit a uložit
+462	Zrušit nahrávání
+463	Spravovat makra...
+464	Makra
+465	Spustit
+467	Uložit makro
+468	Název makra:
+470	Nahrávání je již aktivní.
+471	Přidat tento krok do makra?
+472	Ano|Ne
+473	Nahrávání není aktivní.
+474	Žádné kroky k uložení.
+475	Není načten žádný obrázek.
+476	kroků
+477	Nahrávání makra
+478	HAM6 - 16 barev + Hold-Modify
+479	HAM8 - 64 barev + Hold-Modify
+480	Simulace HAM6 (16 základních barev s režimy hold-modify)
+481	Simulace HAM8 (64 základních barev s režimy hold-modify)
+482	HAM6
+483	HAM8
+484	Oříznout na výběr
+485	Velikost výběru...
+486	Uložit ikonu...
+487	Velikost ikony:
+488	Formát ikony:
+489	Ikona uložena.
+491	Varování: tento efekt je velmi náročný. U obrázků nad 6 MP může zpracování trvat 30-60 sekund.
+492	Pokračovat
+493	Záře...
+494	Poloměr záře:
+495	Amiga přechod...
+496	Překrytí přechodem ve stylu Amiga copper
+497	Amiga přechod (Agony)...
+498	Přechod ve stylu Agony copper
+499	Uložit jako ikonu Windows...
+501	Kvalita JPEG 2000 (0-100, 100=bezeztrátové):
+502	Nesprávné vyvolání...
+503	Nesprávné vyvolání — simulace E-6/C-41
+504	Uložit balíček ikon (ZIP)...
+505	Přejmenovat
+506	Jazyk...
+507	Nastavení
+508	Kvalita exportu...
+509	Balíček ikon
+510	Není vybrána velikost.
+511	Balíček ikon uložen do:
+512	Komprese TIFF:
+514	Vyberte platformu:
+515	Vyberte formát:
+520	Resetovat
+522	Uložit aktuální obrázek jako ikonu
+523	Uložit ikony ve více velikostech jako ZIP archiv
+524	Spustit nahrávání makra
+525	Zastavit nahrávání a uložit makro
+526	Zrušit nahrávání bez uložení
+527	Spustit, přejmenovat nebo smazat makra
+528	Změnit jazyk aplikace
+529	Nastavit kvalitu exportu JPEG, JPEG 2000 a TIFF
+530	O programu Fotografista
+531	Zobrazit klávesové zkratky
+532	Rozhraní...
+533	Nastavení rozhraní
+534	Rozhraní
+535	Barva pozadí plátna (pouze se standardním motivem Windows):
+537	Otevřít obrázek
+538	Všechny soubory
+539	Schránka
+540	Vloženo
+541	LZW
+542	Flate
+543	JPEG
+544	Nový název:
+545	Jazyk / Language
+546	Polski (Polština)
+547	English (Angličtina)
+548	Velikost výběru
+553	Výběr: %d × %d
+554	Mapovat na OCS 32barevnou paletu s ditheringem
+555	Mapovat na EHB 64barevnou paletu s ditheringem
+556	Mapovat na AGA 256barevnou paletu s ditheringem
+557	Mapovat na Workbench 256barevnou paletu s ditheringem
+558	Mapovat na MagicWB 8barevnou paletu s ditheringem
+559	Horní odstín (0-360):
+560	Dolní odstín (0-360):
+561	Počet pásem (32-256):
+562	E-6 v C-41
+563	C-41 v E-6
+564	Kodak ve vývojce Fuji
+565	Fuji ve vývojce Kodak
+566	ECN-2 v C-41
+568	Velikost písma (stavový řádek):
+569	Klasický AmigaOS (4 barvy)
+570	Dlaždice...
+571	Rozložit obrázek na dlaždice pro vyplnění cílových rozměrů
+572	Amiga pozadí...
+573	Cílové rozlišení:
+574	Zarovnání obrázku:
+575	Barva pozadí (paleta MagicWB):
+576	Šedá
+577	Černá
+578	Bílá
+579	Modrá
+580	Tmavě šedá
+581	Světle šedá
+582	Hnědá
+583	Lososová
+584	Amiga pozadí (roztažené, MagicWB)...
+585	Přizpůsobit obrázek amigovskému rozlišení s roztažením okrajů
+586	Vlastní barva...
+587	Exportovat...
+588	Importovat...
+589	Exportovat makro
+590	Makro úspěšně exportováno.
+591	Importovat makro
+592	Neplatný soubor makra.
+593	Makro s tímto názvem již existuje. Přepsat?
+594	Makro úspěšně importováno.
+595	Zapamatovat velikost a pozici okna
+596	Počet nedávných souborů:
+597	Ukončit bez uložení změn
+598	Reliéf...
+599	Materiálový basreliéf z jasu obrázku
+600	Hloubka (1-100):
+601	Sádra / bílý kámen
+602	Bílý mramor
+603	Šedý kámen
+604	Bronz / medaile
+605	Pískovec
+606	Měřítko (%):
+607	Zachovat poměr stran
+609	Emergo...
+610	Français (Francouzština)
+611	Español (Španělština)
+612	Italiano (Italština)
+613	Deutsch (Němčina)
+614	Upravit makro
+615	Odebrat krok
+616	Ruční
+617	Automatické
+618	Operace dokončena.
+620	Výsledek je připraven.
+621	Můžete se vrátit k počítači.
+622	Vaše káva pravděpodobně vychladla.
+623	Gratulujeme. CPU přežil.
+624	Myslel jsem, že to nikdy neskončí.
+625	Haleluja! Konečně.
+626	Fungovalo to. Vše je připraveno.
+627	Konec čekání.
+628	Děkujeme za trpělivost.
+629	Emergo — inteligentní obnova detailů stínů
+630	Náhled 100%
+631	Simulace HAM
+632	Tento efekt je extrémně náročný.\nU obrázků nad 2 MP může zpracování trvat několik minut.
+633	Falešný bokeh...
+634	Tilt-shift (miniatura)...
+635	Plynulé rozmazání
+636	Síla:
+637	Tvar:
+638	Radiální (bokeh)
+639	Lineární (tilt-shift)
+640	CMYK neregistrace...
+641	CMYK neregistrace
+642	Síla posunu:
+643	Tritón...
+644	Tritón
+645	Kvadrón...
+646	Kvadrón
+647	Barva 1 (stíny):
+648	Barva 2 (střední tóny):
+649	Barva 3 (světla):
+650	Barva 4 (extrémní světla):
+651	Chromatická aberace...
+652	Chromatická aberace
+653	Posun:
+654	Střed X:
+655	Střed Y:
+656	Poloměr:
+657	Útlum:
+658	Pozice pásma:
+659	Výška pásma:
+660	Ostatní retro počítače
+661	C64 — Pepto / Colodore...
+662	Paleta Commodore 64 — Pepto nebo Colodore
+663	Commodore 64
+664	Mapovat na paletu Commodore 64 s ditheringem
+665	Pepto
+666	Colodore
+667	ZX Spectrum...
+668	Paleta ZX Spectrum
+669	ZX Spectrum
+670	Mapovat na paletu ZX Spectrum s ditheringem
+671	Game Boy — DMG / Pocket...
+672	Paleta Game Boy — DMG (zelená) nebo Pocket (šedá)
+673	Game Boy
+674	Mapovat na paletu Game Boy s ditheringem
+675	DMG (zelená)
+676	Pocket (šedá)
+677	NES (Nestopia)...
+678	Paleta NES (Nestopia)
+679	NES — Nestopia
+680	Mapovat na paletu NES Nestopia s ditheringem
+681	Vzor (retro)
+682	Floyd–Steinberg (hladký)
+683	Vybraný režim je velmi pomalý pro velké obrázky.\nU obrázků nad 2 MP může náhled a aplikace efektu trvat několik minut.\nJiné režimy jsou mnohem rychlejší.
+684	Výkon...
+685	Maximální pracovní rozlišení:
+687	Obrázek
+688	Obrácený tunel
+689	30° výseč
+690	Full HD (1920×1080)
+691	4K (3840×2160)
+692	Výkon a maximální pracovní rozlišení
+693	SVGA (800×600)
+694	Azurová
+695	Purpurová
+696	Žlutá
+699	Oranžová
+701	Růžová
+702	Tmavě modrá
+703	Fialová
+704	Tyrkysová
+705	Korálová
+706	Vínová
+707	Mátová
+708	Risograf v2...
+709	Risograf v3...
+710	Počet vrstev:
+711	Vrstva 1...
+712	Vrstva 2...
+713	Vrstva 3...
+714	Vrstva 4...
+715	Vrstva 5...
+716	Výběr
+717	Příprava na sítotisk (trička)...
+718	Návrh trička...
+719	Počet barev:
+720	2. Mapování barev na inkoust
+721	3. Vyčištění detailů
+722	Min. plocha (px):
+724	Výběr inkoustu
+725	Inkoust:
+726	Simulace rastru sítotisku
+727	Výroba triček
+728	1. Posterizace
+729	Odstranění ostrůvků:
+730	Návrh trička
+731	Plynulé škálování náhledu
+732	Měření výkonu
+733	Tento test změří rychlost 12 efektů zpracování obrazu.\nDoba trvání: od několika sekund do několika minut -\nzávisí na rozlišení obrazu a výkonu procesoru.
+734	Test výkonu
+735	Příprava obrazu...
+736	Obrázek: %s (%d×%d)
+737	%s: %,2f ms (průměr %d)
+738	Čas: %d min %d s
+739	(přerušeno)
+740	Nejtěžší: %s (%.2f ms).
+741	Výsledky výkonu
+745	Křížový proces
+746	Basreliéf
+750	Risografie v2
+751	HAM8 (64 barev)
+752	HAM6 (16 barev)
+753	Záře
+754	Měření výkonu grafických efektů
+755	Zpracování
+756	Poloměr štětce (1-30):
+757	Závada...
+758	Digitální zkreslení obrazu — posun RGB, šum, horizontální posun řezu
+759	Posun RGB:
+760	Chvění řádků:
+761	Šum:
+762	Efekt CRT:
+763	Ztráta bloků:
+764	Horizontální posun řezu:
+765	Ztmaví každý druhý řádek při poměru PAL — vyšší hodnota = tmavší mezery
+766	Online dokumentace
+767	Otevřete webové stránky Fotografista ve webovém prohlížeči
+768	Rastříkovače...
+769	Rastříkovače — inkoustové okraje na bílém pozadí
+770	Rastříkovače
+771	Zrnitost:
+772	Citlivost okrajů:
+773	Intenzita toneru:
+775	Exportovat PDF...
+776	Exportovat obrázek do souboru PDF
+777	Exportovat PDF
+778	Hotovo.
+779	PDF úspěšně uloženo.
+780	Chyba při ukládání PDF.
+781	Exportovat porovnání...
+782	Exportovat porovnání obrázků — vedle sebe s originálem
+783	Porovnání
+784	Žádný soubor k porovnání — obrázek nebyl otevřen ze souboru.
+785	Porovnání úspěšně uloženo.
+786	Chyba při ukládání porovnání.
+787	Aktuální obrázek
+788	Přizpůsobit velikosti s oříznutím...
+789	Přizpůsobit obrázek cílové velikosti, oříznout přebytečný obsah
+790	Full HD 1920×1080
+791	Přizpůsobit velikosti s oříznutím
+794	Ukotvení:
+795	Vlevo nahoře
+796	Vpravo nahoře
+797	Vlevo dole
+798	Vpravo dole
+799	Použít změnu velikosti s oříznutím
+800	Zrušit změnu velikosti s oříznutím
+801	Obrázek nebyl načten ze souboru.\nPřizpůsobení velikosti s oříznutím použije aktuální obrázek\nkterý může mít nižší rozlišení kvůli nastavení výkonu.
+802	Nástroje
+803	Spouštěč
+804	Barevná hloubka
+805	Načítací modul
+806	Spouštěč rychlých akcí
+807	Program zaregistrován
+808	Zadejte licenční klíč
+809	Zadejte e‑mail použitý při nákupu:
+810	Zadejte licenční klíč:
+811	Úspěch
+812	Licenční klíč byl aktivován.
+814	Neplatný klíč nebo e‑mail!
+815	Zkušební verze vypršela
+816	Zkušební verze Fotografista vypršela po 7 dnech.
+817	Pro pokračování zadejte licenční klíč:
+818	Zavřít program
+819	Zadejte svou e‑mailovou adresu.
+820	Zadejte svůj licenční klíč.
+821	Dávkové zpracování...
+822	Použít uložené makro na všechny obrázky ve složce
+823	Zdrojová složka:
+824	Výstupní složka:
+825	Makro:
+826	Procházet...
+827	Start
+828	Zpracovává se...
+831	Vyberte zdrojovou složku
+832	Vyberte výstupní složku
+833	Žádná uložená makra.
+834	Dávkové zpracování již běží.
+835	Složka je prázdná.
+836	Ve zdrojové složce nebyly nalezeny žádné obrázky.
+837	Vyplňte všechna pole.
+838	Zpracováno
+839	chyb
+840	Makro obsahuje krok změny velikosti. Kombinace s dávkovým škálováním může vést k neočekávaným výsledkům.
+841	Škálovat na dlouhou hranu
+842	px:
+843	Makro nespouštět
+844	Koupit licenci
+845	Umělé bokeh
+846	Umělecké
+847	Přiřadit barvu 1
+848	Přiřadit barvu 2
+849	Přiřadit barvu 3
+850	Přiřadit barvu 4
+851	Přiřadit barvu 5
+852	Přiřadit barvu 6
+853	Nesprávné vyvolání
+854	Blokování
+855	Jas před konverzí (0-200):
+856	Střed X (0-100):
+857	Střed Y (0-100):
+858	Vybrat barvu...
+859	Vyberte barvu:
+860	Vyberte motiv:
+861	Vybrat...
+862	Chyba CMYK
+863	Kontrast před konverzí (0-10):
+864	Vytváření potisku
+865	Křížové šrafování
+866	Cílová složka:
+867	Citlivost detekce (1-100):
+868	Násobitel velikosti bodu:
+869	Velikost podbuňky bodu (3-8 px):
+870	Duplikátor
+871	Efekt A:
+872	Efekt B:
+873	Prolínání efektů
+874	Síla efektu (0-100):
+875	Reliéf
+876	Vyblednutí (0-100):
+877	Přizpůsobit velikosti s oříznutím
+878	Zrnitost:
+879	Informace o obrázku
+880	Velikost písma rozhraní (pt):
+881	Kvalita JPEG v TIFF:
+882	Úhel čar (0-179):
+883	Materiál:
+884	Maximální tloušťka čáry (1-8):
+885	Maketa
+886	Bez komprese
+887	Olejomalba
+888	Jiná barva...
+889	Obrys
+890	Obrys...
+891	Paleta
+892	Paleta:
+893	Fotografické procesy
+894	Pixelizace
+895	Předvolba:
+896	Raster
+897	Obnovit originál
+898	Kvalita uložení
+899	Škálovat na delší stranu, px:
+900	Metoda škálování:
+901	Narovnání skenu
+902	Vybrat
+903	Křivka stínů (1 = jemná, 5):
+904	Solarizace
+905	Tečkování
+906	Úhel narovnání (-10 až +10 stupňů):
+907	Toner:
+908	Sytost
+909	Bez spuštění makra
+910	Přiblížení
+911	Síla (1-100):
+912	Poloměr (1-100):
+913	Pozice pásu (0-100):
+914	Výška pásu (1-100):
+915	Síla (0 = žádná, 100 = max):
+916	Kontrast (0 = žádný, 100):
+917	Poloměr štětce (1-10):
+918	Poloměr záře (1-20):
+919	Chvění čar (0-100):
+920	Šum (0-100):
+921	Efekt CRT (0-100):
+922	Blokové ztráty (0-100):
+923	Vodorovné posuny pásů (0-100):
+924	Posun kanálů RGB (0-30):
+925	Kvalita komprese WebP (0-100):
+926	4. Sítotisk
+927	Profesionální grafický editor
+928	Architektura: 100% nativní (VCL / Object Pascal)
+929	Výkon: přímý přístup k renderovacímu řetězci
+930	Prostředí: nezávislé na běhovém prostředí x86/x64
+931	Vysoce výkonná desktopová aplikace
+932	bez zatížení webovými frameworky.
+935	Spravovat makra
+936	Risograf v1
+937	Risograf v2
+938	Hustota vlny
+939	Test výkonu změří rychlost 12 grafických operací.
+940	Délka trvání: od desítek sekund do několika minut — závisí na rozlišení obrázku a výkonu procesoru.
+941	(nový)
+942	Název
+943	Formát
+944	Šířka
+945	Výška
+946	Rozlišení X
+947	Rozlišení Y
+948	EXIF (%d vlastností)
+949	Nelze otevřít soubor pro čtení metadat.
+950	Barva 2 (světla):
+951	Paleta WB 1.x
+952	Paleta WB 2.x/3.x
+953	Paleta OCS 32
+954	Paleta EHB 64
+955	Paleta AGA 256
+956	Paleta Workbench 256
+957	Paleta MagicWB
+958	Dlaždění
+959	Risograf v3
+960	Pozadí Amiga
+961	Pozadí Amiga (roztažené, MagicWB)
+962	Záře
+963	Glitch
+964	Přechod Amiga
+965	Přechod Amiga (Agony)
+966	NES - Nestopia
+967	Nepodporovaný krok: 
+968	Nelze porovnat - obrázek nebyl otevřen ze souboru.
+969	Soubor neexistuje:
+970	Zdrojový soubor pro obnovení originálu nebyl nalezen na disku.
+971	Nejprve otevřete obrázek.
+972	Makro je prázdné - neuloženo.
+973	Název makra
+974	Zadejte název makra:
+975	Zrušeno - makro nebylo uloženo.
+976	Ve zdrojové složce nejsou žádné obrázky.
+977	Nový název makra:
+978	Smazat makro „%s“?
+979	Smazat krok „%s“?
+980	Žádný obrázek ke zpracování.
+981	Před spuštěním testu výkonu načtěte obrázek.
+982	Nelze načíst obrázek:
+983	Přidat „%s“ do makra?
+984	Soubor „%s“ již existuje.
+985	Přepsat?
+986	Export srovnání
+987	Obrázek: aktuální obrázek (%d x %d)
+988	  Čas testu: %s
+989	  Nejnáročnějším úkolem byl: %s
+990	Azurová + Purpurová
+991	Azurová + Žlutá
+992	Azurová + Černá
+993	Purpurová + Žlutá
+994	Purpurová + Černá
+995	Žlutá + Černá
+996	Azurová + Purpurová + Žlutá
+997	Azurová + Purpurová + Černá
+998	Azurová + Žlutá + Černá
+999	Purpurová + Žlutá + Černá
+1000	Azurová + Purpurová + Žlutá + Černá
+1001	Zelená + Růžová
+1002	Tmavě modrá + Žlutá
+1003	Fialová + Žlutá
+1004	Tyrkysová + Korálová
+1005	Vínová + Mátová
+1006	Tmavě modrá + Růžová
+1007	Zelená + Oranžová
+1008	Fialová + Korálová
+1009	Tyrkysová + Žlutá
+1010	Posunout obrázek
+1011	Mezerník + LMB
+1012	nebo MMB
+1013	Obrázek nebyl uložen.
+1014	Chcete uložit změny před zavřením?
+1015	Žádný kodek pro čtení souboru.
+1016	Nainstalujte příslušné rozšíření obrázků z Microsoft Store.
+1017	V systému není enkodér TIFF.
+1018	Chyba uložení TIFF
+1019	Nepodporovaný formát uložení: %s
+933	Reliéf
+934	Falešný bokeh
+829	Tilt-shift (miniatura)
+830	Kvalita exportu
+792	Výkon
+793	C64 — Pepto / Colodore
+774	Game Boy — DMG / Pocket
+749	NES (Nestopia)
+748	Jazyk
+1020	Rastr CMYK...
+1021	Timelapse...
+1022	Stereogram...
+1023	Odebrat pozadí...
+1024	Velikost buňky (1-32 px):
+1025	Škála bodu [%]:
+1026	Stereogram
+1027	Režim výstupu:
+1028	Autostereogram (SIRDS)
+1029	Anaglyf (brýle červeno-tyrkysové)
+1030	Mezera (px):
+1031	Hloubka (px):
+1032	Náhodný klíč
+1033	3840×2160
+1034	1920×1080
+1035	1280×720
+1036	Abecedně
+1037	Podle data vytvoření
+1041	Uložit do souboru
+1042	Zobrazit jako prezentaci
+1043	V okně
+1044	Na celou obrazovku
+1045	Timelapse
+1046	Snímků za sekundu:
+1047	Podržet první snímek [s]:
+1048	Podržet poslední snímek [s]:
+1049	Neplatnů počet snímků za sekundu
+1050	Nelze inicializovat kódování videa
+1051	Nelze vytvořit výstupní soubor
+1052	Nelze vytvořit video stream
+1053	Nelze inicializovat video enkodér
+1054	Nelze začít zapisovat video
+1055	Nelze zapsat snímek videa
+1056	Nelze uložit video soubor
+1057	Není k dispozici video enkodér (H.264 nebo WMV)
+1058	Název souboru:
+1059	Retuš...
+1060	Retuš
+1061	Vymazat
+1062	Obnovit
+1063	Velikost štětce:
+1064	Odstranit pozadí
+1065	Roh, od kterého odebrat pozadí:
+1066	Tolerance
+1067	Guma
+1068	Černá (PRL)
+1069	Fialová (Západ)
+1070	Tmavě modrá (offset)
+1071	Červená (razítka)
+1072	Samizdat v PLR — bílkovinný cyklostyl, sazovitý inkoust, rozmazaná matrice
+1073	Západní lihový cyklostyl — krystalická violeť, zápach alkoholu
+1074	Matrice offsetového cyklostylu — kancelářská kopie
+1075	Razítka, nadpisy a úřední formuláře
+1076	Západní kanceláře — méně obvyklý inkoust
+1077	Vybledlá, zestárlá kopie
+1078	Opotřebení inkoustu:
+1079	Štětec malování
+1080	Štětec klonování
+1081	Zesvětlení
+1082	Ztmavení
+1083	Štětec jasu
+1084	Štětec ostrosti
+1085	Kbelík
+1086	Kapátko
+1087	Eliptický výběr
+1088	Obdélníkový výběr
+1089	Zobrazení výběru
+1090	Obrys výběru
+1091	Vyplněno
+1092	Ochranná maska
+1093	Zakrýt
+1094	Odkrýt
+1095	Zobrazit ochrannou masku
+1096	Vymazat ochrannou masku
+1097	Chránit výběr
+1098	Zrušit ochranu výběru
+1099	Laso
+1100	Kouzelná hůlka
+1101	Výběr...
+1102	Výběr
+1103	Maska
+1104	Dávkové zpracování
+1105	Zkreslení
+1106	Načíst předvolbu
+1107	Uložit předvolbu
+1108	Barva výplně
+1109	Klepněte na náhled pro nastavení bodu bílé
+1110	Štětec náhrady barvy
+1111	Barva k nahrazení
+1112	Náhradní barva
+1113	Zachovat stíny
+1114	Chránit výběr před efekty
+1115	Odebrat ochranu z výběru
+1116	Zobrazuje chráněné oblasti červeným šikmým překryvem
+1117	Odebrat ochranu ze všech oblastí

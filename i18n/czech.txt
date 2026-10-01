@@ -1,0 +1,844 @@
+Soubor
+Úpravy
+Míchání efektů
+Zobrazení
+Analýza
+Úpravy
+Barvy
+Efekty
+Tisk
+Experimentální
+Zkreslení
+Amiga
+Pomoc
+Otevřít...
+Uložit jako...
+Informace o obrázku
+(žádný)
+Zavřít
+Předvolby...
+Konec
+Zpět
+Znovu
+Kopírovat
+Vložit
+Obnovit originál
+Vymazat historii
+Míchání efektů...
+Míchání (0=A, 100=B):
+Sloučit viditelné
+Smazat vše
+Přiblížit
+Oddálit
+Přizpůsobit oknu
+100%
+50%
+25%
+200%
+400%
+Histogram...
+Vyrovnat histogram...
+Zrcadlit vodorovně
+Zrcadlit svisle
+Otočit doleva
+Otočit doprava
+Otočit 180
+Narovnat sken...
+Kontrast...
+Jas...
+Korekce gama...
+Úrovně...
+Vyvážení bílé...
+Doostřit...
+Živé barvy...
+Vylepšení fotografie...
+Oříznout...
+Změnit velikost...
+Kolorovat...
+HSB vyvážení...
+Solarizace...
+Duotón...
+Sépie...
+Kyanotypie
+Sůl-tisk
+Rentgen
+Falešné barvy IR
+Noční vidění
+Termální
+Orton
+Černobíle...
+Odstíny šedi
+Negativ
+Zrno filmu...
+Olejomalba...
+Uhel...
+Rozmazání...
+Reliéf
+Pixelace...
+Vinětace...
+Posterizace...
+Detekce hran
+Linoryt...
+Rytina...
+Křížové šrafování...
+Půltón...
+Tečkování...
+Kostky...
+Risograf v1...
+Sítotisk...
+Soudkové zkreslení...
+Obloukové zkreslení...
+Víření...
+Vodní vlnění...
+Polární zkreslení...
+Paleta Workbench 1.x (OCS)
+Paleta Workbench 2.x/3.x
+OCS 32barevná paleta...
+EHB 64barevná paleta...
+AGA 256barevná paleta...
+Workbench 256barevná paleta...
+MagicWB paleta (8 barev)...
+O programu
+Otevřít soubor s obrázkem
+Uložit obrázek pod novým názvem
+Zobrazit podrobnosti obrázku
+Zavřít aktuální obrázek
+Nastavení programu
+Ukončit program
+Zpět poslední operaci
+Znovu vrácenou operaci
+Kopírovat obrázek do schránky
+Vložit obrázek ze schránky jako novou vrstvu
+Obnovit původní stav obrázku
+Vymazat historii operací - nevratné
+Míchání dvou efektů posuvníkem
+Čeština
+Português (Portugalština)
+Afrikaans
+Přiblížit zobrazení
+Oddálit zobrazení
+Přizpůsobit obrázek oknu
+Zobrazit v měřítku 1:1
+Zobrazit v měřítku 50%
+Zobrazit v měřítku 25%
+Zobrazit v měřítku 200%
+Zobrazit v měřítku 400%
+Zobrazit barevný histogram
+Vyrovnat histogram - zlepšit kontrast
+Převrátit obrázek vodorovně
+Převrátit obrázek svisle
+Otočit obrázek o 90° doleva
+Otočit obrázek o 90° doprava
+Otočit obrázek o 180°
+Narovnat sken - otočení až +/-10° s auto-oříznutím
+Upravit kontrast
+Upravit jas
+Korekce gama
+Nastavit černý bod, gama a bílý bod - plná tonální kontrola
+Vyvážení bílé - korekce barevné teploty
+Doostřit obrázek
+Živé barvy - syté, zářivé barvy
+Vylepšení fotografie (Násobení)
+Oříznout obrázek
+Změnit velikost obrázku
+Obarvit obrázek vybranou barvou
+Upravit jas, sytost a odstín
+Solarizace - invertovat světlé tóny
+Dvoubarevný efekt - stíny a světla
+Sépie - teplá hnědá monochromie
+Kyanotypie - modrá monochromie
+Sůl-tisk - teplá hnědá
+Rentgen - invertované barvy
+Falešné barvy IR - prohození kanálů, červené rostliny, modrá obloha
+Noční vidění - šedá + zelený fosfor
+Termální - falešné barvy
+Orton - rozmazaná záře, snová nálada
+Převést na ČB s možností ditheringu
+Převést na odstíny šedi
+Invertovat barvy - negativ
+Přidat zrno filmu - náhodný šum
+Olejomalba - simulace štětce
+Uhel - simulace kresby uhlem
+Rozmazat obrázek
+Reliéf
+Pixelace - mozaikový efekt
+Vinětace - ztmavení okrajů
+Posterizace - snížit počet barev
+Detekce hran - efekt skici
+Linoryt - ostrý ČB kontrast
+Rytina - simulace rytiny
+Křížové šrafování pod dvěma úhly
+Půltón - rostoucí body podle jasu
+Tečkování - hustota bodů podle jasu
+Kostky - vzor ok kostek
+Risograf - vrstvený tisk s posunem barev
+Jednobarevný sítotisk - šedá + půltón na pozadí
+Soudkové / poduškové zkreslení
+Obloukové zkreslení - prohnout obrázek
+Víření - zkroutit obrázek
+Vodní vlnění
+Polární zkreslení - tunel, rybí oko
+4barevná paleta - Workbench 1.x (OCS)
+4barevná paleta - Workbench 2.x/3.x
+32barevná paleta (4x4x2) - OCS
+64barevná paleta (4x4x4) - EHB
+256barevná paleta - AGA
+256barevná paleta - Workbench 3.x
+8barevná paleta - MagicWB (MUI)
+Fotografista
+Žádný obrázek
+OK
+Zrušit
+Náhled
+Zobrazit náhled
+Použít a zavřít
+Zavřít bez použití
+O programu
+Fotografický editor
+Build
+Šířka (px):
+Výška (px):
+Použít změnu velikosti
+Zrušit změny
+X (px):
+Y (px):
+Použít oříznutí
+Zrušit oříznutí
+Vybrat barvu
+Barva textu
+Písmo...
+Směr
+Zvýšit
+Snížit
+Dithering
+S ditheringem (lepší kvalita)
+Bez ditheringu
+S ditheringem
+Bez ditheringu
+Povoleno
+Zakázáno
+Intenzita (1-10):
+Jas (0-200, výchozí 100):
+Gama (100 = beze změny):
+Červená (100 = beze změny):
+Zelená (100 = beze změny):
+Modrá (100 = beze změny):
+Intenzita (1-100):
+Intenzita (0-100):
+Poloměr (1-5):
+Intenzita (1-50):
+Velikost buňky (1-100):
+Úhel (0-179°):
+Velikost buňky (4-16 px):
+Max. tloušťka čáry (1-8):
+Velikost buňky (4-64 px):
+Velikost bodu v buňce (3-8 px):
+Práh (1-100):
+Množství inkoustu (světlejší = méně):
+Síla (0-100):
+Sytost (0-100):
+Kontrast (0-100):
+Křivka (1-5):
+Chytré křivky (0-100):
+Černý bod (0-255):
+Bílý bod (0-255):
+Úhel narovnání (-10 až +10°):
+Použít a zavřít
+Zavřít bez použití
+Použít narovnání a zavřít
+Použít změny vrstev a zavřít
+Zavřít bez uložení
+Zobrazit náhled
+Náhled
+OK
+Zrušit
+Barva stínů
+Barva světel
+Barva inkoustu
+Barva papíru
+Název předvolby:
+Načíst
+Smazat
+Zavřít
+Nastavení
+Jas
+Korekce gama
+Doostřit
+Solarizace
+Sépie
+Olejomalba
+Uhel
+Rozmazání
+Reliéf
+Pixelace
+Vinětace
+Detekce hran
+Zrno filmu
+Uložit předvolbu duotónu
+Načíst předvolbu duotónu
+Kontrast
+Oříznutí
+Změna velikosti
+Vyvážení bílé
+Úrovně
+Živé barvy
+Vylepšení fotografie
+Vrstvy
+Narovnat sken
+Kolorovat
+HSB vyvážení
+Černobíle
+Posterizace
+Rytina
+Křížové šrafování
+Půltón
+Tečkování
+Kostky
+Linoryt
+Risograf
+Sítotisk
+OCS 32barevná paleta
+EHB 64barevná paleta
+AGA 256barevná paleta
+Workbench 256barevná paleta
+MagicWB 8barevná paleta
+Soudkové zkreslení
+Obloukové zkreslení
+Víření
+Vodní vlnění
+Polární zkreslení
+Předvolby
+Sytost (0-200, výchozí 100):
+Odstín (0-200, výchozí 100):
+Kontrast (0-10):
+Počet barev (2-64):
+Krytí:
+Režim:
+Vybrat barvu...
+Vyberte typ:
+Vyberte úhel oblouku:
+Vyberte typ:
+Vyberte úhel oblouku:
+Vyberte intenzitu:
+Vyberte variantu:
+Slabý soudek
+Střední soudek
+Silný soudek
+Slabá poduška
+Střední poduška
+Silná poduška
+45°
+90°
+180°
+360°
+90° + otočit
+180° + otočit
+Slabé (45°)
+Střední (90°)
+Silné (180°)
+Velmi silné (270°)
+Plné (360°)
+Obrátit
+Světlé
+Střední
+Silné
+Soustředné
+Z rohu
+Husté
+Plné
+Poloviční úhel
+Čtvrtinový úhel
+Prstenec
+Malý poloměr
+Hladké
+Tunel
+Víření
+Rybí oko
+Vnější roztažení
+Chyba
+Nepodporovaný formát souboru.
+Snímek
+Originál
+Gama (10-500, 100=1,0):
+Přidat vrstvu
+Sloučit vrstvy
+Vyrovnání histogramu
+Kopírovat
+Vložit
+Zpět: 
+Znovu: 
+Živé barvy
+HDR 2
+WB 1.x
+WB 2.x
+OCS 32
+EHB
+AGA 256
+WB 256
+MagicWB
+Převrátit vodorovně
+Převrátit svisle
+Otočit doleva
+Otočit doprava
+Otočit 180
+Narovnat
+Kyanotypie
+Odstíny šedi
+Negativ
+Sůl-tisk
+Rentgen
+Falešné barvy IR
+Noční vidění
+Termální
+Orton
+Reliéf
+Detekce hran
+Duotón
+Kontrast (před převodem)
+Červená
+Zelená
+Modrá
+Jas
+Kontrast
+Odstín
+Sytost
+Gama
+Síla
+Práh
+Úhel
+Velikost buňky
+Tloušťka
+Velikost bodu
+Barvy
+Poloměr
+Neznámé
+Informace
+Není načten žádný obrázek.
+Název:
+Formát:
+Alfa kanál:
+Šířka:
+Výška:
+Velikost:
+Datum:
+Čas:
+Ano
+Ne
+Informace o obrázku
+Náhled
+Vyberte velikost:
+100 px
+200 px
+320 x 240
+640 x 480
+Hotovo
+Náhled uložen.
+Uložit náhled jako
+Kvalita komprese JPEG (0-100):
+Normální
+Násobení
+Obrazovka
+Překrytí
+Měkké světlo
+Tmavší
+Světlejší
+Pozadí (originál)
+Karmínová + Azurová
+Černá + Žlutá
+Modrá + Oranžová
+Karmínová + Azurová + Žlutá
+Černá + Karmínová + Žlutá
+CMYK (4 barvy)
+Vyrovnání histogramu
+Vyberte režim vyrovnání:
+Jas
+Vše
+Zavřít
+Histogram
+Klávesové zkratky
+Makro
+Spustit nahrávání
+Zastavit a uložit
+Zrušit nahrávání
+Spravovat makra...
+Makra
+Spustit
+Smazat
+Uložit makro
+Název makra:
+Makro
+Nahrávání je již aktivní.
+Přidat tento krok do makra?
+Ano|Ne
+Nahrávání není aktivní.
+Žádné kroky k uložení.
+Není načten žádný obrázek.
+kroků
+Nahrávání makra
+HAM6 - 16 barev + Hold-Modify...
+HAM8 - 64 barev + Hold-Modify...
+Simulace HAM6 (16 základních barev s režimy hold-modify)
+Simulace HAM8 (64 základních barev s režimy hold-modify)
+HAM6
+HAM8
+Oříznout na výběr
+Velikost výběru...
+Uložit ikonu...
+Velikost ikony:
+Formát ikony:
+Ikona uložena.
+Živé barvy
+Varování: tento efekt je velmi náročný. U obrázků nad 6 MP může zpracování trvat 30-60 sekund.
+Pokračovat
+Záře...
+Poloměr záře:
+Amiga přechod...
+Překrytí přechodem ve stylu Amiga copper
+Amiga přechod (Agony)...
+Přechod ve stylu Agony copper
+Uložit jako ikonu Windows...
+Intenzita (0-100):
+Kvalita JPEG 2000 (0-100, 100=bezeztrátové):
+Nesprávné vyvolání...
+Nesprávné vyvolání — simulace E-6/C-41
+Uložit balíček ikon (ZIP)...
+Přejmenovat
+Jazyk...
+Nastavení
+Kvalita exportu...
+Balíček ikon
+Není vybrána velikost.
+Balíček ikon uložen do:
+Komprese TIFF:
+Formát ikony:
+Vyberte platformu:
+Vyberte formát:
+Vyberte velikost:
+Uložit ikonu...
+Ikona uložena.
+Vyberte formát:
+Resetovat
+Resetovat
+Uložit aktuální obrázek jako ikonu
+Uložit ikony ve více velikostech jako ZIP archiv
+Spustit nahrávání makra
+Zastavit nahrávání a uložit makro
+Zrušit nahrávání bez uložení
+Spustit, přejmenovat nebo smazat makra
+Změnit jazyk aplikace
+Nastavit kvalitu exportu JPEG, JPEG 2000 a TIFF
+O programu Fotografista
+Zobrazit klávesové zkratky
+Rozhraní...
+Nastavení rozhraní
+Rozhraní
+Barva pozadí plátna:
+Výběr: %d × %d
+Otevřít obrázek
+Všechny soubory
+Schránka
+Vloženo
+LZW
+Flate
+JPEG
+Nový název:
+Jazyk / Language
+Polski (Polština)
+English (Angličtina)
+Velikost výběru
+Šířka (px):
+Výška (px):
+OK
+Zrušit
+Výběr: %d × %d
+Mapovat na OCS 32barevnou paletu s ditheringem
+Mapovat na EHB 64barevnou paletu s ditheringem
+Mapovat na AGA 256barevnou paletu s ditheringem
+Mapovat na Workbench 256barevnou paletu s ditheringem
+Mapovat na MagicWB 8barevnou paletu s ditheringem
+Horní odstín (0-360):
+Dolní odstín (0-360):
+Počet pásem (32-256):
+E-6 v C-41
+C-41 v E-6
+Kodak ve vývojce Fuji
+Fuji ve vývojce Kodak
+ECN-2 v C-41
+Makro
+Velikost písma (stavový řádek):
+Klasický AmigaOS (4 barvy)
+Dlaždice
+Rozložit obrázek na dlaždice pro vyplnění cílových rozměrů
+Amiga pozadí
+Cílové rozlišení:
+Zarovnání obrázku:
+Barva pozadí (paleta MagicWB):
+Šedá
+Černá
+Bílá
+Modrá
+Tmavě šedá
+Světle šedá
+Hnědá
+Lososová
+Amiga pozadí (roztažené, MagicWB)
+Přizpůsobit obrázek amigovskému rozlišení s roztažením okrajů
+Vlastní barva...
+Exportovat...
+Importovat...
+Exportovat makro
+Makro úspěšně exportováno.
+Importovat makro
+Neplatný soubor makra.
+Makro s tímto názvem již existuje. Přepsat?
+Makro úspěšně importováno.
+Zapamatovat velikost a pozici okna
+Počet nedávných souborů:
+Ukončit bez uložení změn
+Reliéf
+Materiálový basreliéf z jasu obrázku
+Hloubka (1-100):
+Sádra / bílý kámen
+Bílý mramor
+Šedý kámen
+Bronz / medaile
+Pískovec
+Měřítko (%):
+Zachovat poměr stran
+Intenzita (0-100):
+Emergo
+Français (Francouzština) 
+Español (Španělština)
+Italiano (Italština)
+Deutsch (Německý)
+Upravit makro
+Odebrat krok
+Ruční
+Automatické
+Operace dokončena.
+Hotovo.
+Výsledek je připraven.
+Můžete se vrátit k počítači.
+Vaše káva pravděpodobně vychladla.
+Gratulujeme. CPU přežil.
+Myslel jsem, že to nikdy neskončí.
+Haleluja! Konečně.
+Fungovalo to. Vše je připraveno.
+Konec čekání.
+Děkujeme za trpělivost.
+Emergo -- inteligentní obnova detailů stínů
+Náhled 100%
+Simulace HAM
+Tento efekt je extrémně náročný.\nU obrázků nad 2 MP může zpracování trvat několik minut.
+Falešný bokeh...
+Tilt-shift (miniatura)...
+Plynulé rozmazání
+Síla:
+Tvar:
+Radiální (bokeh)
+Lineární (tilt-shift)
+CMYK neregistrace...
+CMYK neregistrace
+Síla posunu:
+Tritón...
+Tritón
+Kvadrón...
+Kvadrón
+Barva 1 (stíny):
+Barva 2 (střední tóny):
+Barva 3 (světla):
+Barva 4 (extrémní světla):
+Chromatická aberace...
+Chromatická aberace
+Posun:
+Střed X:
+Střed Y:
+Poloměr:
+Útlum:
+Pozice pásma:
+Výška pásma:
+Ostatní retro počítače
+C64 — Pepto / Colodore
+Paleta Commodore 64 — Pepto nebo Colodore
+Commodore 64
+Mapovat na paletu Commodore 64 s ditheringem
+Pepto
+Colodore
+ZX Spectrum
+Paleta ZX Spectrum
+ZX Spectrum
+Mapovat na paletu ZX Spectrum s ditheringem
+Game Boy — DMG / Pocket
+Paleta Game Boy — DMG (zelená) nebo Pocket (šedá)
+Game Boy
+Mapovat na paletu Game Boy s ditheringem
+DMG (zelená)
+Pocket (šedá)
+NES (Nestopia)
+Paleta NES (Nestopia)
+NES — Nestopia
+Mapovat na paletu NES Nestopia s ditheringem
+Vzor (retro)
+Floyd–Steinberg (hladký)
+Vybraný režim je velmi pomalý pro velké obrázky.\nU obrázků nad 2 MP může náhled a aplikace efektu trvat několik minut.\nJiné režimy jsou mnohem rychlejší.
+Výkon
+Maximální pracovní rozlišení:
+Originál
+Obrázek
+Obrácený tunel
+30° výseč
+Full HD (1920×1080)
+4K (3840×2160)
+Výkon a maximální pracovní rozlišení
+SVGA (800×600)
+Azurová
+Purpurová
+Žlutá
+Černá
+Modrá
+Oranžová
+Zelená
+Růžová
+Tmavě modrá
+Fialová
+Tyrkysová
+Korálová
+Vínová
+Mátová
+Risograf v2...
+Risograph V3...
+Počet vrstev:
+Vrstva 1...
+Vrstva 2...
+Vrstva 3...
+Vrstva 4...
+Vrstva 5...
+Výběr
+Příprava na sítotisk (trička)...
+Návrh trička...
+Počet barev:
+2. Mapování barev na inkoust
+3. Vyčištění detailů
+Min. plocha (px):
+Příprava na sítotisk (trička)...
+Výběr inkoustu
+Inkoust:
+Simulace rastru sítotisku
+Výroba triček
+1. Posterizace
+Odstranění ostrůvků:
+Návrh trička
+Plynulé škálování náhledu
+Měření výkonu...
+Tento test změří rychlost 12 efektů zpracování obrazu.\nDoba trvání: od několika sekund do několika minut -\nzávisí na rozlišení obrazu a výkonu procesoru.
+Test výkonu
+Příprava obrazu...
+Obrázek: %s (%d×%d)
+%s: %,2f ms (průměr %d)
+Čas: %d min %d s
+(přerušeno)
+Nejtěžší: %s (%.2f ms).
+Výsledky výkonu
+Úrovně
+Živé barvy
+Barevné barvy
+Křížový proces
+Basreliéf
+Orton
+Polotón
+Sítotisk
+Risografie v2
+HAM8 (64 barev)
+HAM6 (16 barev)
+Záře
+Měření výkonu grafických efektů
+Zpracování
+Poloměr štětce (1-30):
+Závada...
+Digitální zkreslení obrazu — posun RGB, šum, horizontální posun řezu
+Posun RGB:
+Chvění řádků:
+Šum:
+Efekt CRT:
+Ztráta bloků:
+Horizontální posun řezu:
+Ztmaví každý druhý řádek při poměru PAL — vyšší hodnota = tmavší mezery
+Online dokumentace...
+Otevřete webové stránky Fotografista ve webovém prohlížeči
+Rastříkovače...
+Rastříkovače — černé okraje na bílém pozadí
+Rastříkovače
+Zrnitost:
+Citlivost okrajů:
+Intenzita toneru:
+Rastříkovače
+Exportovat PDF...
+Exportovat obrázek do souboru PDF
+Exportovat PDF
+Hotovo.
+PDF úspěšně uloženo.
+Chyba při ukládání PDF.
+Exportovat porovnání...
+Exportovat porovnání obrázků — vedle sebe s originálem
+Porovnání
+Žádný soubor k porovnání — obrázek nebyl otevřen ze souboru.
+Porovnání úspěšně uloženo.
+Chyba při ukládání porovnání.
+Aktuální obrázek
+Přizpůsobit velikosti s oříznutím...
+Přizpůsobit obrázek cílové velikosti, oříznout přebytečný obsah
+Full HD 1920×1080
+Přizpůsobit velikosti s oříznutím
+Šířka (px):
+Výška (px):
+Ukotvení:
+Vlevo nahoře
+Vpravo nahoře
+Vlevo dole
+Vpravo dole
+Použít změnu velikosti s oříznutím
+Zrušit změnu velikosti s oříznutím
+Obrázek nebyl načten ze souboru.\nPřizpůsobení velikosti s oříznutím použije aktuální obrázek\nkterý může mít nižší rozlišení kvůli nastavení výkonu.
+Nástroje
+Spouštěč
+Barevná hloubka
+Načítací modul
+Spouštěč rychlých akcí
+Program zaregistrován
+Zadejte licenční klíč
+Zadejte e‑mail použitý při nákupu:
+Zadejte licenční klíč:
+Úspěch
+Licenční klíč byl aktivován.
+Chyba
+Neplatný klíč nebo e‑mail!
+Zkušební verze vypršela
+Zkušební verze Fotografista vypršela po 7 dnech.
+Pro pokračování zadejte licenční klíč:
+Zavřít program
+Zadejte svou e‑mailovou adresu.
+Zadejte svůj licenční klíč.
+Dávkové zpracování
+Použít uložené makro na všechny obrázky ve složce
+Zdrojová složka:
+Výstupní složka:
+Makro:
+Procházet…
+Start
+Zpracovává se…
+Zrušit
+Hotovo
+Vyberte zdrojovou složku
+Vyberte výstupní složku
+Žádná uložená makra.
+Dávkové zpracování již běží.
+Složka je prázdná.
+Ve zdrojové složce nebyly nalezeny žádné obrázky.
+Vyplňte všechna pole.
+Zpracováno
+chyb
+Makro obsahuje krok změny velikosti. Kombinace s dávkovým škálováním může vést k neočekávaným výsledkům.
+Škálovat na dlouhou hranu
+px:
+Makro nespouštět
+Koupit licenci

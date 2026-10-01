@@ -1,0 +1,118 @@
+# .gitattributes - Fotografista
+#
+# Cel: swiezy clone == dokladnie ten working tree (bit-identycznosc).
+# * text=auto = parasol: pliki bez reguly -> auto-detekcja (NUL=binary),
+#   wiec nie doznaja zniszczen EOL. Reguly nizej nadpisuja parasol.
+
+# ===== VENDOR: biblioteki trzecie nie licza sie do statystyk jezyka repo =====
+/Lib/**            linguist-vendored
+/Styles/**         linguist-vendored
+
+# ===== EOL / binaria =====
+* text=auto
+*.bmp   -text
+*.bw   -text
+*.chm   -text
+*.crv   -text
+*.cut   -text
+*.dat   -text
+*.dcr   -text
+*.dib   -text
+*.eps   -text
+*.fpx   -text
+*.g3   -text
+*.ged   -text
+*.gif   -text
+*.ico   -text
+*.iff   -text
+*.img   -text
+*.jpg   -text
+*.lbm   -text
+*.mac   -text
+*.msk   -text
+*.obj   -text
+*.pal   -text
+*.pbm   -text
+*.pcd   -text
+*.pct   -text
+*.pcx   -text
+*.pdd   -text
+*.pdf   -text
+*.pfr   -text
+*.pgm   -text
+*.png   -text
+*.ppm   -text
+*.psd   -text
+*.psp   -text
+*.ras   -text
+*.res   -text
+*.rgb   -text
+*.rgba   -text
+*.rle   -text
+*.sgi   -text
+*.tga   -text
+*.tif   -text
+*.tiff   -text
+*.tub   -text
+*.vsf   -text
+*.xcf   -text
+*.1   text eol=crlf
+*.bpr   text eol=crlf
+*.cbproj   text eol=crlf
+*.cpp   text eol=crlf
+*.css   text eol=crlf
+*.dfm   text eol=crlf
+*.dpk   text eol=crlf
+*.dpr   text eol=crlf
+*.dproj   text eol=crlf
+*.gitattributes   text eol=crlf
+*.groupproj   text eol=crlf
+*.htm   text eol=crlf
+*.html   text eol=crlf
+*.inc   text eol=crlf
+*.ini   text eol=crlf
+*.js   text eol=crlf
+*.json   text eol=crlf
+*.lfm   text eol=crlf
+*.lpg   text eol=crlf
+*.lpi   text eol=crlf
+*.lpk   text eol=crlf
+*.lpr   text eol=crlf
+*.pas   text eol=crlf
+*.rc   text eol=crlf
+*.Style   text eol=crlf
+*.style   text eol=crlf
+*.svg   text eol=crlf
+*.tgitconfig   text eol=crlf
+*.tsv   text eol=crlf
+*.txt   text eol=crlf
+*.xml   text eol=crlf
+*LICENSE*   text eol=crlf
+*.bat   text eol=lf
+*.c   text eol=lf
+*.cmd   text eol=lf
+*.h   text eol=lf
+*.md   text eol=lf
+*.ps1   text eol=lf
+*.sh   text eol=lf
+*.xbm   text eol=lf
+.gitignore  text eol=lf
+"/Lib/GraphicEx-master/3rd party/AutoResourceStr/AutoResourceStr.pas"   text eol=lf
+"/Lib/GraphicEx-master/3rd party/AutoResourceStr/variantWrapper.pas"   text eol=lf
+"/Lib/GraphicEx-master/3rd party/DelphiZlib/ZLibEx.inc"   text eol=lf
+"/Lib/GraphicEx-master/3rd party/DelphiZlib/ZLibEx.pas"   text eol=lf
+"/Lib/GraphicEx-master/3rd party/DelphiZlib/ZLibExApi.pas"   text eol=lf
+"/Lib/GraphicEx-master/3rd party/DelphiZlib/ZLibExGZ.pas"   text eol=lf
+"/Lib/GraphicEx-master/3rd party/DelphiZlib/readme.txt"   text eol=lf
+"/Lib/GraphicEx-master/For older (non-unicode) versions of Delphi.txt"   text eol=lf
+"/Lib/GraphicEx-master/TestSuite original/TIFF/Official test images/README.txt"   text eol=lf
+"/Lib/Graphics32/Examples/General/Bitmap32 to PSD layers/PSD_bitmap_export.dproj"   text eol=lf
+"/Lib/Graphics32/Examples/General/Color Picker/ColorPicker.dproj"   text eol=lf
+"/Lib/Graphics32/Examples/General/Image32 background/Image32Background.dproj"   text eol=lf
+"/Lib/Graphics32/Examples/General/Optimized repaint/OptimizedRepaint.dproj"   text eol=lf
+"/Lib/Graphics32/Examples/General/PNG Image32/PNG_GR32_Demo.dproj"   text eol=lf
+"/Lib/Graphics32/Examples/General/Pan & Zoom/PanAndZoom.dproj"   text eol=lf
+"/Lib/Graphics32/Tests/Bitmap Test/BitmapTest.dproj"   text eol=lf
+"/Lib/Graphics32/Tests/Color Space Test/ColorSpaceTest.dproj"   text eol=lf
+"/Lib/Graphics32/Tests/LowLevel Test/LowLevelTest.dproj"   text eol=lf
+"/Lib/Graphics32/Tests/PNG Test/GuiPngTest.dproj"   text eol=lf

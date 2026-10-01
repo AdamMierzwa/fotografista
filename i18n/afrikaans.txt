@@ -1,0 +1,844 @@
+Lêer
+Wysig
+Effekmengsel
+Bekyk
+Ontleed
+Pas aan
+Kleure
+Effekte
+Druk
+Eksperimenteel
+Verdistortings
+Amiga
+Hulp
+Maak oop...
+Stoor as...
+Beeldinligting
+(Geen)
+Sluit
+Voorkeure...
+Verlaat
+Ontdoen
+Herdoen
+Kopieer
+Plak
+Herstel oorspronklike
+Vee geskiedenis uit
+Effekmengsel...
+Mengsel (0=A, 100=B):
+Voeg sigbare lae saam
+Verwyder alles
+Zoem in
+Zoem uit
+Pas by venster
+100%
+50%
+25%
+200%
+400%
+Histogram...
+Egaliseer histogram...
+Spieël horisontaal
+Spieël vertikaal
+Draai links
+Draai regs
+Draai 180°
+Maak skandering reguit...
+Kontras...
+Helderheid...
+Gamma-korreksie...
+Vlakke...
+Witbalans...
+Verskerp...
+Lewendigheid...
+Fotoverbetering...
+Sny uit...
+Verander grootte...
+Kleur in...
+HSB-balans...
+Solariseer...
+Duotoon...
+Sepia...
+Sianotipe
+Soutdruk
+X-strale
+Valskleur-infrarooi
+Nagvisie
+Termies
+Orton
+Swart en wit...
+Grysskaal
+Negatief
+Filmkorrel...
+Olieverf...
+Houtskool...
+Vervaag...
+Reliëf
+Pikseleer...
+Vignet...
+Posteriseer...
+Randopsporing
+Linosnee...
+Gravering...
+Kruisarsering...
+Halftoon...
+Stippeling...
+Dobbelstene...
+Risografie v1...
+Sifdruk...
+Vatvervorming...
+Boogvervorming...
+Draaikolk...
+Waterrimpeling...
+Polêre vervorming...
+Workbench 1.x-palet (OCS)
+Workbench 2.x/3.x-palet
+OCS 32-kleurpalet...
+EHB 64-kleurpalet...
+AGA 256-kleurpalet...
+Workbench 256-kleurpalet...
+MagicWB-palet (8 kleure)...
+Aangaande
+Maak 'n beeldlêer oop
+Stoor die beeld onder 'n nuwe naam
+Wys beeldinligting
+Sluit die huidige beeld
+Programinstellings
+Verlaat die program
+Ontdoen die laaste bewerking
+Herdoen die ontdane bewerking
+Kopieer die beeld na die knipbord
+Plak die beeld vanaf die knipbord as 'n nuwe laag
+Herstel die beeld na sy oorspronklike toestand
+Vee die bewerkingsgeskiedenis uit - onomkeerbaar
+Meng twee effekte met 'n skuifbalk
+Čeština (Tsjeggies)
+Português (Portugees)
+Afrikaans
+Zoem in op die beeld
+Zoem uit op die beeld
+Pas die beeld by die venster
+Wys teen 1:1-skaal
+Wys teen 50%-skaal
+Wys teen 25%-skaal
+Wys teen 200%-skaal
+Wys teen 400%-skaal
+Wys kleurhistogram
+Egaliseer histogram - verbeter kontras
+Spieël die beeld horisontaal
+Spieël die beeld vertikaal
+Draai die beeld 90 grade links
+Draai die beeld 90 grade regs
+Draai die beeld 180 grade
+Maak skandering reguit - draai tot +/- 10 grade met outomatiese uitsny
+Pas kontras aan
+Pas helderheid aan
+Gamma-korreksie
+Stel swartpunt, gamma en witpunt in - volledige toonbeheer
+Witbalans - kleurtemperatuurkorreksie
+Verskerp die beeld
+Lewendigheid - versadigde, lewendige kleure
+Fotoverbetering (Vermenigvuldig)
+Sny die beeld uit
+Verander die grootte van die beeld
+Kleur die beeld met die gekose kleur in
+Pas helderheid, versadiging en tint aan
+Solariseer - keer ligte kleure om
+Tweekleur-effek - skaduwees en hoogtepunte
+Sepia - warm bruin monochroom
+Sianotipe - blou monochroom
+Soutdruk - warm bruin
+X-strale - omgekeerde kleure
+Valskleur-infrarooi - kanaalomruiling, rooi plante, blou lug
+Nagvisie - grysskaal + groen fosfor
+Termies - valskleur-aansig
+Orton - sagte gloed, droomagtige atmosfeer
+Skakel na swart en wit om met halftoon-opsie
+Skakel na grysskaal om
+Keer kleure om - negatief
+Voeg filmkorrel by - ewekansige geraas
+Olieverf - kwassimulasie
+Houtskool - houtskooltekensimulasie
+Vervaag die beeld
+Reliëf
+Pikseleer - mosaïekeffek
+Vignet - verdonker die rande
+Posteriseer - verminder die aantal kleure
+Randopsporing - sketseffek
+Linosnee - sterk swart-en-wit-kontras
+Gravering - simulasie van lyngravering
+Kruisarsering teen twee hoeke
+Halftoon - groeiende kolletjies volgens helderheid
+Stippeling - puntdigtheid volgens helderheid
+Dobbelstene - dobbelsteenpatroon
+Risografie - gelaagde drukwerk met kleurverskuiwing
+Enkelkleur-sifdruk - grysskaal + halftoon op agtergrond
+Vat- / kussingvervorming
+Boogvervorming - buig die beeld
+Draaikolk - draai die beeld
+Waterrimpel-effek
+Polêre vervorming - tonnel, visoog
+4-kleurpalet - Workbench 1.x (OCS)
+4-kleurpalet - Workbench 2.x/3.x
+32-kleurpalet (4x4x2) - OCS
+64-kleurpalet (4x4x4) - EHB
+256-kleurpalet - AGA
+256-kleurpalet - Workbench 3.x
+8-kleurpalet - MagicWB (MUI)
+Fotografista
+Geen beeld
+OK
+Kanselleer
+Voorskou
+Wys voorskou
+Pas toe en sluit
+Sluit sonder om toe te pas
+Aangaande
+Fotoredigeerder
+Bou
+Breedte (px):
+Hoogte (px):
+Pas grootte aan
+Kanselleer veranderinge
+X (px):
+Y (px):
+Pas knip toe
+Kanselleer knip
+Kies kleur
+Tekskleur
+Lettertipe...
+Rigting
+Vergroot
+Verklein
+Dither
+Met dither (beste gehalte)
+Sonder dither
+Met dither
+Sonder dither
+Aangeskakel
+Afgeskakel
+Intensiteit (1-10):
+Helderheid (0-200, standaard 100):
+Gamma (100 = geen verandering):
+Rooi (100 = geen verandering):
+Groen (100 = geen verandering):
+Blou (100 = geen verandering):
+Intensiteit (1-100):
+Intensiteit (0-100):
+Radius (1-5):
+Intensiteit (1-50):
+Selgrootte (1-100):
+Hoek (0-179°):
+Selgrootte (4-16 px):
+Maksimum lyndikte (1-8):
+Selgrootte (4-64 px):
+Subsel-puntgrootte (3-8 px):
+Drempel (1-100):
+Inkhoeveelheid (ligter = minder):
+Intensiteit (0-100):
+Versadiging (0-100):
+Kontras (0-100):
+Kurwe (1-5):
+Slim kurwes (0-100):
+Swartpunt (0-255):
+Witpunt (0-255):
+Reguitmaakhoek (-10 tot +10°):
+Pas toe en sluit
+Sluit sonder om toe te pas
+Pas reguitmaak toe en sluit
+Pas laagveranderinge toe en sluit
+Sluit sonder om te stoor
+Wys voorskou
+Voorskou
+OK
+Kanselleer
+Skadukleur
+Hoogtepuntkleur
+Inkkleur
+Papierkleur
+Voorinstellingsnaam:
+Laai
+Vee uit
+Sluit
+Instelling
+Helderheid
+Gamma-korreksie
+Verskerp
+Solariseer
+Sepia
+Olieverf
+Houtskool
+Vervaag
+Reliëf
+Pikseleer
+Vignet
+Randopsporing
+Filmkorrel
+Stoor duotoon-voorinstelling
+Laai duotoon-voorinstelling
+Kontras
+Knip
+Verander grootte
+Witbalans
+Vlakke
+Lewendigheid
+Fotoverbetering
+Lae
+Reguit maak
+Kleur in
+HSB-balans
+Swart en wit
+Posteriseer
+Gravering
+Kruisarsering
+Halftoon
+Stippeling
+Dobbelstene
+Linosnee
+Risografie
+Sifdruk
+OCS 32-kleurpalet
+EHB 64-kleurpalet
+AGA 256-kleurpalet
+Workbench 256-kleurpalet
+MagicWB 8-kleurpalet
+Vatvervorming
+Boogvervorming
+Draaikolk
+Waterrimpeling
+Polêre vervorming
+Voorkeure
+Versadiging (0-200, standaard 100):
+Tint (0-200, standaard 100):
+Kontras (0-10):
+Aantal kleure (2-64):
+Ondeursigtigheid:
+Modus:
+Kies kleur...
+Kies tipe:
+Kies booghoek:
+Kies tipe:
+Kies booghoek:
+Kies intensiteit:
+Kies variant:
+Ligte vatvervorming
+Medium vatvervorming
+Sterk vatvervorming
+Ligte kussingvervorming
+Medium kussingvervorming
+Sterk kussingvervorming
+45°
+90°
+180°
+360°
+90° + draai
+180° + draai
+Lig (45°)
+Medium (90°)
+Sterk (180°)
+Baie sterk (270°)
+Volledig (360°)
+Omgekeer
+Lig
+Medium
+Sterk
+Konsentries
+Vanaf hoek
+Dig
+Volledig
+Halwe hoek
+Kwarthoek
+Ring
+Klein radius
+Glad
+Tonnel
+Draaikolk
+Visoog
+Buite-uitrekking
+Fout
+Lêerformaat word nie ondersteun nie.
+Kiekie
+Oorspronklik
+Gamma (10-500, 100 = 1,0):
+Voeg laag by
+Voeg lae saam
+Histogram-egalisering
+Kopieer
+Plak
+Ontdoen:
+Herdoen:
+Lewendigheid
+HDR 2
+WB 1.x
+WB 2.x
+OCS 32
+EHB
+AGA 256
+WB 256
+MagicWB
+Spieël horisontaal
+Spieël vertikaal
+Draai links
+Draai regs
+Draai 180°
+Reguit maak
+Sianotipe
+Grysskaal
+Negatief
+Soutdruk
+X-strale
+Valskleur-infrarooi
+Nagvisie
+Termies
+Orton
+Reliëf
+Randopsporing
+Duotoon
+Kontras (voor omskakeling)
+Rooi
+Groen
+Blou
+Helderheid
+Kontras
+Tint
+Versadiging
+Gamma
+Sterkte
+Drempel
+Hoek
+Selgrootte
+Dikte
+Kolgrootte
+Kleure
+Radius
+Onbekend
+Inligting
+Geen beeld gelaai nie.
+Naam:
+Formaat:
+Alfa-kanaal:
+Breedte:
+Hoogte:
+Grootte:
+Datum:
+Tyd:
+Ja
+Nee
+Beeldinligting
+Kleinkiekie
+Kies grootte:
+100 px
+200 px
+320 x 240
+640 x 480
+Klaar
+Kleinkiekie gestoor.
+Stoor kleinkiekie as
+JPEG-kompressiegehalte (0-100):
+Normaal
+Vermenigvuldig
+Skerm
+Oorleg
+Sagte Lig
+Donkerder
+Ligter
+Agtergrond (oorspronklik)
+Karmosyn + Siaan
+Swart + Geel
+Blou + Oranje
+Karmosyn + Siaan + Geel
+Swart + Karmosyn + Geel
+CMYK (4 kleure)
+Histogram-egalisering
+Kies egalisasiemodus:
+Luminessensie
+Alles
+Sluit
+Histogram
+Sleutelbordkortpaaie
+Makro
+Begin opname
+Stop en stoor
+Kanselleer opname
+Bestuur makro's...
+Makro's
+Speel
+Vee uit
+Stoor makro
+Makronaam:
+Makro
+Opname is reeds aktief.
+Voeg hierdie stap by makro?
+Ja|Nee
+Opname is nie aktief nie.
+Geen stappe om te stoor nie.
+Geen beeld gelaai nie.
+stappe
+Makro-opname
+HAM6 - 16 kleure + Hou-Wysig...
+HAM8 - 64 kleure + Hou-Wysig...
+HAM6-simulasie (16 basiskleure met hou-wysig-modusse)
+HAM8-simulasie (64 basiskleure met hou-wysig-modusse)
+HAM6
+HAM8
+Knip na seleksie
+Seleksiegrootte...
+Stoor ikoon...
+Ikoongrootte:
+Ikoonformaat:
+Ikoon gestoor.
+Lewendig
+Waarskuwing: hierdie effek is baie veeleisend. Vir beelde bo 6 MP kan verwerking 30-60 sekondes neem.
+Gaan voort
+Gloed...
+Gloedradius:
+Amiga-gradiënt...
+Amiga-styl koper gradiënt oorleg
+Amiga-gradiënt (Agony)...
+Agony-styl koper gradiënt
+Stoor as Windows-ikoon...
+Intensiteit (0-100):
+JPEG 2000-gehalte (0-100, 100=verliesloos):
+Verkeerde ontwikkeling...
+Verkeerde ontwikkeling - E-6/C-41-simulasie
+Stoor ikoonpakket (ZIP)...
+Hernoem
+Taal...
+Instellings
+Uitvoergehalte...
+Ikoonpakket
+Geen grootte gekies nie.
+Ikoonpakket gestoor na:
+TIFF-kompressie:
+Ikoonformaat:
+Kies platform:
+Kies formaat:
+Kies grootte:
+Stoor ikoon...
+Ikoon gestoor.
+Kies formaat:
+Stel terug
+Stel terug
+Stoor huidige beeld as 'n ikoon
+Stoor ikone in verskeie groottes as 'n ZIP-argief
+Begin opname van makro
+Stop opname en stoor die makro
+Kanselleer opname sonder om te stoor
+Speel, hernoem of vee makro's uit
+Verander programtaal
+Stel JPEG-, JPEG 2000- en TIFF-uitvoergehalte
+Oor Fotografista
+Wys sleutelbordkortpaaie
+Koppelvlak...
+Koppelvlakinstellings
+Koppelvlak
+Doek agtergrondkleur:
+Seleksie: %d x %d
+Maak beeld oop
+Alle lêers
+Knipbord
+Geplak
+LZW
+Flate
+JPEG
+Nuwe naam:
+Taal / Language
+Polski (Pools)
+English (Engels)
+Seleksiegrootte
+Breedte (px):
+Hoogte (px):
+OK
+Kanselleer
+Seleksie: %d x %d
+Karteer na OCS 32-kleure-palet met dither
+Karteer na EHB 64-kleure-palet met dither
+Karteer na AGA 256-kleure-palet met dither
+Karteer na Workbench 256-kleure-palet met dither
+Karteer na MagicWB 8-kleure-palet met dither
+Tint bo (0-360):
+Tint onder (0-360):
+Aantal bande (32-256):
+E-6 in C-41
+C-41 in E-6
+Kodak in Fuji-ontwikkelaar
+Fuji in Kodak-ontwikkelaar
+ECN-2 in C-41
+Makro
+Fontgrootte (statusbalk):
+Klassieke AmigaOS (4 kleure)
+Teëling
+Teël beeld om teikendimensies te vul
+Amiga-agtergrond
+Teikenresolusie:
+Beeldbelyning:
+Agtergrondkleur (MagicWB-palet):
+Grys
+Swart
+Wit
+Blou
+Donkergrys
+Liggrys
+Bruin
+Salm
+Amiga-agtergrond (uitgerek, MagicWB)
+Skaal beeld na Amiga-resolusie met uitgerekte randvulling
+Aangepaste kleur...
+Voer uit...
+Voer in...
+Voer makro uit
+Makro suksesvol uitgevoer.
+Voer makro in
+Ongeldige makrolêer.
+'n Makro met hierdie naam bestaan reeds. Oorskryf?
+Makro suksesvol ingevoer.
+Onthou venstergrootte en posisie
+Aantal onlangse lêers:
+Sluit sonder om veranderinge te stoor
+Reliëf
+Materiaal-basreliëf van beeldluminessensie
+Diepte (1-100):
+Pleister / wit klip
+Wit marmer
+Grys klip
+Brons / medalje
+Sandklip
+Skaal (%):
+Hou aspekverhouding
+Intensiteit (0-100):
+Emergo
+Français (Frans)
+Español (Spaans)
+Italiano (Italiaans)
+Deutsch (Duits)
+Wysig makro
+Verwyder stap
+Handmatig
+Outomaties
+Bewerking voltooi.
+Klaar.
+Die resultaat is gereed.
+U kan na u rekenaar terugkeer.
+U koffie het waarskynlik koud geword.
+Geluk. Die SVE het oorleef.
+Ek het gedink dit sou nooit eindig nie.
+Halleluja! Uiteindelik.
+Dit het gewerk. Alles is gereed.
+Einde van wag.
+Dankie vir u geduld.
+Emergo - intelligente herstel van skadubesonderhede
+Voorskou 100%
+HAM-simulasie
+Hierdie effek is uiters veeleisend.\nVir beelde groter as 2 MP kan verwerking etlike minute duur.
+Vals bokeh...
+Kantel-skuif (miniatuur)...
+Gegradueerde vervaging
+Sterkte:
+Vorm:
+Radiaal (bokeh)
+Lineêr (kantel-skuif)
+CMYK-misregistrasie...
+CMYK-misregistrasie
+Verskuiwingssterkte:
+Driekleur...
+Driekleur
+Vierkleur...
+Vierkleur
+Kleur 1 (skaduwees):
+Kleur 2 (middeltone):
+Kleur 3 (hoogtepunte):
+Kleur 4 (uiterste hoogtepunte):
+Chromatiese aberrasie...
+Chromatiese aberrasie
+Verskuiwing:
+Sentrum X:
+Sentrum Y:
+Radius:
+Verval:
+Bandposisie:
+Bandhoogte:
+Ander retro-rekenaars
+C64 — Pepto / Colodore
+Commodore 64-palet — Pepto of Colodore
+Commodore 64
+Karteer na Commodore 64-palet met dither
+Pepto
+Colodore
+ZX Spectrum
+ZX Spectrum-palet
+ZX Spectrum
+Karteer na ZX Spectrum-palet met dither
+Game Boy — DMG / Pocket
+Game Boy-palet — DMG (groen) of Pocket (grys)
+Game Boy
+Karteer na Game Boy-palet met dither
+DMG (groen)
+Pocket (grys)
+NES (Nestopia)
+NES-palet (Nestopia)
+NES — Nestopia
+Karteer na NES Nestopia-palet met dither
+Patroon (retro)
+Floyd–Steinberg (glad)
+Die geselekteerde modus is baie stadig vir groot beelde.\nVir beelde groter as 2 MP kan voorskou en toepassing van die effek etlike minute duur.\nAnder modusse is baie vinniger.
+Werkverrigting
+Maksimum werkresolusie:
+Oorspronklike
+Beeld
+Omgekeerde tonnel
+30°-segment
+Volle HD (1920×1080)
+4K (3840×2160)
+Werkingsverrigting en maksimum werkresolusie
+SVGA (800×600)
+Siaan
+Magenta
+Geel
+Swart
+Blou
+Oranje
+Groen
+Pienk
+Vlootblou
+Pers
+Turkoois
+Koraal
+Bourgondië
+Munt
+Risografie v2...
+Risograph V3...
+Aantal lae:
+Laag 1...
+Laag 2...
+Laag 3...
+Laag 4...
+Laag 5...
+Kies
+Berei voor vir skermdruk (t-hemde)...
+T-hempontwerp...
+Aantal kleure:
+2. Kleur-na-ink-kartering
+3. Detail-opruiming
+Min. area (px):
+Berei voor vir skermdruk (t-hemde)...
+Kies ink
+Ink:
+Simuleer skermdrukraster
+T-hemp pyplyn
+1. Posterisering
+Eilandjies verwyder:
+T-hempontwerp
+Meet werkverrigting...
+Meet die werkverrigting van grafiese effekte
+Hierdie toets sal die spoed van 12 beeldverwerkingseffekte meet.\nDuur: van 'n paar sekondes tot 'n paar minute -\nhang af van beeldresolusie en SVE-krag.
+Werkverrigtingstoets
+Berei beeld voor...
+Beeld: %s (%d×%d)
+%s: %.2f ms (gemiddeld van %d)
+Tyd: %d min %d s
+(gestop)
+Moeilikste: %s (%.2f ms).
+Prestasieresultate
+Vlakke
+Lewendig
+Inkleur
+Kruisproses
+Bas-reliëf
+Orton
+Halftoon
+Skermdruk
+Risografie v2
+HAM8 (64 kleure)
+HAM6 (16 kleure)
+Gloed
+Meet die prestasie van grafiese effekte
+Verwerking
+Kwasradius (1-30):
+Fout...
+Digitale beeldvervorming — RGB-verskuiwing, geraas, horisontale snyverskuiwing
+RGB-verskuiwing:
+Lynjitter:
+Geraas:
+CRT-effek:
+Blokverlies:
+Horisontale snyverskuiwing:
+Verdonker elke ander lyn teen PAL-verhouding — hoër waarde = donkerder gapings
+Aanlyn dokumentasie...
+Maak die Fotografista-webwerf in jou webblaaier oop
+Mimeograaf...
+Mimeograaf — swart rande op wit agtergrond
+Mimeograaf
+Korrelrigheid:
+Randgevoeligheid:
+Tonerintensiteit:
+Mimeograaf
+Voer PDF uit...
+Voer beeld na PDF-lêer uit
+Voer PDF uit
+Klaar.
+PDF suksesvol gestoor.
+Fout tydens stoering van PDF.
+Voer vergelyking uit...
+Voer beeldvergelyking uit — langs mekaar met oorspronklike
+Vergelyking
+Geen lêer om te vergelyk nie — die beeld is nie vanaf 'n lêer oopgemaak nie.
+Vergelyking suksesvol gestoor.
+Fout tydens stoering van vergelyking.
+Huidige beeld
+Pas by grootte met snoei...
+Skaal beeld na teikengrootte, oortollige snoei
+Volle HD 1920×1080
+Pas by grootte met snoei
+Breedte (px):
+Hoogte (px):
+Anker:
+Links bo
+Regs bo
+Links onder
+Regs onder
+Pas grootte met snoei toe
+Kanselleer grootte met snoei
+Beeld is nie van 'n lêer gelaai nie.\nPas by grootte met snoei sal die huidige beeld gebruik\nwat dalk 'n laer resolusie het as gevolg van Werkverrigting-instellings.
+Gereedskap
+Lanseerder
+Kleurdiepte
+Laaienjin
+Snelle‑aksie‑lanseerder
+Program geregistreer
+Voer die lisensiesleutel in
+Voer die e‑posadres van die aankoop in:
+Voer die lisensiesleutel in:
+Sukses
+Die lisensiesleutel is geaktiveer.
+Fout
+Ongeldige sleutel of e‑pos!
+Proefweergawe het verval
+Fotografista se proefweergawe het ná 7 dae verval.
+Om voort te gaan, voer jou lisensiesleutel in:
+Sluit program
+Voer jou e‑posadres in.
+Voer jou lisensiesleutel in.
+Bondelverwerking
+Pas ’n gestoorde makro toe op alle beelde in ’n vouer
+Bronvouer:
+Uitvoervouer:
+Makro:
+Blaai…
+Begin
+Verwerking…
+Kanselleer
+Klaar
+Kies bronvouer
+Kies uitvoervouer
+Geen gestoorde makros nie.
+Bondelverwerking loop reeds.
+Vouer is leeg.
+Geen beelde in bronvouer gevind nie.
+Vul alle velde in.
+Verwerk
+foute
+Makro bevat ’n grootteveranderingsstap. Kombinasie met bondelskalering kan onverwagte resultate gee.
+Skaleer na lang kant
+px:
+Moenie die makro uitvoer nie
+Koop lisensie

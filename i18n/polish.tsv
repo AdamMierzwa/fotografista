@@ -1,0 +1,1048 @@
+﻿1	Plik
+2	Edycja
+3	Mieszanie efektów
+4	Widok
+5	Analiza
+6	Korektor
+7	Kolory
+8	Efekty
+9	Druk
+10	Eksperymentalne
+11	Zniekształcenia
+12	Amigowe
+13	Pomoc
+14	Otwórz...
+15	Zapisz jako...
+16	Informacja o obrazie
+17	(nic)
+18	Zamknij
+19	Preferencje...
+20	Wyjście
+21	Cofnij
+22	Ponów
+23	Kopiuj
+24	Wklej
+25	Przywróć oryginał
+26	Wyczyść historię
+27	Mieszanie efektów...
+28	Mieszanie (0=A, 100=B):
+29	Połącz widoczne
+30	Wymaż wszystko
+31	Powiększ
+32	Pomniejsz
+33	Dopasuj do okna
+34	100%
+35	50%
+36	25%
+37	200%
+38	400%
+39	Histogram...
+40	Wyrównanie histogramu...
+41	Lustro poziome
+42	Lustro pionowe
+43	Obrót w lewo
+44	Obrót w prawo
+46	Prostuj skan...
+47	Kontrast...
+48	Jasność...
+49	Korekcja gamma...
+50	Poziomy...
+51	Balans bieli...
+52	Wyostrzenie...
+53	Soczystość...
+54	Wzmocnienie zdjęcia...
+55	Przycięcie...
+56	Zmiana rozmiaru...
+57	Kolorowanie...
+58	Balans HSB...
+59	Solaryzacja...
+60	Dwukolor...
+61	Sepia...
+62	Cyanotypia
+63	Fotografia solna
+64	Rentgen
+65	Podczerwień fałszywobarwna
+66	Noktowizor
+68	Orton
+69	Czarno-biały...
+70	Szarość
+71	Negatyw
+72	Ziarno filmowe...
+73	Obraz olejny...
+74	Węgiel...
+75	Rozmycie...
+76	Wytłaczanie...
+77	Pikselizacja...
+78	Winietowanie...
+79	Posteryzacja...
+80	Detekcja krawędzi...
+81	Linoryt...
+82	Grawerowanie...
+83	Krzyżowanie...
+84	Raster...
+85	Kropkowanie...
+86	Kostkowanie...
+87	Risografia v1...
+88	Sitodruk...
+89	Dystorsja beczkowa...
+90	Dystorsja łukowa...
+91	Wir...
+92	Fale wodne...
+93	Zniekształcenie biegunowe...
+94	Paleta Workbench 1.x (OCS)
+95	Paleta Workbench 2.x/3.x
+96	Paleta OCS 32 kolory...
+97	Paleta EHB 64 kolory...
+98	Paleta AGA 256 kolorów...
+99	Paleta Workbench 256 kolorów...
+100	Paleta MagicWB (8 kolorów)...
+101	O programie
+102	Otwórzplik obrazu
+103	Zapisz obraz pod nową nazwą
+104	Pokaż szczegóły obrazu
+105	Zamknij bieżący obraz
+106	Ustawienia programu
+107	Wyjście z programu
+108	Cofnij ostatnia operację
+109	Ponów cofniętą operację
+110	Kopiuj obraz do schowka
+111	Wklej obraz ze schowka jako nową warstwę
+112	Przywróć obraz do stanu pierwotnego
+113	Usuń historieoperacji - nieodwracalne
+114	Połącz dwa efekty za pomocą suwaka
+115	Čeština (czeski)
+116	Português (portugalski)
+117	Afrikaans (afrykanerski)
+118	Powiększ widok
+119	Pomniejsz widok
+120	Dopasuj obraz do okna
+121	Podgląd w skali 1:1
+122	Podgląd w skali 50%
+123	Podgląd w skali 25%
+124	Podgląd w skali 200%
+125	Podgląd w skali 400%
+126	Pokaż historię
+127	Wyrównaj histogram -popraw kontrast
+128	Odbij obraz w poziomie
+129	Odbij obraz w pionie
+130	Obróć obraz o 90° w lewo
+131	Obróć obraz o 90° w prawo
+132	Obróć obraz o 180°
+133	Prostuj skan - obrót o +/- 10 stopni z automatycznym przycinaniem
+134	Dostosuj kontrast
+135	Dostosuj jasność
+136	Korekcja gamma
+137	Ustaw czarny punkt, gamma, biały punkt - pełna kontrola tonalna
+138	Balans bieli - korekcja temperatury barwowej
+139	Wyostrz obraz
+140	Soczystość - nasycone, żywe kolory
+141	Wzmocnienie zdjęcia (Multiply)
+142	Przytnij obraz
+143	Zmień rozmiar obrazu
+144	Pokoloruj obraz wybranym kolorem
+145	Dostosuj jasność, nasycenie i odcień
+146	Solaryzacja – odwrócenie jasnych tonów światła
+147	Dwukolorowy efekt - cienie i światła
+148	Sepia - ciepły brązowy monochromat
+149	Cyjanotypia - niebieski monochromat
+150	Fotografia solna - ciepły brąz
+151	Rentgen - odwrócone kolory
+152	Fałszywe kolory IR – zamiana kanałów, czerwone rośliny, błękitne niebo
+153	Nocne widzenie - szarość i zielony fosfor
+154	Termiczny - podgląd we fałszywych kolorach
+155	Efekt Ortona - rozmyta poświata,bajkowy nastrój
+156	Konawersja do czarno-białego z opcją roztrząsania
+157	Konswersja doskali szarości
+158	Odwrócone kolory - negatyw
+159	Dodaj ziarno filmowe - szum losowy
+160	Efekt olejny - symulacja pędzla
+161	Węgiel - symulacja rysunku węglowego
+162	Rozmycie obrazu
+163	Efekt wypukłości - relief
+164	Pikselizacja - efekt mozaiki
+165	Winietowanie - przyciemnianie krawędzi
+166	Posteryzacja - redukcja liczby kolorów
+167	Detekcja krawędzi - efekt szkicu
+168	Linoryt - ostry, czarno-biały kontrast
+169	Grawerowanie -symulacja linii rytowniczych
+170	Krzyżowanie linii pod dwoma kątami
+171	Raster - rosnące kropki zależnie od jasności
+172	Kropkowanie - gęstość kropek zależnie od jasności
+173	Kostkowanie - oczka kostki do gry
+174	Rizograf - druk warstwowy z offsetem kolorów
+175	Sitodruk jednokolorowy - szary + tło ​​półtonowe
+176	Zniekształcenie beczkowate / poduszkowe
+177	Zniekształcenie łukowe – zginanie obrazu
+178	Wiruj - przekręć obraz
+179	Fale wodne
+180	Zniekształcenia biegunowe - tunel, rybie oko
+181	Paleta 4 kolorów - Workbench 1.x (OCS)
+182	Paleta 4 kolorów - Workbench 2.x/3.x
+183	Paleta 32 kolorów (4x4x2) - OCS
+184	Paleta 64 kolorów (4x4x4) - EHB
+185	Paleta 256 kolorów - AGA
+186	Paleta 256 kolorów - Workbench 3.x
+187	Paleta 8 kolorów - MagicWB (MUI)
+188	Fotografista
+189	Brak obrazu
+190	OK
+191	Anuluj
+192	Podgląd
+193	Pokaż podgląd
+194	Zastosuj i zamknij
+195	Zamknij bez stosowania
+197	Edytor zdjęć
+198	Kompilacja
+199	Szerokość (px):
+200	Wysokość (px):
+201	Zastosuj zmianę rozmiaru
+202	Anuluj zmiany
+203	X (px):
+204	Y (px):
+205	Zastosuj przycięcie
+206	Anuluj przycięcie
+207	Wybierz kolor
+208	Kolor tekstu
+209	Wybierz czcionkę...
+210	Kierunek
+211	Zwiększ
+212	Zmniejsz
+213	Roztrząsanie
+214	Z roztrząsaniem (lepsza jakość)
+216	Z roztrząsaniem
+217	Bez roztrząsania
+218	Włączone
+219	Wyłączone
+220	Intensywność (1-10):
+221	Jasność (0-200, domyślnie 100):
+222	Gamma (100 = brak zmian):
+223	Czerwony (100 = brak zmian):
+224	Zielony (100 = brak zmian):
+225	Niebieski (100 = brak zmian):
+226	Intensywność (1-100):
+227	Intensywność (0-100):
+228	Promień (1-5)
+229	Intensywność (1-50):
+230	Rozmiar komórki (1-100):
+231	Kąt linii (0–179°):
+232	Rozmiar komórki (4–16 px):
+233	Maksymalna grubość linii (1–8):
+234	Rozmiar komórki (4–64 px):
+235	Rozmiar podkomórki kropki (3–8 px):
+236	Prog (1-100):
+237	Ilość tuszu (jaśniejsze = mniej):
+238	Siła efektu (0-100):
+239	Nasycenie (0-100):
+240	Kontrast (0-100):
+241	Krzywa (1-5):
+242	Sprytne krzywe (0-100):
+243	Czarny punkt (0-255):
+244	Biały punkt (0-255):
+245	Kąt prostowania (-10 do +10 stopni):
+248	Zastosuj prostowanie i zamknij
+249	Zastosuj zmiany warstw i zamknij
+250	Zamknij bez zapisywania
+255	Kolor cieni
+256	Kolor świateł
+257	Kolor tuszu
+258	Kolor papieru
+259	Nazwa ustawienia:
+260	Wczytaj
+261	Usuń
+263	Ustawienie
+264	Jasność
+266	Wyostrzenie
+267	Solaryzacja
+268	Sepia
+269	Obraz olejny
+270	Węgiel
+271	Rozmycie
+273	Pikselizacja
+274	Winietowanie
+275	Detekcja krawędzi
+276	Ziarno filmowe
+277	Zapisz ustawienie
+278	Wczytaj ustawienie
+279	Kontrast
+280	Kadrowanie
+281	Zmiana rozmiaru
+282	Balans bieli
+283	Poziomy
+284	Soczystość
+285	Wzmocnienie zdjęcia
+286	Warstwy
+287	Prostowanie skanu
+288	Kolorowanie
+289	Balans HSB
+290	Czarno-biały
+291	Posteryzacja
+292	Grawerowanie
+293	Krzyżowanie
+294	Raster
+295	Kropkowanie
+296	Kostkowanie
+297	Linoryt
+298	Risografia
+299	Sitodruk
+300	Paleta OCS 32 kolory
+301	Paleta EHB 64 kolory
+302	Paleta AGA 256 kolorów
+303	Paleta Workbench 256 kolorów
+304	Paleta MagicWB 8 kolorów
+305	Dystorsja
+306	Dystorsja łukowa
+307	Wir
+308	Fale wodne
+309	Zniekształcenie biegunowe
+310	Jakość zapisu
+311	Nasycenie (0-200, domyślnie 100):
+312	Odcień (0-200, domyślnie 100):
+313	Kontrast przed konwersją (0-10):
+314	Liczba kolorów (2-64):
+315	Krycie
+316	Tryb:
+317	Wybierz kolor...
+320	Wybierz rodzaj:
+321	Wybierz kąt łuku:
+322	Wybierz intensywność:
+323	Wybierz wariant:
+324	Słaba beczka
+325	Średnia beczka
+326	Mocna beczka
+327	Słaba poduszka
+328	Średnia poduszka
+329	Mocna poduszka
+330	45°
+331	90°
+332	180°
+333	360°
+334	90° + obrót
+335	180° + obrót
+336	Słaby (45°)
+337	Średní (90°)
+338	Silny (180°)
+339	Bardzo mocny (270°)
+340	Pełny (360°)
+341	Odwrócony
+342	Delikatne
+343	Średnie
+344	Silne
+345	Koncentryczne
+346	Od rogu
+347	Gęste
+348	Pełny
+349	Połowa kąta
+350	Ćwierć kąta
+351	Pierścień
+352	Mały promień
+353	Wygładzony
+354	Tunel
+356	Rybie oko
+357	Rozciągnięcie zewnętrzne
+358	Błąd
+359	Nieobsługiwany format pliku
+360	Migawka
+361	Oryginał
+362	Gamma (10-500, 100=1.0):
+363	Efekt A
+364	Efekt B
+365	Wyrównanie histogramu
+368	Cofnij
+369	Ponów
+371	Wzmocnienie zdjęcia
+372	Workbench 1.x
+373	Workbench 2.x
+374	OCS 32
+375	EHB
+376	AGA 256
+377	WB 256
+378	MagicWB
+379	Lustro poziome
+380	Lustro pionowe
+383	Obrót 180
+384	Prostowanie
+390	Podczerwień
+392	Termiczny
+394	Wytłaczanie
+396	Dwukolor
+397	Kontrast (przed konwersją)
+398	Czerwona
+399	Zielona
+403	Odcień
+404	Saturacja
+405	Gamma
+406	Siła
+407	Próg
+408	Kąt
+409	Wielkość komórki
+410	Grubość
+411	Wielkość kropkek
+413	Promień
+414	Nieznany
+415	Informacja
+417	Nazwa:
+419	Kanał Alfa:
+420	Szerokość:
+421	Wysokość:
+422	Wielkość:
+423	Data:
+424	Godzina:
+425	Tak
+426	Nie
+428	Miniatura
+429	Wybierz rozmiar:
+430	100 px
+431	200 px
+432	320 x 240
+433	640 x 480
+434	Gotowe
+435	Miniatura zapisana
+436	Zapisz miniaturę jako
+437	Jakość zapisu JPEG (0-100):
+438	Normalna
+439	Mnożenie
+440	Ekran
+441	Nakładka
+442	Miękkie światło
+443	Ciemniejszy
+444	Jaśniejszy
+445	Tło (oryginał)
+446	Karmazyn + Cyjan
+447	Czerń + Żółty
+448	Niebieski + Pomarańczowy
+449	Karmazyn + Cyjan + Żółty
+450	Czerń + Karmazyn + Żółty
+451	CMYK (4 kolory)
+453	Wybierz tryb wyrównania:
+454	Luminancja
+455	Wszystkie
+457	Histogram
+458	Skróty klawiszowe
+459	Makro
+460	Rozpocznij nagrywanie
+461	Zatrzymaj i zapisz
+462	Anuluj nagrywanie
+463	Zarządzaj makrami...
+464	Makra
+465	Odtwórz
+467	Zapisz makro
+468	Nazwa makra:
+470	Nagrywanie jest już aktywne.
+471	Dodać ten krok do makra?
+472	Tak|Nie
+473	Nagrywanie nie jest aktywne.
+474	Brak kroków do zapisania.
+475	Nie wczytano obrazu.
+476	kroków
+477	Nagrywanie makra
+478	HAM6 - 16 kolorów + Hold-Modify
+479	HAM8 - 64 kolory + Hold-Modify
+480	Symulacja HAM6 (16 kolorów podstawowych z trybami hold-modify)
+481	Symulacja HAM8 (64 kolory podstawowe z trybami hold-modify)
+482	HAM6
+483	HAM8
+484	Przytnij do zaznaczenia
+485	Ustaw wymiary zaznaczenia...
+486	Zapisz ikonę...
+487	Rozmiar ikony:
+488	Format ikony:
+489	Ikona zapisana.
+491	Ten efekt jest bardzo wymagający obliczeniowo.\nDla zdjęć powyżej 6 MP czas może przekroczyć 30-60 sekund.
+492	Kontynuuj
+493	Blask...
+494	Promień poświaty:
+495	Gradient Amiga...
+496	Nakładka gradientu copper w stylu Amiga
+497	Amiga gradient (Agony)...
+498	Gradient copper w stylu Agony
+499	Zapisz jako ikonę Windows...
+501	Jakość zapisu JPEG 2000 (0-100, 100=bezstratny):
+502	Błędne wywołanie...
+503	Nieprawidłowe wywołanie — symulacja E-6/C-41
+504	Zapisz pakiet ikon (ZIP)...
+505	Zmień nazwę
+506	Język...
+507	Ustawienia
+508	Jakość zapisu...
+509	Pakiet ikon
+510	Nie wybrano rozmiaru.
+511	Pakiet ikon zapisano do:
+512	Kompresja TIFF:
+514	Wybierz platformę:
+515	Wybierz format:
+520	Resetuj
+522	Zapisz bieżący obraz jako ikonę
+523	Zapisz ikony w wielu rozmiarach jako archiwum ZIP
+524	Rozpocznij nagrywanie makra
+525	Zatrzymaj nagrywanie i zapisz makro
+526	Anuluj nagrywanie bez zapisywania
+527	Odtwórz, zmień nazwę lub usuń makra
+528	Zmiana języka programu
+529	Ustawienie jakości zapisu JPEG, JPEG 2000 a TIFF
+530	O programie Fotografista
+531	Pokazanie listy skrótów klawiaturowych
+532	Interfejs...
+533	Ustawienia interfejsu
+534	Interfejs
+535	Kolor tła kanwy (tylko ze standardowym motywem Windows):
+537	Otwórz obraz
+538	Wszystkie pliki
+539	Schowek
+540	Wklejono
+541	LZW
+542	Flate
+543	JPEG
+544	Nowa nazwa
+545	Język / Language
+546	Polski
+547	English (angielski)
+548	Rozmiar zaznaczenia
+553	Zaznaczenie: %d x %d
+554	Mapowanie do palety OCS 32 kolorów
+555	Mapowanie do palety EHB 64 kolorów (OCS + Half-Brite)
+556	Mapowanie do palety AGA 256 kolorów
+557	Mapowanie do palety Workbench 256 kolorów
+558	Mapowanie do palety MagicWB 8 kolorów
+559	Odcień górny (0-360):
+560	Odcień dół (0-360):
+561	Liczba pasów (32-256):
+562	E-6 w C-41
+563	C-41 w E-6
+564	Kodak w wywoływaczu Fuji
+565	Fuji w wywoływaczu Kodak
+566	ECN-2 w C-41
+568	Rozmiar czcionki (pasek statusu):
+569	AmigaOS klasyczny (4 kolory)
+570	Kafelkowanie...
+571	Powiel obraz jako kafelki do wypełnienia obszaru
+572	Tło Amiga...
+573	Rozdzielczość docelowa:
+574	Wyrównanie obrazu:
+575	Kolor tła (paleta MagicWB):
+576	Szary
+577	Czarny
+578	Biały
+579	Niebieski
+580	Ciemny szary
+581	Jasny szary
+582	Brązowy
+583	Łososiowy
+584	Tło Amiga (rozciągnięte, MagicWB)...
+585	Skaluje obraz do rozdzielczości Amigi z rozciąganiem krawędzi
+586	Inny kolor...
+587	Eksportuj...
+588	Importuj...
+589	Eksportuj makro
+590	Makro zostało pomyślnie wyeksportowane.
+591	Importuj makro
+592	Nieprawidłowy plik makra.
+593	Makro o tej nazwie już istnieje. Nadpisać?
+594	Makro zostało pomyślnie zaimportowane.
+595	Zapamiętuj rozmiar i położenie okna
+596	Liczba ostatnich plików:
+597	Wyjście bez zapisanych zmian
+598	Płaskorzeźba...
+599	Płaskorzeźba materiałowa z jasności obrazu
+600	Głębokość (1-100):
+601	Gips / biały kamień
+602	Biały marmur
+603	Szary kamień
+604	Brąz / medal
+605	Piaskowiec
+606	Skala (%):
+607	Zachowaj proporcje
+609	Emergo...
+610	Français (francuski)
+611	Español (hiszpański)
+612	Italiano (włoski)
+613	Deutsch (niemiecki)
+614	Edytuj makro
+615	Usuń krok
+616	Ręcznie
+617	Automatycznie
+618	Operacja zakończona.
+620	Wynik jest gotowy.
+621	Możesz wrócić do komputera.
+622	Kawa pewnie już wystygła.
+623	Gratulacje. Procesor przeżył.
+624	Myślałem, że to się już nigdy nie skończy.
+625	Alleluja! Nareszcie.
+626	Udało się. Wszystko gotowe.
+627	Koniec oczekiwania.
+628	Dziękujemy za cierpliwość.
+629	Emergo — inteligentne wydobycie szczegółów z cieni
+630	Podgląd 100%
+631	Symulacja HAM
+632	Ten efekt jest wyjątkowo wymagający obliczeniowo.\nDla zdjęć powyżej 2 MP czas może wynieść kilka minut.
+633	Sztuczne bokeh...
+634	Makieta...
+635	Sztuczne bokeh
+636	Siła:
+637	Kształt:
+638	Radialny (bokeh)
+639	Liniowy (tilt-shift)
+640	Błąd CMYK...
+641	Błąd CMYK
+642	Siła przesunięcia:
+643	Trójkolor...
+644	Trójkolor
+645	Czterokolor...
+646	Czterokolor
+647	Kolor 1 (cienie)
+648	Kolor 2 (półtony)
+649	Kolor 3 (światła)
+650	Kolor 4 (ekstremalne światła)
+651	Aberracja chromatyczna...
+652	Aberracja chromatyczna
+653	Przesunięcie
+654	Centrum X:
+655	Centrum Y:
+656	Promień:
+657	Zanik:
+658	Pozycja pasa:
+659	Wysokość pasa:
+660	Inne retrokomputery
+661	C64 — Pepto / Colodore...
+662	Paleta Commodore 64 — Pepto lub Colodore
+663	Commodore 64
+664	Mapowanie do palety Commodore 64
+665	Pepto
+666	Colodore
+667	ZX Spectrum...
+668	Paleta ZX Spectrum
+669	ZX Spectrum
+670	Mapowanie do palety ZX Spectrum
+671	Game Boy — DMG / Pocket...
+672	Paleta Game Boy — DMG (zielona) albo Pocket (szara)
+673	Game Boy
+674	Mapowanie do palety Game Boy
+675	DMG (zielony)
+676	Pocket (szary)
+677	NES (Nestopia)...
+678	Paleta NES (Nestopia)
+679	NES — Nestopia
+680	Mapowanie do palety NES Nestopia
+681	Wzór (retro)
+682	Floyd–Steinberg (wygładzony)
+683	Wybrany tryb jest bardzo wolny dla dużych zdjęć.\nDla zdjęć powyżej 2 MP podgląd i zastosowanie efektu mogą zająć kilka minut.\nInne tryby są znacznie szybsze.
+684	Wydajność...
+685	Maksymalna rozdzielczość robocza:
+687	Obraz
+688	Odwrócony tunel
+689	Wycinek 30°
+690	Full HD (1920×1080)
+691	4K (3840×2160)
+692	Wydajność i maksymalna rozdzielczość robocza
+693	SVGA (800×600)
+694	Cyan
+695	Magenta
+696	Żółta
+699	Pomarańczowa
+701	Różowa
+702	Granatowa
+703	Fioletowa
+704	Turkusowa
+705	Koralowa
+706	Burgund
+707	Miętowa
+708	Risografia v2...
+709	Risografia v3...
+710	Liczba warstw:
+711	Warstwa 1...
+712	Warstwa 2...
+713	Warstwa 3...
+714	Warstwa 4...
+715	Warstwa 5...
+716	Wybierz
+717	Przygotowanie do nadruku (koszulki)...
+718	Tworzenie nadruku...
+719	Liczba kolorow:
+720	2. Mapowanie kolorow na farby
+721	3. Oczyszczenie detalu
+722	Min. obszar (px):
+724	Przypisz farbę
+725	Farba:
+726	Symuluj raster sitodruku
+727	Pipeline koszulki
+728	1. Posteryzacja
+729	Usunięte wyspy:
+730	Tworzenie nadruku
+731	Płynne skalowanie podglądu
+732	Zmierz wydajność
+733	Test wydajności sprawdzi szybkość 12 operacji graficznych.\nCzas trwania: od kilkunastu sekund do kilku minut —\nzależy od rozdzielczości obrazka i mocy procesora.
+734	Test wydajności
+735	Przygotowanie obrazu...
+736	Obraz: %s (%d×%d)
+737	%s: %.2f ms (śr. z %d)
+738	Czas testu: %d min %d s
+739	(przerwane)
+740	Najcięższym wyzwaniem okazał się: %s (%.2f ms).
+741	Wyniki benchmarka
+745	Błędne wywołanie
+746	Płaskorzeźba
+750	Risografia v2
+751	HAM8 (64 kolory)
+752	HAM6 (16 kolorów)
+753	Emergo
+754	Zmierz wydajność efektów graficznych
+755	Przetwarzanie
+756	Promień pędzla (1-30):
+757	Glitch...
+758	Cyfrowe zakłócenia obrazu — przesunięcie RGB, szum, pasma poziome
+759	Przesunięcie kanałów RGB:
+760	Drżenie linii:
+761	Szum:
+762	Efekt kineskopu (CRT):
+763	Utrata bloków:
+764	Przesunięcia pasm poziomych:
+765	Przyciemnia co drugą linię w proporcji PAL — im wyżej, tym ciemniejsze przerwy
+766	Dokumentacja online
+767	Otwórz dokumentację online w przeglądarce
+768	Powielacz...
+769	Powielacz — tuszowe krawędzie na białym tle
+770	Powielacz
+771	Ziarnistość:
+772	Czułość krawędzi:
+773	Intensywność tonera:
+775	Eksportuj PDF...
+776	Eksportuj obraz dopliku PDF
+777	Eksportuj PDF
+778	Gotowe
+779	Plik PDF został pomyślnie zapisany.
+780	Błąd podczas zapisywania pliku PDF.
+781	Eksportuj porównanie...
+782	Eksportuj porównanie obrazów — obok oryginału
+783	Porównanie
+784	Brak pliku do porównania — obraz nie został otwarty z pliku.
+785	Porównanie zostało pomyślnie zapisane.
+786	Błąd podczas zapisywania porównania.
+787	aktualny obraz
+788	Dopasuj do rozmiaru z przycięciem...
+789	Dopasuj obraz do rozmiaru docelowego, przytnij nadmiar treści
+790	Full HD 1920×1080
+791	Dopasuj do rozmiaru z przycięciem
+794	Kotwiczenie:
+795	Góra-lewo
+796	Góra-prawo
+797	Dół-lewo
+798	Dół-prawo
+799	Zastosuj dopasowanie z przycięciem
+800	Anuluj dopasowanie
+801	Obraz nie został wczytany z pliku.\nDopasowanie do rozmiaru użyje bieżącego obrazu,\nktóry może mieć niższą rozdzielczość z powodu ustawień Wydajności.
+802	Narzędzia
+803	Wyrzutnia
+804	Głębia koloru
+805	Silnik wczytywania
+806	Wyrzutnia szybkich operacji
+807	Program zarejestrowany
+808	Wprowadź klucz licencyjny
+809	Podaj adres e-mail użyty przy zakupie:
+810	Wprowadź klucz licencyjny:
+811	Sukces
+812	Klucz licencyjny został aktywowany.
+814	Nieprawidłowy klucz lub adres e-mail!
+815	Wersja testowa wygasła
+816	Wersja testowa Fotografisty wygasła po 7 dniach.
+817	Aby kontynuować, wprowadź klucz licencyjny:
+818	Zamknij program
+819	Podaj swój adres e-mail.
+820	Podaj swój klucz licencyjny
+821	Przetwarzanie wsadowe...
+822	Zastosuj zapisane makro do wszystkich obrazów w folderze
+823	Folder źródłowy:
+824	Folder docelowy:
+825	Makro:
+826	Wybierz...
+827	Rozpocznij
+828	Przetwarzanie...
+831	Wybierz folder źródłowy
+832	Wybierz folder docelowy
+833	Brak zapisanych makr.
+834	Przetwarzanie wsadowe jest już uruchomione.
+835	Folder jest pusty.
+836	Nie znaleziono żadnych obrazów w folderze źródłowym.
+837	Wypełnij wszystkie pola.
+838	Przetworzono
+839	błędów
+840	Makro zawiera krok zmiany rozmiaru. Połączenie go ze skalowaniem wsadowym może dać nieoczekiwane rezultaty.
+841	Skaluj do dłuższego boku
+842	px:
+843	Bez wykonywania makra
+844	Kup licencję
+845	Sztuczne bokeh
+846	Artystyczne
+847	Przypisz farbę 1
+848	Przypisz farbę 2
+849	Przypisz farbę 3
+850	Przypisz farbę 4
+851	Przypisz farbę 5
+852	Przypisz farbę 6
+853	Błędne wywołanie
+854	Blokowanie
+855	Jasność przed konwersją (0-200):
+856	Środek X (0-100):
+857	Środek Y (0-100):
+858	Wybierz kolor...
+859	Wybierz kolor:
+860	Wybierz motyw:
+861	Wybierz...
+862	Błąd CMYK
+863	Kontrast przed konwersją (0-10):
+864	Tworzenie nadruku
+865	Kreskowanie
+866	Folder docelowy:
+867	Czułość detekcji (1-100):
+868	Mnożnik rozmiaru punktu:
+869	Rozmiar podkomórki rastra (3-8 px):
+870	Duplikator
+871	Efekt A:
+872	Efekt B:
+873	Mieszanie efektów
+874	Siła efektu (0-100):
+875	Tłoczenie
+876	Zanikanie (0-100):
+877	Dopasuj do rozmiaru z przycięciem
+878	Ziarnistość:
+879	Informacje o obrazie
+880	Rozmiar czcionki interfejsu (pt):
+881	Jakość JPEG w TIFF:
+882	Kąt linii (0-179):
+883	Materiał:
+884	Maksymalna grubość linii (1-8):
+885	Makieta
+886	Bez kompresji
+887	Obraz olejny
+888	Inny kolor...
+889	Kontur
+890	Kontur...
+891	Paleta
+892	Paleta:
+893	Procesy fotograficzne
+894	Pikselizacja
+895	Preset:
+896	Raster
+897	Przywróć oryginał
+898	Jakość zapisu
+899	Skaluj do dłuższego boku, px:
+900	Metoda skalowania:
+901	Prostowanie skanu
+902	Wybierz
+903	Krzywa cieni (1 = delikatna, 5):
+904	Solarizacja
+905	Kropkowanie
+906	Kąt prostowania (-10 do +10 stopni):
+907	Toner:
+908	Soczystość
+909	Bez uruchamiania makra
+910	Powiększenie
+911	Siła efektu (1-100):
+912	Promień (1-100):
+913	Pozycja pasa (0-100):
+914	Wysokość pasa (1-100):
+915	Siła efektu (0 = brak, 100 = maks.):
+916	Kontrast (0 = brak, 100):
+917	Promień pędzla (1-10):
+918	Promień poświaty (1-20):
+919	Drżenie linii (0-100):
+920	Szum (0-100):
+921	Efekt kineskopu (0-100):
+922	Utrata bloków (0-100):
+923	Przesunięcia pasm poziomych (0-100):
+924	Przesunięcie kanałów RGB (0-30):
+925	Jakość zapisu WebP (0-100):
+926	4. Sitodruk
+927	Profesjonalny edytor grafik
+928	Architektura: 100% natywna (VCL / Object Pascal)
+929	Wydajność: bezpośredni dostęp do potoku renderowania
+930	Środowisko: niezależne od runtime x86/x64
+931	Wysokowydajna aplikacja desktopowa
+932	bez narzutu frameworków webowych.
+935	Zarządzanie makrami
+936	Risografia v1
+937	Risografia v2
+938	Gęstość fali
+939	Test wydajności sprawdzi szybkość 12 operacji graficznych.
+940	Czas trwania: od kilkunastu sekund do kilku minut — zależy od rozdzielczości obrazka i mocy procesora.
+941	(nowy)
+942	Nazwa
+943	Format
+944	Szerokość
+945	Wysokość
+946	Rozdzielczość X
+947	Rozdzielczość Y
+948	EXIF (%d właściwości)
+949	Nie można otworzyć pliku do odczytu metadanych.
+950	Kolor 2 (światła)
+951	Paleta WB 1.x
+952	Paleta WB 2.x/3.x
+953	Paleta OCS 32
+954	Paleta EHB 64
+955	Paleta AGA 256
+956	Paleta Workbench 256
+957	Paleta MagicWB
+958	Kafelkowanie
+959	Risografia v3
+960	Tło Amiga
+961	Tło Amiga (rozciągnięte, MagicWB)
+962	Blask
+963	Glitch
+964	Gradient Amiga
+965	Gradient Amiga (Agony)
+966	NES - Nestopia
+967	Nieobsługiwany krok: 
+968	Nie można porównać - obraz nie został otwarty z pliku.
+969	Plik nie istnieje:
+970	Brak pliku źródłowego na dysku do przywrócenia oryginału.
+971	Najpierw otwórz obraz.
+972	Makro jest puste - nie zapisano.
+973	Nazwa makra
+974	Podaj nazwę makra:
+975	Anulowano - makro nie zostało zapisane.
+976	Brak obrazów w folderze źródłowym.
+977	Nowa nazwa makra:
+978	Usunąć makro „%s“?
+979	Usunąć krok „%s“?
+980	Brak obrazu do przetworzenia.
+981	Załaduj obraz przed wykonaniem testu wydajności.
+982	Nie można załadować obrazu:
+983	Dodać „%s“ do makra?
+984	Plik „%s“ już istnieje.
+985	Nadpisać?
+986	Eksport porównania
+987	Obraz: aktualny obraz (%d x %d)
+988	  Czas testu: %s
+989	  Najcięższym wyzwaniem okazał się: %s
+990	Cyjan + Magenta
+991	Cyjan + Żółty
+992	Cyjan + Czarny
+993	Magenta + Żółty
+994	Magenta + Czarny
+995	Żółty + Czarny
+996	Cyjan + Magenta + Żółty
+997	Cyjan + Magenta + Czarny
+998	Cyjan + Żółty + Czarny
+999	Magenta + Żółty + Czarny
+1000	Cyjan + Magenta + Żółty + Czarny
+1001	Zielony + Różowy
+1002	Granatowy + Żółty
+1003	Fioletowy + Żółty
+1004	Turkusowy + Koralowy
+1005	Bordowy + Miętowy
+1006	Granatowy + Różowy
+1007	Zielony + Pomarańczowy
+1008	Fioletowy + Koralowy
+1009	Turkusowy + Żółty
+1010	Przesuwanie obrazu
+1011	Spacja + LPM
+1012	lub ŚPM
+1013	Obraz nie został zapisany.
+1014	Czy chcesz zapisać zmiany przed zamknięciem?
+1015	Brak kodeka do odczytu pliku.
+1016	Zainstaluj odpowiednie rozszerzenie obrazów z Microsoft Store.
+1017	Brak enkodera TIFF w systemie
+1018	Błąd zapisu TIFF
+1019	Nieobsługiwany format zapisu: %s
+933	Płaskorzeźba
+934	Sztuczne bokeh
+829	Makieta
+830	Jakość zapisu
+792	Wydajność
+793	C64 — Pepto / Colodore
+774	Game Boy — DMG / Pocket
+749	NES (Nestopia)
+748	Język
+1020	Raster CMYK...
+1021	Timelapse...
+1022	Stereogram...
+1023	Usuń tło...
+1024	Rozmiar siatki (1-32 px):
+1025	Skala kropki [%]:
+1026	Stereogram
+1027	Tryb wyjścia:
+1028	Autostereogram (SIRDS)
+1029	Anaglif (okulary czerwono-cyjanowe)
+1030	Odstęp (px):
+1031	Głębia (px):
+1032	Losowy zasiew
+1033	3840×2160
+1034	1920×1080
+1035	1280×720
+1036	Alfabetycznie
+1037	Według daty utworzenia
+1041	Zapisz do pliku
+1042	Pokaż jako prezentację
+1043	W oknie
+1044	Pełny ekran
+1045	Timelapse
+1046	Klatki na sekundę:
+1047	Przytrzymaj pierwszą klatkę [s]:
+1048	Przytrzymaj ostatnią klatkę [s]:
+1049	Nieprawidłowa liczba klatek
+1050	Nie mołna zainicjalizować kodowania wideo
+1051	Nie mołna utworzyć pliku wynikowego
+1052	Nie mołna utworzyć strumienia wideo
+1053	Nie mołna zainicjalizować enkodera wideo
+1054	Nie mołna rozpocząć zapisu wideo
+1055	Nie mołna zapisać klatki wideo
+1056	Nie mołna zapisać pliku wideo
+1057	Brak dostępnego enkodera wideo (H.264 lub WMV)
+1058	Nazwa pliku:
+1059	Retusz...
+1060	Retusz
+1061	Wymaż
+1062	Przywróć
+1063	Wielkość pędzla:
+1064	Usuń tło
+1065	Róg, od którego usunąć tło:
+1066	Tolerancja
+1067	Gumka
+1068	Czerń (PRL)
+1069	Fiolet (Zachód)
+1070	Granat (offset)
+1071	Czerwień (stemple)
+1072	Drugi obieg PRL — powielacz białkowy, okopcony tusz, rozmazana matryca
+1073	Zachodni powielacz spirytusowy — fiolet krystaliczny, zapach alkoholu
+1074	Matryca powielacza offsetowego — kopia biurowa
+1075	Stemple, nagłówki i formularze urzędowe
+1076	Zachodnie biura — rzadszy tusz
+1077	Wyblakła, stara kopia
+1078	Zużycie tuszu:
+1079	Pędzel malowania
+1080	Pędzel klonowania
+1081	Rozjaśnianie
+1082	Ściemnianie
+1083	Pędzel jasności
+1084	Pędzel ostrości
+1085	Zalewanie
+1086	Próbnik
+1087	Zaznaczenie eliptyczne
+1088	Zaznaczenie prostokątne
+1089	Podgląd zaznaczenia
+1090	Obrys
+1091	Wypełnione
+1092	Maska ochronna
+1093	Zakryj
+1094	Odkryj
+1095	Pokaż maskę ochronną
+1096	Wyczyść maskę ochronną
+1097	Chroń zaznaczenie
+1098	Odwołaj ochronę w zaznaczeniu
+1099	Lasso
+1100	Różdżka
+1101	Zaznaczenie...
+1102	Zaznaczenie
+1103	Maska
+1104	Przetwarzanie wsadowe
+1105	Zniekształcenia
+1106	Wczytaj ustawienie
+1107	Zapisz ustawienie
+1108	Kolor wypełnienia
+1109	Kliknij podgląd, aby ustawić punkt bieli
+1110	Pędzel zamiany koloru
+1111	Kolor do zamiany
+1112	Kolor nowy
+1113	Zachowaj cienie
+1114	Chroń zaznaczenie przed efektami
+1115	Usuń ochronę z zaznaczonego obszaru
+1116	Pokazuje obszary chronione czerwonym ukośnym wzorem
+1117	Usuń wszystkie obszary chronione

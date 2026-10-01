@@ -1,0 +1,1048 @@
+﻿1	File
+2	Edit
+3	Effect Blend
+4	View
+5	Analyze
+6	Adjust
+7	Colors
+8	Effects
+9	Print
+10	Experimental
+11	Distortions
+12	Amiga
+13	Help
+14	Open...
+15	Save as...
+16	Image info
+17	(none)
+18	Close
+19	Preferences...
+20	Quit
+21	Undo
+22	Redo
+23	Copy
+24	Paste
+25	Revert to original
+26	Clear history
+27	Effect Blend...
+28	Blend (0=A, 100=B):
+29	Merge visible
+30	Delete all
+31	Zoom in
+32	Zoom out
+33	Fit to window
+34	100%
+35	50%
+36	25%
+37	200%
+38	400%
+39	Histogram...
+40	Equalize histogram...
+41	Mirror horizontally
+42	Mirror vertically
+43	Rotate left
+44	Rotate right
+46	Straighten scan...
+47	Contrast...
+48	Brightness...
+49	Gamma correction...
+50	Levels...
+51	White balance...
+52	Sharpen...
+53	Vivid...
+54	Photo enhancement...
+55	Crop...
+56	Resize...
+57	Colorize...
+58	HSB balance...
+59	Solarize...
+60	Duotone...
+61	Sepia...
+62	Cyanotype
+63	Salt print
+64	X-Ray
+65	False-color infrared
+66	Night vision
+68	Orton
+69	Black & white...
+70	Grayscale
+71	Negative
+72	Film grain...
+73	Oil paint...
+74	Charcoal...
+75	Blur...
+76	Emboss...
+77	Pixelate...
+78	Vignette...
+79	Posterize...
+80	Edge detection...
+81	Linocut...
+82	Engraving...
+83	Crosshatch...
+84	Halftone...
+85	Stipple...
+86	Dice...
+87	Risograph v1...
+88	Screen print...
+89	Barrel distortion...
+90	Arc distortion...
+91	Swirl...
+92	Water ripple...
+93	Polar distortion...
+94	Workbench 1.x palette (OCS)
+95	Workbench 2.x/3.x palette
+96	OCS 32-color palette...
+97	EHB 64-color palette...
+98	AGA 256-color palette...
+99	Workbench 256-color palette...
+100	MagicWB palette (8 colors)...
+101	About
+102	Open an image file
+103	Save image under a new name
+104	Show image details
+105	Close current image
+106	Program settings
+107	Quit the program
+108	Undo last operation
+109	Redo undone operation
+110	Copy image to clipboard
+111	Paste image from clipboard as new layer
+112	Restore image to original state
+113	Clear operation history - irreversible
+114	Blend two effects with a slider
+115	Čeština (Czech)
+116	Português (Portuguese)
+117	Afrikaans
+118	Zoom in view
+119	Zoom out view
+120	Fit image to window
+121	View at 1:1 scale
+122	View at 50% scale
+123	View at 25% scale
+124	View at 200% scale
+125	View at 400% scale
+126	Show color histogram
+127	Equalize histogram - improve contrast
+128	Flip image horizontally
+129	Flip image vertically
+130	Rotate image 90 degrees left
+131	Rotate image 90 degrees right
+132	Rotate image 180 degrees
+133	Straighten scan - rotate up to +/- 10 degrees with auto-crop
+134	Adjust contrast
+135	Adjust brightness
+136	Gamma correction
+137	Set black point, gamma and white point - full tonal control
+138	White balance - color temperature correction
+139	Sharpen image
+140	Vivid - saturated, vibrant colours
+141	Photo enhancement (Multiply)
+142	Crop image
+143	Resize image
+144	Tint image with selected color
+145	Adjust brightness, saturation and hue
+146	Solarize - invert bright tones
+147	Two-color effect - shadows and highlights
+148	Sepia - warm brown monochrome
+149	Cyanotype - blue monochrome
+150	Salt print - warm brown
+151	X-Ray - inverted colors
+152	False-color IR - channel swap, red plants, blue sky
+153	Night vision - grayscale + green phosphor
+154	Thermal - false-color view
+155	Orton - blurred glow, dreamy mood
+156	Convert to B&W with dither option
+157	Convert to grayscale
+158	Invert colors - negative
+159	Add film grain - random noise
+160	Oil paint - brush simulation
+161	Charcoal - charcoal drawing simulation
+162	Blur image
+163	Emboss - relief
+164	Pixelate - mosaic effect
+165	Vignette - darken edges
+166	Posterize - reduce color count
+167	Edge detection - sketch effect
+168	Linocut - sharp B&W contrast
+169	Engraving - line engraving simulation
+170	Crosshatch lines at two angles
+171	Halftone - growing dots based on brightness
+172	Stipple - dot density based on brightness
+173	Dice - dice eyes pattern
+174	Risograph - layered print with color offset
+175	Single-color screen print - grayscale + halftone on background
+176	Barrel / pincushion distortion
+177	Arc distortion - bend image
+178	Swirl - twist image
+179	Water ripple effect
+180	Polar distortion - tunnel, fisheye
+181	4-color palette - Workbench 1.x (OCS)
+182	4-color palette - Workbench 2.x/3.x
+183	32-color palette (4x4x2) - OCS
+184	64-color palette (4x4x4) - EHB
+185	256-color palette - AGA
+186	256-color palette - Workbench 3.x
+187	8-color palette - MagicWB (MUI)
+188	Fotografista
+189	No image
+190	OK
+191	Cancel
+192	Preview
+193	Show preview
+194	Apply and close
+195	Close without applying
+197	Photo editor
+198	Build
+199	Width (px):
+200	Height (px):
+201	Apply resize
+202	Cancel changes
+203	X (px):
+204	Y (px):
+205	Apply crop
+206	Cancel crop
+207	Select color
+208	Text color
+209	Font...
+210	Direction
+211	Increase
+212	Decrease
+213	Dithering
+214	With dither (better quality)
+216	With dither
+217	Without dither
+218	Enabled
+219	Disabled
+220	Intensity (1-10):
+221	Brightness (0-200, default 100):
+222	Gamma (100 = no change):
+223	Red (100 = no change):
+224	Green (100 = no change):
+225	Blue (100 = no change):
+226	Intensity (1-100):
+227	Intensity (0-100):
+228	Radius (1-5):
+229	Intensity (1-50):
+230	Cell size (1-100):
+231	Angle (0-179°):
+232	Cell size (4-16 px):
+233	Max line thickness (1-8):
+234	Cell size (4-64 px):
+235	Subcell dot size (3-8 px):
+236	Threshold (1-100):
+237	Ink amount (lighter = less):
+238	Strength (0-100):
+239	Saturation (0-100):
+240	Contrast (0-100):
+241	Curve (1-5):
+242	Smart Curves (0-100):
+243	Black point (0-255):
+244	White point (0-255):
+245	Straighten angle (-10 to +10°):
+248	Apply straighten and close
+249	Apply layer changes and close
+250	Close without saving
+255	Shadow color
+256	Highlight color
+257	Ink color
+258	Paper color
+259	Preset name:
+260	Load
+261	Delete
+263	Setting
+264	Brightness
+266	Sharpen
+267	Solarize
+268	Sepia
+269	Oil paint
+270	Charcoal
+271	Blur
+273	Pixelate
+274	Vignette
+275	Edge detection
+276	Film grain
+277	Save Duotone preset
+278	Load Duotone preset
+279	Contrast
+280	Crop
+281	Resize
+282	White balance
+283	Levels
+284	Vivid
+285	Photo enhancement
+286	Layers
+287	Straighten scan
+288	Colorize
+289	HSB balance
+290	Black & white
+291	Posterize
+292	Engraving
+293	Crosshatch
+294	Halftone
+295	Stipple
+296	Dice
+297	Linocut
+298	Risograph
+299	Screen print
+300	OCS 32-color palette
+301	EHB 64-color palette
+302	AGA 256-color palette
+303	Workbench 256-color palette
+304	MagicWB 8-color palette
+305	Barrel distortion
+306	Arc distortion
+307	Swirl
+308	Water ripple
+309	Polar distortion
+310	Preferences
+311	Saturation (0-200, default 100):
+312	Hue (0-200, default 100):
+313	Contrast (0-10):
+314	Number of colors (2-64):
+315	Opacity:
+316	Mode:
+317	Select color...
+320	Select type:
+321	Select arc angle:
+322	Select intensity:
+323	Select variant:
+324	Weak barrel
+325	Medium barrel
+326	Strong barrel
+327	Weak pincushion
+328	Medium pincushion
+329	Strong pincushion
+330	45°
+331	90°
+332	180°
+333	360°
+334	90° + rotate
+335	180° + rotate
+336	Weak (45°)
+337	Medium (90°)
+338	Strong (180°)
+339	Very strong (270°)
+340	Full (360°)
+341	Reverse
+342	Light
+343	Medium
+344	Strong
+345	Concentric
+346	From corner
+347	Dense
+348	Full
+349	Half angle
+350	Quarter angle
+351	Ring
+352	Small radius
+353	Smooth
+354	Tunnel
+356	Fisheye
+357	Outer stretch
+358	Error
+359	Unsupported file format.
+360	Snapshot
+361	Original
+362	Gamma (10-500, 100=1.0):
+363	Add layer
+364	Merge layers
+365	Histogram equalization
+368	Undo:
+369	Redo:
+371	HDR 2
+372	WB 1.x
+373	WB 2.x
+374	OCS 32
+375	EHB
+376	AGA 256
+377	WB 256
+378	MagicWB
+379	Flip horizontal
+380	Flip vertical
+383	Rotate 180
+384	Straighten
+390	False-color IR
+392	Thermal
+394	Emboss
+396	Duotone
+397	Contrast (before conversion)
+398	Red
+399	Green
+403	Hue
+404	Saturation
+405	Gamma
+406	Strength
+407	Threshold
+408	Angle
+409	Cell size
+410	Thickness
+411	Dot size
+413	Radius
+414	Unknown
+415	Information
+417	Name:
+419	Alpha channel:
+420	Width:
+421	Height:
+422	Size:
+423	Date:
+424	Time:
+425	Yes
+426	No
+428	Thumbnail
+429	Select size:
+430	100 px
+431	200 px
+432	320 x 240
+433	640 x 480
+434	Done
+435	Thumbnail saved.
+436	Save thumbnail as
+437	JPEG compression quality (0-100):
+438	Normal
+439	Multiply
+440	Screen
+441	Overlay
+442	Soft Light
+443	Darker
+444	Lighter
+445	Background (original)
+446	Crimson + Cyan
+447	Black + Yellow
+448	Blue + Orange
+449	Crimson + Cyan + Yellow
+450	Black + Crimson + Yellow
+451	CMYK (4 colors)
+453	Select equalization mode:
+454	Luminance
+455	All
+457	Histogram
+458	Keyboard shortcuts
+459	Macro
+460	Start recording
+461	Stop and save
+462	Cancel recording
+463	Manage macros...
+464	Macros
+465	Play
+467	Save macro
+468	Macro name:
+470	Recording is already active.
+471	Add this step to macro?
+472	Yes|No
+473	Recording is not active.
+474	No steps to save.
+475	No image loaded.
+476	steps
+477	Recording macro
+478	HAM6 - 16 colors + Hold-Modify
+479	HAM8 - 64 colors + Hold-Modify
+480	HAM6 simulation (16 base colors with hold-modify modes)
+481	HAM8 simulation (64 base colors with hold-modify modes)
+482	HAM6
+483	HAM8
+484	Crop to selection
+485	Selection size...
+486	Save icon...
+487	Icon size:
+488	Icon format:
+489	Icon saved.
+491	Warning: this effect is very demanding. For images above 6 MP processing may take 30-60 seconds.
+492	Continue
+493	Glow...
+494	Glow radius:
+495	Amiga gradient...
+496	Amiga-style copper gradient overlay
+497	Amiga gradient (Agony)...
+498	Agony-style copper gradient
+499	Save as Windows icon...
+501	JPEG 2000 quality (0-100, 100=lossless):
+502	Incorrect development...
+503	Incorrect development — E-6/C-41 simulation
+504	Save icon package (ZIP)...
+505	Rename
+506	Language...
+507	Settings
+508	Export quality...
+509	Icon package
+510	No size selected.
+511	Icon package saved to:
+512	TIFF compression:
+514	Select platform:
+515	Select format:
+520	Reset
+522	Save current image as an icon
+523	Save icons in multiple sizes as a ZIP archive
+524	Start recording a macro
+525	Stop recording and save the macro
+526	Cancel recording without saving
+527	Play, rename or delete macros
+528	Change application language
+529	Set JPEG, JPEG 2000 and TIFF export quality
+530	About Fotografista
+531	Show keyboard shortcuts
+532	Interface...
+533	Interface settings
+534	Interface
+535	Canvas background color (only with standard Windows theme):
+537	Open image
+538	All files
+539	Clipboard
+540	Pasted
+541	LZW
+542	Flate
+543	JPEG
+544	New name:
+545	Language / Language
+546	Polski (Polish)
+547	English
+548	Selection size
+553	Selection: %d x %d
+554	Map to OCS 32-color palette with dithering
+555	Map to EHB 64-color palette with dithering
+556	Map to AGA 256-color palette with dithering
+557	Map to Workbench 256-color palette with dithering
+558	Map to MagicWB 8-color palette with dithering
+559	Hue top (0-360):
+560	Hue bottom (0-360):
+561	Number of bands (32-256):
+562	E-6 in C-41
+563	C-41 in E-6
+564	Kodak in Fuji developer
+565	Fuji in Kodak developer
+566	ECN-2 in C-41
+568	Font size (status bar):
+569	Classic AmigaOS (4 colors)
+570	Tiling...
+571	Tile image to fill target dimensions
+572	Amiga Background...
+573	Target resolution:
+574	Image alignment:
+575	Background color (MagicWB palette):
+576	Grey
+577	Black
+578	White
+579	Blue
+580	Dark grey
+581	Light grey
+582	Brown
+583	Salmon
+584	Amiga Background (stretched, MagicWB)...
+585	Scale image to Amiga resolution with stretched edge fill
+586	Custom color...
+587	Export...
+588	Import...
+589	Export macro
+590	Macro exported successfully.
+591	Import macro
+592	Invalid macro file.
+593	A macro with this name already exists. Overwrite?
+594	Macro imported successfully.
+595	Remember window size and position
+596	Number of recent files:
+597	Exit without saving changes
+598	Relief...
+599	Material bas-relief from image luminance
+600	Depth (1-100):
+601	Plaster / white stone
+602	White marble
+603	Gray stone
+604	Bronze / medal
+605	Sandstone
+606	Scale (%):
+607	Keep aspect ratio
+609	Emergo...
+610	Français (French)
+611	Español (Spanish)
+612	Italiano (Italian)
+613	Deutsch (German)
+614	Edit macro
+615	Remove step
+616	Manual
+617	Automatic
+618	Operation completed.
+620	The result is ready.
+621	You can return to your computer.
+622	Your coffee has probably gone cold.
+623	Congratulations. The CPU survived.
+624	I thought this would never end.
+625	Hallelujah! At last.
+626	It worked. Everything is ready.
+627	End of waiting.
+628	Thank you for your patience.
+629	Emergo — intelligent shadow detail recovery
+630	Preview 100%
+631	HAM simulation
+632	This effect is extremely demanding.\nFor images above 2 MP processing may take several minutes.
+633	Fake bokeh...
+634	Tilt-shift (miniature)...
+635	Graduated blur
+636	Strength:
+637	Shape:
+638	Radial (bokeh)
+639	Linear (tilt-shift)
+640	CMYK misregistration...
+641	CMYK misregistration
+642	Shift strength:
+643	Tritone...
+644	Tritone
+645	Quad-tone...
+646	Quad-tone
+647	Color 1 (shadows):
+648	Color 2 (midtones):
+649	Color 3 (highlights):
+650	Color 4 (extreme highlights):
+651	Chromatic aberration...
+652	Chromatic aberration
+653	Shift:
+654	Centrum X:
+655	Centrum Y:
+656	Radius:
+657	Falloff:
+658	Band position:
+659	Band height:
+660	Other retro computers
+661	C64 — Pepto / Colodore...
+662	Commodore 64 palette — Pepto or Colodore
+663	Commodore 64
+664	Map to Commodore 64 palette with dithering
+665	Pepto
+666	Colodore
+667	ZX Spectrum...
+668	ZX Spectrum palette
+669	ZX Spectrum
+670	Map to ZX Spectrum palette with dithering
+671	Game Boy — DMG / Pocket...
+672	Game Boy palette — DMG (green) or Pocket (gray)
+673	Game Boy
+674	Map to Game Boy palette with dithering
+675	DMG (green)
+676	Pocket (gray)
+677	NES (Nestopia)...
+678	NES palette (Nestopia)
+679	NES — Nestopia
+680	Map to NES Nestopia palette with dithering
+681	Pattern (retro)
+682	Floyd–Steinberg (smooth)
+683	The selected mode is very slow for large images.\nFor images above 2 MP preview and applying the effect may take several minutes.\nOther modes are much faster.
+684	Performance...
+685	Maximum working resolution:
+687	Image
+688	Inverted tunnel
+689	30° slice
+690	Full HD (1920×1080)
+691	4K (3840×2160)
+692	Performance and maximum working resolution
+693	SVGA (800×600)
+694	Cyan
+695	Magenta
+696	Yellow
+699	Orange
+701	Pink
+702	Navy
+703	Purple
+704	Turquoise
+705	Coral
+706	Burgundy
+707	Mint
+708	Risograph v2...
+709	Risograph v3...
+710	Number of layers:
+711	Layer 1...
+712	Layer 2...
+713	Layer 3...
+714	Layer 4...
+715	Layer 5...
+716	Pick
+717	Prepare for screenprint (t-shirts)...
+718	T-Shirt Design...
+719	Number of colors:
+720	2. Color to ink mapping
+721	3. Detail cleanup
+722	Min. area (px):
+724	Pick ink
+725	Ink:
+726	Simulate screenprint raster
+727	T-Shirt pipeline
+728	1. Posterization
+729	Islands removed:
+730	T-Shirt Design
+731	Smooth preview scaling
+732	Performance measurement
+733	This test will measure the speed of 12 image processing effects.\nDuration: from a few seconds to several minutes -\ndepends on image resolution and CPU power.
+734	Performance test
+735	Preparing image...
+736	Image: %s (%d×%d)
+737	%s: %.2f ms (avg of %d)
+738	Time: %d min %d s
+739	(aborted)
+740	Hardest: %s (%.2f ms).
+741	Performance results
+745	Cross process
+746	Bas-relief
+750	Risography v2
+751	HAM8 (64 colors)
+752	HAM6 (16 colors)
+753	Emergo
+754	Measure the performance of graphic effects
+755	Processing
+756	Brush radius (1-30):
+757	Glitch...
+758	Digital image distortion — RGB shift, noise, horizontal slice shift
+759	RGB Shift:
+760	Line jitter:
+761	Noise:
+762	CRT effect:
+763	Block loss:
+764	Horizontal slice shift:
+765	Darkens every other line at PAL ratio — higher value = darker gaps
+766	Online documentation
+767	Open the Fotografista website in your web browser
+768	Mimeograph...
+769	Mimeograph — ink edges on white background
+770	Mimeograph
+771	Granularity:
+772	Edge sensitivity:
+773	Toner intensity:
+775	Export PDF...
+776	Export image to PDF file
+777	Export PDF
+778	Done.
+779	PDF saved successfully.
+780	Error saving PDF.
+781	Export comparison...
+782	Export image comparison — side-by-side with original
+783	Comparison
+784	No file to compare — the image was not opened from a file.
+785	Comparison saved successfully.
+786	Error saving comparison.
+787	Current image
+788	Fit to size with crop...
+789	Scale image to target size, cropping excess
+790	Full HD 1920×1080
+791	Fit to size with crop
+794	Anchor:
+795	Top-left
+796	Top-right
+797	Bottom-left
+798	Bottom-right
+799	Apply resize with crop
+800	Cancel resize with crop
+801	Image was not loaded from a file.\nFit-to-size with crop will use the current image\nwhich may have lower resolution due to Performance settings.
+802	Tools
+803	Launcher
+804	Color depth
+805	Loading engine
+806	Quick action launcher
+807	Program registered
+808	Enter license key
+809	Enter the email used for purchase:
+810	Enter license key:
+811	Success
+812	License key has been activated.
+814	Invalid key or email!
+815	Trial version expired
+816	Fotografista trial version expired after 7 days.
+817	To continue, enter your license key:
+818	Close program
+819	Enter your email address.
+820	Enter your license key.
+821	Batch processing...
+822	Apply a saved macro to all images in a folder
+823	Source folder:
+824	Output folder:
+825	Macro:
+826	Browse...
+827	Start
+828	Processing...
+831	Select source folder
+832	Select output folder
+833	No saved macros.
+834	Batch processing is already running.
+835	Folder is empty.
+836	No images found in source folder.
+837	Fill in all fields.
+838	Processed
+839	errors
+840	Macro contains a resize step. Combining it with batch scaling may give unexpected results.
+841	Scale to long edge
+842	px:
+843	Do not run macro
+844	Buy license
+845	Artificial bokeh
+846	Artistic
+847	Assign ink 1
+848	Assign ink 2
+849	Assign ink 3
+850	Assign ink 4
+851	Assign ink 5
+852	Assign ink 6
+853	Incorrect development
+854	Blocking
+855	Brightness before conversion (0-200):
+856	Center X (0-100):
+857	Center Y (0-100):
+858	Choose color...
+859	Choose color:
+860	Choose theme:
+861	Choose...
+862	CMYK error
+863	Contrast before conversion (0-10):
+864	Creating overprint
+865	Crosshatching
+866	Destination folder:
+867	Detection sensitivity (1-100):
+868	Dot size multiplier:
+869	Dot sub-cell size (3-8 px):
+870	Duplicator
+871	Effect A:
+872	Effect B:
+873	Effect blending
+874	Effect strength (0-100):
+875	Embossing
+876	Fade (0-100):
+877	Fit to size with cropping
+878	Graininess:
+879	Image information
+880	Interface font size (pt):
+881	JPEG quality in TIFF:
+882	Line angle (0-179):
+883	Material:
+884	Maximum line thickness (1-8):
+885	Mockup
+886	No compression
+887	Oil painting
+888	Other color...
+889	Outline
+890	Outline...
+891	Palette
+892	Palette:
+893	Photographic processes
+894	Pixelation
+895	Preset:
+896	Raster
+897	Restore original
+898	Save quality
+899	Scale to long side, px:
+900	Scaling method:
+901	Scan straightening
+902	Select
+903	Shadow curve (1 = gentle, 5):
+904	Solarization
+905	Stippling
+906	Straightening angle (-10 to +10 degrees):
+907	Toner:
+908	Vividness
+909	Without running the macro
+910	Zoom
+911	Strength (1-100):
+912	Radius (1-100):
+913	Band position (0-100):
+914	Band height (1-100):
+915	Strength (0 = none, 100 = max):
+916	Contrast (0 = none, 100):
+917	Brush radius (1-10):
+918	Glow radius (1-20):
+919	Line jitter (0-100):
+920	Noise (0-100):
+921	CRT effect (0-100):
+922	Block loss (0-100):
+923	Horizontal band shifts (0-100):
+924	RGB channel shift (0-30):
+925	WebP compression quality (0-100):
+926	4. Screen print
+927	Professional graphics editor
+928	Architecture: 100% native (VCL / Object Pascal)
+929	Performance: direct access to the rendering pipeline
+930	Environment: independent of x86/x64 runtime
+931	High-performance desktop application
+932	without the overhead of web frameworks.
+935	Manage macros
+936	Risograph v1
+937	Risograph v2
+938	Wave density
+939	The benchmark will test the speed of 12 graphics operations.
+940	Duration: from about a dozen seconds to several minutes, depending on image resolution and processor speed.
+941	(new)
+942	Name
+943	Format
+944	Width
+945	Height
+946	Resolution X
+947	Resolution Y
+948	EXIF (%d properties)
+949	Could not open the file to read metadata.
+950	Color 2 (highlights):
+951	WB 1.x palette
+952	WB 2.x/3.x palette
+953	OCS 32 palette
+954	EHB 64 palette
+955	AGA 256 palette
+956	Workbench 256 palette
+957	MagicWB palette
+958	Tiling
+959	Risograph v3
+960	Amiga background
+961	Amiga background (stretched, MagicWB)
+962	Glow
+963	Glitch
+964	Amiga gradient
+965	Amiga gradient (Agony)
+966	NES - Nestopia
+967	Unsupported step: 
+968	Cannot compare - image was not opened from a file.
+969	File does not exist:
+970	Source file not found on disk to restore the original.
+971	Open an image first.
+972	Macro is empty - not saved.
+973	Macro name
+974	Enter macro name:
+975	Cancelled - macro was not saved.
+976	No images in the source folder.
+977	New macro name:
+978	Delete macro "%s"?
+979	Delete step "%s"?
+980	No image to process.
+981	Load an image before running the performance test.
+982	Cannot load image:
+983	Add "%s" to macro?
+984	File "%s" already exists.
+985	Overwrite?
+986	Export comparison
+987	Image: current image (%d x %d)
+988	  Test time: %s
+989	  The heaviest challenge was: %s
+990	Cyan + Magenta
+991	Cyan + Yellow
+992	Cyan + Black
+993	Magenta + Yellow
+994	Magenta + Black
+995	Yellow + Black
+996	Cyan + Magenta + Yellow
+997	Cyan + Magenta + Black
+998	Cyan + Yellow + Black
+999	Magenta + Yellow + Black
+1000	Cyan + Magenta + Yellow + Black
+1001	Green + Pink
+1002	Navy + Yellow
+1003	Purple + Yellow
+1004	Turquoise + Coral
+1005	Maroon + Mint
+1006	Navy + Pink
+1007	Green + Orange
+1008	Purple + Coral
+1009	Turquoise + Yellow
+1010	Move image
+1011	Space + LMB
+1012	or MMB
+1013	The image has not been saved.
+1014	Do you want to save your changes before closing?
+1015	No codec to read the file.
+1016	Install the appropriate image extension from Microsoft Store.
+1017	No TIFF encoder in the system.
+1018	TIFF save error
+1019	Unsupported save format: %s
+933	Relief
+934	Fake bokeh
+829	Tilt-shift (miniature)
+830	Export quality
+792	Performance
+793	C64 — Pepto / Colodore
+774	Game Boy — DMG / Pocket
+749	NES (Nestopia)
+748	Language
+1020	Raster CMYK...
+1021	Timelapse...
+1022	Stereogram...
+1023	Remove background...
+1024	Cell size (1-32 px):
+1025	Dot scale [%]:
+1026	Stereogram
+1027	Output mode:
+1028	Autostereogram (SIRDS)
+1029	Anaglyph (red-cyan glasses)
+1030	Period (px):
+1031	Depth (px):
+1032	Random seed
+1033	3840×2160
+1034	1920×1080
+1035	1280×720
+1036	Alphabetically
+1037	By creation date
+1041	Save to file
+1042	Show as presentation
+1043	In window
+1044	Full screen
+1045	Timelapse
+1046	Frames per second:
+1047	Hold first frame [s]:
+1048	Hold last frame [s]:
+1049	Invalid frame rate
+1050	Cannot initialize video encoding
+1051	Cannot create output file
+1052	Cannot create video stream
+1053	Cannot initialize video encoder
+1054	Cannot start writing video
+1055	Cannot write video frame
+1056	Cannot save video file
+1057	No video encoder available (H.264 or WMV)
+1058	File name:
+1059	Retouch...
+1060	Retouch
+1061	Erase
+1062	Restore
+1063	Brush size:
+1064	Remove background
+1065	Corner from which to remove background:
+1066	Tolerance
+1067	Eraser
+1068	Black (PRL)
+1069	Violet (West)
+1070	Navy (offset)
+1071	Red (stamps)
+1072	PRL samizdat - white-protein duplicator, sooty ink, smeared stencil
+1073	Western spirit duplicator - crystal violet dye, alcohol smell
+1074	Offset duplicator master - office copy
+1075	Stamps, headings and official forms
+1076	Western offices - less common ink
+1077	Faded, aged copy
+1078	Ink wear:
+1079	Paint brush
+1080	Clone brush
+1081	Dodge
+1082	Burn
+1083	Brightness brush
+1084	Focus brush
+1085	Bucket
+1086	Eyedropper
+1087	Elliptical selection
+1088	Rectangular selection
+1089	Selection display
+1090	Selection outline
+1091	Filled
+1092	Protection mask
+1093	Cover
+1094	Uncover
+1095	Show protection mask
+1096	Clear protection mask
+1097	Protect selection
+1098	Unprotect selection
+1099	Lasso
+1100	Magic wand
+1101	Selection...
+1102	Selection
+1103	Mask
+1104	Batch processing
+1105	Distort
+1106	Load preset
+1107	Save preset
+1108	Fill color
+1109	Click the preview to set the white point
+1110	Color replacement brush
+1111	Color to replace
+1112	Replacement color
+1113	Retain shading
+1114	Protect the selected area from effects
+1115	Remove protection from the selected area
+1116	Shows protected areas with diagonal red overlay
+1117	Remove all protected areas

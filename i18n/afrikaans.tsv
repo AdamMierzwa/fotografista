@@ -1,0 +1,1048 @@
+﻿1	Lêer
+2	Wysig
+3	Effekmengsel
+4	Bekyk
+5	Ontleed
+6	Pas aan
+7	Kleure
+8	Effekte
+9	Druk
+10	Eksperimenteel
+11	Verdistortings
+12	Amiga
+13	Hulp
+14	Maak oop...
+15	Stoor as...
+16	Beeldinligting
+17	(Geen)
+18	Sluit
+19	Voorkeure...
+20	Verlaat
+21	Ontdoen
+22	Herdoen
+23	Kopieer
+24	Plak
+25	Herstel oorspronklike
+26	Vee geskiedenis uit
+27	Effekmengsel...
+28	Mengsel (0=A, 100=B):
+29	Voeg sigbare lae saam
+30	Verwyder alles
+31	Zoem in
+32	Zoem uit
+33	Pas by venster
+34	100%
+35	50%
+36	25%
+37	200%
+38	400%
+39	Histogram...
+40	Egaliseer histogram...
+41	Spieël horisontaal
+42	Spieël vertikaal
+43	Draai links
+44	Draai regs
+46	Maak skandering reguit...
+47	Kontras...
+48	Helderheid...
+49	Gamma-korreksie...
+50	Vlakke...
+51	Witbalans...
+52	Verskerp...
+53	Lewendigheid...
+54	Fotoverbetering...
+55	Sny uit...
+56	Verander grootte...
+57	Kleur in...
+58	HSB-balans...
+59	Solariseer...
+60	Duotoon...
+61	Sepia...
+62	Sianotipe
+63	Soutdruk
+64	X-strale
+65	Valskleur-infrarooi
+66	Nagvisie
+68	Orton
+69	Swart en wit...
+70	Grysskaal
+71	Negatief
+72	Filmkorrel...
+73	Olieverf...
+74	Houtskool...
+75	Vervaag...
+76	Reliëf...
+77	Pikseleer...
+78	Vignet...
+79	Posteriseer...
+80	Randopsporing...
+81	Linosnee...
+82	Gravering...
+83	Kruisarsering...
+84	Halftoon...
+85	Stippeling...
+86	Dobbelstene...
+87	Risografie v1...
+88	Sifdruk...
+89	Vatvervorming...
+90	Boogvervorming...
+91	Draaikolk...
+92	Waterrimpeling...
+93	Polêre vervorming...
+94	Workbench 1.x-palet (OCS)
+95	Workbench 2.x/3.x-palet
+96	OCS 32-kleurpalet...
+97	EHB 64-kleurpalet...
+98	AGA 256-kleurpalet...
+99	Workbench 256-kleurpalet...
+100	MagicWB-palet (8 kleure)...
+101	Aangaande
+102	Maak 'n beeldlêer oop
+103	Stoor die beeld onder 'n nuwe naam
+104	Wys beeldinligting
+105	Sluit die huidige beeld
+106	Programinstellings
+107	Verlaat die program
+108	Ontdoen die laaste bewerking
+109	Herdoen die ontdane bewerking
+110	Kopieer die beeld na die knipbord
+111	Plak die beeld vanaf die knipbord as 'n nuwe laag
+112	Herstel die beeld na sy oorspronklike toestand
+113	Vee die bewerkingsgeskiedenis uit - onomkeerbaar
+114	Meng twee effekte met 'n skuifbalk
+115	Čeština (Tsjeggies)
+116	Português (Portugees)
+117	Afrikaans
+118	Zoem in op die beeld
+119	Zoem uit op die beeld
+120	Pas die beeld by die venster
+121	Wys teen 1:1-skaal
+122	Wys teen 50%-skaal
+123	Wys teen 25%-skaal
+124	Wys teen 200%-skaal
+125	Wys teen 400%-skaal
+126	Wys kleurhistogram
+127	Egaliseer histogram - verbeter kontras
+128	Spieël die beeld horisontaal
+129	Spieël die beeld vertikaal
+130	Draai die beeld 90 grade links
+131	Draai die beeld 90 grade regs
+132	Draai die beeld 180 grade
+133	Maak skandering reguit - draai tot +/- 10 grade met outomatiese uitsny
+134	Pas kontras aan
+135	Pas helderheid aan
+136	Gamma-korreksie
+137	Stel swartpunt, gamma en witpunt in - volledige toonbeheer
+138	Witbalans - kleurtemperatuurkorreksie
+139	Verskerp die beeld
+140	Lewendigheid - versadigde, lewendige kleure
+141	Fotoverbetering (Vermenigvuldig)
+142	Sny die beeld uit
+143	Verander die grootte van die beeld
+144	Kleur die beeld met die gekose kleur in
+145	Pas helderheid, versadiging en tint aan
+146	Solariseer - keer ligte kleure om
+147	Tweekleur-effek - skaduwees en hoogtepunte
+148	Sepia - warm bruin monochroom
+149	Sianotipe - blou monochroom
+150	Soutdruk - warm bruin
+151	X-strale - omgekeerde kleure
+152	Valskleur-infrarooi - kanaalomruiling, rooi plante, blou lug
+153	Nagvisie - grysskaal + groen fosfor
+154	Termies - valskleur-aansig
+155	Orton - sagte gloed, droomagtige atmosfeer
+156	Skakel na swart en wit om met halftoon-opsie
+157	Skakel na grysskaal om
+158	Keer kleure om - negatief
+159	Voeg filmkorrel by - ewekansige geraas
+160	Olieverf - kwassimulasie
+161	Houtskool - houtskooltekensimulasie
+162	Vervaag die beeld
+163	Reliëf
+164	Pikseleer - mosaïekeffek
+165	Vignet - verdonker die rande
+166	Posteriseer - verminder die aantal kleure
+167	Randopsporing - sketseffek
+168	Linosnee - sterk swart-en-wit-kontras
+169	Gravering - simulasie van lyngravering
+170	Kruisarsering teen twee hoeke
+171	Halftoon - groeiende kolletjies volgens helderheid
+172	Stippeling - puntdigtheid volgens helderheid
+173	Dobbelstene - dobbelsteenpatroon
+174	Risografie - gelaagde drukwerk met kleurverskuiwing
+175	Enkelkleur-sifdruk - grysskaal + halftoon op agtergrond
+176	Vat- / kussingvervorming
+177	Boogvervorming - buig die beeld
+178	Draaikolk - draai die beeld
+179	Waterrimpel-effek
+180	Polêre vervorming - tonnel, visoog
+181	4-kleurpalet - Workbench 1.x (OCS)
+182	4-kleurpalet - Workbench 2.x/3.x
+183	32-kleurpalet (4x4x2) - OCS
+184	64-kleurpalet (4x4x4) - EHB
+185	256-kleurpalet - AGA
+186	256-kleurpalet - Workbench 3.x
+187	8-kleurpalet - MagicWB (MUI)
+188	Fotografista
+189	Geen beeld
+190	OK
+191	Kanselleer
+192	Voorskou
+193	Wys voorskou
+194	Pas toe en sluit
+195	Sluit sonder om toe te pas
+197	Fotoredigeerder
+198	Bou
+199	Breedte (px):
+200	Hoogte (px):
+201	Pas grootte aan
+202	Kanselleer veranderinge
+203	X (px):
+204	Y (px):
+205	Pas knip toe
+206	Kanselleer knip
+207	Kies kleur
+208	Tekskleur
+209	Lettertipe...
+210	Rigting
+211	Vergroot
+212	Verklein
+213	Dither
+214	Met dither (beste gehalte)
+216	Met dither
+217	Sonder dither
+218	Aangeskakel
+219	Afgeskakel
+220	Intensiteit (1-10):
+221	Helderheid (0-200, standaard 100):
+222	Gamma (100 = geen verandering):
+223	Rooi (100 = geen verandering):
+224	Groen (100 = geen verandering):
+225	Blou (100 = geen verandering):
+226	Intensiteit (1-100):
+227	Intensiteit (0-100):
+228	Radius (1-5):
+229	Intensiteit (1-50):
+230	Selgrootte (1-100):
+231	Hoek (0-179°):
+232	Selgrootte (4-16 px):
+233	Maksimum lyndikte (1-8):
+234	Selgrootte (4-64 px):
+235	Subsel-puntgrootte (3-8 px):
+236	Drempel (1-100):
+237	Inkhoeveelheid (ligter = minder):
+238	Intensiteit (0-100):
+239	Versadiging (0-100):
+240	Kontras (0-100):
+241	Kurwe (1-5):
+242	Slim kurwes (0-100):
+243	Swartpunt (0-255):
+244	Witpunt (0-255):
+245	Reguitmaakhoek (-10 tot +10°):
+248	Pas reguitmaak toe en sluit
+249	Pas laagveranderinge toe en sluit
+250	Sluit sonder om te stoor
+255	Skadukleur
+256	Hoogtepuntkleur
+257	Inkkleur
+258	Papierkleur
+259	Voorinstellingsnaam:
+260	Laai
+261	Vee uit
+263	Instelling
+264	Helderheid
+266	Verskerp
+267	Solariseer
+268	Sepia
+269	Olieverf
+270	Houtskool
+271	Vervaag
+273	Pikseleer
+274	Vignet
+275	Randopsporing
+276	Filmkorrel
+277	Stoor duotoon-voorinstelling
+278	Laai duotoon-voorinstelling
+279	Kontras
+280	Knip
+281	Verander grootte
+282	Witbalans
+283	Vlakke
+284	Lewendigheid
+285	Fotoverbetering
+286	Lae
+287	Reguit maak
+288	Kleur in
+289	HSB-balans
+290	Swart en wit
+291	Posteriseer
+292	Gravering
+293	Kruisarsering
+294	Halftoon
+295	Stippeling
+296	Dobbelstene
+297	Linosnee
+298	Risografie
+299	Sifdruk
+300	OCS 32-kleurpalet
+301	EHB 64-kleurpalet
+302	AGA 256-kleurpalet
+303	Workbench 256-kleurpalet
+304	MagicWB 8-kleurpalet
+305	Vatvervorming
+306	Boogvervorming
+307	Draaikolk
+308	Waterrimpeling
+309	Polêre vervorming
+310	Voorkeure
+311	Versadiging (0-200, standaard 100):
+312	Tint (0-200, standaard 100):
+313	Kontras (0-10):
+314	Aantal kleure (2-64):
+315	Ondeursigtigheid:
+316	Modus:
+317	Kies kleur...
+320	Kies tipe:
+321	Kies booghoek:
+322	Kies intensiteit:
+323	Kies variant:
+324	Ligte vatvervorming
+325	Medium vatvervorming
+326	Sterk vatvervorming
+327	Ligte kussingvervorming
+328	Medium kussingvervorming
+329	Sterk kussingvervorming
+330	45°
+331	90°
+332	180°
+333	360°
+334	90° + draai
+335	180° + draai
+336	Lig (45°)
+337	Medium (90°)
+338	Sterk (180°)
+339	Baie sterk (270°)
+340	Volledig (360°)
+341	Omgekeer
+342	Lig
+343	Medium
+344	Sterk
+345	Konsentries
+346	Vanaf hoek
+347	Dig
+348	Volledig
+349	Halwe hoek
+350	Kwarthoek
+351	Ring
+352	Klein radius
+353	Glad
+354	Tonnel
+356	Visoog
+357	Buite-uitrekking
+358	Fout
+359	Lêerformaat word nie ondersteun nie.
+360	Kiekie
+361	Oorspronklik
+362	Gamma (10-500, 100 = 1,0):
+363	Voeg laag by
+364	Voeg lae saam
+365	Histogram-egalisering
+368	Ontdoen:
+369	Herdoen:
+371	HDR 2
+372	WB 1.x
+373	WB 2.x
+374	OCS 32
+375	EHB
+376	AGA 256
+377	WB 256
+378	MagicWB
+379	Spieël horisontaal
+380	Spieël vertikaal
+383	Draai 180°
+384	Reguit maak
+390	Valskleur-infrarooi
+392	Termies
+394	Reliëf
+396	Duotoon
+397	Kontras (voor omskakeling)
+398	Rooi
+399	Groen
+403	Tint
+404	Versadiging
+405	Gamma
+406	Sterkte
+407	Drempel
+408	Hoek
+409	Selgrootte
+410	Dikte
+411	Kolgrootte
+413	Radius
+414	Onbekend
+415	Inligting
+417	Naam:
+419	Alfa-kanaal:
+420	Breedte:
+421	Hoogte:
+422	Grootte:
+423	Datum:
+424	Tyd:
+425	Ja
+426	Nee
+428	Kleinkiekie
+429	Kies grootte:
+430	100 px
+431	200 px
+432	320 x 240
+433	640 x 480
+434	Klaar
+435	Kleinkiekie gestoor.
+436	Stoor kleinkiekie as
+437	JPEG-kompressiegehalte (0-100):
+438	Normaal
+439	Vermenigvuldig
+440	Skerm
+441	Oorleg
+442	Sagte Lig
+443	Donkerder
+444	Ligter
+445	Agtergrond (oorspronklik)
+446	Karmosyn + Siaan
+447	Swart + Geel
+448	Blou + Oranje
+449	Karmosyn + Siaan + Geel
+450	Swart + Karmosyn + Geel
+451	CMYK (4 kleure)
+453	Kies egalisasiemodus:
+454	Luminessensie
+455	Alles
+457	Histogram
+458	Sleutelbordkortpaaie
+459	Makro
+460	Begin opname
+461	Stop en stoor
+462	Kanselleer opname
+463	Bestuur makro's...
+464	Makro's
+465	Speel
+467	Stoor makro
+468	Makronaam:
+470	Opname is reeds aktief.
+471	Voeg hierdie stap by makro?
+472	Ja|Nee
+473	Opname is nie aktief nie.
+474	Geen stappe om te stoor nie.
+475	Geen beeld gelaai nie.
+476	stappe
+477	Makro-opname
+478	HAM6 - 16 kleure + Hou-Wysig
+479	HAM8 - 64 kleure + Hou-Wysig
+480	HAM6-simulasie (16 basiskleure met hou-wysig-modusse)
+481	HAM8-simulasie (64 basiskleure met hou-wysig-modusse)
+482	HAM6
+483	HAM8
+484	Knip na seleksie
+485	Seleksiegrootte...
+486	Stoor ikoon...
+487	Ikoongrootte:
+488	Ikoonformaat:
+489	Ikoon gestoor.
+491	Waarskuwing: hierdie effek is baie veeleisend. Vir beelde bo 6 MP kan verwerking 30-60 sekondes neem.
+492	Gaan voort
+493	Gloed...
+494	Gloedradius:
+495	Amiga-gradiënt...
+496	Amiga-styl koper gradiënt oorleg
+497	Amiga-gradiënt (Agony)...
+498	Agony-styl koper gradiënt
+499	Stoor as Windows-ikoon...
+501	JPEG 2000-gehalte (0-100, 100=verliesloos):
+502	Verkeerde ontwikkeling...
+503	Verkeerde ontwikkeling - E-6/C-41-simulasie
+504	Stoor ikoonpakket (ZIP)...
+505	Hernoem
+506	Taal...
+507	Instellings
+508	Uitvoergehalte...
+509	Ikoonpakket
+510	Geen grootte gekies nie.
+511	Ikoonpakket gestoor na:
+512	TIFF-kompressie:
+514	Kies platform:
+515	Kies formaat:
+520	Stel terug
+522	Stoor huidige beeld as 'n ikoon
+523	Stoor ikone in verskeie groottes as 'n ZIP-argief
+524	Begin opname van makro
+525	Stop opname en stoor die makro
+526	Kanselleer opname sonder om te stoor
+527	Speel, hernoem of vee makro's uit
+528	Verander programtaal
+529	Stel JPEG-, JPEG 2000- en TIFF-uitvoergehalte
+530	Oor Fotografista
+531	Wys sleutelbordkortpaaie
+532	Koppelvlak...
+533	Koppelvlakinstellings
+534	Koppelvlak
+535	Doek agtergrondkleur (slegs met die standaard Windows-tema):
+537	Maak beeld oop
+538	Alle lêers
+539	Knipbord
+540	Geplak
+541	LZW
+542	Flate
+543	JPEG
+544	Nuwe naam:
+545	Taal / Language
+546	Polski (Pools)
+547	English (Engels)
+548	Seleksiegrootte
+553	Seleksie: %d x %d
+554	Karteer na OCS 32-kleure-palet met dither
+555	Karteer na EHB 64-kleure-palet met dither
+556	Karteer na AGA 256-kleure-palet met dither
+557	Karteer na Workbench 256-kleure-palet met dither
+558	Karteer na MagicWB 8-kleure-palet met dither
+559	Tint bo (0-360):
+560	Tint onder (0-360):
+561	Aantal bande (32-256):
+562	E-6 in C-41
+563	C-41 in E-6
+564	Kodak in Fuji-ontwikkelaar
+565	Fuji in Kodak-ontwikkelaar
+566	ECN-2 in C-41
+568	Fontgrootte (statusbalk):
+569	Klassieke AmigaOS (4 kleure)
+570	Teëling...
+571	Teël beeld om teikendimensies te vul
+572	Amiga-agtergrond...
+573	Teikenresolusie:
+574	Beeldbelyning:
+575	Agtergrondkleur (MagicWB-palet):
+576	Grys
+577	Swart
+578	Wit
+579	Blou
+580	Donkergrys
+581	Liggrys
+582	Bruin
+583	Salm
+584	Amiga-agtergrond (uitgerek, MagicWB)...
+585	Skaal beeld na Amiga-resolusie met uitgerekte randvulling
+586	Aangepaste kleur...
+587	Voer uit...
+588	Voer in...
+589	Voer makro uit
+590	Makro suksesvol uitgevoer.
+591	Voer makro in
+592	Ongeldige makrolêer.
+593	'n Makro met hierdie naam bestaan reeds. Oorskryf?
+594	Makro suksesvol ingevoer.
+595	Onthou venstergrootte en posisie
+596	Aantal onlangse lêers:
+597	Sluit sonder om veranderinge te stoor
+598	Reliëf...
+599	Materiaal-basreliëf van beeldluminessensie
+600	Diepte (1-100):
+601	Pleister / wit klip
+602	Wit marmer
+603	Grys klip
+604	Brons / medalje
+605	Sandklip
+606	Skaal (%):
+607	Hou aspekverhouding
+609	Emergo...
+610	Français (Frans)
+611	Español (Spaans)
+612	Italiano (Italiaans)
+613	Deutsch (Duits)
+614	Wysig makro
+615	Verwyder stap
+616	Handmatig
+617	Outomaties
+618	Bewerking voltooi.
+620	Die resultaat is gereed.
+621	U kan na u rekenaar terugkeer.
+622	U koffie het waarskynlik koud geword.
+623	Geluk. Die SVE het oorleef.
+624	Ek het gedink dit sou nooit eindig nie.
+625	Halleluja! Uiteindelik.
+626	Dit het gewerk. Alles is gereed.
+627	Einde van wag.
+628	Dankie vir u geduld.
+629	Emergo — intelligente herstel van skadubesonderhede
+630	Voorskou 100%
+631	HAM-simulasie
+632	Hierdie effek is uiters veeleisend.\nVir beelde groter as 2 MP kan verwerking etlike minute duur.
+633	Vals bokeh...
+634	Kantel-skuif (miniatuur)...
+635	Gegradueerde vervaging
+636	Sterkte:
+637	Vorm:
+638	Radiaal (bokeh)
+639	Lineêr (kantel-skuif)
+640	CMYK-misregistrasie...
+641	CMYK-misregistrasie
+642	Verskuiwingssterkte:
+643	Driekleur...
+644	Driekleur
+645	Vierkleur...
+646	Vierkleur
+647	Kleur 1 (skaduwees):
+648	Kleur 2 (middeltone):
+649	Kleur 3 (hoogtepunte):
+650	Kleur 4 (uiterste hoogtepunte):
+651	Chromatiese aberrasie...
+652	Chromatiese aberrasie
+653	Verskuiwing:
+654	Sentrum X:
+655	Sentrum Y:
+656	Radius:
+657	Verval:
+658	Bandposisie:
+659	Bandhoogte:
+660	Ander retro-rekenaars
+661	C64 — Pepto / Colodore...
+662	Commodore 64-palet — Pepto of Colodore
+663	Commodore 64
+664	Karteer na Commodore 64-palet met dither
+665	Pepto
+666	Colodore
+667	ZX Spectrum...
+668	ZX Spectrum-palet
+669	ZX Spectrum
+670	Karteer na ZX Spectrum-palet met dither
+671	Game Boy — DMG / Pocket...
+672	Game Boy-palet — DMG (groen) of Pocket (grys)
+673	Game Boy
+674	Karteer na Game Boy-palet met dither
+675	DMG (groen)
+676	Pocket (grys)
+677	NES (Nestopia)...
+678	NES-palet (Nestopia)
+679	NES — Nestopia
+680	Karteer na NES Nestopia-palet met dither
+681	Patroon (retro)
+682	Floyd–Steinberg (glad)
+683	Die geselekteerde modus is baie stadig vir groot beelde.\nVir beelde groter as 2 MP kan voorskou en toepassing van die effek etlike minute duur.\nAnder modusse is baie vinniger.
+684	Werkverrigting...
+685	Maksimum werkresolusie:
+687	Beeld
+688	Omgekeerde tonnel
+689	30°-segment
+690	Volle HD (1920×1080)
+691	4K (3840×2160)
+692	Werkingsverrigting en maksimum werkresolusie
+693	SVGA (800×600)
+694	Siaan
+695	Magenta
+696	Geel
+699	Oranje
+701	Pienk
+702	Vlootblou
+703	Pers
+704	Turkoois
+705	Koraal
+706	Bourgondië
+707	Munt
+708	Risografie v2...
+709	Risografie v3...
+710	Aantal lae:
+711	Laag 1...
+712	Laag 2...
+713	Laag 3...
+714	Laag 4...
+715	Laag 5...
+716	Kies
+717	Berei voor vir skermdruk (t-hemde)...
+718	T-hempontwerp...
+719	Aantal kleure:
+720	2. Kleur-na-ink-kartering
+721	3. Detail-opruiming
+722	Min. area (px):
+724	Kies ink
+725	Ink:
+726	Simuleer skermdrukraster
+727	T-hemp pyplyn
+728	1. Posterisering
+729	Eilandjies verwyder:
+730	T-hempontwerp
+731	Vloeiende voorskou-skaal
+732	Meet die werkverrigting van grafiese effekte
+733	Hierdie toets sal die spoed van 12 beeldverwerkingseffekte meet.\nDuur: van 'n paar sekondes tot 'n paar minute -\nhang af van beeldresolusie en SVE-krag.
+734	Werkverrigtingstoets
+735	Berei beeld voor...
+736	Beeld: %s (%d×%d)
+737	%s: %.2f ms (gemiddeld van %d)
+738	Tyd: %d min %d s
+739	(gestop)
+740	Moeilikste: %s (%.2f ms).
+741	Prestasieresultate
+745	Kruisproses
+746	Bas-reliëf
+750	Risografie v2
+751	HAM8 (64 kleure)
+752	HAM6 (16 kleure)
+753	Gloed
+754	Meet die prestasie van grafiese effekte
+755	Verwerking
+756	Kwasradius (1-30):
+757	Fout...
+758	Digitale beeldvervorming — RGB-verskuiwing, geraas, horisontale snyverskuiwing
+759	RGB-verskuiwing:
+760	Lynjitter:
+761	Geraas:
+762	CRT-effek:
+763	Blokverlies:
+764	Horisontale snyverskuiwing:
+765	Verdonker elke ander lyn teen PAL-verhouding — hoër waarde = donkerder gapings
+766	Aanlyn dokumentasie
+767	Maak die Fotografista-webwerf in jou webblaaier oop
+768	Mimeograaf...
+769	Mimeograaf — inkrande op wit agtergrond
+770	Mimeograaf
+771	Korrelrigheid:
+772	Randgevoeligheid:
+773	Tonerintensiteit:
+775	Voer PDF uit...
+776	Voer beeld na PDF-lêer uit
+777	Voer PDF uit
+778	Klaar.
+779	PDF suksesvol gestoor.
+780	Fout tydens stoering van PDF.
+781	Voer vergelyking uit...
+782	Voer beeldvergelyking uit — langs mekaar met oorspronklike
+783	Vergelyking
+784	Geen lêer om te vergelyk nie — die beeld is nie vanaf 'n lêer oopgemaak nie.
+785	Vergelyking suksesvol gestoor.
+786	Fout tydens stoering van vergelyking.
+787	Huidige beeld
+788	Pas by grootte met snoei...
+789	Skaal beeld na teikengrootte, oortollige snoei
+790	Volle HD 1920×1080
+791	Pas by grootte met snoei
+794	Anker:
+795	Links bo
+796	Regs bo
+797	Links onder
+798	Regs onder
+799	Pas grootte met snoei toe
+800	Kanselleer grootte met snoei
+801	Beeld is nie van 'n lêer gelaai nie.\nPas by grootte met snoei sal die huidige beeld gebruik\nwat dalk 'n laer resolusie het as gevolg van Werkverrigting-instellings.
+802	Gereedskap
+803	Lanseerder
+804	Kleurdiepte
+805	Laaienjin
+806	Snelle‑aksie‑lanseerder
+807	Program geregistreer
+808	Voer die lisensiesleutel in
+809	Voer die e‑posadres van die aankoop in:
+810	Voer die lisensiesleutel in:
+811	Sukses
+812	Die lisensiesleutel is geaktiveer.
+814	Ongeldige sleutel of e‑pos!
+815	Proefweergawe het verval
+816	Fotografista se proefweergawe het ná 7 dae verval.
+817	Om voort te gaan, voer jou lisensiesleutel in:
+818	Sluit program
+819	Voer jou e‑posadres in.
+820	Voer jou lisensiesleutel in.
+821	Bondelverwerking...
+822	Pas ’n gestoorde makro toe op alle beelde in ’n vouer
+823	Bronvouer:
+824	Uitvoervouer:
+825	Makro:
+826	Blaai...
+827	Begin
+828	Verwerking...
+831	Kies bronvouer
+832	Kies uitvoervouer
+833	Geen gestoorde makros nie.
+834	Bondelverwerking loop reeds.
+835	Vouer is leeg.
+836	Geen beelde in bronvouer gevind nie.
+837	Vul alle velde in.
+838	Verwerk
+839	foute
+840	Makro bevat ’n grootteveranderingsstap. Kombinasie met bondelskalering kan onverwagte resultate gee.
+841	Skaleer na lang kant
+842	px:
+843	Moenie die makro uitvoer nie
+844	Koop lisensie
+845	Kunsmatige bokeh
+846	Artistiek
+847	Ken ink 1 toe
+848	Ken ink 2 toe
+849	Ken ink 3 toe
+850	Ken ink 4 toe
+851	Ken ink 5 toe
+852	Ken ink 6 toe
+853	Verkeerde ontwikkeling
+854	Blokkering
+855	Helderheid voor omskakeling (0-200):
+856	Middelpunt X (0-100):
+857	Middelpunt Y (0-100):
+858	Kies kleur...
+859	Kies kleur:
+860	Kies tema:
+861	Kies...
+862	CMYK-fout
+863	Kontras voor omskakeling (0-10):
+864	Skep van opdruk
+865	Kruisskadulyne
+866	Bestemmingsgids:
+867	Opsporingsensitiwiteit (1-100):
+868	Kolgrootte-vermenigvuldiger:
+869	Sub-selgrootte van kol (3-8 px):
+870	Dupliseerder
+871	Effek A:
+872	Effek B:
+873	Effekvermenging
+874	Effekssterkte (0-100):
+875	Reliëf
+876	Verdowwing (0-100):
+877	Pas by grootte met bysnyding
+878	Korrelrigheid:
+879	Beeldinligting
+880	Lettergrootte van koppelvlak (pt):
+881	JPEG-gehalte in TIFF:
+882	Lynhoek (0-179):
+883	Materiaal:
+884	Maksimum lyndikte (1-8):
+885	Voorbeeldmodel
+886	Geen kompressie
+887	Olieverfskildery
+888	Ander kleur...
+889	Buitelyn
+890	Buitelyn...
+891	Palet
+892	Palet:
+893	Fotografiese prosesse
+894	Verpikselering
+895	Voorinstelling:
+896	Raster
+897	Herstel oorspronklike
+898	Stoorgehalte
+899	Skaleer na lang kant, px:
+900	Skaleringsmetode:
+901	Skandering regmaak
+902	Kies
+903	Skaduboog (1 = sag, 5):
+904	Solarisasie
+905	Stippelwerk
+906	Regmaakhoek (-10 tot +10 grade):
+907	Toner:
+908	Lewendigheid
+909	Sonder om die makro uit te voer
+910	Zoem
+911	Sterkte (1-100):
+912	Radius (1-100):
+913	Bandposisie (0-100):
+914	Bandhoogte (1-100):
+915	Sterkte (0 = geen, 100 = maks.):
+916	Kontras (0 = geen, 100):
+917	Kwasradius (1-10):
+918	Gloedradius (1-20):
+919	Lynwewiging (0-100):
+920	Ruis (0-100):
+921	CRT-effek (0-100):
+922	Blokverlies (0-100):
+923	Horisontale bandverskuiwings (0-100):
+924	RGB-kanaalverskuiwing (0-30):
+925	WebP-kompressiegehalte (0-100):
+926	4. Skermdruk
+927	Professionele grafiese redigeerder
+928	Argitektuur: 100% inheems (VCL / Object Pascal)
+929	Werkverrigting: direkte toegang tot die renderpypleiding
+930	Omgewing: onafhanklik van die x86/x64-runtime
+931	Hoëprestasie-tafelrekenaartoepassing
+932	sonder die las van webraamwerke.
+935	Bestuur makro's
+936	Risografie v1
+937	Risografie v2
+938	Golfdigtheid
+939	Die werkverrigtingstoets sal die spoed van 12 grafiese bewerkings meet.
+940	Duur: van ongeveer tien sekondes tot etlike minute — afhangende van beeldresolusie en verwerkerspoed.
+941	(nuut)
+942	Naam
+943	Formaat
+944	Breedte
+945	Hoogte
+946	Resolusie X
+947	Resolusie Y
+948	EXIF (%d eienskappe)
+949	Kon nie die lêer oopmaak om metadata te lees nie.
+950	Kleur 2 (hoogtepunte):
+951	WB 1.x-palet
+952	WB 2.x/3.x-palet
+953	OCS 32-palet
+954	EHB 64-palet
+955	AGA 256-palet
+956	Workbench 256-palet
+957	MagicWB-palet
+958	Teëling
+959	Risografie v3
+960	Amiga-agtergrond
+961	Amiga-agtergrond (gerek, MagicWB)
+962	Glans
+963	Glitch
+964	Amiga-verloop
+965	Amiga-verloop (Agony)
+966	NES - Nestopia
+967	Nie-ondersteunde stap: 
+968	Kan nie vergelyk nie - die beeld is nie vanaf 'n lêer geopen nie.
+969	Die lêer bestaan nie:
+970	Bronlêer nie op skyf gevind om die oorspronklike te herstel nie.
+971	Maak eers 'n beeld oop.
+972	Makro is leeg - nie gestoor nie.
+973	Naam van die makro
+974	Voer die naam van die makro in:
+975	Gekanselleer - makro is nie gestoor nie.
+976	Geen beelde in die bronserver nie.
+977	Nuwe naam van die makro:
+978	Makro "%s" uitvee?
+979	Stap "%s" uitvee?
+980	Geen beeld om te verwerk nie.
+981	Laai 'n beeld voor die prestasietoets uitgevoer word.
+982	Kan nie die beeld laai nie:
+983	Voeg "%s" by die makro?
+984	Die lêer "%s" bestaan reeds.
+985	Oorskryf?
+986	Vergelyking uitvoer
+987	Beeld: huidige beeld (%d x %d)
+988	  Toetstyd: %s
+989	  Die swaarste uitdaging was: %s
+990	Siaan + Magenta
+991	Siaan + Geel
+992	Siaan + Swart
+993	Magenta + Geel
+994	Magenta + Swart
+995	Geel + Swart
+996	Siaan + Magenta + Geel
+997	Siaan + Magenta + Swart
+998	Siaan + Geel + Swart
+999	Magenta + Geel + Swart
+1000	Siaan + Magenta + Geel + Swart
+1001	Groen + Pienk
+1002	Vlootblou + Geel
+1003	Pers + Geel
+1004	Turkoois + Koraal
+1005	Bordo + Ment
+1006	Vlootblou + Pienk
+1007	Groen + Oranje
+1008	Pers + Koraal
+1009	Turkoois + Geel
+1010	Skuif beeld
+1011	Spatiebalk + LMB
+1012	of MMB
+1013	Die beeld is nie gestoor nie.
+1014	Wil u die veranderinge stoor voordat u sluit?
+1015	Geen kodek om die lêer te lees nie.
+1016	Installeer die toepaslike beelduitbreiding vanaf die Microsoft Store.
+1017	Geen TIFF-enkodeerder in die stelsel nie.
+1018	Fout by die stoor van TIFF
+1019	Ongesteunde stoorformaat: %s
+933	Reliëf
+934	Vals bokeh
+829	Kantel-skuif (miniatuur)
+830	Uitvoergehalte
+792	Werkverrigting
+793	C64 — Pepto / Colodore
+774	Game Boy — DMG / Pocket
+749	NES (Nestopia)
+748	Taal
+1020	CMYK-raster...
+1021	Timelapse...
+1022	Stereogram...
+1023	Verwyder agtergrond...
+1024	Selgrootte (1-32 px):
+1025	Puntskaal [%]:
+1026	Stereogram
+1027	Uitsetmodus:
+1028	Outostereogram (SIRDS)
+1029	Anaglief (rooi-siaan bril)
+1030	Periode (px):
+1031	Diepte (px):
+1032	Lukrake saad
+1033	3840×2160
+1034	1920×1080
+1035	1280×720
+1036	Alfabeties
+1037	Volgens skeppingsdatum
+1041	Stoor na lêer
+1042	Wys as aanbieding
+1043	In 'n venster
+1044	Volskerm
+1045	Timelapse
+1046	Raampies per sekonde:
+1047	Hou eerste raampie [s]:
+1048	Hou laaste raampie [s]:
+1049	Ongeldige raamtempo
+1050	Kan nie video-enkodering initialiseer nie
+1051	Kan nie uitsetlêer skep nie
+1052	Kan nie videostroom skep nie
+1053	Kan nie video-enkodeerder initialiseer nie
+1054	Kan nie begin om video te skryf nie
+1055	Kan nie videoraam skryf nie
+1056	Kan nie videolêer stoor nie
+1057	Geen video-enkodeerder beskikbaar (H.264 of WMV)
+1058	Lêernaam:
+1059	Retouchering...
+1060	Retouchering
+1061	Vee uit
+1062	Herstel
+1063	Kwasgrootte:
+1064	Verwyder agtergrond
+1065	Hoek van waaruit agtergrond verwyder word:
+1066	Toleransie
+1067	Uitveër
+1068	Swart (PRL)
+1069	Violet (Weste)
+1070	Marineblou (offset)
+1071	Rooi (stempels)
+1072	PRL-samizdat — proteïen-verveelvuldiger, roetige ink, uitgesmeerde stensil
+1073	Westerse alkohol-verveelvuldiger — kristalviolet, alkoholreuk
+1074	Offset-verveelvuldiger-matrijs — kantoorafskrif
+1075	Stempels, opskrifte en amptelike vorms
+1076	Westerse kantore — minder algemene ink
+1077	Vervaagde, verouderde afskrif
+1078	Inkslytasie:
+1079	Verfkwas
+1080	Kloonkwas
+1081	Verhelder
+1082	Verdonker
+1083	Helderheidskwas
+1084	Skerptekwas
+1085	Emmer
+1086	Pipet
+1087	Elliptiese seleksie
+1088	Reghoekige seleksie
+1089	Uitstalling van seleksie
+1090	Seleksie-omtrek
+1091	Gevul
+1092	Beskermingsmasker
+1093	Bedek
+1094	Ontbloot
+1095	Wys beskermingsmasker
+1096	Vee beskermingsmasker uit
+1097	Beskerm seleksie
+1098	Verwyder beskerming van seleksie
+1099	Lasso
+1100	Towerstaf
+1101	Seleksie...
+1102	Seleksie
+1103	Masker
+1104	Bondelverwerking
+1105	Verdistortings
+1106	Laai voorinstelling
+1107	Stoor voorinstelling
+1108	Vulkleur
+1109	Klik die voorskou om die witpunt te stel
+1110	Kleurvervangkwas
+1111	Kleur om te vervang
+1112	Vervangende kleur
+1113	Hou skaduwee
+1114	Beskerm die seleksie teen effekte
+1115	Verwyder beskerming van die gekose gebied
+1116	Wys beskermde gebiede met 'n diagonale rooi oorlegk
+1117	Verwyder alle beskermde gebiede

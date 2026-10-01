@@ -1,0 +1,6 @@
+ICON_FILE_OPEN   RCDATA "icons\svg\file_open_24dp_E3E3E3.svg"
+ICON_SAVE_AS     RCDATA "icons\svg\save_as_24dp_E3E3E3.svg"
+ICON_COPY        RCDATA "icons\svg\content_copy_24dp_E3E3E3.svg"
+ICON_PASTE       RCDATA "icons\svg\content_paste_24dp_E3E3E3.svg"
+ICON_MACRO       RCDATA "icons\svg\play_arrow_24dp_E3E3E3.svg"
+ICON_COMPARE     RCDATA "icons\svg\compare_24dp_E3E3E3.svg"

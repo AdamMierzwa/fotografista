@@ -1,0 +1,844 @@
+Archivo
+Editar
+Mezcla de efectos
+Ver
+Analizar
+Ajustar
+Colores
+Efectos
+Imprimir
+Experimental
+Distorsiones
+Amiga
+Ayuda
+Abrir...
+Guardar como...
+Información de la imagen
+(Ninguna)
+Cerrar
+Preferencias...
+Salir
+Deshacer
+Rehacer
+Copiar
+Pegar
+Restaurar original
+Borrar historial
+Mezcla de efectos...
+Mezcla (0=A, 100=B):
+Combinar capas visibles
+Eliminar todo
+Acercar
+Alejar
+Ajustar a la ventana
+100%
+50%
+25%
+200%
+400%
+Histograma...
+Ecualizar histograma...
+Voltear horizontalmente
+Voltear verticalmente
+Girar a la izquierda
+Girar a la derecha
+Girar 180°
+Enderezar escaneo...
+Contraste...
+Brillo...
+Corrección gamma...
+Niveles...
+Balance de blancos...
+Enfocar...
+Intensificar...
+Mejora fotográfica...
+Recortar...
+Redimensionar...
+Colorear...
+Balance HSB...
+Solarizar...
+Duotono...
+Sepia...
+Cianotipia
+Impresión a la sal
+Rayos X
+Infrarrojo en falso color
+Visión nocturna
+Térmico
+Orton
+Blanco y negro...
+Escala de grises
+Negativo
+Grano de película...
+Pintura al óleo...
+Carboncillo...
+Desenfoque...
+Relieve
+Pixelar...
+Vineta...
+Posterizar...
+Detección de bordes
+Linograbado...
+Grabado...
+Tramado cruzado...
+Semitonos...
+Punteado...
+Dados...
+Risografía v1...
+Serigrafía...
+Distorsión de barril...
+Distorsión de arco...
+Remolino...
+Ondulación del agua...
+Distorsión polar...
+Paleta Workbench 1.x (OCS)
+Paleta Workbench 2.x/3.x
+Paleta OCS de 32 colores...
+Paleta EHB de 64 colores...
+Paleta AGA de 256 colores...
+Paleta Workbench de 256 colores...
+Paleta MagicWB (8 colores)...
+Acerca de
+Abrir un archivo de imagen
+Guardar la imagen con un nombre nuevo
+Mostrar información de la imagen
+Cerrar la imagen actual
+Configuración del programa
+Salir del programa
+Deshacer la última operación
+Rehacer la última operación deshecha
+Copiar la imagen al portapapeles
+Pegar la imagen del portapapeles como una nueva capa
+Restaurar la imagen a su estado original
+Borrar el historial de operaciones - irreversible
+Mezclar dos efectos mediante un control deslizante
+Čeština (Checo)
+Portugues (Portugués)
+Afrikaans (Afrikáans)
+Acercar la vista
+Alejar la vista
+Ajustar la imagen a la ventana
+Ver a escala 1:1
+Ver al 50%
+Ver al 25%
+Ver al 200%
+Ver al 400%
+Mostrar el histograma de colores
+Ecualizar el histograma - mejorar el contraste
+Voltear la imagen horizontalmente
+Voltear la imagen verticalmente
+Girar la imagen 90 grados a la izquierda
+Girar la imagen 90 grados a la derecha
+Girar la imagen 180 grados
+Enderezar escaneo: girar hasta +/- 10 grados con recorte automático
+Ajustar el contraste
+Ajustar el brillo
+Corrección gamma
+Ajustar punto negro, gamma y punto blanco: control tonal completo
+Balance de blancos: corrección de la temperatura de color
+Enfocar la imagen
+Intensificar: colores vivos y saturados
+Mejora fotográfica (Multiplicar)
+Recortar la imagen
+Redimensionar la imagen
+Tenir la imagen con el color seleccionado
+Ajustar brillo, saturación y tono
+Solarizar: invertir los tonos claros
+Efecto de dos colores: sombras y luces
+Sepia: monocromo marrón cálido
+Cianotipia: monocromo azul
+Impresión a la sal: marrón cálido
+Rayos X: colores invertidos
+Infrarrojo en falso color: intercambio de canales, vegetación roja, cielo azul
+Visión nocturna: escala de grises + fósforo verde
+Térmico: visualización en falso color
+Orton: resplandor difuso, ambiente onírico
+Convertir a blanco y negro con opción de tramado
+Convertir a escala de grises
+Invertir colores - negativo
+Anadir grano de película - ruido aleatorio
+Pintura al óleo - simulación de pincel
+Carboncillo - simulación de dibujo al carboncillo
+Desenfocar la imagen
+Relieve
+Pixelar - efecto mosaico
+Vineta - oscurecer los bordes
+Posterizar - reducir el número de colores
+Detección de bordes - efecto de boceto
+Linograbado - fuerte contraste en blanco y negro
+Grabado - simulación de grabado lineal
+Tramado cruzado en dos ángulos
+Semitonos - puntos de tamano variable según el brillo
+Punteado - densidad de puntos según el brillo
+Dados - patrón de puntos de dados
+Risografía - impresión por capas con desplazamiento de color
+Serigrafía monocromática - escala de grises + semitonos sobre el fondo
+Distorsión de barril / cojín
+Distorsión de arco - curvar la imagen
+Remolino - retorcer la imagen
+Efecto de ondulación del agua
+Distorsión polar - túnel, ojo de pez
+Paleta de 4 colores - Workbench 1.x (OCS)
+Paleta de 4 colores - Workbench 2.x/3.x
+Paleta de 32 colores (4x4x2) - OCS
+Paleta de 64 colores (4x4x4) - EHB
+Paleta de 256 colores - AGA
+Paleta de 256 colores - Workbench 3.x
+Paleta de 8 colores - MagicWB (MUI)
+Fotografista
+Sin imagen
+Aceptar
+Cancelar
+Vista previa
+Mostrar vista previa
+Aplicar y cerrar
+Cerrar sin aplicar
+Acerca de
+Editor de fotografías
+Compilación
+Ancho (px):
+Alto (px):
+Aplicar redimensionado
+Cancelar cambios
+X (px):
+Y (px):
+Aplicar recorte
+Cancelar recorte
+Seleccionar color
+Color del texto
+Fuente...
+Dirección
+Aumentar
+Disminuir
+Difuminado
+Con difuminado (mejor calidad)
+Sin difuminado
+Con difuminado
+Sin difuminado
+Activado
+Desactivado
+Intensidad (1-10):
+Brillo (0-200, predeterminado 100):
+Gamma (100 = sin cambios):
+Rojo (100 = sin cambios):
+Verde (100 = sin cambios):
+Azul (100 = sin cambios):
+Intensidad (1-100):
+Intensidad (0-100):
+Radio (1-5):
+Intensidad (1-50):
+Tamano de celda (1-100):
+Ángulo (0-179°):
+Tamano de celda (4-16 px):
+Grosor máximo de línea (1-8):
+Tamano de celda (4-64 px):
+Tamano de punto de subcelda (3-8 px):
+Umbral (1-100):
+Cantidad de tinta (más claro = menos):
+Intensidad (0-100):
+Saturación (0-100):
+Contraste (0-100):
+Curva (1-5):
+Curvas inteligentes (0-100):
+Punto negro (0-255):
+Punto blanco (0-255):
+Ángulo de enderezado (-10 a +10°):
+Aplicar y cerrar
+Cerrar sin aplicar
+Aplicar enderezado y cerrar
+Aplicar cambios de la capa y cerrar
+Cerrar sin guardar
+Mostrar vista previa
+Vista previa
+Aceptar
+Cancelar
+Color de las sombras
+Color de las luces
+Color de la tinta
+Color del papel
+Nombre del preajuste:
+Cargar
+Eliminar
+Cerrar
+Ajuste
+Brillo
+Corrección gamma
+Enfocar
+Solarizar
+Sepia
+Pintura al óleo
+Carboncillo
+Desenfoque
+Relieve
+Pixelar
+Vineta
+Detección de bordes
+Grano de película
+Guardar preajuste de Duotono
+Cargar preajuste de Duotono
+Contraste
+Recortar
+Redimensionar
+Balance de blancos
+Niveles
+Intensificar
+Mejora fotográfica
+Capas
+Enderezar escaneo
+Colorear
+Balance HSB
+Blanco y negro
+Posterizar
+Grabado
+Tramado cruzado
+Semitonos
+Punteado
+Dados
+Linograbado
+Risografía
+Serigrafía
+Paleta OCS de 32 colores
+Paleta EHB de 64 colores
+Paleta AGA de 256 colores
+Paleta Workbench de 256 colores
+Paleta MagicWB de 8 colores
+Distorsión de barril
+Distorsión de arco
+Remolino
+Ondulación del agua
+Distorsión polar
+Preferencias
+Saturación (0-200, predeterminado 100):
+Tono (0-200, predeterminado 100):
+Contraste (0-10):
+Número de colores (2-64):
+Opacidad:
+Modo:
+Seleccionar color...
+Seleccionar tipo:
+Seleccionar ángulo del arco:
+Seleccionar tipo:
+Seleccionar ángulo del arco:
+Seleccionar intensidad:
+Seleccionar variante:
+Barril suave
+Barril medio
+Barril fuerte
+Cojín suave
+Cojín medio
+Cojín fuerte
+45°
+90°
+180°
+360°
+90° + girar
+180° + girar
+Suave (45°)
+Medio (90°)
+Fuerte (180°)
+Muy fuerte (270°)
+Completo (360°)
+Invertido
+Suave
+Medio
+Fuerte
+Concéntrico
+Desde la esquina
+Denso
+Completo
+Medio ángulo
+Cuarto de ángulo
+Anillo
+Radio pequeno
+Suave
+Túnel
+Remolino
+Ojo de pez
+Estiramiento exterior
+Error
+Formato de archivo no compatible.
+Instantánea
+Original
+Gamma (10-500, 100 = 1,0):
+Anadir capa
+Combinar capas
+Ecualización del histograma
+Copiar
+Pegar
+Deshacer:
+Rehacer:
+Intensificar
+HDR 2
+WB 1.x
+WB 2.x
+OCS 32
+EHB
+AGA 256
+WB 256
+MagicWB
+Voltear horizontalmente
+Voltear verticalmente
+Girar a la izquierda
+Girar a la derecha
+Girar 180°
+Enderezar
+Cianotipia
+Escala de grises
+Negativo
+Impresión a la sal
+Rayos X
+Infrarrojo en falso color
+Visión nocturna
+Térmico
+Orton
+Relieve
+Detección de bordes
+Duotono
+Contraste (antes de la conversión)
+Rojo
+Verde
+Azul
+Brillo
+Contraste
+Tono
+Saturación
+Gamma
+Intensidad
+Umbral
+Ángulo
+Tamano de celda
+Grosor
+Tamano del punto
+Colores
+Radio
+Desconocido
+Información
+No hay ninguna imagen cargada.
+Nombre:
+Formato:
+Canal alfa:
+Ancho:
+Alto:
+Tamano:
+Fecha:
+Hora:
+Sí
+No
+Información de la imagen
+Miniatura
+Seleccionar tamano:
+100 px
+200 px
+320 x 240
+640 x 480
+Hecho
+Miniatura guardada.
+Guardar miniatura como
+Calidad de compresión JPEG (0-100):
+Normal
+Multiplicar
+Pantalla
+Superposición
+Luz suave
+Más oscuro
+Más claro
+Fondo (original)
+Carmesí + Cian
+Negro + Amarillo
+Azul + Naranja
+Carmesí + Cian + Amarillo
+Negro + Carmesí + Amarillo
+CMYK (4 colores)
+Ecualización del histograma
+Seleccionar modo de ecualización:
+Luminancia
+Todos
+Cerrar
+Histograma
+Atajos de teclado
+Macro
+Iniciar grabación
+Detener y guardar
+Cancelar grabación
+Administrar macros...
+Macros
+Reproducir
+Eliminar
+Guardar macro
+Nombre de la macro:
+Macro
+La grabación ya está activa.
+?Anadir este paso a la macro?
+Sí|No
+La grabación no está activa.
+No hay pasos para guardar.
+No hay ninguna imagen cargada.
+pasos
+Grabación de macro
+HAM6 - 16 colores + Hold-Modify...
+HAM8 - 64 colores + Hold-Modify...
+Simulación HAM6 (16 colores base con modos Hold-Modify)
+Simulación HAM8 (64 colores base con modos Hold-Modify)
+HAM6
+HAM8
+Recortar a la selección
+Tamano de la selección...
+Guardar icono...
+Tamano del icono:
+Formato del icono:
+Icono guardado.
+Intensificar
+Advertencia: este efecto requiere muchos recursos. En imágenes de más de 6 MP el procesamiento puede tardar entre 30 y 60 segundos.
+Continuar
+Resplandor...
+Radio del resplandor:
+Degradado Amiga...
+Superposición de degradado copper al estilo Amiga
+Degradado Amiga (Agony)...
+Degradado copper al estilo Agony
+Guardar como icono de Windows...
+Intensidad (0-100):
+Calidad JPEG 2000 (0-100, 100 = sin pérdidas):
+Revelado incorrecto...
+Revelado incorrecto — simulación E-6/C-41
+Guardar paquete de iconos (ZIP)...
+Renombrar
+Idioma...
+Configuración
+Calidad de exportación...
+Paquete de iconos
+No se ha seleccionado ningún tamano.
+Paquete de iconos guardado en:
+Compresión TIFF:
+Formato del icono:
+Seleccionar plataforma:
+Seleccionar formato:
+Seleccionar tamano:
+Guardar icono...
+Icono guardado.
+Seleccionar formato:
+Restablecer
+Restablecer
+Guardar la imagen actual como icono
+Guardar iconos de varios tamanos en un archivo ZIP
+Iniciar la grabación de una macro
+Detener la grabación y guardar la macro
+Cancelar la grabación sin guardar
+Reproducir, renombrar o eliminar macros
+Cambiar el idioma de la aplicación
+Configurar la calidad de exportación de JPEG, JPEG 2000 y TIFF
+Acerca de Fotografista
+Mostrar atajos de teclado
+Interfaz...
+Configuración de la interfaz
+Interfaz
+Color de fondo del lienzo:
+Selección: %d x %d
+Abrir imagen
+Todos los archivos
+Portapapeles
+Pegado
+LZW
+Flate
+JPEG
+Nombre nuevo:
+Idioma / Language
+Polski (Polaco)
+English (Inglés)
+Tamano de la selección
+Ancho (px):
+Alto (px):
+Aceptar
+Cancelar
+Selección: %d x %d
+Convertir a la paleta OCS de 32 colores con difuminado
+Convertir a la paleta EHB de 64 colores con difuminado
+Convertir a la paleta AGA de 256 colores con difuminado
+Convertir a la paleta Workbench de 256 colores con difuminado
+Convertir a la paleta MagicWB de 8 colores con difuminado
+Tono superior (0-360):
+Tono inferior (0-360):
+Número de bandas (32-256):
+E-6 en C-41
+C-41 en E-6
+Kodak en revelador Fuji
+Fuji en revelador Kodak
+ECN-2 en C-41
+Macro
+Tamano de fuente (barra de estado):
+AmigaOS clásico (4 colores)
+Mosaico
+Repetir la imagen en mosaico para rellenar las dimensiones de destino
+Fondo Amiga
+Resolución de destino:
+Alineación de la imagen:
+Color de fondo (paleta MagicWB):
+Gris
+Negro
+Blanco
+Azul
+Gris oscuro
+Gris claro
+Marrón
+Salmón
+Fondo Amiga (estirado, MagicWB)
+Escalar la imagen a la resolución Amiga con relleno de bordes estirado
+Color personalizado...
+Exportar...
+Importar...
+Exportar macro
+Macro exportada correctamente.
+Importar macro
+Archivo de macro no válido.
+Ya existe una macro con este nombre. ?Desea reemplazarla?
+Macro importada correctamente.
+Recordar el tamano y la posición de la ventana
+Número de archivos recientes:
+Salir sin guardar los cambios
+Relieve
+Relieve del material a partir de la luminancia de la imagen
+Profundidad (1-100):
+Yeso / piedra blanca
+Mármol blanco
+Piedra gris
+Bronce / medalla
+Arenisca
+Escala (%):
+Mantener la relación de aspecto
+Intensidad (0-100):
+Emergo
+Français (Francés)
+Espanol
+Italiano
+Deutsch (Alemán)
+Editar macro
+Eliminar paso
+Manual
+Automático
+Operación completada.
+Hecho.
+El resultado está listo.
+Puede volver a su ordenador.
+Es probable que su café ya se haya enfriado.
+Enhorabuena. La CPU ha sobrevivido.
+Pensé que esto nunca terminaría.
+!Aleluya! Por fin.
+Ha funcionado. Todo está listo.
+Fin de la espera.
+Gracias por su paciencia.
+Emergo -- recuperación inteligente de detalles en las sombras
+Vista previa al 100 %
+Simulación HAM
+Este efecto requiere muchísimos recursos.\nEn imágenes de más de 2 MP el procesamiento puede tardar varios minutos.
+Bokeh falso...
+Tilt-shift (miniatura)...
+Desenfoque gradual
+Intensidad:
+Forma:
+Radial (bokeh)
+Lineal (tilt-shift)
+Desalineación CMYK...
+Desalineación CMYK
+Intensidad del desplazamiento:
+Tritono...
+Tritono
+Cuadritono...
+Cuadritono
+Color 1 (sombras):
+Color 2 (tonos medios):
+Color 3 (altas luces):
+Color 4 (luces extremas):
+Aberración cromática...
+Aberración cromática
+Desplazamiento:
+Centro X:
+Centro Y:
+Radio:
+Atenuación:
+Posición de la banda:
+Altura de la banda:
+Otros ordenadores retro
+C64 — Pepto / Colodore
+Paleta Commodore 64 — Pepto o Colodore
+Commodore 64
+Convertir a la paleta Commodore 64 con difuminado
+Pepto
+Colodore
+ZX Spectrum
+Paleta ZX Spectrum
+ZX Spectrum
+Convertir a la paleta ZX Spectrum con difuminado
+Game Boy — DMG / Pocket
+Paleta Game Boy — DMG (verde) o Pocket (gris)
+Game Boy
+Convertir a la paleta Game Boy con difuminado
+DMG (verde)
+Pocket (gris)
+NES (Nestopia)
+Paleta NES (Nestopia)
+NES — Nestopia
+Convertir a la paleta NES Nestopia con difuminado
+Patrón (retro)
+Floyd–Steinberg (suave)
+El modo seleccionado es muy lento para imágenes grandes.\nEn imágenes de más de 2 MP, la vista previa y la aplicación del efecto pueden tardar varios minutos.\nLos demás modos son mucho más rápidos.
+Rendimiento
+Resolución máxima de trabajo:
+Original
+Imagen
+Túnel invertido
+Sector de 30°
+Full HD (1920×1080)
+4K (3840×2160)
+Rendimiento y resolución máxima de trabajo
+SVGA (800×600)
+Cian
+Magenta
+Amarillo
+Negro
+Azul
+Naranja
+Verde
+Rosa
+Azul marino
+Morado
+Turquesa
+Coral
+Burdeos
+Menta
+Risografía v2...
+Risograph V3...
+Número de capas:
+Capa 1...
+Capa 2...
+Capa 3...
+Capa 4...
+Capa 5...
+Seleccionar
+Preparar para serigrafía (camisetas)...
+Diseno de camiseta...
+Número de colores:
+2. Mapeo de color a tinta
+3. Limpieza de detalles
+Área mínima (px): 
+Preparación para serigrafía (camisetas)...
+Seleccionar tinta
+Tinta: 
+Simular trama de serigrafía
+Proceso de producción de camisetas
+1. Posterización
+Islas eliminadas: 
+Diseno de camiseta
+Medición del rendimiento...
+Medición del rendimiento de los efectos gráficos
+Esta prueba medirá la velocidad de 12 efectos de procesamiento de imágenes.\nDuración: de unos segundos a varios minutos,\ndepende de la resolución de la imagen y la potencia de la CPU.
+Prueba de rendimiento
+Preparando la imagen...
+Imagen: %s (%d×%d)
+%s: %.2f ms (promedio de %d)
+Tiempo: %d min %d s
+(abortada)
+Máxima exigencia: %s (%.2f ms).
+Resultados de rendimiento
+Niveles
+Vívido
+Colorear
+Proceso cruzado
+Bajo relieve
+Orton
+Semitono
+Serigrafía
+Risografía v2
+HAM8 (64 colores)
+HAM6 (16 colores)
+Resplandor
+Medir el rendimiento de los efectos gráficos
+Procesamiento
+Radio del pincel (1-30):
+Fallo...
+Distorsión de la imagen digital: desplazamiento RGB, ruido, desplazamiento de corte horizontal
+Desplazamiento RGB:
+Vibración de línea:
+Ruido:
+Efecto CRT:
+Pérdida de bloque:
+Desplazamiento de corte horizontal:
+Oscurece una línea sí y otra no en relación PAL: valor más alto = espacios más oscuros
+Documentación en línea...
+Abre el sitio web de Fotografista en tu navegador
+Mimeógrafo...
+Mimeógrafo: bordes negros sobre fondo blanco
+Mimeógrafo
+Granularidad:
+Sensibilidad de borde:
+Intensidad del tóner:
+Mimeógrafo
+Exportar PDF...
+Exportar imagen a archivo PDF
+Exportar PDF
+Listo.
+PDF guardado correctamente.
+Error al guardar el PDF.
+Exportar comparación...
+Exportar comparación de imágenes: lado a lado con el original
+Comparación
+No hay archivo para comparar: la imagen no se abrió desde un archivo.
+Comparación guardada correctamente.
+Error al guardar la comparación.
+Imagen actual
+Ajustar al tamano con recorte...
+Escalar la imagen al tamano deseado, recortando el exceso
+Full HD 1920×1080
+Ajustar al tamano con recorte
+Ancho (px):
+Alto (px):
+Anclaje:
+Esquina superior izquierda
+Esquina superior derecha
+Esquina inferior izquierda
+Esquina inferior derecha
+Aplicar redimensionamiento con recorte
+Cancelar redimensionamiento con recorte
+La imagen no se cargó desde un archivo.\nEl ajuste al tamano con recorte utilizará la imagen actual,\nque puede tener una resolución menor debido a la configuración de rendimiento.
+Herramientas
+Iniciador
+Profundidad de color
+Motor de carga
+Iniciador de acciones rápidas
+Programa registrado
+Introducir la clave de licencia
+Introduzca el correo usado en la compra:
+Introducir la clave de licencia:
+Éxito
+La clave de licencia ha sido activada.
+Error
+Clave o correo inválido
+Versión de prueba expirada
+La versión de prueba de Fotografista expiró tras 7 días.
+Para continuar, introduzca su clave de licencia:
+Cerrar programa
+Introduzca su dirección de correo.
+Introduzca su clave de licencia.
+Procesamiento por lotes
+Aplicar un macro guardado a todas las imágenes de una carpeta
+Carpeta de origen:
+Carpeta de destino:
+Macro:
+Examinar…
+Iniciar
+Procesando…
+Cancelar
+Hecho
+Seleccionar carpeta de origen
+Seleccionar carpeta de destino
+No hay macros guardados.
+El procesamiento por lotes ya está en ejecución.
+La carpeta está vacía.
+No se encontraron imágenes en la carpeta de origen.
+Complete todos los campos.
+Procesadas
+errores
+El macro contiene un paso de cambio de tamano. Combinarlo con el escalado por lotes puede producir resultados inesperados.
+Escalar al borde largo
+px:
+No ejecutar el macro
+Comprar licencia

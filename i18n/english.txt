@@ -1,0 +1,844 @@
+File
+Edit
+Effect Blend
+View
+Analyze
+Adjust
+Colors
+Effects
+Print
+Experimental
+Distortions
+Amiga
+Help
+Open...
+Save as...
+Image info
+(none)
+Close
+Preferences...
+Quit
+Undo
+Redo
+Copy
+Paste
+Revert to original
+Clear history
+Effect Blend...
+Blend (0=A, 100=B):
+Merge visible
+Delete all
+Zoom in
+Zoom out
+Fit to window
+100%
+50%
+25%
+200%
+400%
+Histogram...
+Equalize histogram...
+Mirror horizontally
+Mirror vertically
+Rotate left
+Rotate right
+Rotate 180
+Straighten scan...
+Contrast...
+Brightness...
+Gamma correction...
+Levels...
+White balance...
+Sharpen...
+Vivid...
+Photo enhancement...
+Crop...
+Resize...
+Colorize...
+HSB balance...
+Solarize...
+Duotone...
+Sepia...
+Cyanotype
+Salt print
+X-Ray
+False-color infrared
+Night vision
+Thermal
+Orton
+Black & white...
+Grayscale
+Negative
+Film grain...
+Oil paint...
+Charcoal...
+Blur...
+Emboss...
+Pixelate...
+Vignette...
+Posterize...
+Edge detection...
+Linocut...
+Engraving...
+Crosshatch...
+Halftone...
+Stipple...
+Dice...
+Risograph v1...
+Screen print...
+Barrel distortion...
+Arc distortion...
+Swirl...
+Water ripple...
+Polar distortion...
+Workbench 1.x palette (OCS)
+Workbench 2.x/3.x palette
+OCS 32-color palette...
+EHB 64-color palette...
+AGA 256-color palette...
+Workbench 256-color palette...
+MagicWB palette (8 colors)...
+About
+Open an image file
+Save image under a new name
+Show image details
+Close current image
+Program settings
+Quit the program
+Undo last operation
+Redo undone operation
+Copy image to clipboard
+Paste image from clipboard as new layer
+Restore image to original state
+Clear operation history - irreversible
+Blend two effects with a slider
+Čeština (Czech)
+Português (Portuguese)
+Afrikaans
+Zoom in view
+Zoom out view
+Fit image to window
+View at 1:1 scale
+View at 50% scale
+View at 25% scale
+View at 200% scale
+View at 400% scale
+Show color histogram
+Equalize histogram - improve contrast
+Flip image horizontally
+Flip image vertically
+Rotate image 90 degrees left
+Rotate image 90 degrees right
+Rotate image 180 degrees
+Straighten scan - rotate up to +/- 10 degrees with auto-crop
+Adjust contrast
+Adjust brightness
+Gamma correction
+Set black point, gamma and white point - full tonal control
+White balance - color temperature correction
+Sharpen image
+Vivid - saturated, vibrant colours
+Photo enhancement (Multiply)
+Crop image
+Resize image
+Tint image with selected color
+Adjust brightness, saturation and hue
+Solarize - invert bright tones
+Two-color effect - shadows and highlights
+Sepia - warm brown monochrome
+Cyanotype - blue monochrome
+Salt print - warm brown
+X-Ray - inverted colors
+False-color IR - channel swap, red plants, blue sky
+Night vision - grayscale + green phosphor
+Thermal - false-color view
+Orton - blurred glow, dreamy mood
+Convert to B&W with dither option
+Convert to grayscale
+Invert colors - negative
+Add film grain - random noise
+Oil paint - brush simulation
+Charcoal - charcoal drawing simulation
+Blur image
+Emboss - relief
+Pixelate - mosaic effect
+Vignette - darken edges
+Posterize - reduce color count
+Edge detection - sketch effect
+Linocut - sharp B&W contrast
+Engraving - line engraving simulation
+Crosshatch lines at two angles
+Halftone - growing dots based on brightness
+Stipple - dot density based on brightness
+Dice - dice eyes pattern
+Risograph - layered print with color offset
+Single-color screen print - grayscale + halftone on background
+Barrel / pincushion distortion
+Arc distortion - bend image
+Swirl - twist image
+Water ripple effect
+Polar distortion - tunnel, fisheye
+4-color palette - Workbench 1.x (OCS)
+4-color palette - Workbench 2.x/3.x
+32-color palette (4x4x2) - OCS
+64-color palette (4x4x4) - EHB
+256-color palette - AGA
+256-color palette - Workbench 3.x
+8-color palette - MagicWB (MUI)
+Fotografista
+No image
+OK
+Cancel
+Preview
+Show preview
+Apply and close
+Close without applying
+About
+Photo editor
+Build
+Width (px):
+Height (px):
+Apply resize
+Cancel changes
+X (px):
+Y (px):
+Apply crop
+Cancel crop
+Select color
+Text color
+Font...
+Direction
+Increase
+Decrease
+Dithering
+With dither (better quality)
+Without dither
+With dither
+Without dither
+Enabled
+Disabled
+Intensity (1-10):
+Brightness (0-200, default 100):
+Gamma (100 = no change):
+Red (100 = no change):
+Green (100 = no change):
+Blue (100 = no change):
+Intensity (1-100):
+Intensity (0-100):
+Radius (1-5):
+Intensity (1-50):
+Cell size (1-100):
+Angle (0-179°):
+Cell size (4-16 px):
+Max line thickness (1-8):
+Cell size (4-64 px):
+Subcell dot size (3-8 px):
+Threshold (1-100):
+Ink amount (lighter = less):
+Strength (0-100):
+Saturation (0-100):
+Contrast (0-100):
+Curve (1-5):
+Smart Curves (0-100):
+Black point (0-255):
+White point (0-255):
+Straighten angle (-10 to +10°):
+Apply and close
+Close without applying
+Apply straighten and close
+Apply layer changes and close
+Close without saving
+Show preview
+Preview
+OK
+Cancel
+Shadow color
+Highlight color
+Ink color
+Paper color
+Preset name:
+Load
+Delete
+Close
+Setting
+Brightness
+Gamma correction
+Sharpen
+Solarize
+Sepia
+Oil paint
+Charcoal
+Blur
+Emboss
+Pixelate
+Vignette
+Edge detection
+Film grain
+Save Duotone preset
+Load Duotone preset
+Contrast
+Crop
+Resize
+White balance
+Levels
+Vivid
+Photo enhancement
+Layers
+Straighten scan
+Colorize
+HSB balance
+Black & white
+Posterize
+Engraving
+Crosshatch
+Halftone
+Stipple
+Dice
+Linocut
+Risograph
+Screen print
+OCS 32-color palette
+EHB 64-color palette
+AGA 256-color palette
+Workbench 256-color palette
+MagicWB 8-color palette
+Barrel distortion
+Arc distortion
+Swirl
+Water ripple
+Polar distortion
+Preferences
+Saturation (0-200, default 100):
+Hue (0-200, default 100):
+Contrast (0-10):
+Number of colors (2-64):
+Opacity:
+Mode:
+Select color...
+Select type:
+Select arc angle:
+Select type:
+Select arc angle:
+Select intensity:
+Select variant:
+Weak barrel
+Medium barrel
+Strong barrel
+Weak pincushion
+Medium pincushion
+Strong pincushion
+45°
+90°
+180°
+360°
+90° + rotate
+180° + rotate
+Weak (45°)
+Medium (90°)
+Strong (180°)
+Very strong (270°)
+Full (360°)
+Reverse
+Light
+Medium
+Strong
+Concentric
+From corner
+Dense
+Full
+Half angle
+Quarter angle
+Ring
+Small radius
+Smooth
+Tunnel
+Swirl
+Fisheye
+Outer stretch
+Error
+Unsupported file format.
+Snapshot
+Original
+Gamma (10-500, 100=1.0):
+Add layer
+Merge layers
+Histogram equalization
+Copy
+Paste
+Undo: 
+Redo: 
+Vivid
+HDR 2
+WB 1.x
+WB 2.x
+OCS 32
+EHB
+AGA 256
+WB 256
+MagicWB
+Flip horizontal
+Flip vertical
+Rotate left
+Rotate right
+Rotate 180
+Straighten
+Cyanotype
+Grayscale
+Negative
+Salt print
+X-Ray
+False-color IR
+Night vision
+Thermal
+Orton
+Emboss
+Edge detection
+Duotone
+Contrast (before conversion)
+Red
+Green
+Blue
+Brightness
+Contrast
+Hue
+Saturation
+Gamma
+Strength
+Threshold
+Angle
+Cell size
+Thickness
+Dot size
+Colors
+Radius
+Unknown
+Information
+No image loaded.
+Name:
+Format:
+Alpha channel:
+Width:
+Height:
+Size:
+Date:
+Time:
+Yes
+No
+Image info
+Thumbnail
+Select size:
+100 px
+200 px
+320 x 240
+640 x 480
+Done
+Thumbnail saved.
+Save thumbnail as
+JPEG compression quality (0-100):
+Normal
+Multiply
+Screen
+Overlay
+Soft Light
+Darker
+Lighter
+Background (original)
+Crimson + Cyan
+Black + Yellow
+Blue + Orange
+Crimson + Cyan + Yellow
+Black + Crimson + Yellow
+CMYK (4 colors)
+Histogram equalization
+Select equalization mode:
+Luminance
+All
+Close
+Histogram
+Keyboard shortcuts
+Macro
+Start recording
+Stop and save
+Cancel recording
+Manage macros...
+Macros
+Play
+Delete
+Save macro
+Macro name:
+Macro
+Recording is already active.
+Add this step to macro?
+Yes|No
+Recording is not active.
+No steps to save.
+No image loaded.
+steps
+Recording macro
+HAM6 - 16 colors + Hold-Modify
+HAM8 - 64 colors + Hold-Modify
+HAM6 simulation (16 base colors with hold-modify modes)
+HAM8 simulation (64 base colors with hold-modify modes)
+HAM6
+HAM8
+Crop to selection
+Selection size...
+Save icon...
+Icon size:
+Icon format:
+Icon saved.
+Vivid
+Warning: this effect is very demanding. For images above 6 MP processing may take 30-60 seconds.
+Continue
+Glow...
+Glow radius:
+Amiga gradient...
+Amiga-style copper gradient overlay
+Amiga gradient (Agony)...
+Agony-style copper gradient
+Save as Windows icon...
+Intensity (0-100):
+JPEG 2000 quality (0-100, 100=lossless):
+Incorrect development...
+Incorrect development — E-6/C-41 simulation
+Save icon package (ZIP)...
+Rename
+Language...
+Settings
+Export quality...
+Icon package
+No size selected.
+Icon package saved to:
+TIFF compression:
+Icon format:
+Select platform:
+Select format:
+Select size:
+Save icon...
+Icon saved.
+Select format:
+Reset
+Reset
+Save current image as an icon
+Save icons in multiple sizes as a ZIP archive
+Start recording a macro
+Stop recording and save the macro
+Cancel recording without saving
+Play, rename or delete macros
+Change application language
+Set JPEG, JPEG 2000 and TIFF export quality
+About Fotografista
+Show keyboard shortcuts
+Interface...
+Interface settings
+Interface
+Canvas background color:
+Selection: %d x %d
+Open image
+All files
+Clipboard
+Pasted
+LZW
+Flate
+JPEG
+New name:
+Language / Language
+Polski (Polish)
+English
+Selection size
+Width (px):
+Height (px):
+OK
+Cancel
+Selection: %d x %d
+Map to OCS 32-color palette with dithering
+Map to EHB 64-color palette with dithering
+Map to AGA 256-color palette with dithering
+Map to Workbench 256-color palette with dithering
+Map to MagicWB 8-color palette with dithering
+Hue top (0-360):
+Hue bottom (0-360):
+Number of bands (32-256):
+E-6 in C-41
+C-41 in E-6
+Kodak in Fuji developer
+Fuji in Kodak developer
+ECN-2 in C-41
+Macro
+Font size (status bar):
+Classic AmigaOS (4 colors)
+Tiling...
+Tile image to fill target dimensions
+Amiga Background...
+Target resolution:
+Image alignment:
+Background color (MagicWB palette):
+Grey
+Black
+White
+Blue
+Dark grey
+Light grey
+Brown
+Salmon
+Amiga Background (stretched, MagicWB)...
+Scale image to Amiga resolution with stretched edge fill
+Custom color...
+Export...
+Import...
+Export macro
+Macro exported successfully.
+Import macro
+Invalid macro file.
+A macro with this name already exists. Overwrite?
+Macro imported successfully.
+Remember window size and position
+Number of recent files:
+Exit without saving changes
+Relief...
+Material bas-relief from image luminance
+Depth (1-100):
+Plaster / white stone
+White marble
+Gray stone
+Bronze / medal
+Sandstone
+Scale (%):
+Keep aspect ratio
+Intensity (0-100):
+Emergo...
+Français (French)
+Español (Spanish)
+Italiano (Italian)
+Deutsch (German)
+Edit macro
+Remove step
+Manual
+Automatic
+Operation completed.
+Done.
+The result is ready.
+You can return to your computer.
+Your coffee has probably gone cold.
+Congratulations. The CPU survived.
+I thought this would never end.
+Hallelujah! At last.
+It worked. Everything is ready.
+End of waiting.
+Thank you for your patience.
+Emergo -- intelligent shadow detail recovery
+Preview 100%
+HAM simulation
+This effect is extremely demanding.\nFor images above 2 MP processing may take several minutes.
+Fake bokeh...
+Tilt-shift (miniature)...
+Graduated blur
+Strength:
+Shape:
+Radial (bokeh)
+Linear (tilt-shift)
+CMYK misregistration...
+CMYK misregistration
+Shift strength:
+Tritone...
+Tritone
+Quad-tone...
+Quad-tone
+Color 1 (shadows):
+Color 2 (midtones):
+Color 3 (highlights):
+Color 4 (extreme highlights):
+Chromatic aberration...
+Chromatic aberration
+Shift:
+Centrum X:
+Centrum Y:
+Radius:
+Falloff:
+Band position:
+Band height:
+Other retro computers
+C64 — Pepto / Colodore...
+Commodore 64 palette — Pepto or Colodore
+Commodore 64
+Map to Commodore 64 palette with dithering
+Pepto
+Colodore
+ZX Spectrum...
+ZX Spectrum palette
+ZX Spectrum
+Map to ZX Spectrum palette with dithering
+Game Boy — DMG / Pocket...
+Game Boy palette — DMG (green) or Pocket (gray)
+Game Boy
+Map to Game Boy palette with dithering
+DMG (green)
+Pocket (gray)
+NES (Nestopia)...
+NES palette (Nestopia)
+NES — Nestopia
+Map to NES Nestopia palette with dithering
+Pattern (retro)
+Floyd–Steinberg (smooth)
+The selected mode is very slow for large images.\nFor images above 2 MP preview and applying the effect may take several minutes.\nOther modes are much faster.
+Performance...
+Maximum working resolution:
+Original
+Image
+Inverted tunnel
+30° slice
+Full HD (1920×1080)
+4K (3840×2160)
+Performance and maximum working resolution
+SVGA (800×600)
+Cyan
+Magenta
+Yellow
+Black
+Blue
+Orange
+Green
+Pink
+Navy
+Purple
+Turquoise
+Coral
+Burgundy
+Mint
+Risograph v2...
+Risograph V3...
+Number of layers:
+Layer 1...
+Layer 2...
+Layer 3...
+Layer 4...
+Layer 5...
+Pick
+Prepare for screenprint (t-shirts)...
+T-Shirt Design...
+Number of colors: 
+2. Color to ink mapping
+3. Detail cleanup
+Min. area (px): 
+Prepare for screenprint (t-shirts)...
+Pick ink
+Ink: 
+Simulate screenprint raster
+T-Shirt pipeline
+1. Posterization
+Islands removed: 
+T-Shirt Design
+Smooth preview scaling
+Performance measurement
+This test will measure the speed of 12 image processing effects.\nDuration: from a few seconds to several minutes -\ndepends on image resolution and CPU power.
+Performance test
+Preparing image...
+Image: %s (%d×%d)
+%s: %.2f ms (avg of %d)
+Time: %d min %d s
+(aborted)
+Hardest: %s (%.2f ms).
+Performance results
+Levels
+Vivid
+Colorize
+Cross process
+Bas-relief
+Orton
+Halftone
+Screen print
+Risography v2
+HAM8 (64 colors)
+HAM6 (16 colors)
+Emergo
+Measure the performance of graphic effects
+Processing
+Brush radius (1-30):
+Glitch...
+Digital image distortion — RGB shift, noise, horizontal slice shift
+RGB Shift:
+Line jitter:
+Noise:
+CRT effect:
+Block loss:
+Horizontal slice shift:
+Darkens every other line at PAL ratio — higher value = darker gaps
+Online documentation
+Open the Fotografista website in your web browser
+Mimeograph...
+Mimeograph — black edges on white background
+Mimeograph
+Granularity:
+Edge sensitivity:
+Toner intensity:
+Mimeograph
+Export PDF...
+Export image to PDF file
+Export PDF
+Done.
+PDF saved successfully.
+Error saving PDF.
+Export comparison...
+Export image comparison — side-by-side with original
+Comparison
+No file to compare — the image was not opened from a file.
+Comparison saved successfully.
+Error saving comparison.
+Current image
+Fit to size with crop...
+Scale image to target size, cropping excess
+Full HD 1920×1080
+Fit to size with crop
+Width (px):
+Height (px):
+Anchor:
+Top-left
+Top-right
+Bottom-left
+Bottom-right
+Apply resize with crop
+Cancel resize with crop
+Image was not loaded from a file.\nFit-to-size with crop will use the current image\nwhich may have lower resolution due to Performance settings.
+Tools
+Launcher
+Color depth
+Loading engine
+Quick action launcher
+Program registered
+Enter license key
+Enter the email used for purchase:
+Enter license key:
+Success
+License key has been activated.
+Error
+Invalid key or email!
+Trial version expired
+Fotografista trial version expired after 7 days.
+To continue, enter your license key:
+Close program
+Enter your email address.
+Enter your license key.
+Batch processing
+Apply a saved macro to all images in a folder
+Source folder:
+Output folder:
+Macro:
+Browse...
+Start
+Processing...
+Cancel
+Done
+Select source folder
+Select output folder
+No saved macros.
+Batch processing is already running.
+Folder is empty.
+No images found in source folder.
+Fill in all fields.
+Processed
+errors
+Macro contains a resize step. Combining it with batch scaling may give unexpected results.
+Scale to long edge
+px:
+Do not run macro
+Buy license

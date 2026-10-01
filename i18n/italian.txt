@@ -1,0 +1,844 @@
+File
+Modifica
+Fusione effetti
+Visualizza
+Analizza
+Regola
+Colori
+Effetti
+Stampa
+Sperimentale
+Distorsioni
+Amiga
+Aiuto
+Apri...
+Salva con nome...
+Informazioni immagine
+(Nessuna)
+Chiudi
+Preferenze...
+Esci
+Annulla
+Ripristina
+Copia
+Incolla
+Ripristina originale
+Cancella cronologia
+Fusione effetti...
+Fusione (0=A, 100=B):
+Unisci livelli visibili
+Elimina tutto
+Zoom avanti
+Zoom indietro
+Adatta alla finestra
+100%
+50%
+25%
+200%
+400%
+Istogramma...
+Equalizza istogramma...
+Rifletti orizzontalmente
+Rifletti verticalmente
+Ruota a sinistra
+Ruota a destra
+Ruota di 180°
+Raddrizza scansione...
+Contrasto...
+Luminosità...
+Correzione gamma...
+Livelli...
+Bilanciamento del bianco...
+Nitidezza...
+Vividezza...
+Miglioramento fotografico...
+Ritaglia...
+Ridimensiona...
+Colorizza...
+Bilanciamento HSB...
+Solarizza...
+Duotono...
+Seppia...
+Cianotipia
+Stampa ai sali
+Raggi X
+Infrarosso a falsi colori
+Visione notturna
+Termico
+Orton
+Bianco e nero...
+Scala di grigi
+Negativo
+Grana della pellicola...
+Pittura a olio...
+Carboncino...
+Sfocatura...
+Rilievo
+Pixelizza...
+Vignettatura...
+Posterizza...
+Rilevamento bordi
+Linoleografia...
+Incisione...
+Tratteggio incrociato...
+Mezzitoni...
+Puntinatura...
+Dadi...
+Risografia v1...
+Serigrafia...
+Distorsione a barilotto...
+Distorsione ad arco...
+Vortice...
+Increspatura dell'acqua...
+Distorsione polare...
+Tavolozza Workbench 1.x (OCS)
+Tavolozza Workbench 2.x/3.x
+Tavolozza OCS a 32 colori...
+Tavolozza EHB a 64 colori...
+Tavolozza AGA a 256 colori...
+Tavolozza Workbench a 256 colori...
+Tavolozza MagicWB (8 colori)...
+Informazioni
+Apri un file immagine
+Salva l'immagine con un nuovo nome
+Mostra informazioni sull'immagine
+Chiudi l'immagine corrente
+Impostazioni del programma
+Esci dal programma
+Annulla l'ultima operazione
+Ripristina l'operazione annullata
+Copia l'immagine negli appunti
+Incolla l'immagine dagli appunti come nuovo livello
+Ripristina l'immagine allo stato originale
+Cancella la cronologia delle operazioni - irreversibile
+Fondi due effetti con un cursore
+Čeština (Ceco)
+Português (Portoghese) 
+Afrikaans
+Ingrandisci la visualizzazione
+Riduci la visualizzazione
+Adatta l'immagine alla finestra
+Visualizza in scala 1:1
+Visualizza al 50%
+Visualizza al 25%
+Visualizza al 200%
+Visualizza al 400%
+Mostra l'istogramma dei colori
+Equalizza l'istogramma - migliora il contrasto
+Rifletti l'immagine orizzontalmente
+Rifletti l'immagine verticalmente
+Ruota l'immagine di 90° a sinistra
+Ruota l'immagine di 90° a destra
+Ruota l'immagine di 180°
+Raddrizza la scansione - ruota fino a +/- 10° con ritaglio automatico
+Regola il contrasto
+Regola la luminosità
+Correzione gamma
+Imposta punto di nero, gamma e punto di bianco - controllo tonale completo
+Bilanciamento del bianco - correzione della temperatura colore
+Aumenta la nitidezza dell'immagine
+Vividezza - colori saturi e brillanti
+Miglioramento fotografico (Moltiplica)
+Ritaglia l'immagine
+Ridimensiona l'immagine
+Colorizza l'immagine con il colore selezionato
+Regola luminosità, saturazione e tonalità
+Solarizza - inverti i toni chiari
+Effetto a due colori - ombre e luci
+Seppia - monocromatico marrone caldo
+Cianotipia - monocromatico blu
+Stampa ai sali - marrone caldo
+Raggi X - colori invertiti
+Infrarosso a falsi colori - scambio dei canali, vegetazione rossa, cielo blu
+Visione notturna - scala di grigi + fosforo verde
+Termico - visualizzazione a falsi colori
+Orton - bagliore sfocato, atmosfera sognante
+Converti in bianco e nero con opzione di retinatura
+Converti in scala di grigi
+Inverti i colori - negativo
+Aggiungi grana della pellicola - rumore casuale
+Pittura a olio - simulazione del pennello
+Carboncino - simulazione di disegno a carboncino
+Sfoca l'immagine
+Rilievo
+Pixelizza - effetto mosaico
+Vignettatura - scurisci i bordi
+Posterizza - riduci il numero di colori
+Rilevamento bordi - effetto schizzo
+Linoleografia - forte contrasto in bianco e nero
+Incisione - simulazione di incisione a linee
+Tratteggio incrociato a due angolazioni
+Mezzitoni - punti di dimensione variabile in base alla luminosità
+Puntinatura - densità dei punti in base alla luminosità
+Dadi - motivo con punti da dado
+Risografia - stampa a livelli con sfalsamento dei colori
+Serigrafia monocromatica - scala di grigi + mezzitoni sullo sfondo
+Distorsione a barilotto / cuscinetto
+Distorsione ad arco - incurva l'immagine
+Vortice - ruota l'immagine a spirale
+Effetto increspatura dell'acqua
+Distorsione polare - tunnel, occhio di pesce
+Tavolozza a 4 colori - Workbench 1.x (OCS)
+Tavolozza a 4 colori - Workbench 2.x/3.x
+Tavolozza a 32 colori (4x4x2) - OCS
+Tavolozza a 64 colori (4x4x4) - EHB
+Tavolozza a 256 colori - AGA
+Tavolozza a 256 colori - Workbench 3.x
+Tavolozza a 8 colori - MagicWB (MUI)
+Fotografista
+Nessuna immagine
+OK
+Annulla
+Anteprima
+Mostra anteprima
+Applica e chiudi
+Chiudi senza applicare
+Informazioni
+Editor fotografico
+Build
+Larghezza (px):
+Altezza (px):
+Applica ridimensionamento
+Annulla modifiche
+X (px):
+Y (px):
+Applica ritaglio
+Annulla ritaglio
+Seleziona colore
+Colore del testo
+Carattere...
+Direzione
+Aumenta
+Diminuisci
+Retinatura
+Con retinatura (qualità migliore)
+Senza retinatura
+Con retinatura
+Senza retinatura
+Abilitato
+Disabilitato
+Intensità (1-10):
+Luminosità (0-200, predefinito 100):
+Gamma (100 = nessuna modifica):
+Rosso (100 = nessuna modifica):
+Verde (100 = nessuna modifica):
+Blu (100 = nessuna modifica):
+Intensità (1-100):
+Intensità (0-100):
+Raggio (1-5):
+Intensità (1-50):
+Dimensione cella (1-100):
+Angolo (0-179°):
+Dimensione cella (4-16 px):
+Spessore massimo della linea (1-8):
+Dimensione cella (4-64 px):
+Dimensione del punto della sottocella (3-8 px):
+Soglia (1-100):
+Quantità di inchiostro (più chiaro = meno):
+Intensità (0-100):
+Saturazione (0-100):
+Contrasto (0-100):
+Curva (1-5):
+Curve intelligenti (0-100):
+Punto di nero (0-255):
+Punto di bianco (0-255):
+Angolo di raddrizzamento (-10 a +10°):
+Applica e chiudi
+Chiudi senza applicare
+Applica raddrizzamento e chiudi
+Applica modifiche del livello e chiudi
+Chiudi senza salvare
+Mostra anteprima
+Anteprima
+OK
+Annulla
+Colore delle ombre
+Colore delle luci
+Colore dell'inchiostro
+Colore della carta
+Nome del predefinito:
+Carica
+Elimina
+Chiudi
+Impostazione
+Luminosità
+Correzione gamma
+Nitidezza
+Solarizza
+Seppia
+Pittura a olio
+Carboncino
+Sfocatura
+Rilievo
+Pixelizza
+Vignettatura
+Rilevamento bordi
+Grana della pellicola
+Salva predefinito Duotono
+Carica predefinito Duotono
+Contrasto
+Ritaglia
+Ridimensiona
+Bilanciamento del bianco
+Livelli
+Vividezza
+Miglioramento fotografico
+Livelli
+Raddrizza scansione
+Colorizza
+Bilanciamento HSB
+Bianco e nero
+Posterizza
+Incisione
+Tratteggio incrociato
+Mezzitoni
+Puntinatura
+Dadi
+Linoleografia
+Risografia
+Serigrafia
+Tavolozza OCS a 32 colori
+Tavolozza EHB a 64 colori
+Tavolozza AGA a 256 colori
+Tavolozza Workbench a 256 colori
+Tavolozza MagicWB a 8 colori
+Distorsione a barilotto
+Distorsione ad arco
+Vortice
+Increspatura dell'acqua
+Distorsione polare
+Preferenze
+Saturazione (0-200, predefinito 100):
+Tonalità (0-200, predefinito 100):
+Contrasto (0-10):
+Numero di colori (2-64):
+Opacità:
+Modalità:
+Seleziona colore...
+Seleziona tipo:
+Seleziona l'angolo dell'arco:
+Seleziona tipo:
+Seleziona l'angolo dell'arco:
+Seleziona intensità:
+Seleziona variante:
+Barilotto debole
+Barilotto medio
+Barilotto forte
+Cuscinetto debole
+Cuscinetto medio
+Cuscinetto forte
+45°
+90°
+180°
+360°
+90° + ruota
+180° + ruota
+Debole (45°)
+Medio (90°)
+Forte (180°)
+Molto forte (270°)
+Completo (360°)
+Invertito
+Leggero
+Medio
+Forte
+Concentrico
+Dall'angolo
+Denso
+Completo
+Mezzo angolo
+Quarto di angolo
+Anello
+Raggio piccolo
+Morbido
+Tunnel
+Vortice
+Occhio di pesce
+Stiramento esterno
+Errore
+Formato file non supportato.
+Istantanea
+Originale
+Gamma (10-500, 100 = 1,0):
+Aggiungi livello
+Unisci livelli
+Equalizzazione dell'istogramma
+Copia
+Incolla
+Annulla:
+Ripristina:
+Vividezza
+HDR 2
+WB 1.x
+WB 2.x
+OCS 32
+EHB
+AGA 256
+WB 256
+MagicWB
+Rifletti orizzontalmente
+Rifletti verticalmente
+Ruota a sinistra
+Ruota a destra
+Ruota di 180°
+Raddrizza
+Cianotipia
+Scala di grigi
+Negativo
+Stampa ai sali
+Raggi X
+Infrarosso a falsi colori
+Visione notturna
+Termico
+Orton
+Rilievo
+Rilevamento bordi
+Duotono
+Contrasto (prima della conversione)
+Rosso
+Verde
+Blu
+Luminosità
+Contrasto
+Tonalità
+Saturazione
+Gamma
+Intensità
+Soglia
+Angolo
+Dimensione cella
+Spessore
+Dimensione punto
+Colori
+Raggio
+Sconosciuto
+Informazioni
+Nessuna immagine caricata.
+Nome:
+Formato:
+Canale alfa:
+Larghezza:
+Altezza:
+Dimensione:
+Data:
+Ora:
+Sì
+No
+Informazioni immagine
+Miniatura
+Seleziona dimensione:
+100 px
+200 px
+320 x 240
+640 x 480
+Fatto
+Miniatura salvata.
+Salva miniatura con nome
+Qualità di compressione JPEG (0-100):
+Normale
+Moltiplica
+Schermo
+Sovrapponi
+Luce soffusa
+Più scuro
+Più chiaro
+Sfondo (originale)
+Cremisi + Ciano
+Nero + Giallo
+Blu + Arancione
+Cremisi + Ciano + Giallo
+Nero + Cremisi + Giallo
+CMYK (4 colori)
+Equalizzazione dell'istogramma
+Seleziona modalità di equalizzazione:
+Luminanza
+Tutti
+Chiudi
+Istogramma
+Scorciatoie da tastiera
+Macro
+Avvia registrazione
+Arresta e salva
+Annulla registrazione
+Gestisci macro...
+Macro
+Riproduci
+Elimina
+Salva macro
+Nome macro:
+Macro
+La registrazione è già attiva.
+Aggiungere questo passaggio alla macro?
+Sì|No
+La registrazione non è attiva.
+Nessun passaggio da salvare.
+Nessuna immagine caricata.
+passaggi
+Registrazione macro
+HAM6 - 16 colori + Hold-Modify...
+HAM8 - 64 colori + Hold-Modify...
+Simulazione HAM6 (16 colori base con modalità Hold-Modify)
+Simulazione HAM8 (64 colori base con modalità Hold-Modify)
+HAM6
+HAM8
+Ritaglia alla selezione
+Dimensione selezione...
+Salva icona...
+Dimensione icona:
+Formato icona:
+Icona salvata.
+Vividezza
+Avviso: questo effetto richiede molte risorse. Per immagini superiori a 6 MP l'elaborazione può richiedere da 30 a 60 secondi.
+Continua
+Bagliore...
+Raggio del bagliore:
+Gradiente Amiga...
+Sovrapposizione di gradiente copper in stile Amiga
+Gradiente Amiga (Agony)...
+Gradiente copper in stile Agony
+Salva come icona di Windows...
+Intensità (0-100):
+Qualità JPEG 2000 (0-100, 100 = senza perdita):
+Sviluppo errato...
+Sviluppo errato — simulazione E-6/C-41
+Salva pacchetto di icone (ZIP)...
+Rinomina
+Lingua...
+Impostazioni
+Qualità di esportazione...
+Pacchetto di icone
+Nessuna dimensione selezionata.
+Pacchetto di icone salvato in:
+Compressione TIFF:
+Formato icona:
+Seleziona piattaforma:
+Seleziona formato:
+Seleziona dimensione:
+Salva icona...
+Icona salvata.
+Seleziona formato:
+Ripristina
+Ripristina
+Salva l'immagine corrente come icona
+Salva icone di più dimensioni in un archivio ZIP
+Avvia la registrazione di una macro
+Arresta la registrazione e salva la macro
+Annulla la registrazione senza salvare
+Riproduci, rinomina o elimina macro
+Cambia la lingua dell'applicazione
+Imposta la qualità di esportazione di JPEG, JPEG 2000 e TIFF
+Informazioni su Fotografista
+Mostra scorciatoie da tastiera
+Interfaccia...
+Impostazioni dell'interfaccia
+Interfaccia
+Colore di sfondo dell'area di lavoro:
+Selezione: %d x %d
+Apri immagine
+Tutti i file
+Appunti
+Incollato
+LZW
+Flate
+JPEG
+Nuovo nome:
+Lingua / Language
+Polski (Polacco)
+English (Inglese)
+Dimensione selezione
+Larghezza (px):
+Altezza (px):
+OK
+Annulla
+Selezione: %d x %d
+Converti nella tavolozza OCS a 32 colori con retinatura
+Converti nella tavolozza EHB a 64 colori con retinatura
+Converti nella tavolozza AGA a 256 colori con retinatura
+Converti nella tavolozza Workbench a 256 colori con retinatura
+Converti nella tavolozza MagicWB a 8 colori con retinatura
+Tonalità superiore (0-360):
+Tonalità inferiore (0-360):
+Numero di bande (32-256):
+E-6 in C-41
+C-41 in E-6
+Kodak in sviluppo Fuji
+Fuji in sviluppo Kodak
+ECN-2 in C-41
+Macro
+Dimensione carattere (barra di stato):
+AmigaOS classico (4 colori)
+Affiancamento
+Ripeti l'immagine per riempire le dimensioni di destinazione
+Sfondo Amiga
+Risoluzione di destinazione:
+Allineamento immagine:
+Colore di sfondo (tavolozza MagicWB):
+Grigio
+Nero
+Bianco
+Blu
+Grigio scuro
+Grigio chiaro
+Marrone
+Salmone
+Sfondo Amiga (stirato, MagicWB)
+Adatta l'immagine alla risoluzione Amiga con riempimento dei bordi esteso
+Colore personalizzato...
+Esporta...
+Importa...
+Esporta macro
+Macro esportata con successo.
+Importa macro
+File macro non valido.
+Esiste già una macro con questo nome. Sovrascriverla?
+Macro importata con successo.
+Ricorda dimensione e posizione della finestra
+Numero di file recenti:
+Esci senza salvare le modifiche
+Rilievo
+Rilievo del materiale dalla luminanza dell'immagine
+Profondità (1-100):
+Gesso / pietra bianca
+Marmo bianco
+Pietra grigia
+Bronzo / medaglia
+Arenaria
+Scala (%):
+Mantieni proporzioni
+Intensità (0-100):
+Emergo
+Français (Francese)
+Español (Spagnolo)
+Italiano
+Deutsch (Tedesco)
+Modifica macro
+Rimuovi passaggio
+Manuale
+Automatico
+Operazione completata.
+Fatto.
+Il risultato è pronto.
+Puoi tornare al computer.
+Probabilmente il tuo caffè si è raffreddato.
+Congratulazioni. La CPU è sopravvissuta.
+Pensavo che non sarebbe mai finita.
+Alleluia! Finalmente.
+Ha funzionato. È tutto pronto.
+Fine dell'attesa.
+Grazie per la pazienza.
+Emergo -- recupero intelligente dei dettagli nelle ombre
+Anteprima 100%
+Simulazione HAM
+Questo effetto richiede moltissime risorse.\nPer immagini superiori a 2 MP l'elaborazione può richiedere diversi minuti.
+Falso bokeh...
+Tilt-shift (miniatura)...
+Sfocatura graduata
+Intensità:
+Forma:
+Radiale (bokeh)
+Lineare (tilt-shift)
+Disallineamento CMYK...
+Disallineamento CMYK
+Intensità dello spostamento:
+Tritono...
+Tritono
+Quadritono...
+Quadritono
+Colore 1 (ombre):
+Colore 2 (toni medi):
+Colore 3 (alte luci):
+Colore 4 (luci estreme):
+Aberrazione cromatica...
+Aberrazione cromatica
+Spostamento:
+Centro X:
+Centro Y:
+Raggio:
+Attenuazione:
+Posizione della banda:
+Altezza della banda:
+Altri computer retro
+C64 — Pepto / Colodore
+Tavolozza Commodore 64 — Pepto o Colodore
+Commodore 64
+Converti nella tavolozza Commodore 64 con retinatura
+Pepto
+Colodore
+ZX Spectrum
+Tavolozza ZX Spectrum
+ZX Spectrum
+Converti nella tavolozza ZX Spectrum con retinatura
+Game Boy — DMG / Pocket
+Tavolozza Game Boy — DMG (verde) o Pocket (grigia)
+Game Boy
+Converti nella tavolozza Game Boy con retinatura
+DMG (verde)
+Pocket (grigia)
+NES (Nestopia)
+Tavolozza NES (Nestopia)
+NES — Nestopia
+Converti nella tavolozza NES Nestopia con retinatura
+Motivo (retro)
+Floyd–Steinberg (uniforme)
+La modalità selezionata è molto lenta per immagini di grandi dimensioni.\nPer immagini superiori a 2 MP l'anteprima e l'applicazione dell'effetto possono richiedere diversi minuti.\nLe altre modalità sono molto più veloci.
+Prestazioni
+Risoluzione massima di lavoro:
+Originale
+Immagine
+Tunnel invertito
+Sezione di 30°
+Full HD (1920×1080)
+4K (3840×2160)
+Prestazioni e risoluzione massima di lavoro
+SVGA (800×600)
+Ciano
+Magenta
+Giallo
+Nero
+Blu
+Arancione
+Verde
+Rosa
+Blu navy
+Viola
+Turchese
+Corallo
+Bordeaux
+Menta
+Risografia v2...
+Risograph V3...
+Numero di livelli:
+Livello 1...
+Livello 2...
+Livello 3...
+Livello 4...
+Livello 5...
+Seleziona
+Prepara per la serigrafia (magliette)...
+Design per magliette...
+Numero di colori:
+2. Mappatura colore-inchiostro
+3. Pulizia dettagli
+Area minima (px):
+Preparazione per la serigrafia (magliette)...
+Seleziona inchiostro
+Inchiostro: 
+Simula raster serigrafia
+Produzione di magliette
+1. Posterizzazione
+Isole rimosse: 
+Design per magliette
+Misura le prestazioni...
+Misura le prestazioni degli effetti grafici
+Questo test misurerà la velocità di 12 effetti di elaborazione delle immagini.\nDurata: da pochi secondi a diversi minuti -\ndipende dalla risoluzione dell'immagine e dalla potenza della CPU.
+Test delle prestazioni
+Preparazione dell'immagine...
+Immagine: %s (%d×%d)
+%s: %.2f ms (media di %d)
+Tempo: %d min %d s
+(interrotto)
+Più difficile: %s (%.2f ms).
+Risultati delle prestazioni
+Livelli
+Vivid
+Colorize
+Cross-process
+Bassorilievo
+Orton
+Mezzatinta
+Serigrafia
+Risography v2
+HAM8 (64 colori)
+HAM6 (16 colori)
+Bagliore
+Misura le prestazioni degli effetti grafici
+Elaborazione
+Raggio del pennello (1-30):
+Glitch...
+Distorsione dell'immagine digitale: spostamento RGB, rumore, spostamento orizzontale delle sezioni
+Spostamento RGB:
+Jitter delle linee:
+Rumore:
+Effetto CRT:
+Perdita di blocchi:
+Spostamento orizzontale delle sezioni:
+Scurisce una riga sì e una no al rapporto PAL: valore più alto = spazi più scuri
+Documentazione online...
+Apri il sito web di Fotografista nel tuo browser
+Cimeografo...
+Cimeografo: bordi neri su sfondo bianco
+Cimeografo
+Granularità:
+Sensibilità dei bordi:
+Intensità del toner:
+Cimeografo
+Esporta PDF...
+Esporta l'immagine in un file PDF
+Esporta PDF
+Fatto.
+PDF salvato correttamente.
+Errore durante il salvataggio del PDF.
+Esporta confronto...
+Esporta confronto immagini: affiancate all'originale
+Confronto
+Nessun file da confrontare: l'immagine non è stata aperta da un file.
+Confronto salvato correttamente.
+Errore durante il salvataggio del confronto.
+Immagine corrente
+Adatta alle dimensioni con ritaglio...
+Ridimensiona l'immagine alle dimensioni desiderate, ritagliando l'eccesso
+Full HD 1920×1080
+Adatta alle dimensioni con ritaglio
+Larghezza (px):
+Altezza (px):
+Punto di ancoraggio:
+In alto a sinistra
+In alto a destra
+In basso a sinistra
+In basso a destra
+Applica ridimensionamento con ritaglio
+Annulla ridimensionamento con ritaglio
+L'immagine non è stata caricata da un file.\nL'opzione "Adatta alle dimensioni con ritaglio" utilizzerà l'immagine corrente\nche potrebbe avere una risoluzione inferiore a causa delle impostazioni delle prestazioni.
+Strumenti
+Avviatore
+Profondità colore
+Motore di caricamento
+Avviatore azioni rapide
+Programma registrato
+Inserire la chiave di licenza
+Inserire l’e‑mail usata per l’acquisto:
+Inserire la chiave di licenza:
+Successo
+La chiave di licenza è stata attivata.
+Errore
+Chiave o e‑mail non valida
+Versione di prova scaduta
+La versione di prova di Fotografista è scaduta dopo 7 giorni.
+Per continuare, inserire la chiave di licenza:
+Chiudi programma
+Inserire il proprio indirizzo e‑mail.
+Inserire la chiave di licenza.
+Elaborazione batch
+Applicare una macro salvata a tutte le immagini in una cartella
+Cartella sorgente:
+Cartella di destinazione:
+Macro:
+Sfoglia…
+Avvia
+Elaborazione…
+Annulla
+Fatto
+Seleziona cartella sorgente
+Seleziona cartella di destinazione
+Nessuna macro salvata.
+Elaborazione batch già in esecuzione.
+Cartella vuota.
+Nessuna immagine trovata nella cartella sorgente.
+Compilare tutti i campi.
+Elaborate
+errori
+La macro contiene un passaggio di ridimensionamento. Combinarlo con la scalatura batch può produrre risultati imprevisti.
+Scala al lato lungo
+px:
+Non eseguire la macro
+Acquista licenza

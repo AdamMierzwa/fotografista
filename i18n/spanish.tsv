@@ -1,0 +1,1048 @@
+﻿1	Archivo
+2	Editar
+3	Mezcla de efectos
+4	Ver
+5	Analizar
+6	Ajustar
+7	Colores
+8	Efectos
+9	Imprimir
+10	Experimental
+11	Distorsiones
+12	Amiga
+13	Ayuda
+14	Abrir...
+15	Guardar como...
+16	Información de la imagen
+17	(Ninguna)
+18	Cerrar
+19	Preferencias...
+20	Salir
+21	Deshacer
+22	Rehacer
+23	Copiar
+24	Pegar
+25	Restaurar original
+26	Borrar historial
+27	Mezcla de efectos...
+28	Mezcla (0=A, 100=B):
+29	Combinar capas visibles
+30	Eliminar todo
+31	Acercar
+32	Alejar
+33	Ajustar a la ventana
+34	100%
+35	50%
+36	25%
+37	200%
+38	400%
+39	Histograma...
+40	Ecualizar histograma...
+41	Voltear horizontalmente
+42	Voltear verticalmente
+43	Girar a la izquierda
+44	Girar a la derecha
+46	Enderezar escaneo...
+47	Contraste...
+48	Brillo...
+49	Corrección gamma...
+50	Niveles...
+51	Balance de blancos...
+52	Enfocar...
+53	Intensificar...
+54	Mejora fotográfica...
+55	Recortar...
+56	Redimensionar...
+57	Colorear...
+58	Balance HSB...
+59	Solarizar...
+60	Duotono...
+61	Sepia...
+62	Cianotipia
+63	Impresión a la sal
+64	Rayos X
+65	Infrarrojo en falso color
+66	Visión nocturna
+68	Orton
+69	Blanco y negro...
+70	Escala de grises
+71	Negativo
+72	Grano de película...
+73	Pintura al óleo...
+74	Carboncillo...
+75	Desenfoque...
+76	Relieve...
+77	Pixelar...
+78	Vineta...
+79	Posterizar...
+80	Detección de bordes...
+81	Linograbado...
+82	Grabado...
+83	Tramado cruzado...
+84	Semitonos...
+85	Punteado...
+86	Dados...
+87	Risografía v1...
+88	Serigrafía...
+89	Distorsión de barril...
+90	Distorsión de arco...
+91	Remolino...
+92	Ondulación del agua...
+93	Distorsión polar...
+94	Paleta Workbench 1.x (OCS)
+95	Paleta Workbench 2.x/3.x
+96	Paleta OCS de 32 colores...
+97	Paleta EHB de 64 colores...
+98	Paleta AGA de 256 colores...
+99	Paleta Workbench de 256 colores...
+100	Paleta MagicWB (8 colores)...
+101	Acerca de
+102	Abrir un archivo de imagen
+103	Guardar la imagen con un nombre nuevo
+104	Mostrar información de la imagen
+105	Cerrar la imagen actual
+106	Configuración del programa
+107	Salir del programa
+108	Deshacer la última operación
+109	Rehacer la última operación deshecha
+110	Copiar la imagen al portapapeles
+111	Pegar la imagen del portapapeles como una nueva capa
+112	Restaurar la imagen a su estado original
+113	Borrar el historial de operaciones - irreversible
+114	Mezclar dos efectos mediante un control deslizante
+115	Čeština (Checo)
+116	Português (Portugués)
+117	Afrikaans (Afrikáans)
+118	Acercar la vista
+119	Alejar la vista
+120	Ajustar la imagen a la ventana
+121	Ver a escala 1:1
+122	Ver al 50%
+123	Ver al 25%
+124	Ver al 200%
+125	Ver al 400%
+126	Mostrar el histograma de colores
+127	Ecualizar el histograma - mejorar el contraste
+128	Voltear la imagen horizontalmente
+129	Voltear la imagen verticalmente
+130	Girar la imagen 90 grados a la izquierda
+131	Girar la imagen 90 grados a la derecha
+132	Girar la imagen 180 grados
+133	Enderezar escaneo: girar hasta +/- 10 grados con recorte automático
+134	Ajustar el contraste
+135	Ajustar el brillo
+136	Corrección gamma
+137	Ajustar punto negro, gamma y punto blanco: control tonal completo
+138	Balance de blancos: corrección de la temperatura de color
+139	Enfocar la imagen
+140	Intensificar: colores vivos y saturados
+141	Mejora fotográfica (Multiplicar)
+142	Recortar la imagen
+143	Redimensionar la imagen
+144	Tenir la imagen con el color seleccionado
+145	Ajustar brillo, saturación y tono
+146	Solarizar: invertir los tonos claros
+147	Efecto de dos colores: sombras y luces
+148	Sepia: monocromo marrón cálido
+149	Cianotipia: monocromo azul
+150	Impresión a la sal: marrón cálido
+151	Rayos X: colores invertidos
+152	Infrarrojo en falso color: intercambio de canales, vegetación roja, cielo azul
+153	Visión nocturna: escala de grises + fósforo verde
+154	Térmico: visualización en falso color
+155	Orton: resplandor difuso, ambiente onírico
+156	Convertir a blanco y negro con opción de tramado
+157	Convertir a escala de grises
+158	Invertir colores - negativo
+159	Añadir grano de película - ruido aleatorio
+160	Pintura al óleo - simulación de pincel
+161	Carboncillo - simulación de dibujo al carboncillo
+162	Desenfocar la imagen
+163	Relieve
+164	Pixelar - efecto mosaico
+165	Vineta - oscurecer los bordes
+166	Posterizar - reducir el número de colores
+167	Detección de bordes - efecto de boceto
+168	Linograbado - fuerte contraste en blanco y negro
+169	Grabado - simulación de grabado lineal
+170	Tramado cruzado en dos ángulos
+171	Semitonos - puntos de tamaño variable según el brillo
+172	Punteado - densidad de puntos según el brillo
+173	Dados - patrón de puntos de dados
+174	Risografía - impresión por capas con desplazamiento de color
+175	Serigrafía monocromática - escala de grises + semitonos sobre el fondo
+176	Distorsión de barril / cojín
+177	Distorsión de arco - curvar la imagen
+178	Remolino - retorcer la imagen
+179	Efecto de ondulación del agua
+180	Distorsión polar - túnel, ojo de pez
+181	Paleta de 4 colores - Workbench 1.x (OCS)
+182	Paleta de 4 colores - Workbench 2.x/3.x
+183	Paleta de 32 colores (4x4x2) - OCS
+184	Paleta de 64 colores (4x4x4) - EHB
+185	Paleta de 256 colores - AGA
+186	Paleta de 256 colores - Workbench 3.x
+187	Paleta de 8 colores - MagicWB (MUI)
+188	Fotografista
+189	Sin imagen
+190	Aceptar
+191	Cancelar
+192	Vista previa
+193	Mostrar vista previa
+194	Aplicar y cerrar
+195	Cerrar sin aplicar
+197	Editor de fotografías
+198	Compilación
+199	Ancho (px):
+200	Alto (px):
+201	Aplicar redimensionado
+202	Cancelar cambios
+203	X (px):
+204	Y (px):
+205	Aplicar recorte
+206	Cancelar recorte
+207	Seleccionar color
+208	Color del texto
+209	Fuente...
+210	Dirección
+211	Aumentar
+212	Disminuir
+213	Difuminado
+214	Con difuminado (mejor calidad)
+216	Con difuminado
+217	Sin difuminado
+218	Activado
+219	Desactivado
+220	Intensidad (1-10):
+221	Brillo (0-200, predeterminado 100):
+222	Gamma (100 = sin cambios):
+223	Rojo (100 = sin cambios):
+224	Verde (100 = sin cambios):
+225	Azul (100 = sin cambios):
+226	Intensidad (1-100):
+227	Intensidad (0-100):
+228	Radio (1-5):
+229	Intensidad (1-50):
+230	Tamaño de celda (1-100):
+231	Ángulo (0-179°):
+232	Tamaño de celda (4-16 px):
+233	Grosor máximo de línea (1-8):
+234	Tamaño de celda (4-64 px):
+235	Tamaño de punto de subcelda (3-8 px):
+236	Umbral (1-100):
+237	Cantidad de tinta (más claro = menos):
+238	Intensidad (0-100):
+239	Saturación (0-100):
+240	Contraste (0-100):
+241	Curva (1-5):
+242	Curvas inteligentes (0-100):
+243	Punto negro (0-255):
+244	Punto blanco (0-255):
+245	Ángulo de enderezado (-10 a +10°):
+248	Aplicar enderezado y cerrar
+249	Aplicar cambios de la capa y cerrar
+250	Cerrar sin guardar
+255	Color de las sombras
+256	Color de las luces
+257	Color de la tinta
+258	Color del papel
+259	Nombre del preajuste:
+260	Cargar
+261	Eliminar
+263	Ajuste
+264	Brillo
+266	Enfocar
+267	Solarizar
+268	Sepia
+269	Pintura al óleo
+270	Carboncillo
+271	Desenfoque
+273	Pixelar
+274	Vineta
+275	Detección de bordes
+276	Grano de película
+277	Guardar preajuste de Duotono
+278	Cargar preajuste de Duotono
+279	Contraste
+280	Recortar
+281	Redimensionar
+282	Balance de blancos
+283	Niveles
+284	Intensificar
+285	Mejora fotográfica
+286	Capas
+287	Enderezar escaneo
+288	Colorear
+289	Balance HSB
+290	Blanco y negro
+291	Posterizar
+292	Grabado
+293	Tramado cruzado
+294	Semitonos
+295	Punteado
+296	Dados
+297	Linograbado
+298	Risografía
+299	Serigrafía
+300	Paleta OCS de 32 colores
+301	Paleta EHB de 64 colores
+302	Paleta AGA de 256 colores
+303	Paleta Workbench de 256 colores
+304	Paleta MagicWB de 8 colores
+305	Distorsión de barril
+306	Distorsión de arco
+307	Remolino
+308	Ondulación del agua
+309	Distorsión polar
+310	Preferencias
+311	Saturación (0-200, predeterminado 100):
+312	Tono (0-200, predeterminado 100):
+313	Contraste (0-10):
+314	Número de colores (2-64):
+315	Opacidad:
+316	Modo:
+317	Seleccionar color...
+320	Seleccionar tipo:
+321	Seleccionar ángulo del arco:
+322	Seleccionar intensidad:
+323	Seleccionar variante:
+324	Barril suave
+325	Barril medio
+326	Barril fuerte
+327	Cojín suave
+328	Cojín medio
+329	Cojín fuerte
+330	45°
+331	90°
+332	180°
+333	360°
+334	90° + girar
+335	180° + girar
+336	Suave (45°)
+337	Medio (90°)
+338	Fuerte (180°)
+339	Muy fuerte (270°)
+340	Completo (360°)
+341	Invertido
+342	Suave
+343	Medio
+344	Fuerte
+345	Concéntrico
+346	Desde la esquina
+347	Denso
+348	Completo
+349	Medio ángulo
+350	Cuarto de ángulo
+351	Anillo
+352	Radio pequeño
+353	Suave
+354	Túnel
+356	Ojo de pez
+357	Estiramiento exterior
+358	Error
+359	Formato de archivo no compatible.
+360	Instantánea
+361	Original
+362	Gamma (10-500, 100 = 1,0):
+363	Añadir capa
+364	Combinar capas
+365	Ecualización del histograma
+368	Deshacer:
+369	Rehacer:
+371	HDR 2
+372	WB 1.x
+373	WB 2.x
+374	OCS 32
+375	EHB
+376	AGA 256
+377	WB 256
+378	MagicWB
+379	Voltear horizontalmente
+380	Voltear verticalmente
+383	Girar 180°
+384	Enderezar
+390	Infrarrojo en falso color
+392	Térmico
+394	Relieve
+396	Duotono
+397	Contraste (antes de la conversión)
+398	Rojo
+399	Verde
+403	Tono
+404	Saturación
+405	Gamma
+406	Intensidad
+407	Umbral
+408	Ángulo
+409	Tamaño de celda
+410	Grosor
+411	Tamaño del punto
+413	Radio
+414	Desconocido
+415	Información
+417	Nombre:
+419	Canal alfa:
+420	Ancho:
+421	Alto:
+422	Tamaño:
+423	Fecha:
+424	Hora:
+425	Sí
+426	No
+428	Miniatura
+429	Seleccionar tamaño:
+430	100 px
+431	200 px
+432	320 x 240
+433	640 x 480
+434	Hecho
+435	Miniatura guardada.
+436	Guardar miniatura como
+437	Calidad de compresión JPEG (0-100):
+438	Normal
+439	Multiplicar
+440	Pantalla
+441	Superposición
+442	Luz suave
+443	Más oscuro
+444	Más claro
+445	Fondo (original)
+446	Carmesí + Cian
+447	Negro + Amarillo
+448	Azul + Naranja
+449	Carmesí + Cian + Amarillo
+450	Negro + Carmesí + Amarillo
+451	CMYK (4 colores)
+453	Seleccionar modo de ecualización:
+454	Luminancia
+455	Todos
+457	Histograma
+458	Atajos de teclado
+459	Macro
+460	Iniciar grabación
+461	Detener y guardar
+462	Cancelar grabación
+463	Administrar macros...
+464	Macros
+465	Reproducir
+467	Guardar macro
+468	Nombre de la macro:
+470	La grabación ya está activa.
+471	¿Añadir este paso a la macro?
+472	Sí|No
+473	La grabación no está activa.
+474	No hay pasos para guardar.
+475	No hay ninguna imagen cargada.
+476	pasos
+477	Grabación de macro
+478	HAM6 - 16 colores + Hold-Modify
+479	HAM8 - 64 colores + Hold-Modify
+480	Simulación HAM6 (16 colores base con modos Hold-Modify)
+481	Simulación HAM8 (64 colores base con modos Hold-Modify)
+482	HAM6
+483	HAM8
+484	Recortar a la selección
+485	Tamaño de la selección...
+486	Guardar icono...
+487	Tamaño del icono:
+488	Formato del icono:
+489	Icono guardado.
+491	Advertencia: este efecto requiere muchos recursos. En imágenes de más de 6 MP el procesamiento puede tardar entre 30 y 60 segundos.
+492	Continuar
+493	Resplandor...
+494	Radio del resplandor:
+495	Degradado Amiga...
+496	Superposición de degradado copper al estilo Amiga
+497	Degradado Amiga (Agony)...
+498	Degradado copper al estilo Agony
+499	Guardar como icono de Windows...
+501	Calidad JPEG 2000 (0-100, 100 = sin pérdidas):
+502	Revelado incorrecto...
+503	Revelado incorrecto — simulación E-6/C-41
+504	Guardar paquete de iconos (ZIP)...
+505	Renombrar
+506	Idioma...
+507	Configuración
+508	Calidad de exportación...
+509	Paquete de iconos
+510	No se ha seleccionado ningún tamaño.
+511	Paquete de iconos guardado en:
+512	Compresión TIFF:
+514	Seleccionar plataforma:
+515	Seleccionar formato:
+520	Restablecer
+522	Guardar la imagen actual como icono
+523	Guardar iconos de varios tamanos en un archivo ZIP
+524	Iniciar la grabación de una macro
+525	Detener la grabación y guardar la macro
+526	Cancelar la grabación sin guardar
+527	Reproducir, renombrar o eliminar macros
+528	Cambiar el idioma de la aplicación
+529	Configurar la calidad de exportación de JPEG, JPEG 2000 y TIFF
+530	Acerca de Fotografista
+531	Mostrar atajos de teclado
+532	Interfaz...
+533	Configuración de la interfaz
+534	Interfaz
+535	Color de fondo del lienzo (solo con el tema estándar de Windows):
+537	Abrir imagen
+538	Todos los archivos
+539	Portapapeles
+540	Pegado
+541	LZW
+542	Flate
+543	JPEG
+544	Nombre nuevo:
+545	Idioma / Language
+546	Polski (Polaco)
+547	English (Inglés)
+548	Tamaño de la selección
+553	Selección: %d x %d
+554	Convertir a la paleta OCS de 32 colores con difuminado
+555	Convertir a la paleta EHB de 64 colores con difuminado
+556	Convertir a la paleta AGA de 256 colores con difuminado
+557	Convertir a la paleta Workbench de 256 colores con difuminado
+558	Convertir a la paleta MagicWB de 8 colores con difuminado
+559	Tono superior (0-360):
+560	Tono inferior (0-360):
+561	Número de bandas (32-256):
+562	E-6 en C-41
+563	C-41 en E-6
+564	Kodak en revelador Fuji
+565	Fuji en revelador Kodak
+566	ECN-2 en C-41
+568	Tamaño de fuente (barra de estado):
+569	AmigaOS clásico (4 colores)
+570	Mosaico...
+571	Repetir la imagen en mosaico para rellenar las dimensiones de destino
+572	Fondo Amiga...
+573	Resolución de destino:
+574	Alineación de la imagen:
+575	Color de fondo (paleta MagicWB):
+576	Gris
+577	Negro
+578	Blanco
+579	Azul
+580	Gris oscuro
+581	Gris claro
+582	Marrón
+583	Salmón
+584	Fondo Amiga (estirado, MagicWB)...
+585	Escalar la imagen a la resolución Amiga con relleno de bordes estirado
+586	Color personalizado...
+587	Exportar...
+588	Importar...
+589	Exportar macro
+590	Macro exportada correctamente.
+591	Importar macro
+592	Archivo de macro no válido.
+593	Ya existe una macro con este nombre. ¿Desea reemplazarla?
+594	Macro importada correctamente.
+595	Recordar el tamaño y la posición de la ventana
+596	Número de archivos recientes:
+597	Salir sin guardar los cambios
+598	Relieve...
+599	Relieve del material a partir de la luminancia de la imagen
+600	Profundidad (1-100):
+601	Yeso / piedra blanca
+602	Mármol blanco
+603	Piedra gris
+604	Bronce / medalla
+605	Arenisca
+606	Escala (%):
+607	Mantener la relación de aspecto
+609	Emergo...
+610	Français (Francés)
+611	Español
+612	Italiano
+613	Deutsch (Alemán)
+614	Editar macro
+615	Eliminar paso
+616	Manual
+617	Automático
+618	Operación completada.
+620	El resultado está listo.
+621	Puede volver a su ordenador.
+622	Es probable que su café ya se haya enfriado.
+623	Enhorabuena. La CPU ha sobrevivido.
+624	Pensé que esto nunca terminaría.
+625	¡Aleluya! Por fin.
+626	Ha funcionado. Todo está listo.
+627	Fin de la espera.
+628	Gracias por su paciencia.
+629	Emergo — recuperación inteligente de detalles en las sombras
+630	Vista previa al 100 %
+631	Simulación HAM
+632	Este efecto requiere muchísimos recursos.\nEn imágenes de más de 2 MP el procesamiento puede tardar varios minutos.
+633	Bokeh falso...
+634	Tilt-shift (miniatura)...
+635	Desenfoque gradual
+636	Intensidad:
+637	Forma:
+638	Radial (bokeh)
+639	Lineal (tilt-shift)
+640	Desalineación CMYK...
+641	Desalineación CMYK
+642	Intensidad del desplazamiento:
+643	Tritono...
+644	Tritono
+645	Cuadritono...
+646	Cuadritono
+647	Color 1 (sombras):
+648	Color 2 (tonos medios):
+649	Color 3 (altas luces):
+650	Color 4 (luces extremas):
+651	Aberración cromática...
+652	Aberración cromática
+653	Desplazamiento:
+654	Centro X:
+655	Centro Y:
+656	Radio:
+657	Atenuación:
+658	Posición de la banda:
+659	Altura de la banda:
+660	Otros ordenadores retro
+661	C64 — Pepto / Colodore...
+662	Paleta Commodore 64 — Pepto o Colodore
+663	Commodore 64
+664	Convertir a la paleta Commodore 64 con difuminado
+665	Pepto
+666	Colodore
+667	ZX Spectrum...
+668	Paleta ZX Spectrum
+669	ZX Spectrum
+670	Convertir a la paleta ZX Spectrum con difuminado
+671	Game Boy — DMG / Pocket...
+672	Paleta Game Boy — DMG (verde) o Pocket (gris)
+673	Game Boy
+674	Convertir a la paleta Game Boy con difuminado
+675	DMG (verde)
+676	Pocket (gris)
+677	NES (Nestopia)...
+678	Paleta NES (Nestopia)
+679	NES — Nestopia
+680	Convertir a la paleta NES Nestopia con difuminado
+681	Patrón (retro)
+682	Floyd–Steinberg (suave)
+683	El modo seleccionado es muy lento para imágenes grandes.\nEn imágenes de más de 2 MP, la vista previa y la aplicación del efecto pueden tardar varios minutos.\nLos demás modos son mucho más rápidos.
+684	Rendimiento...
+685	Resolución máxima de trabajo:
+687	Imagen
+688	Túnel invertido
+689	Sector de 30°
+690	Full HD (1920×1080)
+691	4K (3840×2160)
+692	Rendimiento y resolución máxima de trabajo
+693	SVGA (800×600)
+694	Cian
+695	Magenta
+696	Amarillo
+699	Naranja
+701	Rosa
+702	Azul marino
+703	Morado
+704	Turquesa
+705	Coral
+706	Burdeos
+707	Menta
+708	Risografía v2...
+709	Risografía v3...
+710	Número de capas:
+711	Capa 1...
+712	Capa 2...
+713	Capa 3...
+714	Capa 4...
+715	Capa 5...
+716	Seleccionar
+717	Preparar para serigrafía (camisetas)...
+718	Diseño de camiseta...
+719	Número de colores:
+720	2. Mapeo de color a tinta
+721	3. Limpieza de detalles
+722	Área mínima (px):
+724	Seleccionar tinta
+725	Tinta:
+726	Simular trama de serigrafía
+727	Proceso de producción de camisetas
+728	1. Posterización
+729	Islas eliminadas:
+730	Diseño de camiseta
+731	Escalado suave de la vista previa
+732	Medición del rendimiento de los efectos gráficos
+733	Esta prueba medirá la velocidad de 12 efectos de procesamiento de imágenes.\nDuración: de unos segundos a varios minutos,\ndepende de la resolución de la imagen y la potencia de la CPU.
+734	Prueba de rendimiento
+735	Preparando la imagen...
+736	Imagen: %s (%d×%d)
+737	%s: %.2f ms (promedio de %d)
+738	Tiempo: %d min %d s
+739	(abortada)
+740	Máxima exigencia: %s (%.2f ms).
+741	Resultados de rendimiento
+745	Proceso cruzado
+746	Bajo relieve
+750	Risografía v2
+751	HAM8 (64 colores)
+752	HAM6 (16 colores)
+753	Resplandor
+754	Medir el rendimiento de los efectos gráficos
+755	Procesamiento
+756	Radio del pincel (1-30):
+757	Fallo...
+758	Distorsión de la imagen digital: desplazamiento RGB, ruido, desplazamiento de corte horizontal
+759	Desplazamiento RGB:
+760	Vibración de línea:
+761	Ruido:
+762	Efecto CRT:
+763	Pérdida de bloque:
+764	Desplazamiento de corte horizontal:
+765	Oscurece una línea sí y otra no en relación PAL: valor más alto = espacios más oscuros
+766	Documentación en línea
+767	Abre el sitio web de Fotografista en tu navegador
+768	Mimeógrafo...
+769	Mimeógrafo: bordes de tinta sobre fondo blanco
+770	Mimeógrafo
+771	Granularidad:
+772	Sensibilidad de borde:
+773	Intensidad del tóner:
+775	Exportar PDF...
+776	Exportar imagen a archivo PDF
+777	Exportar PDF
+778	Listo.
+779	PDF guardado correctamente.
+780	Error al guardar el PDF.
+781	Exportar comparación...
+782	Exportar comparación de imágenes: lado a lado con el original
+783	Comparación
+784	No hay archivo para comparar: la imagen no se abrió desde un archivo.
+785	Comparación guardada correctamente.
+786	Error al guardar la comparación.
+787	Imagen actual
+788	Ajustar al tamaño con recorte...
+789	Escalar la imagen al tamaño deseado, recortando el exceso
+790	Full HD 1920×1080
+791	Ajustar al tamaño con recorte
+794	Anclaje:
+795	Esquina superior izquierda
+796	Esquina superior derecha
+797	Esquina inferior izquierda
+798	Esquina inferior derecha
+799	Aplicar redimensionamiento con recorte
+800	Cancelar redimensionamiento con recorte
+801	La imagen no se cargó desde un archivo.\nEl ajuste al tamaño con recorte utilizará la imagen actual,\nque puede tener una resolución menor debido a la configuración de rendimiento.
+802	Herramientas
+803	Iniciador
+804	Profundidad de color
+805	Motor de carga
+806	Iniciador de acciones rápidas
+807	Programa registrado
+808	Introducir la clave de licencia
+809	Introduzca el correo usado en la compra:
+810	Introducir la clave de licencia:
+811	Éxito
+812	La clave de licencia ha sido activada.
+814	Clave o correo inválido
+815	Versión de prueba expirada
+816	La versión de prueba de Fotografista expiró tras 7 días.
+817	Para continuar, introduzca su clave de licencia:
+818	Cerrar programa
+819	Introduzca su dirección de correo.
+820	Introduzca su clave de licencia.
+821	Procesamiento por lotes...
+822	Aplicar un macro guardado a todas las imágenes de una carpeta
+823	Carpeta de origen:
+824	Carpeta de destino:
+825	Macro:
+826	Examinar...
+827	Iniciar
+828	Procesando...
+831	Seleccionar carpeta de origen
+832	Seleccionar carpeta de destino
+833	No hay macros guardados.
+834	El procesamiento por lotes ya está en ejecución.
+835	La carpeta está vacía.
+836	No se encontraron imágenes en la carpeta de origen.
+837	Complete todos los campos.
+838	Procesadas
+839	errores
+840	El macro contiene un paso de cambio de tamaño. Combinarlo con el escalado por lotes puede producir resultados inesperados.
+841	Escalar al borde largo
+842	px:
+843	No ejecutar el macro
+844	Comprar licencia
+845	Bokeh artificial
+846	Artístico
+847	Asignar tinta 1
+848	Asignar tinta 2
+849	Asignar tinta 3
+850	Asignar tinta 4
+851	Asignar tinta 5
+852	Asignar tinta 6
+853	Revelado incorrecto
+854	Bloqueo
+855	Brillo antes de la conversión (0-200):
+856	Centro X (0-100):
+857	Centro Y (0-100):
+858	Elegir color...
+859	Elegir color:
+860	Elegir tema:
+861	Elegir...
+862	Error CMYK
+863	Contraste antes de la conversión (0-10):
+864	Creando la estampación
+865	Sombreado cruzado
+866	Carpeta de destino:
+867	Sensibilidad de detección (1-100):
+868	Multiplicador del tamaño de punto:
+869	Tamaño de subcelda del punto (3-8 px):
+870	Duplicador
+871	Efecto A:
+872	Efecto B:
+873	Mezcla de efectos
+874	Intensidad del efecto (0-100):
+875	Repujado
+876	Desvanecimiento (0-100):
+877	Ajustar al tamaño con recorte
+878	Granulosidad:
+879	Información de la imagen
+880	Tamaño de fuente de la interfaz (pt):
+881	Calidad JPEG en TIFF:
+882	Ángulo de línea (0-179):
+883	Material:
+884	Grosor máximo de línea (1-8):
+885	Maqueta
+886	Sin compresión
+887	Pintura al óleo
+888	Otro color...
+889	Contorno
+890	Contorno...
+891	Paleta
+892	Paleta:
+893	Procesos fotográficos
+894	Pixelado
+895	Preajuste:
+896	Trama
+897	Restaurar original
+898	Calidad de guardado
+899	Escalar al lado largo, px:
+900	Método de escalado:
+901	Enderezado del escaneo
+902	Seleccionar
+903	Curva de sombras (1 = suave, 5):
+904	Solarización
+905	Punteado
+906	Ángulo de enderezado (-10 a +10 grados):
+907	Tóner:
+908	Viveza
+909	Sin ejecutar la macro
+910	Zoom
+911	Intensidad (1-100):
+912	Radio (1-100):
+913	Posición de la banda (0-100):
+914	Altura de la banda (1-100):
+915	Intensidad (0 = ninguna, 100 = máx):
+916	Contraste (0 = ninguno, 100):
+917	Radio del pincel (1-10):
+918	Radio del resplandor (1-20):
+919	Vibración de línea (0-100):
+920	Ruido (0-100):
+921	Efecto CRT (0-100):
+922	Pérdida de bloques (0-100):
+923	Desplazamientos horizontales de banda (0-100):
+924	Desplazamiento de canales RGB (0-30):
+925	Calidad de compresión WebP (0-100):
+926	4. Serigrafía
+927	Editor gráfico profesional
+928	Arquitectura: 100% nativa (VCL / Object Pascal)
+929	Rendimiento: acceso directo a la canalización de renderizado
+930	Entorno: independiente del runtime x86/x64
+931	Aplicación de escritorio de alto rendimiento
+932	sin la carga de los frameworks web.
+935	Administrar macros
+936	Risografía v1
+937	Risografía v2
+938	Densidad de onda
+939	La prueba de rendimiento medirá la velocidad de 12 operaciones gráficas.
+940	Duración: de unos diez segundos a varios minutos — según la resolución de la imagen y la potencia del procesador.
+941	(nuevo)
+942	Nombre
+943	Formato
+944	Ancho
+945	Alto
+946	Resolución X
+947	Resolución Y
+948	EXIF (%d propiedades)
+949	No se pudo abrir el archivo para leer los metadatos.
+950	Color 2 (altas luces):
+951	Paleta WB 1.x
+952	Paleta WB 2.x/3.x
+953	Paleta OCS 32
+954	Paleta EHB 64
+955	Paleta AGA 256
+956	Paleta Workbench 256
+957	Paleta MagicWB
+958	Mosaico
+959	Risografía v3
+960	Fondo Amiga
+961	Fondo Amiga (estirado, MagicWB)
+962	Resplandor
+963	Glitch
+964	Degradado Amiga
+965	Degradado Amiga (Agony)
+966	NES - Nestopia
+967	Paso no admitido: 
+968	No se puede comparar - la imagen no se abrió desde un archivo.
+969	El archivo no existe:
+970	No se encontró el archivo de origen en el disco para restaurar el original.
+971	Abra primero una imagen.
+972	La macro está vacía - no guardada.
+973	Nombre de la macro
+974	Introduzca el nombre de la macro:
+975	Cancelado - la macro no se guardó.
+976	No hay imágenes en la carpeta de origen.
+977	Nuevo nombre de la macro:
+978	¿Eliminar la macro «%s»?
+979	¿Eliminar el paso «%s»?
+980	No hay ninguna imagen que procesar.
+981	Cargue una imagen antes de ejecutar la prueba de rendimiento.
+982	No se puede cargar la imagen:
+983	¿Añadir «%s» a la macro?
+984	El archivo «%s» ya existe.
+985	¿Sobrescribir?
+986	Exportar comparación
+987	Imagen: imagen actual (%d x %d)
+988	  Tiempo de prueba: %s
+989	  El reto más difícil fue: %s
+990	Cian + Magenta
+991	Cian + Amarillo
+992	Cian + Negro
+993	Magenta + Amarillo
+994	Magenta + Negro
+995	Amarillo + Negro
+996	Cian + Magenta + Amarillo
+997	Cian + Magenta + Negro
+998	Cian + Amarillo + Negro
+999	Magenta + Amarillo + Negro
+1000	Cian + Magenta + Amarillo + Negro
+1001	Verde + Rosa
+1002	Azul marino + Amarillo
+1003	Púrpura + Amarillo
+1004	Turquesa + Coral
+1005	Granate + Menta
+1006	Azul marino + Rosa
+1007	Verde + Naranja
+1008	Púrpura + Coral
+1009	Turquesa + Amarillo
+1010	Mover imagen
+1011	Espacio + LMB
+1012	o MMB
+1013	La imagen no se ha guardado.
+1014	¿Quieres guardar los cambios antes de cerrar?
+1015	No hay códec para leer el archivo.
+1016	Instale la extensión de imágenes adecuada desde Microsoft Store.
+1017	No hay codificador TIFF en el sistema.
+1018	Error al guardar TIFF
+1019	Formato de guardado no compatible: %s
+933	Relieve
+934	Bokeh falso
+829	Tilt-shift (miniatura)
+830	Calidad de exportación
+792	Rendimiento
+793	C64 — Pepto / Colodore
+774	Game Boy — DMG / Pocket
+749	NES (Nestopia)
+748	Idioma
+1020	Trama CMYK...
+1021	Timelapse...
+1022	Estereograma...
+1023	Eliminar fondo...
+1024	Tamaño de celda (1-32 px):
+1025	Escala del punto [%]:
+1026	Estereograma
+1027	Modo de salida:
+1028	Autoestereograma (SIRDS)
+1029	Anaglifo (gafas rojo-cian)
+1030	Periodo (px):
+1031	Profundidad (px):
+1032	Semilla aleatoria
+1033	3840×2160
+1034	1920×1080
+1035	1280×720
+1036	Alfabéticamente
+1037	Por fecha de creación
+1041	Guardar en archivo
+1042	Mostrar como presentación
+1043	En ventana
+1044	Pantalla completa
+1045	Timelapse
+1046	Fotogramas por segundo:
+1047	Mantener primer fotograma [s]:
+1048	Mantener áltimo fotograma [s]:
+1049	Velocidad de fotogramas inválida
+1050	No se puede inicializar la codificación de vídeo
+1051	No se puede crear el archivo de salida
+1052	No se puede crear el flujo de vídeo
+1053	No se puede inicializar el codificador de vídeo
+1054	No se puede iniciar la escritura del vídeo
+1055	No se puede escribir el fotograma de vídeo
+1056	No se puede guardar el archivo de vídeo
+1057	No hay codificador de vídeo disponible (H.264 o WMV)
+1058	Nombre del archivo:
+1059	Retoque...
+1060	Retoque
+1061	Borrar
+1062	Restaurar
+1063	Tamaño del pincel:
+1064	Eliminar el fondo
+1065	Esquina desde la que eliminar el fondo:
+1066	Tolerancia
+1067	Goma
+1068	Negro (PRL)
+1069	Violeta (Occidente)
+1070	Azul marino (offset)
+1071	Rojo (sellos)
+1072	Samizdat de la RPP — multicopista de proteína, tinta hollinienta, matriz embadurnada
+1073	Multicopista de alcohol occidental — violeta cristal, olor a alcohol
+1074	Matriz de multicopista offset — copia de oficina
+1075	Sellos, encabezados y formularios oficiales
+1076	Oficinas occidentales — tinta menos común
+1077	Copia desvaída y envejecida
+1078	Desgaste de la tinta:
+1079	Pincel de pintura
+1080	Pincel de clonación
+1081	Sobreexponer
+1082	Subexponer
+1083	Pincel de brillo
+1084	Pincel de nitidez
+1085	Bote de pintura
+1086	Cuentagotas
+1087	Selección elíptica
+1088	Selección rectangular
+1089	Visualización de selección
+1090	Contorno de selección
+1091	Relleno
+1092	Máscara de protección
+1093	Cubrir
+1094	Descubrir
+1095	Mostrar máscara de protección
+1096	Borrar máscara de protección
+1097	Proteger selección
+1098	Desproteger selección
+1099	Lazo
+1100	Varita mágica
+1101	Selección...
+1102	Selección
+1103	Máscara
+1104	Procesamiento por lotes
+1105	Distorsiones
+1106	Cargar preajuste
+1107	Guardar preajuste
+1108	Color de relleno
+1109	Haga clic en la vista previa para establecer el punto blanco
+1110	Pincel de reemplazo de color
+1111	Color a reemplazar
+1112	Color de reemplazo
+1113	Conservar sombras
+1114	Proteger la selección de los efectos
+1115	Quitar la protección del área seleccionada
+1116	Muestra las áreas protegidas con una trama roja diagonal
+1117	Quitar todas las áreas protegidas

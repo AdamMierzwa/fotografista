@@ -1,0 +1,844 @@
+Datei
+Bearbeiten
+Effekt-Mischung
+Ansicht
+Analyse
+Anpassen
+Farben
+Effekte
+Drucken
+Experimentell
+Verzerrungen
+Amiga
+Helfen
+Öffnen...
+Speichern unter...
+Bildinfo
+(kein Bild)
+Schließen
+Einstellungen...
+Beenden
+Rückgängig
+Wiederholen
+Kopieren
+Einfügen
+Original wiederherstellen
+Verlauf löschen
+Effekt-Mischung...
+Mischung (0=A, 100=B):
+Sichtbare zusammenführen
+Alle löschen
+Vergrößern
+Verkleinern
+An Fenster anpassen
+100%
+50%
+25%
+200%
+400%
+Histogramm...
+Histogramm ausgleichen...
+Horizontal spiegeln
+Vertikal spiegeln
+Nach links drehen
+Nach rechts drehen
+180° drehen
+Scan begradigen...
+Kontrast...
+Helligkeit...
+Gamma-Korrektur...
+Tonwertkorrektur...
+Weißabgleich...
+Schärfen...
+Brillant...
+Fotoverstärkung...
+Zuschneiden...
+Größe ändern...
+Einfärben...
+HSB-Gleichgewicht...
+Solarisieren...
+Duoton....
+Sepia...
+Cyanotypie
+Salzdruck
+Röntgen
+Falschfarben-Infrarot
+Nachtsicht
+Thermal
+Orton
+Schwarz & Weiß...
+Graustufen
+Negativ
+Filmkorn...
+Ölgemälde...
+Kohlezeichnung...
+Weichzeichner...
+Prägen
+Pixelieren...
+Vignette...
+Posterisieren...
+Kantenerkennung
+Linolschnitt...
+Gravur...
+Schraffur...
+Raster...
+Punktierung...
+Würfel...
+Risografie v1...
+Siebdruck...
+Tonnenverzerrung...
+Bogenverzerrung...
+Wirbel...
+Wasserwelle...
+Polarverzerrung...
+Workbench 1.x Palette (OCS)
+Workbench 2.x/3.x Palette
+OCS 32-Farben-Palette...
+EHB 64-Farben-Palette...
+AGA 256-Farben-Palette...
+Workbench 256-Farben-Palette...
+MagicWB-Palette (8 Farben)...
+Über
+Bilddatei öffnen
+Bild unter neuem Namen speichern
+Bilddetails anzeigen
+Aktuelles Bild schließen
+Programmeinstellungen
+Programm beenden
+Letzten Schritt rückgängig machen
+Rückgängig gemachten Schritt wiederholen
+Bild in Zwischenablage kopieren
+Bild aus Zwischenablage als neue Ebene einfügen
+Bild in Originalzustand zurückversetzen
+Operationsverlauf löschen - nicht umkehrbar
+Zwei Effekte mit Schieberegler mischen
+Čeština (Tschechisch)
+Português (Portugiesisch)
+Afrikaans
+Bild vergrößern
+Bild verkleinern
+Bild an Fenster anpassen
+Bild im Maßstab 1:1 anzeigen
+Bild im Maßstab 50% anzeigen
+Bild im Maßstab 25% anzeigen
+Bild im Maßstab 200% anzeigen
+Bild im Maßstab 400% anzeigen
+Farbhistogramm anzeigen
+Histogramm ausgleichen - Kontrast verbessern
+Bild horizontal spiegeln
+Bild vertikal spiegeln
+Bild 90° nach links drehen
+Bild 90° nach rechts drehen
+Bild 180° drehen
+Scan begradigen - bis +/- 10 Grad mit automatischem Zuschnitt
+Kontrast einstellen
+Helligkeit einstellen
+Gamma-Korrektur
+Schwarzpunkt, Gamma und Weißpunkt einstellen - volle Tonwertkontrolle
+Weißabgleich - Farbtemperatur korrigieren
+Bild schärfen
+Brillant - gesättigte, lebendige Farben
+Fotoverstärkung (Multiplizieren)
+Bild zuschneiden
+Bildgröße ändern
+Bild mit ausgewählter Farbe einfärben
+Helligkeit, Sättigung und Farbton einstellen
+Solarisieren - helle Töne invertieren
+Zweifarbeneffekt - Schatten und Lichter
+Sepia - warmes Braun-Monochrom
+Cyanotypie - blaues Monochrom
+Salzdruck - warmes Braun
+Röntgen - invertierte Farben
+Falschfarben-IR - Kanaltausch, rote Pflanzen, blauer Himmel
+Nachtsicht - Graustufen + grünes Phosphor
+Thermal - Falschfarben-Ansicht
+Orton - weicher Leuchteffekt, verträumte Stimmung
+In Schwarz & Weiß umwandeln mit Dither-Option
+In Graustufen umwandeln
+Farben invertieren - Negativ
+Filmkorn hinzufügen - zufälliges Rauschen
+Ölgemälde - Pinselsimulation
+Kohlezeichnung - Simulation von Kohlezeichnung
+Bild weichzeichnen
+Prägen - Relief
+Pixelieren - Mosaikeffekt
+Vignette - Ränder abdunkeln
+Posterisieren - Farbanzahl reduzieren
+Kantenerkennung - Skizzen-Effekt
+Linolschnitt - scharfer S/W-Kontrast
+Gravur - Linienstich-Simulation
+Schraffur - Kreuzschraffur in zwei Winkeln
+Raster - wachsende Punkte basierend auf Helligkeit
+Punktierung - Punktedichte basierend auf Helligkeit
+Würfel - Würfelaugen-Muster
+Risografie - Schichtdruck mit Farbversatz
+Einfarbiger Siebdruck - Graustufen + Raster auf Hintergrund
+Tonnen- / Kissenverzerrung
+Bogenverzerrung - Bild biegen
+Wirbel - Bild verwirbeln
+Wasserwellen-Effekt
+Polarverzerrung - Tunnel, Fischauge
+4-Farben-Palette - Workbench 1.x (OCS)
+4-Farben-Palette - Workbench 2.x/3.x
+32-Farben-Palette (4x4x2) - OCS
+64-Farben-Palette (4x4x4) - EHB
+256-Farben-Palette - AGA
+256-Farben-Palette - Workbench 3.x
+8-Farben-Palette - MagicWB (MUI)
+Fotografista
+Kein Bild
+OK
+Abbrechen
+Vorschau
+Vorschau anzeigen
+Übernehmen und schließen
+Ohne Übernehmen schließen
+Über
+Bildbearbeitung
+Build
+Breite (px):
+Höhe (px):
+Größenänderung übernehmen
+Änderungen verwerfen
+X (px):
+Y (px):
+Zuschnitt übernehmen
+Zuschnitt abbrechen
+Farbe wählen
+Textfarbe
+Schriftart...
+Richtung
+Erhöhen
+Verringern
+Dithering
+Mit Dither (bessere Qualität)
+Ohne Dither
+Mit Dither
+Ohne Dither
+Aktiviert
+Deaktiviert
+Intensität (1-10):
+Helligkeit (0-200, Standard 100):
+Gamma (100 = keine Änderung):
+Rot (100 = keine Änderung):
+Grün (100 = keine Änderung):
+Blau (100 = keine Änderung):
+Intensität (1-100):
+Intensität (0-100):
+Radius (1-5):
+Intensität (1-50):
+Zellgröße (1-100):
+Winkel (0-179°):
+Zellgröße (4-16 px):
+Max. Linienstärke (1-8):
+Zellgröße (4-64 px):
+Punktgröße (3-8 px):
+Schwellwert (1-100):
+Tintenmenge (heller = weniger):
+Stärke (0-100):
+Sättigung (0-100):
+Kontrast (0-100):
+Kurve (1-5):
+Smart Curves (0-100):
+Schwarzpunkt (0-255):
+Weißpunkt (0-255):
+Begradigungswinkel (-10 bis +10°):
+Übernehmen und schließen
+Ohne Übernehmen schließen
+Begradigung übernehmen und schließen
+Ebenen-Änderungen übernehmen und schließen
+Ohne Speichern schließen
+Vorschau anzeigen
+Vorschau
+OK
+Abbrechen
+Schattenfarbe
+Lichtfarbe
+Tintenfarbe
+Papierfarbe
+Voreinstellungsname:
+Laden
+Löschen
+Schließen
+Einstellung
+Helligkeit
+Gamma-Korrektur
+Schärfen
+Solarisieren
+Sepia
+Ölgemälde
+Kohlezeichnung
+Weichzeichner
+Prägen
+Pixelieren
+Vignette
+Kantenerkennung
+Filmkorn
+Duoton-Voreinstellung speichern
+Duoton-Voreinstellung laden
+Kontrast
+Zuschneiden
+Größe ändern
+Weißabgleich
+Tonwertkorrektur
+Brillant
+Fotoverstärkung
+Ebenen
+Scan begradigen
+Einfärben
+HSB-Gleichgewicht
+Schwarz & Weiß
+Posterisieren
+Gravur
+Schraffur
+Raster
+Punktierung
+Würfel
+Linolschnitt
+Risografie
+Siebdruck
+OCS 32-Farben-Palette
+EHB 64-Farben-Palette
+AGA 256-Farben-Palette
+Workbench 256-Farben-Palette
+MagicWB 8-Farben-Palette
+Tonnenverzerrung
+Bogenverzerrung
+Wirbel
+Wasserwelle
+Polarverzerrung
+Einstellungen
+Sättigung (0-200, Standard 100):
+Farbton (0-200, Standard 100):
+Kontrast (0-10):
+Farbanzahl (2-64):
+Deckkraft:
+Modus:
+Farbe wählen...
+Typ wählen:
+Bogenwinkel wählen:
+Intensität wählen:
+Bogenwinkel auswählen:
+Intensität auswählen:
+Variante auswählen:
+Schwache Tonne
+Mittlere Tonne
+Starke Tonne
+Schwaches Kissen
+Mittleres Kissen
+Starkes Kissen
+45°
+90°
+180°
+360°
+90° + drehen
+180° + drehen
+Schwach (45°)
+Mittel (90°)
+Stark (180°)
+Sehr stark (270°)
+Voll (360°)
+Umgekehrt
+Leicht
+Mittel
+Stark
+Konzentrisch
+Von der Ecke
+Dicht
+Voll
+Halber Winkel
+Viertelwinkel
+Ring
+Kleiner Radius
+Glatt
+Tunnel
+Wirbel
+Fischauge
+Äußere Dehnung
+Fehler
+Nicht unterstütztes Dateiformat.
+Schnappschuss
+Original
+Gamma (10–500, 100=1,0):
+Ebene hinzufügen
+Ebenen zusammenführen
+Histogramm-Entzerrung
+Kopieren
+Einfügen
+Rückgängig:
+Wiederholen:
+Brillant
+HDR 2
+WB 1.x
+WB 2.x
+OCS 32
+EHB
+AGA 256
+WB 256
+MagicWB
+Horizontal spiegeln
+Vertikal spiegeln
+Nach links drehen
+Nach rechts drehen
+180° drehen
+Geraderichten
+Cyanotypie
+Graustufen
+Negativ
+Salzdruck
+Röntgen
+Falschfarben-IR
+Nachtsicht
+Thermisch
+Orton
+Relief
+Kantenerkennung
+Duoton
+Kontrast (vor der Umwandlung)
+Rot
+Grün
+Blau
+Helligkeit
+Kontrast
+Farbton
+Sättigung
+Gamma
+Stärke
+Schwellwert
+Winkel
+Zellgröße
+Stärke
+Punktgröße
+Farben
+Radius
+Unbekannt
+Information
+Kein Bild geladen.
+Name:
+Format:
+Alphakanal:
+Breite:
+Höhe:
+Größe:
+Datum:
+Zeit:
+Ja
+Nein
+Bildinformationen
+Vorschaubild
+Größe auswählen:
+100 px
+200 px
+320 x 240
+640 x 480
+Fertig
+Vorschaubild gespeichert.
+Vorschaubild speichern unter
+JPEG-Komprimierungsqualität (0-100):
+Normal
+Multiplizieren
+Negativ multiplizieren
+Überlagern
+Weiches Licht
+Dunkler
+Heller
+Hintergrund (Original)
+Cyjan + Magenta
+Schwarz + Gelb
+Blau + Orange
+Cyjan + Magenta + Gelb
+Schwarz + Magenta + Gelb
+CMYK (4 Farben)
+Histogramm-Entzerrung
+Entzerrungsmodus auswählen:
+Luminanz
+Alle
+Schließen
+Histogramm
+Tastenkombinationen
+Makro
+Aufnahme starten
+Stoppen und speichern
+Aufnahme abbrechen
+Makros verwalten...
+Makros
+Abspielen
+Löschen
+Makro speichern
+Makroname:
+Makro
+Aufnahme ist bereits aktiv.
+Diesen Schritt zum Makro hinzufügen?
+Ja|Nein
+Aufnahme ist nicht aktiv.
+Keine Schritte zum Speichern.
+Kein Bild geladen.
+Schritte
+Makro wird aufgenommen
+HAM6 - 16 Farben + Hold-Modify...
+HAM8 - 64 Farben + Hold-Modify...
+HAM6-Simulation (16 Grundfarben mit Hold-Modify-Modi)
+HAM8-Simulation (64 Grundfarben mit Hold-Modify-Modi)
+HAM6
+HAM8
+Auf Auswahl zuschneiden
+Auswahlgröße...
+Symbol speichern...
+Symbolgröße:
+Symbolformat:
+Symbol gespeichert.
+Brillant
+Warnung: Dieser Effekt ist sehr aufwendig. Bei Bildern über 6 MP kann die Verarbeitung 30-60 Sekunden dauern.
+Fortsetzen
+Glühen...
+Glühradius:
+Amiga-Verlauf...
+Amiga-Coppergradienten-Überlagerung
+Amiga-Verlauf (Agony)...
+Agony-Stil Copper-Gradient
+Als Windows-Symbol speichern...
+Intensität (0-100):
+JPEG-2000-Qualität (0-100, 100=verlustfrei):
+Fehlentwicklung...
+Fehlentwicklung — E-6/C-41-Simulation
+Symbolpaket (ZIP) speichern...
+Umbenennen
+Sprache...
+Einstellungen
+Exportqualität...
+Symbolpaket
+Keine Größe ausgewählt.
+Symbolpaket gespeichert unter:
+TIFF-Komprimierung:
+Symbolformat:
+Plattform auswählen:
+Format auswählen:
+Größe auswählen:
+Symbol speichern...
+Symbol gespeichert.
+Format auswählen:
+Zurücksetzen
+Zurücksetzen
+Aktuelles Bild als Symbol speichern
+Symbole in mehreren Größen als ZIP-Archiv speichern
+Makroaufnahme starten
+Aufnahme stoppen und Makro speichern
+Aufnahme abbrechen ohne zu speichern
+Makros abspielen, umbenennen oder löschen
+Anwendungssprache ändern
+JPEG-, JPEG-2000- und TIFF-Exportqualität festlegen
+Über Fotografista
+Tastenkombinationen anzeigen
+Oberfläche...
+Oberflächeneinstellungen
+Oberfläche
+Hintergrundfarbe der Leinwand:
+Auswahl: %d x %d
+Bild öffnen
+Alle Dateien
+Zwischenablage
+Eingefügt
+LZW
+Flate
+JPEG
+Neuer Name:
+Sprache / Language
+Polski (Polnisch)
+English (Englisch)
+Auswahlgröße
+Breite (px):
+Höhe (px):
+OK
+Abbrechen
+Auswahl: %d x %d
+Auf OCS-32-Farben-Palette mit Dithering abbilden
+Auf EHB-64-Farben-Palette mit Dithering abbilden
+Auf AGA-256-Farben-Palette mit Dithering abbilden
+Auf Workbench-256-Farben-Palette mit Dithering abbilden
+Auf MagicWB-8-Farben-Palette mit Dithering abbilden
+Farbton oben (0-360):
+Farbton unten (0-360):
+Anzahl der Bänder (32-256):
+E-6 in C-41
+C-41 in E-6
+Kodak in Fuji-Entwickler
+Fuji in Kodak-Entwickler
+ECN-2 in C-41
+Makro
+Schriftgröße (Statusleiste):
+Klassisches AmigaOS (4 Farben)
+Kacheln
+Bild kacheln, um Zielgröße zu füllen
+Amiga-Hintergrund
+Zielauflösung:
+Bildausrichtung:
+Hintergrundfarbe (MagicWB-Palette):
+Grau
+Schwarz
+Weiß
+Blau
+Dunkelgrau
+Hellgrau
+Braun
+Lachs
+Amiga-Hintergrund (gestreckt, MagicWB)
+Bild auf Amiga-Auflösung mit gestrecktem Rand skalieren
+Benutzerdefinierte Farbe...
+Exportieren...
+Importieren...
+Makro exportieren
+Makro erfolgreich exportiert.
+Makro importieren
+Ungültige Makrodatei.
+Ein Makro mit diesem Namen existiert bereits. Überschreiben?
+Makro erfolgreich importiert.
+Fenstergröße und -position merken
+Anzahl der zuletzt verwendeten Dateien:
+Beenden ohne Änderungen zu speichern
+Relief
+Materialrelief aus Bildluminanz
+Tiefe (1-100):
+Gips / weißer Stein
+Weißer Marmor
+Grauer Stein
+Bronze / Medaille
+Sandstein
+Maßstab (%):
+Seitenverhältnis beibehalten
+Intensität (0-100):
+Emergo
+Français (Französisch)
+Español (Spanisch)
+Italiano (Italienisch)
+Deutsch
+Makro bearbeiten
+Schritt entfernen
+Manuell
+Automatisch
+Vorgang abgeschlossen.
+Fertig.
+Das Ergebnis ist bereit.
+Sie können zu Ihrem Computer zurückkehren.
+Ihr Kaffee ist wahrscheinlich kalt geworden.
+Glückwunsch! Die CPU hat überlebt.
+Ich dachte, das würde nie enden.
+Halleluja! Endlich.
+Es hat funktioniert. Alles ist bereit.
+Warten beendet.
+Vielen Dank für Ihre Geduld.
+Emergo -- intelligente Schattenaufhellung
+Vorschau 100%
+HAM-Simulation
+Dieser Effekt ist extrem rechenintensiv.\nBei Bildern über 2 MP kann die Verarbeitung mehrere Minuten dauern.
+Künstlicher Bokeh...
+Tilt-Shift (Miniatur)...
+Verlaufsweichzeichnung
+Stärke:
+Form:
+Radial (Bokeh)
+Linear (Tilt-Shift)
+CMYK-Fehlregistrierung...
+CMYK-Fehlregistrierung
+Versatz:
+Triton...
+Triton
+Quad-Ton...
+Quad-Ton
+Farbe 1 (Schatten):
+Farbe 2 (Mitteltöne):
+Farbe 3 (Lichter):
+Farbe 4 (Spitzlichter):
+Chromatische Aberration...
+Chromatische Aberration
+Versatz:
+Mitte X:
+Mitte Y:
+Radius:
+Abfall:
+Bandposition:
+Bandhöhe:
+Andere Retro-Systeme
+Commodore 64 — Pepto / Colodore
+Commodore-64-Palette — Pepto oder Colodore
+Commodore 64
+Auf Commodore-64-Palette mit Dithering abbilden
+Pepto
+Colodore
+ZX Spectrum
+ZX-Spectrum-Palette
+ZX Spectrum
+Auf ZX-Spectrum-Palette mit Dithering abbilden
+Game Boy — DMG / Pocket
+Game-Boy-Palette — DMG (grün) oder Pocket (grau)
+Game Boy
+Auf Game-Boy-Palette mit Dithering abbilden
+DMG (grün)
+Pocket (grau)
+NES (Nestopia)
+NES-Palette (Nestopia)
+NES — Nestopia
+Auf NES-Nestopia-Palette mit Dithering abbilden
+Muster (Retro)
+Floyd–Steinberg (weich)
+Der gewählte Modus ist bei großen Bildern sehr langsam.\nBei Bildern über 2 MP können Vorschau und Anwendung des Effekts mehrere Minuten dauern.\nAndere Modi sind deutlich schneller.
+Leistung
+Maximale Arbeitsauflösung:
+Original
+Bild
+Umgekehrter Tunnel
+30°-Ausschnitt
+Full HD (1920×1080)
+4K (3840×2160)
+Leistung und maximale Arbeitsauflösung
+SVGA (800×600)
+Cyan
+Magenta
+Gelb
+Schwarz
+Blau
+Orange
+Grün
+Rosa
+Marineblau
+Lila
+Türkis
+Koralle
+Burgunderrot
+Mint
+Risografie v2...
+Risograph V3...
+Anzahl der Ebenen:
+Ebene 1...
+Ebene 2...
+Ebene 3...
+Ebene 4...
+Ebene 5...
+Auswahl
+Vorbereitung für Siebdruck (T-Shirts)...
+T-Shirt-Design...
+Anzahl der Farben:
+2. Farbzuordnung
+3. Detailbereinigung
+Mindestfläche (px):
+Vorbereitung für den Siebdruck (T-Shirts)...
+Farbe auswählen
+Farbe:
+Siebdruckraster simulieren
+T-Shirt-Produktionsprozess
+1. Posterisierung
+Inseln entfernt:
+T-Shirt-Design
+Leistungsmessung...
+Leistungsmessung von Grafikeffekten
+Dieser Test misst die Geschwindigkeit von 12 Bildverarbeitungseffekten.\nDauer: von wenigen Sekunden bis zu mehreren Minuten – abhängig von Bildauflösung und CPU-Leistung.
+Leistungstest
+Bild wird vorbereitet...
+Bild: %s (%d×%d)
+%s: %.2f ms (Durchschnitt von %d)
+Zeit: %d min %d s
+(abgebrochen)
+Maximale Belastung: %s (%.2f ms).
+Leistungsergebnisse
+Stufen
+Lebhaft
+Kolorieren
+Cross-Prozess
+Basrelief
+Orton
+Halbton
+Siebdruck
+Risography v2
+HAM8 (64 Farben)
+HAM6 (16 Farben)
+Glow
+Leistung grafischer Effekte messen
+Verarbeitung
+Pinselradius (1–30):
+Glitch...
+Digitale Bildverzerrung – RGB-Verschiebung, Rauschen, horizontale Schnittverschiebung
+RGB-Verschiebung:
+Zeilenzittern:
+Rauschen:
+CRT-Effekt:
+Blockverlust:
+Horizontale Schnittverschiebung:
+Verdunkelt jede zweite Zeile im PAL-Verhältnis – höherer Wert = dunklere Zwischenräume
+Online-Dokumentation...
+Öffnen Sie die Fotografista-Website in Ihrem Webbrowser.
+Mimeograph...
+Mimeograph – schwarze Ränder auf weißem Hintergrund
+Mimeograph
+Körnigkeit:
+Randempfindlichkeit:
+Tonerintensität:
+Mimeograph
+PDF exportieren...
+Bild als PDF-Datei exportieren
+PDF exportieren
+Fertig.
+PDF erfolgreich gespeichert.
+Fehler beim Speichern der PDF-Datei.
+Vergleich exportieren...
+Bildvergleich exportieren – neben dem Original
+Vergleich
+Keine Vergleichsdatei vorhanden – das Bild wurde nicht aus einer Datei geöffnet.
+Vergleich erfolgreich gespeichert.
+Fehler beim Speichern des Vergleichs.
+Aktuelles Bild
+An Größe anpassen mit Zuschneiden...
+Bild auf Zielgröße skalieren und Überschüssiges abschneiden
+Full HD 1920×1080
+An Größe anpassen mit Zuschneiden
+Breite (px):
+Höhe (px):
+Anker:
+Oben links
+Oben rechts
+Unten links
+Unten rechts
+Größenänderung mit Zuschneiden anwenden
+Größenänderung mit Zuschneiden abbrechen
+Bild wurde nicht aus einer Datei geladen.\nBei „An Größe anpassen mit Zuschneiden“ wird das aktuelle Bild verwendet.\nDas kann aufgrund der Leistungseinstellungen eine geringere Auflösung haben.
+Werkzeuge
+Starter
+Farbtiefe
+Lade‑Modul
+Schnellaktions‑Starter
+Programm registriert
+Lizenzschlüssel eingeben
+E‑Mail‑Adresse der Bestellung eingeben:
+Lizenzschlüssel eingeben:
+Erfolg
+Der Lizenzschlüssel wurde aktiviert.
+Fehler
+Ungültiger Schlüssel oder E‑Mail!
+Testversion abgelaufen
+Die Fotografista‑Testversion ist nach 7 Tagen abgelaufen.
+Zum Fortfahren geben Sie Ihren Lizenzschlüssel ein:
+Programm schließen
+Geben Sie Ihre E‑Mail‑Adresse ein.
+Geben Sie Ihren Lizenzschlüssel ein.
+Stapelverarbeitung
+Gespeichertes Makro auf alle Bilder im Ordner anwenden
+Quellordner:
+Zielordner:
+Makro:
+Durchsuchen…
+Start
+Verarbeitung…
+Abbrechen
+Fertig
+Quellordner auswählen
+Zielordner auswählen
+Keine gespeicherten Makros.
+Stapelverarbeitung läuft bereits.
+Ordner ist leer.
+Keine Bilder im Quellordner gefunden.
+Alle Felder ausfüllen.
+Verarbeitet
+Fehler
+Makro enthält einen Größenänderungsschritt. Die Kombination mit Stapelskalierung kann unerwartete Ergebnisse erzeugen.
+Auf lange Kante skalieren
+px:
+Makro nicht ausführen
+Lizenz kaufen

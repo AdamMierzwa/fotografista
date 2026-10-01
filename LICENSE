@@ -1,0 +1,87 @@
+Fotografista - Proprietary License
+==================================
+
+Copyright (c) 2026 Adam Bogumil Mierzwa. All rights reserved.
+
+NOTICE: This is a source-available, proprietary work. It is NOT open
+source. No open source license applies to the Fotografista code.
+
+Third-party components bundled in this repository are NOT covered by
+this license. They remain under their own licenses - see
+THIRD_PARTY_NOTICES.md.
+
+
+1. Grant of permission
+----------------------
+
+Permission is granted to view and read the source code of Fotografista
+(the "Software"), and to compile it locally for your own personal,
+non-commercial evaluation.
+
+
+2. Restrictions
+---------------
+
+Except as expressly granted in section 1, no permission is granted to:
+
+  a) copy, duplicate, or reproduce the Software, in whole or in part,
+     in any medium or form;
+  b) modify, adapt, translate, or create derivative works of the
+     Software;
+  c) redistribute the Software, whether modified or unmodified,
+     whether as source, object code, or executable;
+  d) publish, upload, mirror, or otherwise make the Software available
+     to third parties, in whole or in part;
+  e) sublicense, rent, lease, sell, or otherwise transfer any rights in
+     the Software;
+  f) fork this repository, or create a derived repository from it,
+     whether on this platform or any other;
+  g) remove or alter any copyright, trademark, or attribution notice,
+     in the Software or in any third-party component bundled with it.
+
+
+3. Third-party components
+-------------------------
+
+The Software bundles components owned by third parties under separate
+licenses, including without limitation:
+
+  * Graphics32            - MPL 1.1 or LGPL 2.1 (see Lib/Graphics32/)
+  * fpdf                  - MIT
+
+Those components are excluded from section 2. Their terms govern their
+use, and they must not be modified, relicensed, or redistributed apart
+from the conditions set out in those licenses. For full details see
+THIRD_PARTY_NOTICES.md.
+
+The MPL and MIT licenses require that their notices be preserved. Those
+notices are kept verbatim in the source files, including third-party
+copyright and attribution lines.
+
+
+4. No warranty
+--------------
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
+OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NONINFRINGEMENT.
+
+
+5. Termination
+--------------
+
+Any use of the Software outside the scope of section 1 terminates this
+license automatically. Upon termination you must cease all use and
+delete all copies.
+
+
+6. Contact
+----------
+
+Permission requests may be sent to the author via the contact details
+listed on the project page.
+
+---------------------------------------------------------------------
+If you did not obtain this file directly from the author, you do not
+have a valid license to use the Software.
+---------------------------------------------------------------------

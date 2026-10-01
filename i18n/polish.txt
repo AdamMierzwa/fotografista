@@ -1,0 +1,844 @@
+Plik
+Edycja
+Mieszanie efektów
+Widok
+
+
+
+Efekty
+Druk
+
+Zniekształcenia
+Amigowe
+Pomoc
+Otwórz...
+Zapisz jako...
+Informacja o obrazie
+
+Zamknij
+
+Wyjście
+Cofnij
+Ponów
+Kopiuj
+Wklej
+Przywróć oryginał
+Wyczyść historię
+Mieszanie efektów...
+>Mieszanie (0=A, 100=B):
+
+
+Powiększ
+Pomniejsz
+Dopasuj do okna
+100%
+50%
+25%
+200%
+400%
+Histogram...
+Wyrównanie histogramu...
+Lustro poziome
+Lustro pionowe
+Obrót w lewo
+Obrót w prawo
+Obrót do góry nogami
+Prostuj skan...
+Kontrast...
+Jasność...
+Korekcja gamma...
+Poziomy...
+Balans bieli...
+Wyostrzenie...
+Soczystość...
+Wzmocnienie zdjęcia...
+
+Zmiana rozmiaru...
+Kolorowanie...
+Balans HSB...
+Solaryzacja...
+Dwukolor...
+Sepia...
+Cyanotypia
+Fotografia solna
+Rentgen
+Podczerwień fałszywobarwna
+Noktowizor
+Termiczny
+Orton
+Czarno-biały...
+Szarość
+Negatyw
+Ziarno filmowe...
+Obraz olejny...
+Węgiel...
+Rozmycie...
+Wytłaczanie...
+Pikselizacja...
+Winietowanie...
+Posteryzacja...
+Detekcja krawędzi...
+Linoryt...
+Grawerowanie...
+Krzyżowanie...
+Raster...
+Kropkowanie...
+Kostkowanie...
+Risografia v1...
+Sitodruk...
+Dystorsja beczkowa...
+Dystorsja łukowa...
+Wir...
+Fale wodne...
+Zniekształcenie biegunowe...
+Paleta Workbench 1.x (OCS)
+Paleta Workbench 2.x/3.x
+Paleta OCS 32 kolory...
+Paleta EHB 64 kolory...
+Paleta AGA 256 kolorów...
+Paleta Workbench 256 kolorów...
+Paleta MagicWB (8 kolorów)...
+O programie
+
+Zapisz obraz pod nową nazwą
+
+
+
+
+
+
+Kopiuj obraz do schowka
+Wklej obraz ze schowka jako nową warstwę
+
+
+
+>Čeština (czeski)
+>Português (portugalski)
+>Afrikaans (afrykanerski)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Korekcja gamma
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+>Fotografista
+Brak obrazu
+>OK
+Anuluj
+>Podgląd
+Pokaż podgląd
+Zastosuj i zamknij
+Zamknij bez stosowania
+O programie
+>Edytor zdjęć
+Kompilacja
+>Szerokość (px):
+>Wysokość (px):
+Zastosuj zmianę rozmiaru
+Anuluj zmiany
+>X (px):
+>Y (px):
+Zastosuj przycięcie
+Anuluj przycięcie
+Wybierz kolor
+Kolor tekstu
+Wybierz czcionkę
+
+>Zwiększ
+>Zmniejsz
+Roztrząsanie
+>Z roztrząsaniem (lepsza jakość)
+>Bez roztrząsania
+>Z ditheringiem
+>Bez ditheringu
+>Włączone
+>Wyłączone
+>Intensywność (1-10):
+>Jasność (0-200, domyślnie 100):
+Gamma (100 = brak zmian):
+>Czerwony (100 = brak zmian):
+>Zielony (100 = brak zmian):
+>Niebieski (100 = brak zmian):
+Intensywność (1-100):
+>Intensywność (0-100):
+
+Intensywność (1-50):
+Rozmiar komórki (1-100):
+>Kąt linii (0–179°):
+>Rozmiar komórki (4–16 px):
+>Maksymalna grubość linii (1–8):
+>Rozmiar komórki (4–64 px):
+>Rozmiar podkomórki kropki (3–8 px):
+>Prog (1-100):
+>Ilość tuszu (jaśniejsze = mniej):
+>Siła efektu (0-100):
+>Nasycenie (0-100):
+>Kontrast (0-100):
+>Krzywa (1-5):
+>Sprytne krzywe (0-100):
+>Czarny punkt (0-255):
+>Biały punkt (0-255):
+>Kąt prostowania (-10 do +10 stopni):
+
+
+Zastosuj prostowanie i zamknij
+
+
+
+
+OK
+Anuluj
+Kolor cieni
+Kolor świateł
+Kolor tuszu
+Kolor papieru
+>Nazwa ustawienia:
+>Wczytaj
+>Usuń
+>Zamknij
+Ustawienie
+Jasność
+Korekcja gamma
+Wyostrzenie
+Solaryzacja
+Sepia
+Obraz olejny
+Węgiel
+Rozmycie
+Emboss
+Pikselizacja
+Winietowanie
+Detekcja krawędzi
+Ziarno filmowe
+Zapisz ustawienie
+Wczytaj ustawienie
+Kontrast
+Kadrowanie
+Zmiana rozmiaru
+Balans bieli
+Poziomy
+Soczystość
+Wzmocnienie zdjęcia
+
+Prostowanie skanu
+Kolorowanie
+Balans HSB
+Czarno-biały
+Posteryzacja
+Grawerowanie
+Krzyżowanie
+Raster
+Kropkowanie
+Kostkowanie
+Linoryt
+Risografia
+Sitodruk
+Paleta OCS 32 kolory
+Paleta EHB 64 kolory
+Paleta AGA 256 kolorów
+Paleta Workbench 256 kolorów
+Paleta MagicWB 8 kolorów
+Dystorsja
+Dystorsja łukowa
+Wir
+Fale wodne
+Zniekształcenie biegunowe
+Jakość zapisu
+>Nasycenie (0-200, domyślnie 100):
+>Odcień (0-200, domyślnie 100):
+>Kontrast przed konwersją (0-10):
+>Liczba kolorów (2-64):
+
+Tryb:
+>Wybierz kolor...
+
+
+>Wybierz rodzaj:
+>Wybierz kąt łuku:
+>Wybierz intensywność:
+>Wybierz wariant:
+Słaba beczka
+
+
+Słaba poduszka
+
+
+45°
+
+
+360°
+
+
+Słaby (45°)
+
+
+Bardzo mocny (270°)
+
+
+Delikatne
+
+
+Koncentryczne
+
+
+Pełny
+
+
+Pierścień
+
+
+Tunel
+
+
+Rozciągnięcie zewnętrzne
+Błąd
+
+
+Oryginał
+Gamma (10-500, 100=1.0):
+Efekt A
+Efekt B
+Wyrównanie histogramu
+Kopiuj
+Wklej
+
+
+Soczystość
+Wzmocnienie zdjęcia
+Workbench 1.x
+Workbench 2.x
+OCS 32
+EHB
+AGA 256
+WB 256
+MagicWB
+Lustro poziome
+Lustro pionowe
+Obrót w lewo
+Obrót w prawo
+Obrót 180
+Prostowanie
+Cyanotypia
+Szarość
+Negatyw
+Fotografia solna
+Rentgen
+Podczerwień
+Noktowizor
+Termiczny
+Orton
+Wytłaczanie
+Detekcja krawędzi
+Dwukolor
+
+
+
+
+Jasność
+Kontrast
+
+
+
+
+
+
+
+
+
+
+
+Nieznany
+Informacja
+
+Nazwa: 
+Format: 
+Kanał Alfa: 
+Szerokość: 
+Wysokość: 
+Wielkość: 
+Data: 
+Godzina: 
+Tak
+Nie
+Informacja o obrazie
+Miniatura
+
+100 px
+
+320 x 240
+
+Gotowe
+
+Zapisz miniaturę jako
+>Jakość zapisu JPEG (0-100):
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Wyrównanie histogramu
+>Wybierz tryb wyrównania:
+>Luminancja
+>Wszystkie
+>Zamknij
+Histogram
+Skróty klawiszowe
+Makro
+Rozpocznij nagrywanie
+Zatrzymaj i zapisz
+Anuluj nagrywanie
+Zarządzaj makrami...
+Makra
+Odtwórz
+Usuń
+
+Nazwa makra:
+Makro
+
+
+
+
+
+
+kroków
+Nagrywanie makra
+HAM6 - 16 kolorów + Hold-Modify
+HAM8 - 64 kolory + Hold-Modify
+
+
+HAM6
+HAM8
+Przytnij do zaznaczenia
+Ustaw wymiary zaznaczenia
+
+
+
+
+Soczystość
+Ten efekt jest bardzo wymagający obliczeniowo.\nDla zdjęć powyżej 6 MP czas może przekroczyć 30-60 sekund.
+Kontynuuj
+Blask
+
+Gradient Amiga
+
+Amiga Gradient (Agony)
+
+
+Intensywnosc (0-100):
+>Jakość zapisu JPEG 2000 (0-100, 100=bezstratny):
+Błędne wywołanie
+
+Zapisz pakiet ikon (ZIP)...
+>" .. GetCatalogString(505, "Zmień nazwę") .. "
+Język...
+Ustawienia
+Jakość zapisu...
+
+
+
+>Kompresja TIFF:
+Format ikony
+Wybierz platformę:
+
+Wybierz rozmiar:
+Zapisz ikonę
+
+Wybierz format:
+
+
+
+
+
+
+
+Odtwórz, zmień nazwę lub usuń makra
+
+
+
+
+Interfejs...
+
+Interfejs
+Kolor tła kanwy:
+Kolor tła
+
+
+
+
+>LZW
+>Flate
+>JPEG
+
+Język / Language
+>Polski
+>English (angielski)
+Rozmiar zaznaczenia
+>" .. GetCatalogString(549, "Szerokość (px):") .. "
+Szerokość (px):
+Wysokość (px):
+OK
+Anuluj
+>" .. GetCatalogString(554, "Mapowanie do palety OCS 32 kolorów") .. "
+Mapowanie do palety OCS 32 kolorów
+Mapowanie do palety EHB 64 kolorów (OCS + Half-Brite)
+Mapowanie do palety AGA 256 kolorów
+Mapowanie do palety Workbench 256 kolorów
+Mapowanie do palety MagicWB 8 kolorów
+>Odcień dół (0-360):
+>Liczba pasów (32-256):
+>E-6 w C-41
+>C-41 w E-6
+>Kodak w wywoływaczu Fuji
+>Fuji w wywoływaczu Kodak
+>ECN-2 w C-41
+Makro
+Rozmiar czcionki (pasek statusu):
+AmigaOS klasyczny (4 kolory)
+Kafelkowanie
+
+Tło Amiga
+>Rozdzielczość docelowa:
+
+>Kolor tła (paleta MagicWB):
+Szary
+Czarny
+Biały
+Niebieski
+Ciemny szary
+Jasny szary
+Brązowy
+Łososiowy
+Tło Amiga (rozciągnięte, MagicWB)
+
+>Inny kolor...
+Eksportuj...
+Importuj...
+Eksportuj makro
+
+Importuj makro
+
+
+
+>Zapamiętuj rozmiar i położenie okna
+Liczba ostatnich plików:
+Wychodzisz bez zapisanych zmian
+Płaskorzeźba
+
+>Głębokość (1-100):
+
+
+
+
+
+>Skala (%):
+>Zachowaj proporcje
+>Intensywność (0-100):
+Emergo
+>Français (francuski)
+>Español (hiszpański)
+>Italiano (włoski)
+>Deutsch (niemiecki)
+Edytuj makro
+Usuń krok
+Ręcznie
+Automatycznie
+Operacja zakończona.
+Operacja zakończona.
+Wynik jest gotowy.
+Możesz wrócić do komputera.
+Kawa pewnie już wystygła.
+Gratulacje. Procesor przeżył.
+Myślałem, że to się już nigdy nie skończy.
+Alleluja! Nareszcie.
+Udało się. Wszystko gotowe.
+Koniec oczekiwania.
+Dziękujemy za cierpliwość.
+
+Podgląd 100%
+Symulacja HAM
+Ten efekt jest wyjątkowo wymagający obliczeniowo.\nDla zdjęć powyżej 2 MP czas może wynieść kilka minut.
+Sztuczne bokeh
+Makieta
+Sztuczne bokeh
+>Siła:
+
+
+
+Błąd CMYK...
+Błąd CMYK
+CMYK misregistration
+Trójkolor...
+Trójkolor
+Trójkolor
+Czterokolor
+Czterokolor
+Kolor 1 (cienie)
+Kolor 2 (półtony)
+Kolor 3 (światła)
+Kolor 4 (ekstremalne)
+
+
+>Centrum X:
+>Centrum Y:
+>Promień:
+>Zanik:
+>Pozycja pasa:
+>Wysokość pasa:
+Inne retrokomputery
+C64 — Pepto / Colodore
+
+Commodore 64
+Mapowanie do palety Commodore 64
+Pepto
+>Colodore
+ZX Spectrum
+
+ZX Spectrum
+Mapowanie do palety ZX Spectrum
+Game Boy — DMG / Pocket
+
+Game Boy
+Mapowanie do palety Game Boy
+DMG (zielony)
+>Pocket (szary)
+NES (Nestopia)
+
+NES — Nestopia
+Mapowanie do palety NES Nestopia
+>Wzór (retro)
+>Floyd–Steinberg (wygładzony)
+Wybrany tryb jest bardzo wolny dla dużych zdjęć.\nDla zdjęć powyżej 2 MP podgląd i zastosowanie efektu mogą zająć kilka minut.\nInne tryby są znacznie szybsze.
+Wydajność...
+>Maksymalna rozdzielczość robocza:
+>Oryginalna
+Obraz
+
+
+>Full HD (1920×1080)
+>4K (3840×2160)
+
+>SVGA (800×600)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Risografia V2
+Risografia V3
+>Liczba warstw:
+>Warstwa 1...
+>Warstwa 2...
+>Warstwa 3...
+>Warstwa 4...
+>Warstwa 5...
+Wybierz
+Przygotowanie do nadruku (koszulki)
+Tworzenie nadruku...
+Liczba kolorow:
+2. Mapowanie kolorow na farby
+3. Oczyszczenie detalu
+Min. obszar (px):
+Przygotowanie do nadruku (koszulki)
+Przypisz farbę
+Farba:
+Symuluj raster sitodruku
+Pipeline koszulki
+1. Posteryzacja
+Usunięte wyspy:
+Tworzenie nadruku
+Płynne skalowanie podglądu
+Zmierz wydajność
+Test wydajności sprawdzi szybkość 12 operacji graficznych.\nCzas trwania: od kilkunastu sekund do kilku minut —\nzależy od rozdzielczości obrazka i mocy procesora.
+Test wydajności
+Przygotowanie obrazu...
+Obraz: %s (%d×%d)
+%s: %.2f ms (śr. z %d)
+Czas testu: %d min %d s
+(przerwane)
+Najcięższym wyzwaniem okazał się: %s (%.2f ms).
+Wyniki benchmarka
+Poziomy
+Soczystość
+Kolorowanie
+Błędne wywołanie
+Płaskorzeźba
+Orton
+Raster
+Sitodruk
+Risografia v2
+HAM8 (64 kolory)
+HAM6 (16 kolorów)
+Emergo
+
+Przetwarzanie
+Promień pędzla (1-30):
+Glitch
+
+Przesunięcie kanałów RGB:
+Drżenie linii:
+Szum:
+Efekt kineskopu (CRT):
+Utrata bloków:
+Przesunięcia pasm poziomych:
+Przyciemnia co drugą linię w proporcji PAL — im wyżej, tym ciemniejsze przerwy
+Dokumentacja online
+
+Powielacz...
+
+Powielacz
+>Ziarnistość:
+>Czułość krawędzi:
+>Intensywność tonera:
+Powielacz
+Eksportuj PDF...
+
+Eksportuj PDF
+Gotowe
+
+
+Eksportuj porównanie...
+
+Porównanie
+
+
+
+aktualny obraz
+Dopasuj do rozmiaru z przycięciem...
+
+Full HD 1920×1080
+Dopasuj do rozmiaru z przycięciem
+Szerokość (px):
+Wysokość (px):
+Kotwiczenie:
+Góra-lewo
+Góra-prawo
+Dół-lewo
+Dół-prawo
+Zastosuj dopasowanie z przycięciem
+Anuluj dopasowanie
+Obraz nie został wczytany z pliku.\nDopasowanie do rozmiaru użyje bieżącego obrazu,\nktóry może mieć niższą rozdzielczość z powodu ustawień Wydajności.
+Narzędzia
+Wyrzutnia
+Głębia koloru: 
+Silnik wczytywania: 
+
+Program zarejestrowany
+Wprowadź klucz licencyjny
+Podaj adres e-mail użyty przy zakupie:
+Wprowadź klucz licencyjny:
+Sukces
+
+Błąd
+
+Wersja testowa wygasła
+Wersja testowa Fotografisty wygasła po 7 dniach.
+Aby kontynuować, wprowadź klucz licencyjny:
+Zamknij program
+
+
+Przetwarzanie wsadowe
+
+Folder źródłowy:
+Folder docelowy:
+Makro:
+Wybierz...
+Rozpocznij
+Przetwarzanie...
+Anuluj
+
+Wybierz folder źródłowy
+Wybierz folder docelowy
+
+
+
+
+
+Przetworzono
+błędów
+
+Skaluj do dłuższego boku
+px:
+Bez wykonywania makra
+Kup licencję
