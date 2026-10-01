@@ -142,7 +142,8 @@ documentation.
 
 Formats on read: BMP, JPEG, PNG, GIF, TIFF, WebP, HEIC, HEIF, AVIF and Amiga
 IFF ILBM. Formats on write: PNG, JPEG, BMP, GIF, TIFF and WebP. Timelapse
-export writes an MP4 video using H.264.
+export writes an MP4 video using H.264 (it falls back to WMV3 in a `.wmv` file
+only if the system has no H.264 encoder).
 
 The interface ships with 35 Embarcadero VCL themes, loaded at startup from the
 `Styles` folder, and is available in 9 languages: Afrikaans, Czech, English,
