@@ -21,12 +21,11 @@
 #   3) liczba dwukropkow ':' NIE MOZE sie zmienic
 #   4) raportuje kazda zmieniona komorke - bramka zostaje zamknieta recznie
 #
-# UWAGA: $STRAIGHT musi byc dokladnie JEDNYM znakiem (U+0022). Zapis
-# $STRAIGHT = '"' tez jest poprawny - pojedyncze cudzyslowy w PowerShell
-# delimituja string. Kod punktowy ponizej eliminuje ryzyko pomylki przy quotingu.
+# UWAGA o PowerShell: $STRAIGHT NIE MOZE byc zapisane jako '"' (podwojny
+# cudzyslow delimituje string = dwa znaki). Dostęp tylko przez kod punktowy.
 
 $ErrorActionPreference = 'Stop'
-$root = (Split-Path -Parent $PSScriptRoot)
+$root = 'C:\Fotografista\Delphi'
 . (Join-Path $root 'tools\i18n_common.ps1')
 $encb = New-Object System.Text.UTF8Encoding($true)
 

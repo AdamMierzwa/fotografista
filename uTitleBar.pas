@@ -17,6 +17,7 @@ type
   protected
     function UseCustomTitleBar: Boolean; virtual;
     procedure DoShow; override;
+    procedure CMParentFontChanged(var Message: TCMParentFontChanged); message CM_PARENTFONTCHANGED;
     procedure LayoutDialogContent;
   public
     procedure AfterConstruction; override;
@@ -34,6 +35,13 @@ type
     function StackBelow(TopOf: Integer; Gap: Integer): Integer; overload;
     function StackBelow(C: TControl; Gap: Integer): Integer; overload;
     procedure FitHeight(MarginBottom: Integer = 0);
+    function ButtonPad: Integer;
+    procedure FitButton(B: TButton; AMinWidth: Integer = 85);
+    procedure FitButtonGroup(const Buttons: array of TButton; AMinWidth: Integer = 85);
+    procedure RefitButtons; virtual;
+    procedure DisableTrackBarTicks;
+  private
+    procedure DisableTrackBarTicksIn(Host: TWinControl);
   end;
 
 procedure PaintTitleBarCaption(Canvas: TCanvas; const ARect: TRect; AForm: TCustomForm);
@@ -220,7 +228,36 @@ begin
   end;
 
   if not (csDesigning in ComponentState) then
+  begin
     ReflowTrackBarRows;
+    DisableTrackBarTicks;
+  end;
+end;
+
+{ tsAuto sam liczy gestosc kresek z Min/Max i szerokosci kontrolki, wiec ta sama
+  kontrolka w dwoch oknach o roznych zakresach dostaje rozna liczbe kresek.
+  Numeryczny odczyt pod suwakiem jest dokladniejszy, niz podzialka. Zero
+  kresek wszedzie, bez wyjatku.
+
+  Iteracja rekurencyjna jest konieczna: 7 z 92 suwakow lezy o co najmniej
+  jeden poziom glebiej niz bezposrednie dziecko formy albo ContentParent.
+  TBrushSizeSlider (uCanvasTools.pas) tez jest wlasnym komponentem
+  kontrolki, wiec obsluguje suwak sam w swoim konstruktorze. }
+procedure TFotoForm.DisableTrackBarTicksIn(Host: TWinControl);
+var
+  I: Integer;
+begin
+  for I := 0 to Host.ControlCount - 1 do
+    if Host.Controls[I] is TTrackBar then
+      TTrackBar(Host.Controls[I]).TickStyle := tsNone;
+  for I := 0 to Host.ControlCount - 1 do
+    if Host.Controls[I] is TWinControl then
+      DisableTrackBarTicksIn(TWinControl(Host.Controls[I]));
+end;
+
+procedure TFotoForm.DisableTrackBarTicks;
+begin
+  DisableTrackBarTicksIn(Self);
 end;
 
 procedure TFotoForm.TitleBarPanelPaint(Sender: TObject; Canvas: TCanvas; var ARect: TRect);
@@ -247,6 +284,11 @@ begin
     CustomTitleBar.Height := FBarHeight;
   end;
   inherited DoShow;
+  RefitButtons;
+  if FindComponent('btnOK') is TButton then
+    ActiveControl := TButton(FindComponent('btnOK'))
+  else if FindComponent('btnClose') is TButton then
+    ActiveControl := TButton(FindComponent('btnClose'));
 end;
 
 procedure TFotoForm.LayoutDialogContent;
@@ -336,6 +378,92 @@ begin
   finally
     Sorted.Free;
   end;
+end;
+
+function TFotoForm.ButtonPad: Integer;
+begin
+  Result := 2 * Self.Canvas.TextWidth('W');
+end;
+
+procedure TFotoForm.FitButton(B: TButton; AMinWidth: Integer = 85);
+var
+  Need: Integer;
+begin
+  if B = nil then Exit;
+  Need := Self.Canvas.TextWidth(B.Caption) + ButtonPad;
+  B.Width := Max(AMinWidth, Need);
+end;
+
+procedure TFotoForm.FitButtonGroup(const Buttons: array of TButton; AMinWidth: Integer = 85);
+var
+  I, W, Need: Integer;
+begin
+  W := AMinWidth;
+  for I := Low(Buttons) to High(Buttons) do
+    if Buttons[I] <> nil then
+    begin
+      Need := Self.Canvas.TextWidth(Buttons[I].Caption) + ButtonPad;
+      if Need > W then
+        W := Need;
+    end;
+  for I := Low(Buttons) to High(Buttons) do
+    if Buttons[I] <> nil then
+      Buttons[I].Width := W;
+end;
+
+{ Globalne przeliczenie szerokosci pary OK/Anuluj. Wywolywane z DoShow,
+  CMParentFontChanged oraz po SetLanguage/ActiveFormChanged - czyli dla
+  wszystkich trzech wyzwalaczy: otwarcie okna, zmiana czcionki, zmiana
+  jezyka. Po 67 okienach para nosi nazwy btnOK/btnCancel.
+  Przycisk moze tylko urosnac: nigdy nie mniejszy sie i nie jest
+  wyrównywany do najszerszego, zeby nie zepsuc szerokosci dobranej
+  swiadomie. Pozycja przesuwana wylacznie przy wyjsciu za prawa
+  krawedz rodzica. }
+procedure TFotoForm.RefitButtons;
+var
+  BtnOK, BtnCancel: TButton;
+  HostCtl: TWinControl;
+  R, Over: Integer;
+
+  procedure FitIfNeeded(B: TButton);
+  var
+    Need: Integer;
+  begin
+    Need := Self.Canvas.TextWidth(B.Caption) + ButtonPad;
+    if B.Width < Need then
+      B.Width := Need;
+  end;
+
+begin
+  if not (FindComponent('btnOK') is TButton) then Exit;
+  if not (FindComponent('btnCancel') is TButton) then Exit;
+  BtnOK := TButton(FindComponent('btnOK'));
+  BtnCancel := TButton(FindComponent('btnCancel'));
+
+  FitIfNeeded(BtnCancel);
+  FitIfNeeded(BtnOK);
+
+  { VCL sam przelicza pozycje przyciskow z Align - nie mylisz go. }
+  if (BtnOK.Align <> alNone) or (BtnCancel.Align <> alNone) then Exit;
+  if BtnCancel.Parent <> BtnOK.Parent then Exit;
+  if not (BtnCancel.Parent is TWinControl) then Exit;
+  HostCtl := TWinControl(BtnCancel.Parent);
+
+  R := Max(BtnOK.Left + BtnOK.Width, BtnCancel.Left + BtnCancel.Width);
+  Over := R - HostCtl.ClientWidth;
+  if Over <= 0 then Exit;
+
+  { Uklad wycentrowany albo lewoszedny - zostaje nietkniety. }
+  if R < HostCtl.ClientWidth div 2 then Exit;
+
+  BtnCancel.Left := BtnCancel.Left - Over;
+  BtnOK.Left := BtnOK.Left - Over;
+end;
+
+procedure TFotoForm.CMParentFontChanged(var Message: TCMParentFontChanged);
+begin
+  inherited;
+  RefitButtons;
 end;
 
 procedure TFotoForm.ReflowTrackBarRows;

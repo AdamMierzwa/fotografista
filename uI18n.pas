@@ -49,7 +49,7 @@ implementation
 
 uses
   System.TypInfo, System.Variants, System.Classes,
-  System.IOUtils, Winapi.Windows;
+  System.IOUtils, Winapi.Windows, uTitleBar;
 
 const
   // BEGIN GENERATED TEXTABLE - nie edytować ręcznie, generuje tools\gen_i18n.ps1
@@ -351,7 +351,7 @@ const
     (EN: 'About'; PL: 'O programie'; CS: 'O programu';
      FR: 'À propos'; DE: 'Über'; IT: 'Informazioni';
      ES: 'Acerca de'; PT: 'Acerca de'; AF: 'Aangaande'),
-    (EN: 'Open an image file'; PL: 'Otwórzplik obrazu'; CS: 'Otevřít soubor s obrázkem';
+    (EN: 'Open an image file'; PL: 'Otwórz plik obrazu'; CS: 'Otevřít soubor s obrázkem';
      FR: 'Ouvrir un fichier image'; DE: 'Bilddatei öffnen'; IT: 'Apri un file immagine';
      ES: 'Abrir un archivo de imagen'; PT: 'Abrir um ficheiro de imagem'; AF: 'Maak ''n beeldlêer oop'),
     (EN: 'Save image under a new name'; PL: 'Zapisz obraz pod nową nazwą'; CS: 'Uložit obrázek pod novým názvem';
@@ -384,7 +384,7 @@ const
     (EN: 'Restore image to original state'; PL: 'Przywróć obraz do stanu pierwotnego'; CS: 'Obnovit původní stav obrázku';
      FR: 'Restaurer l’image à son état d’origine'; DE: 'Bild in Originalzustand zurückversetzen'; IT: 'Ripristina l''immagine allo stato originale';
      ES: 'Restaurar la imagen a su estado original'; PT: 'Repor a imagem ao estado original'; AF: 'Herstel die beeld na sy oorspronklike toestand'),
-    (EN: 'Clear operation history - irreversible'; PL: 'Usuń historieoperacji - nieodwracalne'; CS: 'Vymazat historii operací - nevratné';
+    (EN: 'Clear operation history - irreversible'; PL: 'Usuń historię operacji — nieodwracalne'; CS: 'Vymazat historii operací - nevratné';
      FR: 'Effacer l’historique des opérations - irréversible'; DE: 'Operationsverlauf löschen - nicht umkehrbar'; IT: 'Cancella la cronologia delle operazioni - irreversibile';
      ES: 'Borrar el historial de operaciones - irreversible'; PT: 'Limpar o histórico de operações - irreversível'; AF: 'Vee die bewerkingsgeskiedenis uit - onomkeerbaar'),
     (EN: 'Blend two effects with a slider'; PL: 'Połącz dwa efekty za pomocą suwaka'; CS: 'Míchání dvou efektů posuvníkem';
@@ -426,7 +426,7 @@ const
     (EN: 'Show color histogram'; PL: 'Pokaż historię'; CS: 'Zobrazit barevný histogram';
      FR: 'Afficher l’histogramme des couleurs'; DE: 'Farbhistogramm anzeigen'; IT: 'Mostra l''istogramma dei colori';
      ES: 'Mostrar el histograma de colores'; PT: 'Mostrar o histograma de cores'; AF: 'Wys kleurhistogram'),
-    (EN: 'Equalize histogram - improve contrast'; PL: 'Wyrównaj histogram -popraw kontrast'; CS: 'Vyrovnat histogram - zlepšit kontrast';
+    (EN: 'Equalize histogram - improve contrast'; PL: 'Wyrównaj histogram — popraw kontrast'; CS: 'Vyrovnat histogram - zlepšit kontrast';
      FR: 'Égaliser l’histogramme - améliorer le contraste'; DE: 'Histogramm ausgleichen - Kontrast verbessern'; IT: 'Equalizza l''istogramma - migliora il contrasto';
      ES: 'Ecualizar el histograma - mejorar el contraste'; PT: 'Equalizar o histograma - melhorar o contraste'; AF: 'Egaliseer histogram - verbeter kontras'),
     (EN: 'Flip image horizontally'; PL: 'Odbij obraz w poziomie'; CS: 'Převrátit obrázek vodorovně';
@@ -444,7 +444,7 @@ const
     (EN: 'Rotate image 180 degrees'; PL: 'Obróć obraz o 180°'; CS: 'Otočit obrázek o 180°';
      FR: 'Pivoter l’image de 180°'; DE: 'Bild 180° drehen'; IT: 'Ruota l''immagine di 180°';
      ES: 'Girar la imagen 180 grados'; PT: 'Rodar a imagem 180 graus'; AF: 'Draai die beeld 180 grade'),
-    (EN: 'Straighten scan - rotate up to +/- 10 degrees with auto-crop'; PL: 'Prostuj skan - obrót o +/- 10 stopni z automatycznym przycinaniem'; CS: 'Narovnat sken - otočení až +/-10° s auto-oříznutím';
+    (EN: 'Straighten scan - rotate up to +/- 10 degrees with auto-crop'; PL: 'Prostuj skan — obrót o +/- 10 stopni z automatycznym przycinaniem'; CS: 'Narovnat sken - otočení až +/-10° s auto-oříznutím';
      FR: 'Redresser le scan - rotation jusqu’à +/- 10° avec recadrage automatique'; DE: 'Scan begradigen - bis +/- 10 Grad mit automatischem Zuschnitt'; IT: 'Raddrizza la scansione - ruota fino a +/- 10° con ritaglio automatico';
      ES: 'Enderezar escaneo: girar hasta +/- 10 grados con recorte automático'; PT: 'Endireitar digitalização - rodar até +/- 10 graus com recorte automático'; AF: 'Maak skandering reguit - draai tot +/- 10 grade met outomatiese uitsny'),
     (EN: 'Adjust contrast'; PL: 'Dostosuj kontrast'; CS: 'Upravit kontrast';
@@ -456,16 +456,16 @@ const
     (EN: 'Gamma correction'; PL: 'Korekcja gamma'; CS: 'Korekce gama';
      FR: 'Correction gamma'; DE: 'Gamma-Korrektur'; IT: 'Correzione gamma';
      ES: 'Corrección gamma'; PT: 'Correção de gama'; AF: 'Gamma-korreksie'),
-    (EN: 'Set black point, gamma and white point - full tonal control'; PL: 'Ustaw czarny punkt, gamma, biały punkt - pełna kontrola tonalna'; CS: 'Nastavit černý bod, gama a bílý bod - plná tonální kontrola';
+    (EN: 'Set black point, gamma and white point - full tonal control'; PL: 'Ustaw czarny punkt, gamma, biały punkt — pełna kontrola tonalna'; CS: 'Nastavit černý bod, gama a bílý bod - plná tonální kontrola';
      FR: 'Définir le point noir, le gamma et le point blanc - contrôle tonal complet'; DE: 'Schwarzpunkt, Gamma und Weißpunkt einstellen - volle Tonwertkontrolle'; IT: 'Imposta punto di nero, gamma e punto di bianco - controllo tonale completo';
      ES: 'Ajustar punto negro, gamma y punto blanco: control tonal completo'; PT: 'Definir ponto de preto, gama e ponto de branco - controlo tonal completo'; AF: 'Stel swartpunt, gamma en witpunt in - volledige toonbeheer'),
-    (EN: 'White balance - color temperature correction'; PL: 'Balans bieli - korekcja temperatury barwowej'; CS: 'Vyvážení bílé - korekce barevné teploty';
+    (EN: 'White balance - color temperature correction'; PL: 'Balans bieli — korekcja temperatury barwowej'; CS: 'Vyvážení bílé - korekce barevné teploty';
      FR: 'Balance des blancs - correction de la température de couleur'; DE: 'Weißabgleich - Farbtemperatur korrigieren'; IT: 'Bilanciamento del bianco - correzione della temperatura colore';
      ES: 'Balance de blancos: corrección de la temperatura de color'; PT: 'Balanço de brancos - correção da temperatura da cor'; AF: 'Witbalans - kleurtemperatuurkorreksie'),
     (EN: 'Sharpen image'; PL: 'Wyostrz obraz'; CS: 'Doostřit obrázek';
      FR: 'Accentuer la netteté de l’image'; DE: 'Bild schärfen'; IT: 'Aumenta la nitidezza dell''immagine';
      ES: 'Enfocar la imagen'; PT: 'Aumentar a nitidez da imagem'; AF: 'Verskerp die beeld'),
-    (EN: 'Vivid - saturated, vibrant colours'; PL: 'Soczystość - nasycone, żywe kolory'; CS: 'Živé barvy - syté, zářivé barvy';
+    (EN: 'Vivid - saturated, vibrant colours'; PL: 'Soczystość — nasycone, żywe kolory'; CS: 'Živé barvy - syté, zářivé barvy';
      FR: 'Éclat - couleurs saturées et vives'; DE: 'Brillant - gesättigte, lebendige Farben'; IT: 'Vividezza - colori saturi e brillanti';
      ES: 'Intensificar: colores vivos y saturados'; PT: 'Vividez - cores vivas e saturadas'; AF: 'Lewendigheid - versadigde, lewendige kleure'),
     (EN: 'Photo enhancement (Multiply)'; PL: 'Wzmocnienie zdjęcia (Multiply)'; CS: 'Vylepšení fotografie (Násobení)';
@@ -483,34 +483,34 @@ const
     (EN: 'Adjust brightness, saturation and hue'; PL: 'Dostosuj jasność, nasycenie i odcień'; CS: 'Upravit jas, sytost a odstín';
      FR: 'Régler la luminosité, la saturation et la teinte'; DE: 'Helligkeit, Sättigung und Farbton einstellen'; IT: 'Regola luminosità, saturazione e tonalità';
      ES: 'Ajustar brillo, saturación y tono'; PT: 'Ajustar luminosidade, saturação e tonalidade'; AF: 'Pas helderheid, versadiging en tint aan'),
-    (EN: 'Solarize - invert bright tones'; PL: 'Solaryzacja – odwrócenie jasnych tonów światła'; CS: 'Solarizace - invertovat světlé tóny';
+    (EN: 'Solarize - invert bright tones'; PL: 'Solaryzacja — odwrócenie jasnych tonów światła'; CS: 'Solarizace - invertovat světlé tóny';
      FR: 'Solariser - inverser les tons clairs'; DE: 'Solarisieren - helle Töne invertieren'; IT: 'Solarizza - inverti i toni chiari';
      ES: 'Solarizar: invertir los tonos claros'; PT: 'Solarizar - inverter os tons claros'; AF: 'Solariseer - keer ligte kleure om'),
-    (EN: 'Two-color effect - shadows and highlights'; PL: 'Dwukolorowy efekt - cienie i światła'; CS: 'Dvoubarevný efekt - stíny a světla';
+    (EN: 'Two-color effect - shadows and highlights'; PL: 'Dwukolorowy efekt — cienie i światła'; CS: 'Dvoubarevný efekt - stíny a světla';
      FR: 'Effet bicolore - ombres et hautes lumières'; DE: 'Zweifarbeneffekt - Schatten und Lichter'; IT: 'Effetto a due colori - ombre e luci';
      ES: 'Efecto de dos colores: sombras y luces'; PT: 'Efeito de duas cores - sombras e realces'; AF: 'Tweekleur-effek - skaduwees en hoogtepunte'),
-    (EN: 'Sepia - warm brown monochrome'; PL: 'Sepia - ciepły brązowy monochromat'; CS: 'Sépie - teplá hnědá monochromie';
+    (EN: 'Sepia - warm brown monochrome'; PL: 'Sepia — ciepły brązowy monochromat'; CS: 'Sépie - teplá hnědá monochromie';
      FR: 'Sépia - monochrome brun chaud'; DE: 'Sepia - warmes Braun-Monochrom'; IT: 'Seppia - monocromatico marrone caldo';
      ES: 'Sepia: monocromo marrón cálido'; PT: 'Sépia - monocromático castanho quente'; AF: 'Sepia - warm bruin monochroom'),
-    (EN: 'Cyanotype - blue monochrome'; PL: 'Cyjanotypia - niebieski monochromat'; CS: 'Kyanotypie - modrá monochromie';
+    (EN: 'Cyanotype - blue monochrome'; PL: 'Cyjanotypia — niebieski monochromat'; CS: 'Kyanotypie - modrá monochromie';
      FR: 'Cyanotypie - monochrome bleu'; DE: 'Cyanotypie - blaues Monochrom'; IT: 'Cianotipia - monocromatico blu';
      ES: 'Cianotipia: monocromo azul'; PT: 'Cianotipia - monocromático azul'; AF: 'Sianotipe - blou monochroom'),
-    (EN: 'Salt print - warm brown'; PL: 'Fotografia solna - ciepły brąz'; CS: 'Sůl-tisk - teplá hnědá';
+    (EN: 'Salt print - warm brown'; PL: 'Fotografia solna — ciepły brąz'; CS: 'Sůl-tisk - teplá hnědá';
      FR: 'Tirage au sel - brun chaud'; DE: 'Salzdruck - warmes Braun'; IT: 'Stampa ai sali - marrone caldo';
      ES: 'Impresión a la sal: marrón cálido'; PT: 'Impressão a sal - castanho quente'; AF: 'Soutdruk - warm bruin'),
-    (EN: 'X-Ray - inverted colors'; PL: 'Rentgen - odwrócone kolory'; CS: 'Rentgen - invertované barvy';
+    (EN: 'X-Ray - inverted colors'; PL: 'Rentgen — odwrócone kolory'; CS: 'Rentgen - invertované barvy';
      FR: 'Rayons X - couleurs inversées'; DE: 'Röntgen - invertierte Farben'; IT: 'Raggi X - colori invertiti';
      ES: 'Rayos X: colores invertidos'; PT: 'Raios X - cores invertidas'; AF: 'X-strale - omgekeerde kleure'),
-    (EN: 'False-color IR - channel swap, red plants, blue sky'; PL: 'Fałszywe kolory IR – zamiana kanałów, czerwone rośliny, błękitne niebo'; CS: 'Falešné barvy IR - prohození kanálů, červené rostliny, modrá obloha';
+    (EN: 'False-color IR - channel swap, red plants, blue sky'; PL: 'Fałszywe kolory IR — zamiana kanałów, czerwone rośliny, błękitne niebo'; CS: 'Falešné barvy IR - prohození kanálů, červené rostliny, modrá obloha';
      FR: 'Infrarouge en fausses couleurs - permutation des canaux, végétation rouge, ciel bleu'; DE: 'Falschfarben-IR - Kanaltausch, rote Pflanzen, blauer Himmel'; IT: 'Infrarosso a falsi colori - scambio dei canali, vegetazione rossa, cielo blu';
      ES: 'Infrarrojo en falso color: intercambio de canales, vegetación roja, cielo azul'; PT: 'Infravermelho em falsas cores - troca de canais, vegetação vermelha, céu azul'; AF: 'Valskleur-infrarooi - kanaalomruiling, rooi plante, blou lug'),
-    (EN: 'Night vision - grayscale + green phosphor'; PL: 'Nocne widzenie - szarość i zielony fosfor'; CS: 'Noční vidění - šedá + zelený fosfor';
+    (EN: 'Night vision - grayscale + green phosphor'; PL: 'Nocne widzenie — szarość i zielony fosfor'; CS: 'Noční vidění - šedá + zelený fosfor';
      FR: 'Vision nocturne - niveaux de gris + phosphore vert'; DE: 'Nachtsicht - Graustufen + grünes Phosphor'; IT: 'Visione notturna - scala di grigi + fosforo verde';
      ES: 'Visión nocturna: escala de grises + fósforo verde'; PT: 'Visão noturna - escala de cinzentos + fósforo verde'; AF: 'Nagvisie - grysskaal + groen fosfor'),
-    (EN: 'Thermal - false-color view'; PL: 'Termiczny - podgląd we fałszywych kolorach'; CS: 'Termální - falešné barvy';
+    (EN: 'Thermal - false-color view'; PL: 'Termiczny — podgląd we fałszywych kolorach'; CS: 'Termální - falešné barvy';
      FR: 'Thermique - affichage en fausses couleurs'; DE: 'Thermal - Falschfarben-Ansicht'; IT: 'Termico - visualizzazione a falsi colori';
      ES: 'Térmico: visualización en falso color'; PT: 'Térmico - visualização em falsas cores'; AF: 'Termies - valskleur-aansig'),
-    (EN: 'Orton - blurred glow, dreamy mood'; PL: 'Efekt Ortona - rozmyta poświata,bajkowy nastrój'; CS: 'Orton - rozmazaná záře, snová nálada';
+    (EN: 'Orton - blurred glow, dreamy mood'; PL: 'Efekt Ortona — rozmyta poświata, bajkowy nastrój'; CS: 'Orton - rozmazaná záře, snová nálada';
      FR: 'Orton - halo flou, atmosphère onirique'; DE: 'Orton - weicher Leuchteffekt, verträumte Stimmung'; IT: 'Orton - bagliore sfocato, atmosfera sognante';
      ES: 'Orton: resplandor difuso, ambiente onírico'; PT: 'Orton - brilho difuso, atmosfera onírica'; AF: 'Orton - sagte gloed, droomagtige atmosfeer'),
     (EN: 'Convert to B&W with dither option'; PL: 'Konawersja do czarno-białego z opcją roztrząsania'; CS: 'Převést na ČB s možností ditheringu';
@@ -519,94 +519,94 @@ const
     (EN: 'Convert to grayscale'; PL: 'Konswersja doskali szarości'; CS: 'Převést na odstíny šedi';
      FR: 'Convertir en niveaux de gris'; DE: 'In Graustufen umwandeln'; IT: 'Converti in scala di grigi';
      ES: 'Convertir a escala de grises'; PT: 'Converter para escala de cinzentos'; AF: 'Skakel na grysskaal om'),
-    (EN: 'Invert colors - negative'; PL: 'Odwrócone kolory - negatyw'; CS: 'Invertovat barvy - negativ';
+    (EN: 'Invert colors - negative'; PL: 'Odwrócone kolory — negatyw'; CS: 'Invertovat barvy - negativ';
      FR: 'Inverser les couleurs - négatif'; DE: 'Farben invertieren - Negativ'; IT: 'Inverti i colori - negativo';
      ES: 'Invertir colores - negativo'; PT: 'Inverter cores - negativo'; AF: 'Keer kleure om - negatief'),
-    (EN: 'Add film grain - random noise'; PL: 'Dodaj ziarno filmowe - szum losowy'; CS: 'Přidat zrno filmu - náhodný šum';
+    (EN: 'Add film grain - random noise'; PL: 'Dodaj ziarno filmowe — szum losowy'; CS: 'Přidat zrno filmu - náhodný šum';
      FR: 'Ajouter un grain argentique - bruit aléatoire'; DE: 'Filmkorn hinzufügen - zufälliges Rauschen'; IT: 'Aggiungi grana della pellicola - rumore casuale';
      ES: 'Añadir grano de película - ruido aleatorio'; PT: 'Adicionar grão de película - ruído aleatório'; AF: 'Voeg filmkorrel by - ewekansige geraas'),
-    (EN: 'Oil paint - brush simulation'; PL: 'Efekt olejny - symulacja pędzla'; CS: 'Olejomalba - simulace štětce';
+    (EN: 'Oil paint - brush simulation'; PL: 'Efekt olejny — symulacja pędzla'; CS: 'Olejomalba - simulace štětce';
      FR: 'Peinture à l’huile - simulation de pinceau'; DE: 'Ölgemälde - Pinselsimulation'; IT: 'Pittura a olio - simulazione del pennello';
      ES: 'Pintura al óleo - simulación de pincel'; PT: 'Pintura a óleo - simulação de pincel'; AF: 'Olieverf - kwassimulasie'),
-    (EN: 'Charcoal - charcoal drawing simulation'; PL: 'Węgiel - symulacja rysunku węglowego'; CS: 'Uhel - simulace kresby uhlem';
+    (EN: 'Charcoal - charcoal drawing simulation'; PL: 'Węgiel — symulacja rysunku węglowego'; CS: 'Uhel - simulace kresby uhlem';
      FR: 'Fusain - simulation de dessin au fusain'; DE: 'Kohlezeichnung - Simulation von Kohlezeichnung'; IT: 'Carboncino - simulazione di disegno a carboncino';
      ES: 'Carboncillo - simulación de dibujo al carboncillo'; PT: 'Carvão - simulação de desenho a carvão'; AF: 'Houtskool - houtskooltekensimulasie'),
     (EN: 'Blur image'; PL: 'Rozmycie obrazu'; CS: 'Rozmazat obrázek';
      FR: 'Flouter l’image'; DE: 'Bild weichzeichnen'; IT: 'Sfoca l''immagine';
      ES: 'Desenfocar la imagen'; PT: 'Desfocar a imagem'; AF: 'Vervaag die beeld'),
-    (EN: 'Emboss - relief'; PL: 'Efekt wypukłości - relief'; CS: 'Reliéf';
+    (EN: 'Emboss - relief'; PL: 'Efekt wypukłości — relief'; CS: 'Reliéf';
      FR: 'Estampage - relief'; DE: 'Prägen - Relief'; IT: 'Rilievo';
      ES: 'Relieve'; PT: 'Relevo'; AF: 'Reliëf'),
-    (EN: 'Pixelate - mosaic effect'; PL: 'Pikselizacja - efekt mozaiki'; CS: 'Pixelace - mozaikový efekt';
+    (EN: 'Pixelate - mosaic effect'; PL: 'Pikselizacja — efekt mozaiki'; CS: 'Pixelace - mozaikový efekt';
      FR: 'Pixeliser - effet mosaïque'; DE: 'Pixelieren - Mosaikeffekt'; IT: 'Pixelizza - effetto mosaico';
      ES: 'Pixelar - efecto mosaico'; PT: 'Pixelizar - efeito de mosaico'; AF: 'Pikseleer - mosaïekeffek'),
-    (EN: 'Vignette - darken edges'; PL: 'Winietowanie - przyciemnianie krawędzi'; CS: 'Vinětace - ztmavení okrajů';
+    (EN: 'Vignette - darken edges'; PL: 'Winietowanie — przyciemnianie krawędzi'; CS: 'Vinětace - ztmavení okrajů';
      FR: 'Vignette - assombrir les bords'; DE: 'Vignette - Ränder abdunkeln'; IT: 'Vignettatura - scurisci i bordi';
      ES: 'Vineta - oscurecer los bordes'; PT: 'Vinheta - escurecer as margens'; AF: 'Vignet - verdonker die rande'),
-    (EN: 'Posterize - reduce color count'; PL: 'Posteryzacja - redukcja liczby kolorów'; CS: 'Posterizace - snížit počet barev';
+    (EN: 'Posterize - reduce color count'; PL: 'Posteryzacja — redukcja liczby kolorów'; CS: 'Posterizace - snížit počet barev';
      FR: 'Postériser - réduire le nombre de couleurs'; DE: 'Posterisieren - Farbanzahl reduzieren'; IT: 'Posterizza - riduci il numero di colori';
      ES: 'Posterizar - reducir el número de colores'; PT: 'Posterizar - reduzir o número de cores'; AF: 'Posteriseer - verminder die aantal kleure'),
-    (EN: 'Edge detection - sketch effect'; PL: 'Detekcja krawędzi - efekt szkicu'; CS: 'Detekce hran - efekt skici';
+    (EN: 'Edge detection - sketch effect'; PL: 'Detekcja krawędzi — efekt szkicu'; CS: 'Detekce hran - efekt skici';
      FR: 'Détection des contours - effet esquisse'; DE: 'Kantenerkennung - Skizzen-Effekt'; IT: 'Rilevamento bordi - effetto schizzo';
      ES: 'Detección de bordes - efecto de boceto'; PT: 'Deteção de contornos - efeito de esboço'; AF: 'Randopsporing - sketseffek'),
-    (EN: 'Linocut - sharp B&W contrast'; PL: 'Linoryt - ostry, czarno-biały kontrast'; CS: 'Linoryt - ostrý ČB kontrast';
+    (EN: 'Linocut - sharp B&W contrast'; PL: 'Linoryt — ostry, czarno-biały kontrast'; CS: 'Linoryt - ostrý ČB kontrast';
      FR: 'Linogravure - fort contraste noir et blanc'; DE: 'Linolschnitt - scharfer S/W-Kontrast'; IT: 'Linoleografia - forte contrasto in bianco e nero';
      ES: 'Linograbado - fuerte contraste en blanco y negro'; PT: 'Linogravura - forte contraste a preto e branco'; AF: 'Linosnee - sterk swart-en-wit-kontras'),
-    (EN: 'Engraving - line engraving simulation'; PL: 'Grawerowanie -symulacja linii rytowniczych'; CS: 'Rytina - simulace rytiny';
+    (EN: 'Engraving - line engraving simulation'; PL: 'Grawerowanie — symulacja linii rytowniczych'; CS: 'Rytina - simulace rytiny';
      FR: 'Gravure - simulation de gravure'; DE: 'Gravur - Linienstich-Simulation'; IT: 'Incisione - simulazione di incisione a linee';
      ES: 'Grabado - simulación de grabado lineal'; PT: 'Gravura - simulação de gravura em linhas'; AF: 'Gravering - simulasie van lyngravering'),
     (EN: 'Crosshatch lines at two angles'; PL: 'Krzyżowanie linii pod dwoma kątami'; CS: 'Křížové šrafování pod dvěma úhly';
      FR: 'Hachures - hachures croisées à deux angles'; DE: 'Schraffur - Kreuzschraffur in zwei Winkeln'; IT: 'Tratteggio incrociato a due angolazioni';
      ES: 'Tramado cruzado en dos ángulos'; PT: 'Hachura cruzada em dois ângulos'; AF: 'Kruisarsering teen twee hoeke'),
-    (EN: 'Halftone - growing dots based on brightness'; PL: 'Raster - rosnące kropki zależnie od jasności'; CS: 'Půltón - rostoucí body podle jasu';
+    (EN: 'Halftone - growing dots based on brightness'; PL: 'Raster — rosnące kropki zależnie od jasności'; CS: 'Půltón - rostoucí body podle jasu';
      FR: 'Tramage - points de taille variable selon la luminosité'; DE: 'Raster - wachsende Punkte basierend auf Helligkeit'; IT: 'Mezzitoni - punti di dimensione variabile in base alla luminosità';
      ES: 'Semitonos - puntos de tamaño variable según el brillo'; PT: 'Meios-tons - pontos de tamanho variável conforme a luminosidade'; AF: 'Halftoon - groeiende kolletjies volgens helderheid'),
-    (EN: 'Stipple - dot density based on brightness'; PL: 'Kropkowanie - gęstość kropek zależnie od jasności'; CS: 'Tečkování - hustota bodů podle jasu';
+    (EN: 'Stipple - dot density based on brightness'; PL: 'Kropkowanie — gęstość kropek zależnie od jasności'; CS: 'Tečkování - hustota bodů podle jasu';
      FR: 'Pointillisme - densité des points selon la luminosité'; DE: 'Punktierung - Punktedichte basierend auf Helligkeit'; IT: 'Puntinatura - densità dei punti in base alla luminosità';
      ES: 'Punteado - densidad de puntos según el brillo'; PT: 'Pontilhado - densidade de pontos conforme a luminosidade'; AF: 'Stippeling - puntdigtheid volgens helderheid'),
-    (EN: 'Dice - dice eyes pattern'; PL: 'Kostkowanie - oczka kostki do gry'; CS: 'Kostky - vzor ok kostek';
+    (EN: 'Dice - dice eyes pattern'; PL: 'Kostkowanie — oczka kostki do gry'; CS: 'Kostky - vzor ok kostek';
      FR: 'Dés - motif en points de dés'; DE: 'Würfel - Würfelaugen-Muster'; IT: 'Dadi - motivo con punti da dado';
      ES: 'Dados - patrón de puntos de dados'; PT: 'Dados - padrão de pontos de dado'; AF: 'Dobbelstene - dobbelsteenpatroon'),
-    (EN: 'Risograph - layered print with color offset'; PL: 'Rizograf - druk warstwowy z offsetem kolorów'; CS: 'Risograf - vrstvený tisk s posunem barev';
+    (EN: 'Risograph - layered print with color offset'; PL: 'Rizograf — druk warstwowy z offsetem kolorów'; CS: 'Risograf - vrstvený tisk s posunem barev';
      FR: 'Risographie - impression en couches avec décalage des couleurs'; DE: 'Risografie - Schichtdruck mit Farbversatz'; IT: 'Risografia - stampa a livelli con sfalsamento dei colori';
      ES: 'Risografía - impresión por capas con desplazamiento de color'; PT: 'Risografia - impressão em camadas com desvio de cores'; AF: 'Risografie - gelaagde drukwerk met kleurverskuiwing'),
-    (EN: 'Single-color screen print - grayscale + halftone on background'; PL: 'Sitodruk jednokolorowy - szary + tło ​​półtonowe'; CS: 'Jednobarevný sítotisk - šedá + půltón na pozadí';
+    (EN: 'Single-color screen print - grayscale + halftone on background'; PL: 'Sitodruk jednokolorowy — szary + tło  półtonowe'; CS: 'Jednobarevný sítotisk - šedá + půltón na pozadí';
      FR: 'Sérigraphie monochrome - niveaux de gris + tramage sur fond'; DE: 'Einfarbiger Siebdruck - Graustufen + Raster auf Hintergrund'; IT: 'Serigrafia monocromatica - scala di grigi + mezzitoni sullo sfondo';
      ES: 'Serigrafía monocromática - escala de grises + semitonos sobre el fondo'; PT: 'Serigrafia monocromática - escala de cinzentos + meios-tons sobre o fundo'; AF: 'Enkelkleur-sifdruk - grysskaal + halftoon op agtergrond'),
     (EN: 'Barrel / pincushion distortion'; PL: 'Zniekształcenie beczkowate / poduszkowe'; CS: 'Soudkové / poduškové zkreslení';
      FR: 'Distorsion en barillet / en coussinet'; DE: 'Tonnen- / Kissenverzerrung'; IT: 'Distorsione a barilotto / cuscinetto';
      ES: 'Distorsión de barril / cojín'; PT: 'Distorção de barril / almofada'; AF: 'Vat- / kussingvervorming'),
-    (EN: 'Arc distortion - bend image'; PL: 'Zniekształcenie łukowe – zginanie obrazu'; CS: 'Obloukové zkreslení - prohnout obrázek';
+    (EN: 'Arc distortion - bend image'; PL: 'Zniekształcenie łukowe — zginanie obrazu'; CS: 'Obloukové zkreslení - prohnout obrázek';
      FR: 'Distorsion en arc - courber l’image'; DE: 'Bogenverzerrung - Bild biegen'; IT: 'Distorsione ad arco - incurva l''immagine';
      ES: 'Distorsión de arco - curvar la imagen'; PT: 'Distorção em arco - curvar a imagem'; AF: 'Boogvervorming - buig die beeld'),
-    (EN: 'Swirl - twist image'; PL: 'Wiruj - przekręć obraz'; CS: 'Víření - zkroutit obrázek';
+    (EN: 'Swirl - twist image'; PL: 'Wiruj — przekręć obraz'; CS: 'Víření - zkroutit obrázek';
      FR: 'Tourbillon - déformer l’image en spirale'; DE: 'Wirbel - Bild verwirbeln'; IT: 'Vortice - ruota l''immagine a spirale';
      ES: 'Remolino - retorcer la imagen'; PT: 'Redemoinho - torcer a imagem'; AF: 'Draaikolk - draai die beeld'),
     (EN: 'Water ripple effect'; PL: 'Fale wodne'; CS: 'Vodní vlnění';
      FR: 'Effet d’ondulation'; DE: 'Wasserwellen-Effekt'; IT: 'Effetto increspatura dell''acqua';
      ES: 'Efecto de ondulación del agua'; PT: 'Efeito de ondulação da água'; AF: 'Waterrimpel-effek'),
-    (EN: 'Polar distortion - tunnel, fisheye'; PL: 'Zniekształcenia biegunowe - tunel, rybie oko'; CS: 'Polární zkreslení - tunel, rybí oko';
+    (EN: 'Polar distortion - tunnel, fisheye'; PL: 'Zniekształcenia biegunowe — tunel, rybie oko'; CS: 'Polární zkreslení - tunel, rybí oko';
      FR: 'Distorsion polaire - tunnel, œil-de-poisson'; DE: 'Polarverzerrung - Tunnel, Fischauge'; IT: 'Distorsione polare - tunnel, occhio di pesce';
      ES: 'Distorsión polar - túnel, ojo de pez'; PT: 'Distorção polar - túnel, olho de peixe'; AF: 'Polêre vervorming - tonnel, visoog'),
-    (EN: '4-color palette - Workbench 1.x (OCS)'; PL: 'Paleta 4 kolorów - Workbench 1.x (OCS)'; CS: '4barevná paleta - Workbench 1.x (OCS)';
+    (EN: '4-color palette - Workbench 1.x (OCS)'; PL: 'Paleta 4 kolorów — Workbench 1.x (OCS)'; CS: '4barevná paleta - Workbench 1.x (OCS)';
      FR: 'Palette 4 couleurs - Workbench 1.x (OCS)'; DE: '4-Farben-Palette - Workbench 1.x (OCS)'; IT: 'Tavolozza a 4 colori - Workbench 1.x (OCS)';
      ES: 'Paleta de 4 colores - Workbench 1.x (OCS)'; PT: 'Paleta de 4 cores - Workbench 1.x (OCS)'; AF: '4-kleurpalet - Workbench 1.x (OCS)'),
-    (EN: '4-color palette - Workbench 2.x/3.x'; PL: 'Paleta 4 kolorów - Workbench 2.x/3.x'; CS: '4barevná paleta - Workbench 2.x/3.x';
+    (EN: '4-color palette - Workbench 2.x/3.x'; PL: 'Paleta 4 kolorów — Workbench 2.x/3.x'; CS: '4barevná paleta - Workbench 2.x/3.x';
      FR: 'Palette 4 couleurs - Workbench 2.x/3.x'; DE: '4-Farben-Palette - Workbench 2.x/3.x'; IT: 'Tavolozza a 4 colori - Workbench 2.x/3.x';
      ES: 'Paleta de 4 colores - Workbench 2.x/3.x'; PT: 'Paleta de 4 cores - Workbench 2.x/3.x'; AF: '4-kleurpalet - Workbench 2.x/3.x'),
-    (EN: '32-color palette (4x4x2) - OCS'; PL: 'Paleta 32 kolorów (4x4x2) - OCS'; CS: '32barevná paleta (4x4x2) - OCS';
+    (EN: '32-color palette (4x4x2) - OCS'; PL: 'Paleta 32 kolorów (4x4x2) — OCS'; CS: '32barevná paleta (4x4x2) - OCS';
      FR: 'Palette 32 couleurs (4×4×2) - OCS'; DE: '32-Farben-Palette (4x4x2) - OCS'; IT: 'Tavolozza a 32 colori (4x4x2) - OCS';
      ES: 'Paleta de 32 colores (4x4x2) - OCS'; PT: 'Paleta de 32 cores (4x4x2) - OCS'; AF: '32-kleurpalet (4x4x2) - OCS'),
-    (EN: '64-color palette (4x4x4) - EHB'; PL: 'Paleta 64 kolorów (4x4x4) - EHB'; CS: '64barevná paleta (4x4x4) - EHB';
+    (EN: '64-color palette (4x4x4) - EHB'; PL: 'Paleta 64 kolorów (4x4x4) — EHB'; CS: '64barevná paleta (4x4x4) - EHB';
      FR: 'Palette 64 couleurs (4×4×4) - EHB'; DE: '64-Farben-Palette (4x4x4) - EHB'; IT: 'Tavolozza a 64 colori (4x4x4) - EHB';
      ES: 'Paleta de 64 colores (4x4x4) - EHB'; PT: 'Paleta de 64 cores (4x4x4) - EHB'; AF: '64-kleurpalet (4x4x4) - EHB'),
-    (EN: '256-color palette - AGA'; PL: 'Paleta 256 kolorów - AGA'; CS: '256barevná paleta - AGA';
+    (EN: '256-color palette - AGA'; PL: 'Paleta 256 kolorów — AGA'; CS: '256barevná paleta - AGA';
      FR: 'Palette 256 couleurs - AGA'; DE: '256-Farben-Palette - AGA'; IT: 'Tavolozza a 256 colori - AGA';
      ES: 'Paleta de 256 colores - AGA'; PT: 'Paleta de 256 cores - AGA'; AF: '256-kleurpalet - AGA'),
-    (EN: '256-color palette - Workbench 3.x'; PL: 'Paleta 256 kolorów - Workbench 3.x'; CS: '256barevná paleta - Workbench 3.x';
+    (EN: '256-color palette - Workbench 3.x'; PL: 'Paleta 256 kolorów — Workbench 3.x'; CS: '256barevná paleta - Workbench 3.x';
      FR: 'Palette 256 couleurs - Workbench 3.x'; DE: '256-Farben-Palette - Workbench 3.x'; IT: 'Tavolozza a 256 colori - Workbench 3.x';
      ES: 'Paleta de 256 colores - Workbench 3.x'; PT: 'Paleta de 256 cores - Workbench 3.x'; AF: '256-kleurpalet - Workbench 3.x'),
-    (EN: '8-color palette - MagicWB (MUI)'; PL: 'Paleta 8 kolorów - MagicWB (MUI)'; CS: '8barevná paleta - MagicWB (MUI)';
+    (EN: '8-color palette - MagicWB (MUI)'; PL: 'Paleta 8 kolorów — MagicWB (MUI)'; CS: '8barevná paleta - MagicWB (MUI)';
      FR: 'Palette 8 couleurs - MagicWB (MUI)'; DE: '8-Farben-Palette - MagicWB (MUI)'; IT: 'Tavolozza a 8 colori - MagicWB (MUI)';
      ES: 'Paleta de 8 colores - MagicWB (MUI)'; PT: 'Paleta de 8 cores - MagicWB (MUI)'; AF: '8-kleurpalet - MagicWB (MUI)'),
     (EN: 'Fotografista'; PL: 'Fotografista'; CS: 'Fotografista';
@@ -699,10 +699,10 @@ const
     (EN: 'Disabled'; PL: 'Wyłączone'; CS: 'Zakázáno';
      FR: 'Désactivé'; DE: 'Deaktiviert'; IT: 'Disabilitato';
      ES: 'Desactivado'; PT: 'Desativado'; AF: 'Afgeskakel'),
-    (EN: 'Intensity (1-10):'; PL: 'Intensywność (1-10):'; CS: 'Intenzita (1-10):';
+    (EN: 'Intensity (1-10):'; PL: 'Intensywność (1–10):'; CS: 'Intenzita (1-10):';
      FR: 'Intensité (1-10) :'; DE: 'Intensität (1-10):'; IT: 'Intensità (1-10):';
      ES: 'Intensidad (1-10):'; PT: 'Intensidade (1-10):'; AF: 'Intensiteit (1-10):'),
-    (EN: 'Brightness (0-200, default 100):'; PL: 'Jasność (0-200, domyślnie 100):'; CS: 'Jas (0-200, výchozí 100):';
+    (EN: 'Brightness (0-200, default 100):'; PL: 'Jasność (0–200, domyślnie 100):'; CS: 'Jas (0-200, výchozí 100):';
      FR: 'Luminosité (0-200, valeur par défaut 100) :'; DE: 'Helligkeit (0-200, Standard 100):'; IT: 'Luminosità (0-200, predefinito 100):';
      ES: 'Brillo (0-200, predeterminado 100):'; PT: 'Luminosidade (0-200, predefinido 100):'; AF: 'Helderheid (0-200, standaard 100):'),
     (EN: 'Gamma (100 = no change):'; PL: 'Gamma (100 = brak zmian):'; CS: 'Gama (100 = beze změny):';
@@ -717,19 +717,19 @@ const
     (EN: 'Blue (100 = no change):'; PL: 'Niebieski (100 = brak zmian):'; CS: 'Modrá (100 = beze změny):';
      FR: 'Bleu (100 = aucun changement) :'; DE: 'Blau (100 = keine Änderung):'; IT: 'Blu (100 = nessuna modifica):';
      ES: 'Azul (100 = sin cambios):'; PT: 'Azul (100 = sem alteração):'; AF: 'Blou (100 = geen verandering):'),
-    (EN: 'Intensity (1-100):'; PL: 'Intensywność (1-100):'; CS: 'Intenzita (1-100):';
+    (EN: 'Intensity (1-100):'; PL: 'Intensywność (1–100):'; CS: 'Intenzita (1-100):';
      FR: 'Intensité (1-100) :'; DE: 'Intensität (1-100):'; IT: 'Intensità (1-100):';
      ES: 'Intensidad (1-100):'; PT: 'Intensidade (1-100):'; AF: 'Intensiteit (1-100):'),
-    (EN: 'Intensity (0-100):'; PL: 'Intensywność (0-100):'; CS: 'Intenzita (0-100):';
+    (EN: 'Intensity (0-100):'; PL: 'Intensywność (0–100):'; CS: 'Intenzita (0-100):';
      FR: 'Intensité (0-100) :'; DE: 'Intensität (0-100):'; IT: 'Intensità (0-100):';
      ES: 'Intensidad (0-100):'; PT: 'Intensidade (0-100):'; AF: 'Intensiteit (0-100):'),
-    (EN: 'Radius (1-5):'; PL: 'Promień (1-5)'; CS: 'Poloměr (1-5):';
+    (EN: 'Radius (1-5):'; PL: 'Promień (1–5)'; CS: 'Poloměr (1-5):';
      FR: 'Rayon (1-5) :'; DE: 'Radius (1-5):'; IT: 'Raggio (1-5):';
      ES: 'Radio (1-5):'; PT: 'Raio (1-5):'; AF: 'Radius (1-5):'),
-    (EN: 'Intensity (1-50):'; PL: 'Intensywność (1-50):'; CS: 'Intenzita (1-50):';
+    (EN: 'Intensity (1-50):'; PL: 'Intensywność (1–50):'; CS: 'Intenzita (1-50):';
      FR: 'Intensité (1-50) :'; DE: 'Intensität (1-50):'; IT: 'Intensità (1-50):';
      ES: 'Intensidad (1-50):'; PT: 'Intensidade (1-50):'; AF: 'Intensiteit (1-50):'),
-    (EN: 'Cell size (1-100):'; PL: 'Rozmiar komórki (1-100):'; CS: 'Velikost buňky (1-100):';
+    (EN: 'Cell size (1-100):'; PL: 'Rozmiar komórki (1–100):'; CS: 'Velikost buňky (1-100):';
      FR: 'Taille de cellule (1-100) :'; DE: 'Zellgröße (1-100):'; IT: 'Dimensione cella (1-100):';
      ES: 'Tamaño de celda (1-100):'; PT: 'Tamanho da célula (1-100):'; AF: 'Selgrootte (1-100):'),
     (EN: 'Angle (0-179°):'; PL: 'Kąt linii (0–179°):'; CS: 'Úhel (0-179°):';
@@ -747,31 +747,31 @@ const
     (EN: 'Subcell dot size (3-8 px):'; PL: 'Rozmiar podkomórki kropki (3–8 px):'; CS: 'Velikost bodu v buňce (3-8 px):';
      FR: 'Taille des sous-points (3-8 px) :'; DE: 'Punktgröße (3-8 px):'; IT: 'Dimensione del punto della sottocella (3-8 px):';
      ES: 'Tamaño de punto de subcelda (3-8 px):'; PT: 'Tamanho do ponto da subcélula (3-8 px):'; AF: 'Subsel-puntgrootte (3-8 px):'),
-    (EN: 'Threshold (1-100):'; PL: 'Prog (1-100):'; CS: 'Práh (1-100):';
+    (EN: 'Threshold (1-100):'; PL: 'Prog (1–100):'; CS: 'Práh (1-100):';
      FR: 'Seuil (1-100) :'; DE: 'Schwellwert (1-100):'; IT: 'Soglia (1-100):';
      ES: 'Umbral (1-100):'; PT: 'Limiar (1-100):'; AF: 'Drempel (1-100):'),
     (EN: 'Ink amount (lighter = less):'; PL: 'Ilość tuszu (jaśniejsze = mniej):'; CS: 'Množství inkoustu (světlejší = méně):';
      FR: 'Quantité d’encre (plus clair = moins) :'; DE: 'Tintenmenge (heller = weniger):'; IT: 'Quantità di inchiostro (più chiaro = meno):';
      ES: 'Cantidad de tinta (más claro = menos):'; PT: 'Quantidade de tinta (mais claro = menos):'; AF: 'Inkhoeveelheid (ligter = minder):'),
-    (EN: 'Strength (0-100):'; PL: 'Siła efektu (0-100):'; CS: 'Síla (0-100):';
+    (EN: 'Strength (0-100):'; PL: 'Siła efektu (0–100):'; CS: 'Síla (0-100):';
      FR: 'Force (0-100) :'; DE: 'Stärke (0-100):'; IT: 'Intensità (0-100):';
      ES: 'Intensidad (0-100):'; PT: 'Intensidade (0-100):'; AF: 'Intensiteit (0-100):'),
-    (EN: 'Saturation (0-100):'; PL: 'Nasycenie (0-100):'; CS: 'Sytost (0-100):';
+    (EN: 'Saturation (0-100):'; PL: 'Nasycenie (0–100):'; CS: 'Sytost (0-100):';
      FR: 'Saturation (0-100) :'; DE: 'Sättigung (0-100):'; IT: 'Saturazione (0-100):';
      ES: 'Saturación (0-100):'; PT: 'Saturação (0-100):'; AF: 'Versadiging (0-100):'),
-    (EN: 'Contrast (0-100):'; PL: 'Kontrast (0-100):'; CS: 'Kontrast (0-100):';
+    (EN: 'Contrast (0-100):'; PL: 'Kontrast (0–100):'; CS: 'Kontrast (0-100):';
      FR: 'Contraste (0-100) :'; DE: 'Kontrast (0-100):'; IT: 'Contrasto (0-100):';
      ES: 'Contraste (0-100):'; PT: 'Contraste (0-100):'; AF: 'Kontras (0-100):'),
-    (EN: 'Curve (1-5):'; PL: 'Krzywa (1-5):'; CS: 'Křivka (1-5):';
+    (EN: 'Curve (1-5):'; PL: 'Krzywa (1–5):'; CS: 'Křivka (1-5):';
      FR: 'Courbe (1-5) :'; DE: 'Kurve (1-5):'; IT: 'Curva (1-5):';
      ES: 'Curva (1-5):'; PT: 'Curva (1-5):'; AF: 'Kurwe (1-5):'),
-    (EN: 'Smart Curves (0-100):'; PL: 'Sprytne krzywe (0-100):'; CS: 'Chytré křivky (0-100):';
+    (EN: 'Smart Curves (0-100):'; PL: 'Sprytne krzywe (0–100):'; CS: 'Chytré křivky (0-100):';
      FR: 'Smart Curves (0-100) :'; DE: 'Smart Curves (0-100):'; IT: 'Curve intelligenti (0-100):';
      ES: 'Curvas inteligentes (0-100):'; PT: 'Curvas inteligentes (0-100):'; AF: 'Slim kurwes (0-100):'),
-    (EN: 'Black point (0-255):'; PL: 'Czarny punkt (0-255):'; CS: 'Černý bod (0-255):';
+    (EN: 'Black point (0-255):'; PL: 'Czarny punkt (0–255):'; CS: 'Černý bod (0-255):';
      FR: 'Point noir (0-255) :'; DE: 'Schwarzpunkt (0-255):'; IT: 'Punto di nero (0-255):';
      ES: 'Punto negro (0-255):'; PT: 'Ponto de preto (0-255):'; AF: 'Swartpunt (0-255):'),
-    (EN: 'White point (0-255):'; PL: 'Biały punkt (0-255):'; CS: 'Bílý bod (0-255):';
+    (EN: 'White point (0-255):'; PL: 'Biały punkt (0–255):'; CS: 'Bílý bod (0-255):';
      FR: 'Point blanc (0-255) :'; DE: 'Weißpunkt (0-255):'; IT: 'Punto di bianco (0-255):';
      ES: 'Punto blanco (0-255):'; PT: 'Ponto de branco (0-255):'; AF: 'Witpunt (0-255):'),
     (EN: 'Straighten angle (-10 to +10°):'; PL: 'Kąt prostowania (-10 do +10 stopni):'; CS: 'Úhel narovnání (-10 až +10°):';
@@ -945,16 +945,16 @@ const
     (EN: 'Preferences'; PL: 'Jakość zapisu'; CS: 'Předvolby';
      FR: 'Préférences'; DE: 'Einstellungen'; IT: 'Preferenze';
      ES: 'Preferencias'; PT: 'Preferências'; AF: 'Voorkeure'),
-    (EN: 'Saturation (0-200, default 100):'; PL: 'Nasycenie (0-200, domyślnie 100):'; CS: 'Sytost (0-200, výchozí 100):';
+    (EN: 'Saturation (0-200, default 100):'; PL: 'Nasycenie (0–200, domyślnie 100):'; CS: 'Sytost (0-200, výchozí 100):';
      FR: 'Saturation (0-200, valeur par défaut 100) :'; DE: 'Sättigung (0-200, Standard 100):'; IT: 'Saturazione (0-200, predefinito 100):';
      ES: 'Saturación (0-200, predeterminado 100):'; PT: 'Saturação (0-200, predefinido 100):'; AF: 'Versadiging (0-200, standaard 100):'),
-    (EN: 'Hue (0-200, default 100):'; PL: 'Odcień (0-200, domyślnie 100):'; CS: 'Odstín (0-200, výchozí 100):';
+    (EN: 'Hue (0-200, default 100):'; PL: 'Odcień (0–200, domyślnie 100):'; CS: 'Odstín (0-200, výchozí 100):';
      FR: 'Teinte (0-200, valeur par défaut 100) :'; DE: 'Farbton (0-200, Standard 100):'; IT: 'Tonalità (0-200, predefinito 100):';
      ES: 'Tono (0-200, predeterminado 100):'; PT: 'Tonalidade (0-200, predefinido 100):'; AF: 'Tint (0-200, standaard 100):'),
-    (EN: 'Contrast (0-10):'; PL: 'Kontrast przed konwersją (0-10):'; CS: 'Kontrast (0-10):';
+    (EN: 'Contrast (0-10):'; PL: 'Kontrast przed konwersją (0–10):'; CS: 'Kontrast (0-10):';
      FR: 'Contraste (0-10) :'; DE: 'Kontrast (0-10):'; IT: 'Contrasto (0-10):';
      ES: 'Contraste (0-10):'; PT: 'Contraste (0-10):'; AF: 'Kontras (0-10):'),
-    (EN: 'Number of colors (2-64):'; PL: 'Liczba kolorów (2-64):'; CS: 'Počet barev (2-64):';
+    (EN: 'Number of colors (2-64):'; PL: 'Liczba kolorów (2–64):'; CS: 'Počet barev (2-64):';
      FR: 'Nombre de couleurs (2-64) :'; DE: 'Farbanzahl (2-64):'; IT: 'Numero di colori (2-64):';
      ES: 'Número de colores (2-64):'; PT: 'Número de cores (2-64):'; AF: 'Aantal kleure (2-64):'),
     (EN: 'Opacity:'; PL: 'Krycie'; CS: 'Krytí:';
@@ -1089,7 +1089,7 @@ const
     (EN: 'Original'; PL: 'Oryginał'; CS: 'Originál';
      FR: 'Original'; DE: 'Original'; IT: 'Originale';
      ES: 'Original'; PT: 'Original'; AF: 'Oorspronklik'),
-    (EN: 'Gamma (10-500, 100=1.0):'; PL: 'Gamma (10-500, 100=1.0):'; CS: 'Gama (10-500, 100=1,0):';
+    (EN: 'Gamma (10-500, 100=1.0):'; PL: 'Gamma (10–500, 100=1.0):'; CS: 'Gama (10-500, 100=1,0):';
      FR: 'Gamma (10-500, 100 = 1,0) :'; DE: 'Gamma (10–500, 100=1,0):'; IT: 'Gamma (10-500, 100 = 1,0):';
      ES: 'Gamma (10-500, 100 = 1,0):'; PT: 'Gama (10-500, 100 = 1,0):'; AF: 'Gamma (10-500, 100 = 1,0):'),
     (EN: 'Add layer'; PL: 'Efekt A'; CS: 'Přidat vrstvu';
@@ -1254,7 +1254,7 @@ const
     (EN: 'Save thumbnail as'; PL: 'Zapisz miniaturę jako'; CS: 'Uložit náhled jako';
      FR: 'Enregistrer la vignette sous'; DE: 'Vorschaubild speichern unter'; IT: 'Salva miniatura con nome';
      ES: 'Guardar miniatura como'; PT: 'Guardar miniatura como'; AF: 'Stoor kleinkiekie as'),
-    (EN: 'JPEG compression quality (0-100):'; PL: 'Jakość zapisu JPEG (0-100):'; CS: 'Kvalita komprese JPEG (0-100):';
+    (EN: 'JPEG compression quality (0-100):'; PL: 'Jakość zapisu JPEG (0–100):'; CS: 'Kvalita komprese JPEG (0-100):';
      FR: 'Qualité de compression JPEG (0-100) :'; DE: 'JPEG-Komprimierungsqualität (0-100):'; IT: 'Qualità di compressione JPEG (0-100):';
      ES: 'Calidad de compresión JPEG (0-100):'; PT: 'Qualidade de compressão JPEG (0-100):'; AF: 'JPEG-kompressiegehalte (0-100):'),
     (EN: 'Normal'; PL: 'Normalna'; CS: 'Normální';
@@ -1365,10 +1365,10 @@ const
     (EN: 'Recording macro'; PL: 'Nagrywanie makra'; CS: 'Nahrávání makra';
      FR: 'Enregistrement de la macro'; DE: 'Makro wird aufgenommen'; IT: 'Registrazione macro';
      ES: 'Grabación de macro'; PT: 'Gravação de macro'; AF: 'Makro-opname'),
-    (EN: 'HAM6 - 16 colors + Hold-Modify'; PL: 'HAM6 - 16 kolorów + Hold-Modify'; CS: 'HAM6 - 16 barev + Hold-Modify';
+    (EN: 'HAM6 - 16 colors + Hold-Modify'; PL: 'HAM6 — 16 kolorów + Hold-Modify'; CS: 'HAM6 - 16 barev + Hold-Modify';
      FR: 'HAM6 - 16 couleurs + Hold-Modify'; DE: 'HAM6 - 16 Farben + Hold-Modify'; IT: 'HAM6 - 16 colori + Hold-Modify';
      ES: 'HAM6 - 16 colores + Hold-Modify'; PT: 'HAM6 - 16 cores + Hold-Modify'; AF: 'HAM6 - 16 kleure + Hou-Wysig'),
-    (EN: 'HAM8 - 64 colors + Hold-Modify'; PL: 'HAM8 - 64 kolory + Hold-Modify'; CS: 'HAM8 - 64 barev + Hold-Modify';
+    (EN: 'HAM8 - 64 colors + Hold-Modify'; PL: 'HAM8 — 64 kolory + Hold-Modify'; CS: 'HAM8 - 64 barev + Hold-Modify';
      FR: 'HAM8 - 64 couleurs + Hold-Modify'; DE: 'HAM8 - 64 Farben + Hold-Modify'; IT: 'HAM8 - 64 colori + Hold-Modify';
      ES: 'HAM8 - 64 colores + Hold-Modify'; PT: 'HAM8 - 64 cores + Hold-Modify'; AF: 'HAM8 - 64 kleure + Hou-Wysig'),
     (EN: 'HAM6 simulation (16 base colors with hold-modify modes)'; PL: 'Symulacja HAM6 (16 kolorów podstawowych z trybami hold-modify)'; CS: 'Simulace HAM6 (16 základních barev s režimy hold-modify)';
@@ -1401,7 +1401,7 @@ const
     (EN: 'Icon saved.'; PL: 'Ikona zapisana.'; CS: 'Ikona uložena.';
      FR: 'Icône enregistrée.'; DE: 'Symbol gespeichert.'; IT: 'Icona salvata.';
      ES: 'Icono guardado.'; PT: 'Ícone guardado.'; AF: 'Ikoon gestoor.'),
-    (EN: 'Warning: this effect is very demanding. For images above 6 MP processing may take 30-60 seconds.'; PL: 'Ten efekt jest bardzo wymagający obliczeniowo.\nDla zdjęć powyżej 6 MP czas może przekroczyć 30-60 sekund.'; CS: 'Varování: tento efekt je velmi náročný. U obrázků nad 6 MP může zpracování trvat 30-60 sekund.';
+    (EN: 'Warning: this effect is very demanding. For images above 6 MP processing may take 30-60 seconds.'; PL: 'Ten efekt jest bardzo wymagający obliczeniowo.\nDla zdjęć powyżej 6 MP czas może przekroczyć 30–60 sekund.'; CS: 'Varování: tento efekt je velmi náročný. U obrázků nad 6 MP může zpracování trvat 30-60 sekund.';
      FR: 'Attention : cet effet est très exigeant. Pour les images de plus de 6 MP, le traitement peut prendre de 30 à 60 secondes.'; DE: 'Warnung: Dieser Effekt ist sehr aufwendig. Bei Bildern über 6 MP kann die Verarbeitung 30-60 Sekunden dauern.'; IT: 'Avviso: questo effetto richiede molte risorse. Per immagini superiori a 6 MP l''elaborazione può richiedere da 30 a 60 secondi.';
      ES: 'Advertencia: este efecto requiere muchos recursos. En imágenes de más de 6 MP el procesamiento puede tardar entre 30 y 60 segundos.'; PT: 'Aviso: este efeito exige muitos recursos. Para imagens com mais de 6 MP, o processamento pode demorar entre 30 e 60 segundos.'; AF: 'Waarskuwing: hierdie effek is baie veeleisend. Vir beelde bo 6 MP kan verwerking 30-60 sekondes neem.'),
     (EN: 'Continue'; PL: 'Kontynuuj'; CS: 'Pokračovat';
@@ -1428,7 +1428,7 @@ const
     (EN: 'Save as Windows icon...'; PL: 'Zapisz jako ikonę Windows...'; CS: 'Uložit jako ikonu Windows...';
      FR: 'Enregistrer comme icône Windows…'; DE: 'Als Windows-Symbol speichern...'; IT: 'Salva come icona di Windows...';
      ES: 'Guardar como icono de Windows...'; PT: 'Guardar como ícone do Windows...'; AF: 'Stoor as Windows-ikoon...'),
-    (EN: 'JPEG 2000 quality (0-100, 100=lossless):'; PL: 'Jakość zapisu JPEG 2000 (0-100, 100=bezstratny):'; CS: 'Kvalita JPEG 2000 (0-100, 100=bezeztrátové):';
+    (EN: 'JPEG 2000 quality (0-100, 100=lossless):'; PL: 'Jakość zapisu JPEG 2000 (0–100, 100=bezstratny):'; CS: 'Kvalita JPEG 2000 (0-100, 100=bezeztrátové):';
      FR: 'Qualité JPEG 2000 (0-100, 100 = sans perte) :'; DE: 'JPEG-2000-Qualität (0-100, 100=verlustfrei):'; IT: 'Qualità JPEG 2000 (0-100, 100 = senza perdita):';
      ES: 'Calidad JPEG 2000 (0-100, 100 = sin pérdidas):'; PT: 'Qualidade JPEG 2000 (0-100, 100 = sem perdas):'; AF: 'JPEG 2000-gehalte (0-100, 100=verliesloos):'),
     (EN: 'Incorrect development...'; PL: 'Błędne wywołanie...'; CS: 'Nesprávné vyvolání...';
@@ -1569,13 +1569,13 @@ const
     (EN: 'Map to MagicWB 8-color palette with dithering'; PL: 'Mapowanie do palety MagicWB 8 kolorów'; CS: 'Mapovat na MagicWB 8barevnou paletu s ditheringem';
      FR: 'Convertir vers la palette MagicWB 8 couleurs avec tramage'; DE: 'Auf MagicWB-8-Farben-Palette mit Dithering abbilden'; IT: 'Converti nella tavolozza MagicWB a 8 colori con retinatura';
      ES: 'Convertir a la paleta MagicWB de 8 colores con difuminado'; PT: 'Converter para a paleta MagicWB de 8 cores com reticulação'; AF: 'Karteer na MagicWB 8-kleure-palet met dither'),
-    (EN: 'Hue top (0-360):'; PL: 'Odcień górny (0-360):'; CS: 'Horní odstín (0-360):';
+    (EN: 'Hue top (0-360):'; PL: 'Odcień górny (0–360):'; CS: 'Horní odstín (0-360):';
      FR: 'Teinte supérieure (0-360) :'; DE: 'Farbton oben (0-360):'; IT: 'Tonalità superiore (0-360):';
      ES: 'Tono superior (0-360):'; PT: 'Tonalidade superior (0-360):'; AF: 'Tint bo (0-360):'),
-    (EN: 'Hue bottom (0-360):'; PL: 'Odcień dół (0-360):'; CS: 'Dolní odstín (0-360):';
+    (EN: 'Hue bottom (0-360):'; PL: 'Odcień dół (0–360):'; CS: 'Dolní odstín (0-360):';
      FR: 'Teinte inférieure (0-360) :'; DE: 'Farbton unten (0-360):'; IT: 'Tonalità inferiore (0-360):';
      ES: 'Tono inferior (0-360):'; PT: 'Tonalidade inferior (0-360):'; AF: 'Tint onder (0-360):'),
-    (EN: 'Number of bands (32-256):'; PL: 'Liczba pasów (32-256):'; CS: 'Počet pásem (32-256):';
+    (EN: 'Number of bands (32-256):'; PL: 'Liczba pasów (32–256):'; CS: 'Počet pásem (32-256):';
      FR: 'Nombre de bandes (32-256) :'; DE: 'Anzahl der Bänder (32-256):'; IT: 'Numero di bande (32-256):';
      ES: 'Número de bandas (32-256):'; PT: 'Número de bandas (32-256):'; AF: 'Aantal bande (32-256):'),
     (EN: 'E-6 in C-41'; PL: 'E-6 w C-41'; CS: 'E-6 v C-41';
@@ -1689,7 +1689,7 @@ const
     (EN: 'Material bas-relief from image luminance'; PL: 'Płaskorzeźba materiałowa z jasności obrazu'; CS: 'Materiálový basreliéf z jasu obrázku';
      FR: 'Relief de matériau à partir de la luminance de l’image'; DE: 'Materialrelief aus Bildluminanz'; IT: 'Rilievo del materiale dalla luminanza dell''immagine';
      ES: 'Relieve del material a partir de la luminancia de la imagen'; PT: 'Relevo do material a partir da luminância da imagem'; AF: 'Materiaal-basreliëf van beeldluminessensie'),
-    (EN: 'Depth (1-100):'; PL: 'Głębokość (1-100):'; CS: 'Hloubka (1-100):';
+    (EN: 'Depth (1-100):'; PL: 'Głębokość (1–100):'; CS: 'Hloubka (1-100):';
      FR: 'Profondeur (1-100) :'; DE: 'Tiefe (1-100):'; IT: 'Profondità (1-100):';
      ES: 'Profundidad (1-100):'; PT: 'Profundidade (1-100):'; AF: 'Diepte (1-100):'),
     (EN: 'Plaster / white stone'; PL: 'Gips / biały kamień'; CS: 'Sádra / bílý kámen';
@@ -1929,7 +1929,7 @@ const
     (EN: 'Pattern (retro)'; PL: 'Wzór (retro)'; CS: 'Vzor (retro)';
      FR: 'Motif (rétro)'; DE: 'Muster (Retro)'; IT: 'Motivo (retro)';
      ES: 'Patrón (retro)'; PT: 'Padrão (retro)'; AF: 'Patroon (retro)'),
-    (EN: 'Floyd–Steinberg (smooth)'; PL: 'Floyd–Steinberg (wygładzony)'; CS: 'Floyd–Steinberg (hladký)';
+    (EN: 'Floyd–Steinberg (smooth)'; PL: 'Floyd-Steinberg (wygładzony)'; CS: 'Floyd–Steinberg (hladký)';
      FR: 'Floyd–Steinberg (lissé)'; DE: 'Floyd–Steinberg (weich)'; IT: 'Floyd–Steinberg (uniforme)';
      ES: 'Floyd–Steinberg (suave)'; PT: 'Floyd–Steinberg (suave)'; AF: 'Floyd–Steinberg (glad)'),
     (EN: 'The selected mode is very slow for large images.\nFor images above 2 MP preview and applying the effect may take several minutes.\nOther modes are much faster.'; PL: 'Wybrany tryb jest bardzo wolny dla dużych zdjęć.\nDla zdjęć powyżej 2 MP podgląd i zastosowanie efektu mogą zająć kilka minut.\nInne tryby są znacznie szybsze.'; CS: 'Vybraný režim je velmi pomalý pro velké obrázky.\nU obrázků nad 2 MP může náhled a aplikace efektu trvat několik minut.\nJiné režimy jsou mnohem rychlejší.';
@@ -2124,7 +2124,7 @@ const
     (EN: 'Processing'; PL: 'Przetwarzanie'; CS: 'Zpracování';
      FR: 'Traitement'; DE: 'Verarbeitung'; IT: 'Elaborazione';
      ES: 'Procesamiento'; PT: 'Processamento'; AF: 'Verwerking'),
-    (EN: 'Brush radius (1-30):'; PL: 'Promień pędzla (1-30):'; CS: 'Poloměr štětce (1-30):';
+    (EN: 'Brush radius (1-30):'; PL: 'Promień pędzla (1–30):'; CS: 'Poloměr štětce (1-30):';
      FR: 'Rayon du pinceau (1-30) :'; DE: 'Pinselradius (1–30):'; IT: 'Raggio del pennello (1-30):';
      ES: 'Radio del pincel (1-30):'; PT: 'Raio do pincel (1-30):'; AF: 'Kwasradius (1-30):'),
     (EN: 'Glitch...'; PL: 'Glitch...'; CS: 'Závada...';
@@ -2418,13 +2418,13 @@ const
     (EN: 'Blocking'; PL: 'Blokowanie'; CS: 'Blokování';
      FR: 'Blocage'; DE: 'Blockbildung'; IT: 'Blocco';
      ES: 'Bloqueo'; PT: 'Bloqueio'; AF: 'Blokkering'),
-    (EN: 'Brightness before conversion (0-200):'; PL: 'Jasność przed konwersją (0-200):'; CS: 'Jas před konverzí (0-200):';
+    (EN: 'Brightness before conversion (0-200):'; PL: 'Jasność przed konwersją (0–200):'; CS: 'Jas před konverzí (0-200):';
      FR: 'Luminosité avant conversion (0-200) :'; DE: 'Helligkeit vor der Umwandlung (0-200):'; IT: 'Luminosità prima della conversione (0-200):';
      ES: 'Brillo antes de la conversión (0-200):'; PT: 'Brilho antes da conversão (0-200):'; AF: 'Helderheid voor omskakeling (0-200):'),
-    (EN: 'Center X (0-100):'; PL: 'Środek X (0-100):'; CS: 'Střed X (0-100):';
+    (EN: 'Center X (0-100):'; PL: 'Środek X (0–100):'; CS: 'Střed X (0-100):';
      FR: 'Centre X (0-100) :'; DE: 'Mitte X (0-100):'; IT: 'Centro X (0-100):';
      ES: 'Centro X (0-100):'; PT: 'Centro X (0-100):'; AF: 'Middelpunt X (0-100):'),
-    (EN: 'Center Y (0-100):'; PL: 'Środek Y (0-100):'; CS: 'Střed Y (0-100):';
+    (EN: 'Center Y (0-100):'; PL: 'Środek Y (0–100):'; CS: 'Střed Y (0-100):';
      FR: 'Centre Y (0-100) :'; DE: 'Mitte Y (0-100):'; IT: 'Centro Y (0-100):';
      ES: 'Centro Y (0-100):'; PT: 'Centro Y (0-100):'; AF: 'Middelpunt Y (0-100):'),
     (EN: 'Choose color...'; PL: 'Wybierz kolor...'; CS: 'Vybrat barvu...';
@@ -2442,7 +2442,7 @@ const
     (EN: 'CMYK error'; PL: 'Błąd CMYK'; CS: 'Chyba CMYK';
      FR: 'Erreur CMJN'; DE: 'CMYK-Fehler'; IT: 'Errore CMYK';
      ES: 'Error CMYK'; PT: 'Erro CMYK'; AF: 'CMYK-fout'),
-    (EN: 'Contrast before conversion (0-10):'; PL: 'Kontrast przed konwersją (0-10):'; CS: 'Kontrast před konverzí (0-10):';
+    (EN: 'Contrast before conversion (0-10):'; PL: 'Kontrast przed konwersją (0–10):'; CS: 'Kontrast před konverzí (0-10):';
      FR: 'Contraste avant conversion (0-10) :'; DE: 'Kontrast vor der Umwandlung (0-10):'; IT: 'Contrasto prima della conversione (0-10):';
      ES: 'Contraste antes de la conversión (0-10):'; PT: 'Contraste antes da conversão (0-10):'; AF: 'Kontras voor omskakeling (0-10):'),
     (EN: 'Creating overprint'; PL: 'Tworzenie nadruku'; CS: 'Vytváření potisku';
@@ -2454,13 +2454,13 @@ const
     (EN: 'Destination folder:'; PL: 'Folder docelowy:'; CS: 'Cílová složka:';
      FR: 'Dossier de destination :'; DE: 'Zielordner:'; IT: 'Cartella di destinazione:';
      ES: 'Carpeta de destino:'; PT: 'Pasta de destino:'; AF: 'Bestemmingsgids:'),
-    (EN: 'Detection sensitivity (1-100):'; PL: 'Czułość detekcji (1-100):'; CS: 'Citlivost detekce (1-100):';
+    (EN: 'Detection sensitivity (1-100):'; PL: 'Czułość detekcji (1–100):'; CS: 'Citlivost detekce (1-100):';
      FR: 'Sensibilité de détection (1-100) :'; DE: 'Erkennungsempfindlichkeit (1-100):'; IT: 'Sensibilità di rilevamento (1-100):';
      ES: 'Sensibilidad de detección (1-100):'; PT: 'Sensibilidade de deteção (1-100):'; AF: 'Opsporingsensitiwiteit (1-100):'),
     (EN: 'Dot size multiplier:'; PL: 'Mnożnik rozmiaru punktu:'; CS: 'Násobitel velikosti bodu:';
      FR: 'Multiplicateur de taille de point :'; DE: 'Punktgrößen-Multiplikator:'; IT: 'Moltiplicatore dimensione punto:';
      ES: 'Multiplicador del tamaño de punto:'; PT: 'Multiplicador do tamanho do ponto:'; AF: 'Kolgrootte-vermenigvuldiger:'),
-    (EN: 'Dot sub-cell size (3-8 px):'; PL: 'Rozmiar podkomórki rastra (3-8 px):'; CS: 'Velikost podbuňky bodu (3-8 px):';
+    (EN: 'Dot sub-cell size (3-8 px):'; PL: 'Rozmiar podkomórki rastra (3–8 px):'; CS: 'Velikost podbuňky bodu (3-8 px):';
      FR: 'Taille de sous-cellule du point (3-8 px) :'; DE: 'Unterzellengröße des Punkts (3-8 px):'; IT: 'Dimensione sotto-cella del punto (3-8 px):';
      ES: 'Tamaño de subcelda del punto (3-8 px):'; PT: 'Tamanho da subcélula do ponto (3-8 px):'; AF: 'Sub-selgrootte van kol (3-8 px):'),
     (EN: 'Duplicator'; PL: 'Duplikator'; CS: 'Duplikátor';
@@ -2475,13 +2475,13 @@ const
     (EN: 'Effect blending'; PL: 'Mieszanie efektów'; CS: 'Prolínání efektů';
      FR: 'Fusion des effets'; DE: 'Effektmischung'; IT: 'Fusione degli effetti';
      ES: 'Mezcla de efectos'; PT: 'Mistura de efeitos'; AF: 'Effekvermenging'),
-    (EN: 'Effect strength (0-100):'; PL: 'Siła efektu (0-100):'; CS: 'Síla efektu (0-100):';
+    (EN: 'Effect strength (0-100):'; PL: 'Siła efektu (0–100):'; CS: 'Síla efektu (0-100):';
      FR: 'Intensité de l’effet (0-100) :'; DE: 'Effektstärke (0-100):'; IT: 'Intensità dell''effetto (0-100):';
      ES: 'Intensidad del efecto (0-100):'; PT: 'Intensidade do efeito (0-100):'; AF: 'Effekssterkte (0-100):'),
     (EN: 'Embossing'; PL: 'Tłoczenie'; CS: 'Reliéf';
      FR: 'Estampage'; DE: 'Prägung'; IT: 'Rilievo';
      ES: 'Repujado'; PT: 'Relevo'; AF: 'Reliëf'),
-    (EN: 'Fade (0-100):'; PL: 'Zanikanie (0-100):'; CS: 'Vyblednutí (0-100):';
+    (EN: 'Fade (0-100):'; PL: 'Zanikanie (0–100):'; CS: 'Vyblednutí (0-100):';
      FR: 'Estompage (0-100) :'; DE: 'Ausblendung (0-100):'; IT: 'Dissolvenza (0-100):';
      ES: 'Desvanecimiento (0-100):'; PT: 'Esmaecimento (0-100):'; AF: 'Verdowwing (0-100):'),
     (EN: 'Fit to size with cropping'; PL: 'Dopasuj do rozmiaru z przycięciem'; CS: 'Přizpůsobit velikosti s oříznutím';
@@ -2499,13 +2499,13 @@ const
     (EN: 'JPEG quality in TIFF:'; PL: 'Jakość JPEG w TIFF:'; CS: 'Kvalita JPEG v TIFF:';
      FR: 'Qualité JPEG dans le TIFF :'; DE: 'JPEG-Qualität in TIFF:'; IT: 'Qualità JPEG nel TIFF:';
      ES: 'Calidad JPEG en TIFF:'; PT: 'Qualidade JPEG no TIFF:'; AF: 'JPEG-gehalte in TIFF:'),
-    (EN: 'Line angle (0-179):'; PL: 'Kąt linii (0-179):'; CS: 'Úhel čar (0-179):';
+    (EN: 'Line angle (0-179):'; PL: 'Kąt linii (0–179):'; CS: 'Úhel čar (0-179):';
      FR: 'Angle des lignes (0-179) :'; DE: 'Linienwinkel (0-179):'; IT: 'Angolo linea (0-179):';
      ES: 'Ángulo de línea (0-179):'; PT: 'Ângulo da linha (0-179):'; AF: 'Lynhoek (0-179):'),
     (EN: 'Material:'; PL: 'Materiał:'; CS: 'Materiál:';
      FR: 'Matériau :'; DE: 'Material:'; IT: 'Materiale:';
      ES: 'Material:'; PT: 'Material:'; AF: 'Materiaal:'),
-    (EN: 'Maximum line thickness (1-8):'; PL: 'Maksymalna grubość linii (1-8):'; CS: 'Maximální tloušťka čáry (1-8):';
+    (EN: 'Maximum line thickness (1-8):'; PL: 'Maksymalna grubość linii (1–8):'; CS: 'Maximální tloušťka čáry (1-8):';
      FR: 'Épaisseur de ligne maximale (1-8) :'; DE: 'Maximale Linienstärke (1-8):'; IT: 'Spessore massimo linea (1-8):';
      ES: 'Grosor máximo de línea (1-8):'; PT: 'Espessura máxima da linha (1-8):'; AF: 'Maksimum lyndikte (1-8):'),
     (EN: 'Mockup'; PL: 'Makieta'; CS: 'Maketa';
@@ -2586,16 +2586,16 @@ const
     (EN: 'Zoom'; PL: 'Powiększenie'; CS: 'Přiblížení';
      FR: 'Zoom'; DE: 'Zoom'; IT: 'Zoom';
      ES: 'Zoom'; PT: 'Zoom'; AF: 'Zoem'),
-    (EN: 'Strength (1-100):'; PL: 'Siła efektu (1-100):'; CS: 'Síla (1-100):';
+    (EN: 'Strength (1-100):'; PL: 'Siła efektu (1–100):'; CS: 'Síla (1-100):';
      FR: 'Intensité (1-100) :'; DE: 'Stärke (1-100):'; IT: 'Intensità (1-100):';
      ES: 'Intensidad (1-100):'; PT: 'Intensidade (1-100):'; AF: 'Sterkte (1-100):'),
-    (EN: 'Radius (1-100):'; PL: 'Promień (1-100):'; CS: 'Poloměr (1-100):';
+    (EN: 'Radius (1-100):'; PL: 'Promień (1–100):'; CS: 'Poloměr (1-100):';
      FR: 'Rayon (1-100) :'; DE: 'Radius (1-100):'; IT: 'Raggio (1-100):';
      ES: 'Radio (1-100):'; PT: 'Raio (1-100):'; AF: 'Radius (1-100):'),
-    (EN: 'Band position (0-100):'; PL: 'Pozycja pasa (0-100):'; CS: 'Pozice pásu (0-100):';
+    (EN: 'Band position (0-100):'; PL: 'Pozycja pasa (0–100):'; CS: 'Pozice pásu (0-100):';
      FR: 'Position de la bande (0-100) :'; DE: 'Bandposition (0-100):'; IT: 'Posizione della banda (0-100):';
      ES: 'Posición de la banda (0-100):'; PT: 'Posição da faixa (0-100):'; AF: 'Bandposisie (0-100):'),
-    (EN: 'Band height (1-100):'; PL: 'Wysokość pasa (1-100):'; CS: 'Výška pásu (1-100):';
+    (EN: 'Band height (1-100):'; PL: 'Wysokość pasa (1–100):'; CS: 'Výška pásu (1-100):';
      FR: 'Hauteur de la bande (1-100) :'; DE: 'Bandhöhe (1-100):'; IT: 'Altezza della banda (1-100):';
      ES: 'Altura de la banda (1-100):'; PT: 'Altura da faixa (1-100):'; AF: 'Bandhoogte (1-100):'),
     (EN: 'Strength (0 = none, 100 = max):'; PL: 'Siła efektu (0 = brak, 100 = maks.):'; CS: 'Síla (0 = žádná, 100 = max):';
@@ -2604,31 +2604,31 @@ const
     (EN: 'Contrast (0 = none, 100):'; PL: 'Kontrast (0 = brak, 100):'; CS: 'Kontrast (0 = žádný, 100):';
      FR: 'Contraste (0 = aucun, 100) :'; DE: 'Kontrast (0 = keiner, 100):'; IT: 'Contrasto (0 = nessuno, 100):';
      ES: 'Contraste (0 = ninguno, 100):'; PT: 'Contraste (0 = nenhum, 100):'; AF: 'Kontras (0 = geen, 100):'),
-    (EN: 'Brush radius (1-10):'; PL: 'Promień pędzla (1-10):'; CS: 'Poloměr štětce (1-10):';
+    (EN: 'Brush radius (1-10):'; PL: 'Promień pędzla (1–10):'; CS: 'Poloměr štětce (1-10):';
      FR: 'Rayon du pinceau (1-10) :'; DE: 'Pinselradius (1-10):'; IT: 'Raggio pennello (1-10):';
      ES: 'Radio del pincel (1-10):'; PT: 'Raio do pincel (1-10):'; AF: 'Kwasradius (1-10):'),
-    (EN: 'Glow radius (1-20):'; PL: 'Promień poświaty (1-20):'; CS: 'Poloměr záře (1-20):';
+    (EN: 'Glow radius (1-20):'; PL: 'Promień poświaty (1–20):'; CS: 'Poloměr záře (1-20):';
      FR: 'Rayon de la lueur (1-20) :'; DE: 'Leuchtradius (1-20):'; IT: 'Raggio bagliore (1-20):';
      ES: 'Radio del resplandor (1-20):'; PT: 'Raio do brilho (1-20):'; AF: 'Gloedradius (1-20):'),
-    (EN: 'Line jitter (0-100):'; PL: 'Drżenie linii (0-100):'; CS: 'Chvění čar (0-100):';
+    (EN: 'Line jitter (0-100):'; PL: 'Drżenie linii (0–100):'; CS: 'Chvění čar (0-100):';
      FR: 'Tremblement des lignes (0-100) :'; DE: 'Linienzittern (0-100):'; IT: 'Tremolio delle linee (0-100):';
      ES: 'Vibración de línea (0-100):'; PT: 'Tremor da linha (0-100):'; AF: 'Lynwewiging (0-100):'),
-    (EN: 'Noise (0-100):'; PL: 'Szum (0-100):'; CS: 'Šum (0-100):';
+    (EN: 'Noise (0-100):'; PL: 'Szum (0–100):'; CS: 'Šum (0-100):';
      FR: 'Bruit (0-100) :'; DE: 'Rauschen (0-100):'; IT: 'Rumore (0-100):';
      ES: 'Ruido (0-100):'; PT: 'Ruído (0-100):'; AF: 'Ruis (0-100):'),
-    (EN: 'CRT effect (0-100):'; PL: 'Efekt kineskopu (0-100):'; CS: 'Efekt CRT (0-100):';
+    (EN: 'CRT effect (0-100):'; PL: 'Efekt kineskopu (0–100):'; CS: 'Efekt CRT (0-100):';
      FR: 'Effet CRT (0-100) :'; DE: 'CRT-Effekt (0-100):'; IT: 'Effetto CRT (0-100):';
      ES: 'Efecto CRT (0-100):'; PT: 'Efeito CRT (0-100):'; AF: 'CRT-effek (0-100):'),
-    (EN: 'Block loss (0-100):'; PL: 'Utrata bloków (0-100):'; CS: 'Blokové ztráty (0-100):';
+    (EN: 'Block loss (0-100):'; PL: 'Utrata bloków (0–100):'; CS: 'Blokové ztráty (0-100):';
      FR: 'Perte de blocs (0-100) :'; DE: 'Blockverlust (0-100):'; IT: 'Perdita a blocchi (0-100):';
      ES: 'Pérdida de bloques (0-100):'; PT: 'Perda de blocos (0-100):'; AF: 'Blokverlies (0-100):'),
-    (EN: 'Horizontal band shifts (0-100):'; PL: 'Przesunięcia pasm poziomych (0-100):'; CS: 'Vodorovné posuny pásů (0-100):';
+    (EN: 'Horizontal band shifts (0-100):'; PL: 'Przesunięcia pasm poziomych (0–100):'; CS: 'Vodorovné posuny pásů (0-100):';
      FR: 'Décalages horizontaux des bandes (0-100) :'; DE: 'Horizontale Bandverschiebungen (0-100):'; IT: 'Spostamenti orizzontali delle bande (0-100):';
      ES: 'Desplazamientos horizontales de banda (0-100):'; PT: 'Deslocamentos horizontais de faixa (0-100):'; AF: 'Horisontale bandverskuiwings (0-100):'),
-    (EN: 'RGB channel shift (0-30):'; PL: 'Przesunięcie kanałów RGB (0-30):'; CS: 'Posun kanálů RGB (0-30):';
+    (EN: 'RGB channel shift (0-30):'; PL: 'Przesunięcie kanałów RGB (0–30):'; CS: 'Posun kanálů RGB (0-30):';
      FR: 'Décalage des canaux RVB (0-30) :'; DE: 'RGB-Kanalverschiebung (0-30):'; IT: 'Spostamento canali RGB (0-30):';
      ES: 'Desplazamiento de canales RGB (0-30):'; PT: 'Deslocamento de canais RGB (0-30):'; AF: 'RGB-kanaalverskuiwing (0-30):'),
-    (EN: 'WebP compression quality (0-100):'; PL: 'Jakość zapisu WebP (0-100):'; CS: 'Kvalita komprese WebP (0-100):';
+    (EN: 'WebP compression quality (0-100):'; PL: 'Jakość zapisu WebP (0–100):'; CS: 'Kvalita komprese WebP (0-100):';
      FR: 'Qualité de compression WebP (0-100) :'; DE: 'WebP-Komprimierungsqualität (0-100):'; IT: 'Qualità di compressione WebP (0-100):';
      ES: 'Calidad de compresión WebP (0-100):'; PT: 'Qualidade de compressão WebP (0-100):'; AF: 'WebP-kompressiegehalte (0-100):'),
     (EN: '4. Screen print'; PL: '4. Sitodruk'; CS: '4. Sítotisk';
@@ -2751,13 +2751,13 @@ const
     (EN: 'Amiga gradient (Agony)'; PL: 'Gradient Amiga (Agony)'; CS: 'Přechod Amiga (Agony)';
      FR: 'Dégradé Amiga (Agony)'; DE: 'Amiga-Verlauf (Agony)'; IT: 'Gradiente Amiga (Agony)';
      ES: 'Degradado Amiga (Agony)'; PT: 'Gradiente Amiga (Agony)'; AF: 'Amiga-verloop (Agony)'),
-    (EN: 'NES - Nestopia'; PL: 'NES - Nestopia'; CS: 'NES - Nestopia';
+    (EN: 'NES - Nestopia'; PL: 'NES — Nestopia'; CS: 'NES - Nestopia';
      FR: 'NES - Nestopia'; DE: 'NES - Nestopia'; IT: 'NES - Nestopia';
      ES: 'NES - Nestopia'; PT: 'NES - Nestopia'; AF: 'NES - Nestopia'),
     (EN: 'Unsupported step: '; PL: 'Nieobsługiwany krok: '; CS: 'Nepodporovaný krok: ';
      FR: 'Étape non prise en charge : '; DE: 'Nicht unterstützter Schritt: '; IT: 'Passaggio non supportato: ';
      ES: 'Paso no admitido: '; PT: 'Etapa não suportada: '; AF: 'Nie-ondersteunde stap: '),
-    (EN: 'Cannot compare - image was not opened from a file.'; PL: 'Nie można porównać - obraz nie został otwarty z pliku.'; CS: 'Nelze porovnat - obrázek nebyl otevřen ze souboru.';
+    (EN: 'Cannot compare - image was not opened from a file.'; PL: 'Nie można porównać — obraz nie został otwarty z pliku.'; CS: 'Nelze porovnat - obrázek nebyl otevřen ze souboru.';
      FR: 'Comparaison impossible - l’image n’a pas été ouverte depuis un fichier.'; DE: 'Vergleich nicht möglich - das Bild wurde nicht aus einer Datei geöffnet.'; IT: 'Confronto impossibile - l''immagine non è stata aperta da un file.';
      ES: 'No se puede comparar - la imagen no se abrió desde un archivo.'; PT: 'Não é possível comparar - a imagem não foi aberta a partir de um ficheiro.'; AF: 'Kan nie vergelyk nie - die beeld is nie vanaf ''n lêer geopen nie.'),
     (EN: 'File does not exist:'; PL: 'Plik nie istnieje:'; CS: 'Soubor neexistuje:';
@@ -2769,7 +2769,7 @@ const
     (EN: 'Open an image first.'; PL: 'Najpierw otwórz obraz.'; CS: 'Nejprve otevřete obrázek.';
      FR: 'Ouvrez d’abord une image.'; DE: 'Öffnen Sie zuerst ein Bild.'; IT: 'Aprire prima un''immagine.';
      ES: 'Abra primero una imagen.'; PT: 'Abra primeiro uma imagem.'; AF: 'Maak eers ''n beeld oop.'),
-    (EN: 'Macro is empty - not saved.'; PL: 'Makro jest puste - nie zapisano.'; CS: 'Makro je prázdné - neuloženo.';
+    (EN: 'Macro is empty - not saved.'; PL: 'Makro jest puste — nie zapisano.'; CS: 'Makro je prázdné - neuloženo.';
      FR: 'La macro est vide - non enregistrée.'; DE: 'Makro ist leer - nicht gespeichert.'; IT: 'La macro è vuota - non salvata.';
      ES: 'La macro está vacía - no guardada.'; PT: 'A macro está vazia - não guardada.'; AF: 'Makro is leeg - nie gestoor nie.'),
     (EN: 'Macro name'; PL: 'Nazwa makra'; CS: 'Název makra';
@@ -2778,7 +2778,7 @@ const
     (EN: 'Enter macro name:'; PL: 'Podaj nazwę makra:'; CS: 'Zadejte název makra:';
      FR: 'Entrez le nom de la macro :'; DE: 'Geben Sie den Namen des Makros ein:'; IT: 'Inserire il nome della macro:';
      ES: 'Introduzca el nombre de la macro:'; PT: 'Introduza o nome da macro:'; AF: 'Voer die naam van die makro in:'),
-    (EN: 'Cancelled - macro was not saved.'; PL: 'Anulowano - makro nie zostało zapisane.'; CS: 'Zrušeno - makro nebylo uloženo.';
+    (EN: 'Cancelled - macro was not saved.'; PL: 'Anulowano — makro nie zostało zapisane.'; CS: 'Zrušeno - makro nebylo uloženo.';
      FR: 'Annulé - la macro n’a pas été enregistrée.'; DE: 'Abgebrochen - Makro wurde nicht gespeichert.'; IT: 'Annullato - la macro non è stata salvata.';
      ES: 'Cancelado - la macro no se guardó.'; PT: 'Cancelado - a macro não foi guardada.'; AF: 'Gekanselleer - makro is nie gestoor nie.'),
     (EN: 'No images in the source folder.'; PL: 'Brak obrazów w folderze źródłowym.'; CS: 'Ve zdrojové složce nejsou žádné obrázky.';
@@ -2925,7 +2925,7 @@ const
     (EN: 'Remove background...'; PL: 'Usuń tło...'; CS: 'Odebrat pozadí...';
      FR: 'Supprimer l’arrière-plan…'; DE: 'Hintergrund entfernen...'; IT: 'Rimuovi sfondo...';
      ES: 'Eliminar fondo...'; PT: 'Remover fundo...'; AF: 'Verwyder agtergrond...'),
-    (EN: 'Cell size (1-32 px):'; PL: 'Rozmiar siatki (1-32 px):'; CS: 'Velikost buňky (1-32 px):';
+    (EN: 'Cell size (1-32 px):'; PL: 'Rozmiar siatki (1–32 px):'; CS: 'Velikost buňky (1-32 px):';
      FR: 'Taille de cellule (1-32 px) :'; DE: 'Zellgröße (1-32 px):'; IT: 'Dimensione cella (1-32 px):';
      ES: 'Tamaño de celda (1-32 px):'; PT: 'Tamanho da célula (1-32 px):'; AF: 'Selgrootte (1-32 px):'),
     (EN: 'Dot scale [%]:'; PL: 'Skala kropki [%]:'; CS: 'Škála bodu [%]:';
@@ -3363,6 +3363,7 @@ var
   I: Integer;
   C: TControl;
   N: string;
+  Cur: string;
   Texts: TControlTexts;
   HasCaption: Boolean;
 begin
@@ -3382,7 +3383,8 @@ begin
     if (Texts.Caption <> '') and (GetPropInfo(C.ClassType, 'Caption') <> nil) then
     begin
       N := T(Texts.Caption);
-      if N <> Texts.Caption then
+      Cur := GetPropValue(C, 'Caption', False);
+      if N <> Cur then
         SetPropValue(C, 'Caption', N);
     end;
     if Texts.Hint <> '' then
@@ -3398,9 +3400,18 @@ var
   C: TComponent;
   SBar: TStatusBar;
   S, N: string;
+  FormTexts: TControlTexts;
 begin
   if AForm = nil then Exit;
-  if AForm.Caption <> '' then AForm.Caption := T(AForm.Caption);
+  if not gControlOriginals.TryGetValue(AForm, FormTexts) then
+  begin
+    FormTexts.Caption := AForm.Caption;
+    FormTexts.Hint := '';
+    gControlOriginals.Add(AForm, FormTexts);
+    AForm.FreeNotification(gNotifier);
+  end;
+  if FormTexts.Caption <> '' then
+    AForm.Caption := T(FormTexts.Caption);
   if AForm.Menu <> nil then
     for I := 0 to AForm.Menu.Items.Count - 1 do
       TranslateMenuItem(AForm.Menu.Items[I]);
@@ -3444,13 +3455,21 @@ begin
     end;
   end;
   for I := 0 to Screen.FormCount - 1 do
+  begin
     TranslateForm(Screen.Forms[I]);
+    if Screen.Forms[I] is TFotoForm then
+      TFotoForm(Screen.Forms[I]).RefitButtons;
+  end;
 end;
 
 procedure TI18nEvents.ActiveFormChanged(Sender: TObject);
 begin
   if Screen.ActiveForm <> nil then
+  begin
     TranslateForm(Screen.ActiveForm);
+    if Screen.ActiveForm is TFotoForm then
+      TFotoForm(Screen.ActiveForm).RefitButtons;
+  end;
 end;
 
 var

@@ -67,11 +67,9 @@ Skrypt wyposażony w cztery bramki: integralność TSV przed i po, **round-trip*
 (odwrócenie zamiany musi odtworzyć oryginał), niezmieniona liczba dwukropków,
 raport każdej zmienionej komórki.
 - dwie bramki okazały się konieczne — pierwsza wersja skryptu zawierała
-  `$STRAIGHT = '"'` - '...' w PowerShell to single-quoted string, czyli
-  dokladnie **jeden** znak, wiec sama definicja byla poprawna. Pierwsza wersja
-  skryptu nie zapisywala przebudowanej wartosci z powrotem do zmiennej, stad
-  `-split` niczego nie dzieli i skrypt raportowal "pary: 22 / zmienionych: 0".
-  Druga wersja rekonstruowala wartosc przez
+  `$STRAIGHT = '"'`, co w PowerShell daje **dwa** znaki (podwójny cudzysłów
+  delimituje string), więc `-split` niczego nie dzielił i skrypt raportował
+  „pary: 22 / zmienionych: 0". Druga wersja rekonstruowała wartość przez
   `$parts -join`, co generowało **dodatkowe** cudzysłowy (`"""%s"?`) — złapane
   przez round-trip, zanim cokolwiek trafiło na dysk. Dopiero wersja
   podmieniająca znaki w miejscu (`Substring`, od prawej do lewej) przeszła
@@ -85,8 +83,294 @@ raport każdej zmienionej komórki.
 
 ### Changed
 
+**Maska alfa nie podążała za obrazem przy zmianach geometrii** (`fMain.pas`) —
+osiem nowych wrapperów `Alpha*` dla `FAlphaMask`, podpiętych wszędzie tam, gdzie
+przepuszczano już `Prot*` dla `FProtMask`.
+- `AlphaRotateLeft` / `AlphaRotateRight` / `AlphaRotate180` / `AlphaFlipH` /
+  `AlphaFlipV` / `AlphaCrop` / `AlphaResize` / `AlphaResizeCrop` — geometria
+  identyczna jak `Prot*` (te same indeksy, ten sam nearest-neighbour);
+  dodatkowo każda oznacza `FAlphaDirtyRect` nowym prostokątem, bo
+  `DrawCheckerRect` traktuje pusty rect jako „zero kosztu" i szachownica
+  zostałaby stara
+- odbicia: `ProtFlipH` / `ProtFlipV` były już w menu, ale makro wołało same
+  prymitywy. `FLIPH` / `FLIPV` w `ApplyMacroStep` dostają teraz komplet, tak jak
+  `ROTL` / `ROTR` / `ROT180`. `NotifyBitmapResized` **tu nie wchodzi** — flip nie
+  zmienia wymiarów, a `UpdateZoomFit` zresetowałby zoom, którego użytkownik nie
+  ruszał
+- obrót o 90°, kadrowanie do zaznaczenia, resize i resize z przycięciem miały
+  **tylko** `Prot*`. Po zmianie rozmiaru maska zostawała stara, a wartowniki
+  rozmiaru w `DrawCheckerRect` i `DrawProtMaskOverlay` kończą wtedy rysowanie
+  po cichu — objaw to brak nakładki przezroczystości, nie komunikat błędu
+- ścieżka makra (`ApplyMacroStep`) wołała same prymitywy (`DoRotateLeft`,
+  `DoRotateRight`, `DoRotate180`, `DoFlipH`, `DoFlipV`, `RotateAndCrop`) bez
+  żadnego wrappera. Kroki `ROTL` / `ROTR` / `ROT180` / `FLIPH` / `FLIPV` /
+  `STRAIGHTEN` dostają komplet teraz
+- `RunMacro`: `UndoPush` → `UndoPushMasked(FBitmap, FAlphaMask, FProtMask)`.
+  Bez tego dodanie masek do makra wprowadziłoby **drugi** błąd — cofniecie
+  przywracałoby bitmapę, a zostawiało maskę obróconą. `UndoPushMasked` przyjmuje
+  `nil` dla obu masek (`uUndo.pas:79-91`), więc kroki ich nie dotykające nie płacą
+  za to nic
+- nowa `NotifyBitmapResized` jako jedyna brama zmiany rozmiaru, wołana jawnie
+  z każdego miejsca. Celowo **nie** wplatana w `FinishEffect` — maska potrzebuje
+  kąta i geometrii, które zna tylko wywołujący, a `FinishEffect` otrzymuje
+  wyłącznie nazwę operacji i czas. Świadomie pominięta przy obrocie 180° i
+  odbiciach: nie zmieniają wymiarów, a `UpdateZoomFit` zresetowałby zoom,
+  którego użytkownik nie ruszał
+- `ProtResizeCrop` dostał pełną geometrię `ImageResizeCrop`
+  (`uTransform.pas:153-159`) — liczy `ExcessW`, `ExcessH`, `CropX` i `CropY`
+  z obu osi (`fMain.pas:6963-6973`), więc maska przycina tak samo jak obraz.
+  Wcześniejsza wersja liczyła tylko `CropY` i w osi X nie przycinała wcale
+- `AlphaRotateAngle`: `FAlphaDirtyRect` przeniesiony **przed** przypisaniem
+  maski, żeby `FAlphaMask := NewMask` było ostatnią instrukcją w `try`. W drugą
+  stronę wyjątek zostawiłby `except` ze zwolnieniem bitmapy już przypisanej do
+  pola, czyli z wiszącym wskaźnikiem
+- prostoowanie skanu: wywołanie `UpdateLayout` wprost w handlerze zamienione na
+  `NotifyBitmapResized`, żeby szła ta sama ścieżka co przy resize i obrocie
+- **rozważone, do osobnej decyzji:** przeniesienie obsługi masek do warstwy
+  geometrii — `RotateAndCrop(Bmp, ProtMask, AlphaMask, Angle)` w
+  `uTransform.pas`. Procedura ma tylko dwa miejsca wywołania (handler menu i
+  ścieżka makra), więc zmiana podpisu jest tania i dałaby wszystkim wywołującym
+  maskę za darmo, zamiast polegać na tym, że każde miejsce pamięta o trzech
+  warstwach naraz. W tym etapie **niewdrożone**
+
+**Kolejność narożników w oknie resize/crop jest celowa** (`frmResizeCropDlg.pas`) —
+`rgCorner` ma `Columns = 2`, a VCL wypełnia grupę **kolumnami**, nie wierszami.
+Kolejność pozycji (`frmResizeCropDlg.pas:45-48`) to celowo `Top-left`,
+`Bottom-left`, `Top-right`, `Bottom-right`, żeby narożniki stały tam, gdzie są na
+obrazie: lewy górny i lewy dolny w lewej kolumnie, prawy górny i prawy dolny w
+prawej.
+- wewnętrzna numeracja `Corner` w `ImageResizeCrop` (`uTransform.pas:153-159`) jest
+  **wierszowa**: `0` = lewy górny, `1` = prawy górny (`CropX = ExcessW`),
+  `2` = lewy dolny (`CropY = ExcessH`), pozostałe = prawy dolny. Nie pokrywa się
+  z kolejnością pozycji w UI
+- `VisualToCorner = (0, 2, 1, 3)` (`frmResizeCropDlg.pas:130`) to świadome
+  tłumaczenie między tymi dwoma porządkami: `Bottom-left` → `2`, `Top-right` →
+  `1`. **Nie jest błędem i nie powinno być upraszczane do identity** — przy
+  mapowaniu 1:1 prawy górny wylądowałby w dole lewej kolumny, więc wybór
+  wyglądałby jak z innego obrazu niż oglądany
+
+**Lista motywów obcinała najdłuższą nazwę** (`frmInterfaceDlg.dfm`) —
+`cmbTheme` (`Style = csDropDownList`) miał `Width = 200`. W tym trybie VCL bierze
+szerokość rozwiniętej listy z `Width` (`TCustomComboBox.GetDropDownWidth`,
+`Vcl.StdCtrls.pas:4527-4532` — gdy `FDropDownWidth = 0`, zwraca `Width`), więc
+`Windows 10 Blue Whale LE`, najdłuższa nazwa w `TStyleManager.StyleNames`,
+została ucięta bez możliwości rozszerzenia przez użytkownika.
+- `Width` 200 → **224**, dobrane pod **maksymalną dozwoloną czcionkę 12 pt**
+  (`spinFontSize.MaxValue = 12`): sam tekst to 201 px, dołożone 17 px na
+  strzałkę rozwijania (`SM_CXVSCROLL`) i ~5 px marginesu. W zakresie 8–12 pt
+  mieści się wtedy każda nazwa, a nie tylko przy 9 pt
+- druga linia: `AutoDropDownWidth = True` — VCL poszerza listę do najszerszej
+  pozycji sam, gdy `MaxItemWidth > Width` (`Vcl.StdCtrls.pas:4889-4915`),
+  jako zabezpieczenie na przyszłe nazwy
+- okno **nieposzerzone**: `16 + 224 = 240 < ClientWidth = 340`
+- **pułapka:** samo `AutoDropDownWidth` nie dawało efektu — przy 9 pt tekst ma
+  151 px, więc warunek `MaxItemWidth > Width` był fałszywy i VCL słusznie nic
+  nie poszerzał. Nazwy motywów trzeba było mierzyć w **największej
+  dozwolonej czcionce**, nie w domyślnej
+
+**Suwaki: usunięte kreski podziałki** (`uTitleBar.pas`, `uCanvasTools.pas`) —
+`TickStyle := tsNone` dla wszystkich 92 suwaków w 76 formularzach, **bez
+wyjątku**.
+- powód: `tsAuto` sam liczy gęstość kresek z `Min`/`Max` i szerokości kontrolki,
+  więc dwa okna o różnych zakresach dostawały różną liczbę kresek — to
+  `tsAuto` w działaniu, nie niespójność ustawień. Licznik pod suwakiem jest
+  dokładniejszy niż podziałka
+- przed zmianą `TickStyle` nie występował w **żadnym** `.dfm`; wszystkie suwaki
+  brały wartość domyślną `tsAuto`
+- nowy `TFotoForm.DisableTrackBarTicks`, wołany z `AfterConstruction` obok
+  `ReflowTrackBarRows`. Iteracja **rekurencyjna** (`DisableTrackBarTicksIn`),
+  bo 7 z 92 suwaków leży głębiej niż bezpośrednie dziecko formy — pętla po
+  `Control` ich nie widzi
+- `TBrushSizeSlider` (suwak rozmiaru pędzla, `uCanvasTools.pas`) to osobny
+  komponent `TCustomControl`, niewidoczny z formy, więc ustawia `tsNone` sam
+  w konstruktorze
+
+**Pasek fokusu na suwaku przy otwarciu okna** (`uTitleBar.pas`) —
+`TFotoForm.DoShow` ustawia `ActiveControl` na `btnOK`, a gdy go nie ma, na
+`btnClose`.
+- powód: `TTrackBarStyleHook.Paint` kończy się `if Focused then
+  Canvas.DrawFocusRect(...)` — to bezpośrednie wywołanie GDI, nie element
+  motywu Windows, więc na ciemnych motywach dawało białą kropkowaną ramkę
+- **świadomie nie wyłączamy obwódki:** `DrawFocusRect` nie przyjmuje koloru,
+  motyw jej nie obejmuje, a `TTrackBar` nie ma właściwości sterującej tym
+  rysunkiem. Zmieniamy więc domyślny wybór fokusu, nie sam rysunek
+- obwódka nadal pojawia się, ale dopiero po świadomym wejściu `Tabem` na
+  suwak; nawigacja klawiaturowa nietknięta
+- zabezpieczenie `FindComponent(...) is TButton` — nie wywala się na oknach
+  bez tej kontrolki ani o inny typ klasy
+- pokrycie **73 z 76** formularzy. Pominięte celowo `frmToolsDlg` (3 suwaki) i
+  `frmSelDlg` (1 suwak) — pływające panele roboczne (R), nie dialogi modalne.
+  `frmLauncherDlg` i `frmMain` mają 0 suwaków, więc ich nie dotyczy
+
+**Kolejność przycisków OK / Anuluj** (`frmResizeCropDlg`, `frmResizeDlg`,
+`frmTileDlg`) — trzy okna miały odwróconą kolejność `[Anuluj] [OK]`
+względem pozostałych 67 okien z parą `btnOK` / `btnCancel`. Zamienione
+`Left` i `TabOrder`, pary wyrównane do wzorca
+`AlignButtonsRight([btnOK, btnCancel], CtrlGap * 3)`.
+- `.pas`: `AlignButtonsRight([btnCancel, btnOK], ...)` → `[btnOK, btnCancel]`
+  w `frmResizeCropDlg.pas:122` i `frmResizeDlg.pas:139` — te dwa okna
+  nadpisują `Left` w runtime przez `LayoutDialog`, więc poprawka samego
+  `.dfm` byłaby zresetowana przy każdym otwarciu okna
+- `.dfm`: `frmResizeCropDlg` 230↔321, `frmResizeDlg` 100↔191,
+  `frmTileDlg` 150↔241. `Width = 85`, `Height = 25` i `Caption` bez zmian
+- `frmTileDlg` poprawiony wyłącznie w `.dfm` — nie ma własnego kodu layoutu,
+  pozycje przycisków pochodzą wprost z DFM
+- `TabOrder` zamieniony tak, by tabulator szedł w kolejności wizualnej
+  (najpierw OK, potem Anuluj), zgodnie z resztą okien
+- stan po zmianie: 67 okien z parą w `.dfm` — wszystkie zgodne;
+  `frmBenchmarkDlg` tworzy przyciski w kodzie i był zgodny od początku
+
+**Globalne przeliczanie szerokości przycisków** (`uTitleBar.pas`,
+`uI18n.pas`, `frmHistogramDlg`, `frmInterfaceDlg`, `frmKolorowanieDlg`,
+`frmToolsDlg`, `frmTshirtDlg`) — nowa warstwa pomiaru szerokości z
+treści, wspólna dla wszystkich okien, plus punkt zaczepienia `RefitButtons`
+dla layoutu zależnego od czcionki i języka.
+- `ButtonPad` = `2 * Canvas.TextWidth('W')` — margines poziomy liczony
+  z fontu, wspólny dla `FitButton` i `FitButtonGroup`
+- `FitButton(B, AMinWidth = 85)` = `Max(AMinWidth, TextWidth(Caption) +
+  ButtonPad)`, `FitButtonGroup` wyrównuje grupę do najszerszego. Oba
+  wołane po `TranslateForm`, więc uwzględniają długość tłumaczenia
+- `RefitButtons` (`public`, `virtual`) przelicza parę `btnOK` / `btnCancel`
+  we wszystkich oknach, gdzie para nosi te nazwy. Przycisk może **tylko
+  urosnąć** (`Max(B.Width, potrzeba)`): nigdy nie mniejszy się i nie jest
+  wyrównywany do najszerszego, więc 8 okien z celowo dobranym
+  `Width = 80` zachowuje swoją szerokość, a `btnOK` nie skacze do 130 tam,
+  gdzie jest wolna przerwa
+- pozycja przesuwana wyłącznie przy realnym wyjściu poza prawą krawędź
+  wspólnego rodzica (`Over := R - HostCtl.ClientWidth`) i tylko gdy para jest
+  w prawej połowie kontenera — układ wycentrowany lub lewoszedny nietknięty.
+  `Align <> alNone` → wyjście, bo VCL przelicza pozycję sam
+- wyzwalacze: `DoShow`, nowy handler `CMParentFontChanged`, oraz
+  `SetLanguage` / `ActiveFormChanged` w `uI18n.pas` — otwarcie okna, zmiana
+  czcionki, zmiana języka. `uI18n.pas` dostał do `uses` `System.IOUtils`,
+  `Winapi.Windows`, `uTitleBar`
+- pięć okien nadpisuje `RefitButtons` własnym pomiarem (`btnAll`, `btnLum`,
+  `btnClose`, `btnCanvasBG`, `btnPickColor`, `btnColorChoose`/`2`, grupa
+  `btnInk0..5`) — wszystkie wołają `inherited`, więc para OK / Anuluj
+  przeliczana jest również w nich
+- pokrycie: 67 okien z parą `btnOK` / `btnCancel` w `.dfm`. `frmShortcutsDlg`
+  ma tylko `btnOK`, `frmFileInfoDlg` tylko `btnClose` — bez zmian
+
+**Okna „Zmień rozmiar" i „Przytnij" na layout liczony z treści**
+(`frmResizeDlg.pas`, `frmResizeCropDlg.pas`, `frmResizeDlg.dfm`,
+`frmResizeCropDlg.dfm`) — wymiary i pozycje liczone runtime, `.dfm`
+zostaje wartością startową dla IDE.
+- `FormCreate` woła `TranslateForm(Self)` **przed** pomiarem i dodaniem
+  przetłumaczonych pozycji `rgCorner` — inaczej pomiar szedłby po angielsku.
+  W `frmResizeCropDlg` usunięto ręczne liczenie szerokości `btnFullHD` przez
+  `TBitmap`, zastąpiono `FitButton`
+- nowa `LayoutDialog` w obu oknach: `StackBelow` łańcuchowo z `CtrlGap` /
+  `RowGap` / `SectionGap` / `ButtonPad`, `FitButton`, `FitButtonGroup`,
+  `AlignButtonsRight`, `FitToContent`, `FitHeight`
+- `pnlAnchor.Top` i `pnlBottom.Top` liczone `StackBelow(..., SectionGap)`
+  zamiast pozycji z `.dfm` — odpowiedź na zgłoszone ucinanie ogonka `p` przy
+  12 pt; potwierdzenie wizualne po rebuildzie
+- `LayoutDialog` wołana przed `ShowModal`, nie z `OnShow`, żeby
+  `ShowResizeCropDlg` widział już poprawne rozmiary
+- usunięto z `.dfm` `Align`, który nadpisywał pozycje liczone z treści:
+  `alTop` na `pnlTop`, `alClient` na `pnlAnchor`, `alBottom` na `pnlBottom`
+  oraz `alRight` na obu przyciskach `frmResizeCropDlg`. `ClientWidth` /
+  `ClientHeight` w `.dfm` pozostają jako wartości startowe
+- koszt: `frmResizeDlg` zwęża się z 420 do 290 px; `frmResizeCropDlg`
+  zachowuje 420 px, ale etykiety `Width (px):` / `Height (px):` rosną
+  z 83 / 79 do 105 px
+
+**Layout okna „Jakość zapisu"** (`frmQualityDlg.pas`) — etykiety nachodziły na
+suwaki przy większej czcionce, a wysokość okna była wpisana na sztywno.
+- `TFotoForm.ReflowTrackBarRows` liczy suwaki tylko wśród **bezpośrednich**
+  dzieci hosta (`uTitleBar.pas:459-475`). `TQualityDlg` nie nadpisuje
+  `UseCustomTitleBar`, więc `ContentParent` = `Self`, a bezpośrednie dzieci to
+  `gbJPEG` / `gbWebP` / `gbTIFF` / `btnOK` / `btnCancel` — `N = 0` i procedura
+  wychodzi zanim policzy cokolwiek. Wszystkie trzy suwaki tego okna siedzą
+  w `TGroupBox`, więc od lat nie było reflowu, `FitHeight` ani
+  `AlignButtonsRight`
+- `FormCreate` wywołuje nową `LayoutGroups`, która robi reflow **pojedynczo na
+  każdą grupę** (każda ma płaski układ, więc algorytm helpera ma zastosowanie)
+- wysokość każdej grupy liczona z realnego konturu jej ostatniego dziecka +
+  `CtrlGap * 2` — zamiast wpisanych w `.dfm` `85` / `85` / `195` (`gbTIFF` miał
+  26 px martwej przestrzeni przy 4 px w pozostałych grupach)
+- `Top` grup i przycisków liczony **łańcuchowo**: `Poprzedni.Top +
+  Poprzedni.Height + SectionGap`, akumulator startuje `Groups[0].Left`. Zero
+  stałych `105` / `198`; przy innej czcionce i dłuższych tłumaczeniach wszystko
+  wynika z treści
+- `AlignButtonsRight([btnOK, btnCancel], CtrlGap * 3)` aktywuje prawe
+  wyrównanie przycisków (DFM miał `Left = 192` / `284`, helper daje 190 / 283)
+- `FitHeight(CtrlGap * 3)` zamyka wysokość okna. `ClientWidth` celowo
+  **pozostaje** z `.dfm` — `FitToContent` liczy tylko bezpośrednie dzieci, więc
+  nie widziałby szerokości etykiet w grupach i dałby błędne 376 px
+- koszt: przy 9 pt okno urośnie z 437 do ok. 476 px, przy 12 pt do ok. 503 px.
+  Wiersze dostają realne odstępy (`RowGap` = `TextHeight div 3`) zamiast
+  obecnych 1 px, za to przestają zależeć od rozmiaru czcionki — jak w 48
+  pozostałych `TFotoForm` z suwakiem
+- blok radia w `gbTIFF` (`rbLZW` / `rbNone` / `rbJPEG`) przesuwany o brakujący
+  odstęp: `Shift := Max(0, lblTIFFCompression.Top + lblTIFFCompression.Height +
+  RowGap - rbLZW.Top)`. `lblTIFFCompression` ma `AutoSize`, więc przy 12 pt jego
+  dolna krawędź dochodziła dokładnie do `Top = 34` pierwszego radia — 0 px luku.
+  `ReflowTrackBarRows` tego nie naprawia, bo jego druga seria
+  (`uTitleBar.pas:573-586`) przesuwa wyłącznie kontrolki z `Top > LastLabelOrigTop`
+  (108 px), a radia leżą wyżej. Przesunięcie jest `Max(0, …)`, więc przy 8 pt
+  wynosi 0 i nic nie rusza; dolną granicę grupy i tak wyznacza czytnik suwaka,
+  więc `Height` grupy i `ClientHeight` pozostają bez zmian
+- **audyt** (`tools/tmp/audit_trackbar_nested.ps1` →
+  `audit_trackbar_nested.txt`): 51 `TFotoForm` ma `TTrackBar`, z czego **48**
+  ma go bezpośrednim dzieckiem formy (reflow działa), a **3** zagnieżdżony —
+  `frmQualityDlg` (3 suwaki), `frmTshirtDlg` (`tbMinArea`, `tbCellMult`) i
+  `frmWaterRippleDlg` (`trkStrength`, `trkDensity`). Te dwa ostatnie mają ten
+  sam defekt i **nie zostały ruszone**
+- helpera **nie** zmieniano: `ReflowTrackBarRows` w `uTitleBar.pas:433-639`
+  szuka „następnej kontrolki pod ostatnią etykietą" po to, by ją przesunąć —
+  iteracja w głąb `TGroupBox` przesuwałaby zawartość grup zamiast samych grup.
+  Układ płaski jest założeniem algorytmu
+
+**Layout launchera** (`frmLauncherDlg.dfm`, `frmLauncherDlg.pas`) — podpisy grup
+`Zoom` i `Edit` były „przyklejone" do opisywanej treści, a prawy margines
+wewnątrz grup wychodził o połowę za mały.
+- `TCustomGroupBox.AdjustClientRect` (`Vcl.StdCtrls.pas:2180-2187`) robi
+  `Inc(Rect.Top, Canvas.TextHeight('0'))` — podpis zajmuje pas u góry client
+  area, więc dzieci grupy startują **pod** podpisem, nie obok niego. Oba
+  panele miały pierwszy rząd na `Top = 18` przy `TextHeight = 15`, czyli
+  **3 px** odstępu; przy dopuszczalnych 12 pt (`TextHeight` ~20) podpis
+  nachodził na przyciski. Teraz `Top = 26` (odstęp 11 px przy 9 pt, 6 px
+  przy 12 pt)
+- `AdjustClientRect` wykonuje też dwa `InflateRect(Rect, -1, -1)`
+  (`Ctl3D` = True), czyli `ClientWidth = Width - 4`. `FitButtons` liczył
+  `Width := 8 + btn.Width + 8`, więc przy `btn.Width = 144` client = 156, a
+  treść zajmowała 8..152 — prawy margines wychodził **4 px zamiast 8**.
+  Poprawione na `12 + btn.Width + 8` (4 px ramki + 8 px marginesu)
+- rozstaw w pionie: `grpZoom.Height` 74 → 92, `grpEdit` 88 → 92, `grpEdit.Top`
+  130 → 148 (odstęp między grupami 16 px), okno `ClientHeight` 230 → 252,
+  `ClientWidth` 172 → 176 i `ToolBar.Width` 172 → 176. Odstęp wierszy 6 px
+  (`btnZoomFit` 44 → 57, `btnRevert` 48 → 57) — wcześniej w `grpZoom`
+  pierwszy i drugi ród stykały się co 1 px
+- bramka `tools/gen_i18n.ps1` przechodzi na zmodyfikowanym `.dfm`, `Caption`
+  grup nietknięte, `uI18n.pas` bez zmian
+
+**Naprawa podmiany tłumaczeń w kontrolkach i tytułach okien** (`uI18n.pas`,
+`frmLauncherDlg.pas`, `i18n/polish.tsv`) — napisy zostawały w języku
+poprzednim po zmianie języka.
+- `TranslateControlTree` porównywał nowe tłumaczenie z **zapamiętanym
+  oryginałem EN**, a nie z **bieżącym** napisem kontrolki. Gdy tłumaczenie
+  jest identyczne z kluczem EN, warunek `if N <> Texts.Caption` był fałszywy,
+  `SetPropValue` nie był wołany i kontrolka trzymała napis z poprzedniego
+  języka. Objaw: grupa `Zoom` w panelu Wyrzutnia pozostawała `Powiększenie`
+  po przełączeniu na EN/DE/FR/IT/ES/PT
+- audyt `tools/tmp/audit_i18n_eq_en.ps1`: **141 z 1047 rekordów** ma w którymś
+  języku tłumaczenie = EN, więc były potencjalnie zablokowane (`Zoom`, `OK`,
+  `Sepia`, `Lasso`, `Amiga`, `MagicWB`, `Timelapse`, `Glitch`, `Raster`…).
+  Poprawiony sam warunek, nie treść katalogów
+- `TranslateForm` podmieniał `Caption` formy **w miejscu**, bez cache — tytuł
+  okna zostawał na stałe w pierwszym języku, w którym został przetłumaczony.
+  Oryginał trzymany jest teraz w `gControlOriginals` (`TForm` → `TControl`,
+  sprzątanie przez `TI18nNotifier` działa bez zmian)
+- `frmLauncherDlg.FormCreate` woła `TranslateForm(Self)`. Panel powstaje
+  dopiero przy otwarciu Wyrzutni, czyli **po** `SetLanguage` w
+  `Fotografista.dpr`, więc wcześniej tłumaczył go dopiero `FormActiveChanged`
+- literówka w polskim katalogu: `Otwórzplik obrazu` → `Otwórz plik obrazu`
+  (`i18n/polish.tsv`), przegenerowane `tools/gen_i18n.ps1` — bramka i18n OK
+  przed i po, w bloku `TextTable` zmieniła się **jedna** linia
+
 **Dokumentacja VCL poza katalogiem tymczasowym** (`doc/help/`, `.gitignore`,
-`notatka zrodel dokumentacji`) — dekompresja CHM-ów IDE (`hh.exe -decompile`,
+`ZRODLA_DOKUMENTACJI.md`) — dekompresja CHM-ów IDE (`hh.exe -decompile`,
 42 153 pliki / 473 748 303 B) przeniesiona z `tools/tmp/chm/` do
 `doc/help/topics/` + `doc/help/vcl/`. Ścieżka `tools/tmp/` sugerowała zasób
 jednorazowy, a to jest **jedyna lokalna referencja API VCL** w projekcie —
@@ -99,7 +383,7 @@ identyczne, nic nie skopiowano ani nie utracono.
   (`topics` 2026-06-08 19:38, `vcl` 2026-04-25 01:18)
 - poprawiony błędny licznik w notatce: 43 079 → **42 153** (10 866 + 31 287).
   To był błąd zapisu, nie brakujące pliki
-- `notatka zrodel dokumentacji` podaje teraz lokalne ścieżki do obu CHM-ów oraz
+- `ZRODLA_DOKUMENTACJI.md` podaje teraz lokalne ścieżki do obu CHM-ów oraz
   sposób odtworzenia **bez sieci**; docwiki zostaje jako fallback na wypadek
   zniknięcia instalacji IDE
 - `doc/help/` dopisane do `.gitignore` (linia 33)
@@ -385,7 +669,7 @@ malowanie zamiast kumulowania farby
   Risographa V3. Uzasadnione wyjątki (`Glitch`, `Relief`, `Stereogram`,
   `WB 256`) są na liście z komentarzem; cokolwiek poza nią trafia do sekcji
   „NOWE, DO ROZWAŻENIA"
-- `notatka zrodel dokumentacji` — skąd odtwarzać materiały RTL/VCL i skrypty
+- `ZRODLA_DOKUMENTACJI.md` — skąd odtwarzać materiały RTL/VCL i skrypty
 - rekonstrukcja `.git` z kopii oraz skrypt pakujący na pendrive
   (`spakuj_git_na_pendraj`)
 
@@ -445,5 +729,12 @@ Delphi — przebudowa aplikacji, niezależna od wcześniejszej wersji Hollywood.
 - Automatyczne tłumienie korekcji — kanały dochodzą do 80% drogi do
   neutralnego odcienia zamiast pełnego wyrównania, wartości suwaków
   wyliczane logarytmicznie
+
+---
+
+## Uwagi
+
+- Rejestr commitów: `git log` w katalogu `Delphi/`.
+- Plan rozwoju: `ROADMAP.md`.
 
 

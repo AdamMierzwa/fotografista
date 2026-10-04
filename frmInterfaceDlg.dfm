@@ -90,8 +90,9 @@
   object cmbTheme: TComboBox
     Left = 16
     Top = 300
-    Width = 200
+    Width = 224
     Height = 23
+    AutoDropDownWidth = True
     Style = csDropDownList
     TabOrder = 4
   end

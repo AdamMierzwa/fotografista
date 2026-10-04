@@ -3,8 +3,8 @@
   Top = 0
   BorderStyle = bsDialog
   Caption = 'Resize'
-  ClientHeight = 280
-  ClientWidth = 420
+  ClientHeight = 307
+  ClientWidth = 290
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -13,28 +13,28 @@
   Font.Style = []
   ParentFont = True
   Position = poMainFormCenter
+  OnCreate = FormCreate
   Scaled = True
   TextHeight = 15
   object pnlRadio: TPanel
     Left = 0
     Top = 0
-    Width = 420
-    Height = 50
-    Align = alTop
+    Width = 290
+    Height = 56
     BevelOuter = bvNone
     TabOrder = 0
     object lblMethod: TLabel
       Left = 14
-      Top = 2
-      Width = 76
+      Top = 8
+      Width = 140
       Height = 15
       Caption = 'Scaling method:'
       StyleElements = [seClient, seBorder]
     end
     object rbManual: TRadioButton
       Left = 14
-      Top = 22
-      Width = 80
+      Top = 37
+      Width = 85
       Height = 17
       Caption = 'Manual'
       Checked = True
@@ -43,9 +43,9 @@
       OnClick = rbManualClick
     end
     object rbAutoPct: TRadioButton
-      Left = 100
-      Top = 22
-      Width = 220
+      Left = 110
+      Top = 37
+      Width = 145
       Height = 17
       Caption = 'Automatic'
       TabOrder = 1
@@ -54,22 +54,21 @@
   end
   object pnlInput: TPanel
     Left = 0
-    Top = 50
-    Width = 420
-    Height = 60
-    Align = alTop
+    Top = 56
+    Width = 290
+    Height = 62
     BevelOuter = bvNone
     TabOrder = 1
     object lblWidth: TLabel
       Left = 14
-      Top = 6
-      Width = 83
+      Top = 7
+      Width = 105
       Height = 15
       Caption = 'Width (px):'
       StyleElements = [seClient, seBorder]
     end
     object edWidth: TEdit
-      Left = 110
+      Left = 132
       Top = 3
       Width = 80
       Height = 23
@@ -78,15 +77,15 @@
     end
     object lblHeight: TLabel
       Left = 14
-      Top = 34
-      Width = 79
+      Top = 40
+      Width = 105
       Height = 15
       Caption = 'Height (px):'
       StyleElements = [seClient, seBorder]
     end
     object edHeight: TEdit
-      Left = 110
-      Top = 31
+      Left = 132
+      Top = 36
       Width = 80
       Height = 23
       TabOrder = 1
@@ -95,8 +94,8 @@
   end
   object chkAspect: TCheckBox
     Left = 14
-    Top = 114
-    Width = 200
+    Top = 131
+    Width = 160
     Height = 17
     Caption = 'Keep aspect ratio'
     TabOrder = 2
@@ -104,16 +103,16 @@
   end
   object lblPercent: TLabel
     Left = 14
-    Top = 138
-    Width = 50
+    Top = 161
+    Width = 95
     Height = 15
     Caption = 'Scale (%):'
     StyleElements = [seClient, seBorder]
   end
   object tbPercent: TTrackBar
     Left = 14
-    Top = 158
-    Width = 390
+    Top = 189
+    Width = 262
     Height = 33
     Enabled = False
     Max = 500
@@ -124,8 +123,8 @@
     OnChange = tbPercentChange
   end
   object lblPctValue: TLabel
-    Left = 170
-    Top = 194
+    Left = 115
+    Top = 235
     Width = 60
     Height = 18
     Alignment = taCenter
@@ -135,10 +134,9 @@
   end
   object pnlBottom: TPanel
     Left = 0
-    Top = 230
-    Width = 420
-    Height = 36
-    Align = alBottom
+    Top = 266
+    Width = 290
+    Height = 41
     BevelOuter = bvNone
     TabOrder = 4
     Padding.Left = 8
@@ -146,26 +144,24 @@
     Padding.Right = 8
     Padding.Bottom = 8
     object btnCancel: TButton
-      Left = 232
-      Top = 6
+      Left = 191
+      Top = 8
       Width = 85
       Height = 25
-      Align = alRight
       Cancel = True
       Caption = 'Cancel'
       ModalResult = 2
-      TabOrder = 0
+      TabOrder = 1
     end
     object btnOK: TButton
-      Left = 317
-      Top = 6
+      Left = 100
+      Top = 8
       Width = 85
       Height = 25
-      Align = alRight
       Caption = 'OK'
       Default = True
       ModalResult = 1
-      TabOrder = 1
+      TabOrder = 0
     end
   end
 end

@@ -3,7 +3,7 @@
 interface
 
 uses
-  Winapi.Windows, System.SysUtils, System.Classes,
+  Winapi.Windows, System.SysUtils, System.Classes, System.Math,
   Vcl.Graphics, Vcl.Controls, Vcl.Forms, Vcl.Dialogs,
   Vcl.StdCtrls, Vcl.ComCtrls, Vcl.ExtCtrls,
   uPrefs, uTitleBar;
@@ -42,6 +42,7 @@ type
     procedure UpdateWebPDisplay;
     procedure UpdateTIFFJPEGDisplay;
     procedure UpdateTIFFJPEGState;
+    procedure LayoutGroups;
   end;
 
 function ShowQualityDlg: Boolean;
@@ -102,6 +103,64 @@ begin
   tbWebPQuality.Max := 100;
   tbTIFFJPEGQuality.Min := 1;
   tbTIFFJPEGQuality.Max := 100;
+  LayoutGroups;
+end;
+
+// ReflowTrackBarRows patrzy tylko na bezposrednie dzieci hosta, a trzy suwaki
+// tego okna siedza w TGroupBox (gbJPEG/gbWebP/gbTIFF) — w wywolaniu z
+// TFotoForm.AfterConstruction Host = Self, wiec N = 0 i procedura wychodzi
+// zanim cokolwiek policzy. Dlatego reflow idzie tu pojedynczo na kazda grupe
+// (kazda ma plaski uklad, wiec algorytm helpera ma zastosowanie).
+// Wysokosc kazdej grupy liczona jest z realnego konturu jej ostatniego
+// dziecka, a Top kolejnych grup akumulatorem: Poprzedni.Top + Poprzedni.Height
+// + SectionGap. Zero stalych 105/198 — przy innej czcionce i innych
+// tlumaczeniach wszystko wynika z tresci.
+procedure TQualityDlg.LayoutGroups;
+var
+  I, J, Y, Bottom, Shift: Integer;
+  Groups: array[0..2] of TGroupBox;
+  Radios: array[0..2] of TRadioButton;
+begin
+  Groups[0] := gbJPEG;
+  Groups[1] := gbWebP;
+  Groups[2] := gbTIFF;
+
+  // lblTIFFCompression ma AutoSize, wiec przy wiekszej czcionce jego dolna
+  // krawedz dochodzi do Top rbLZW i oba wiersze sie kleja (0 px przy 12 pt).
+  // ReflowTrackBarRows tego nie rusza: druga seria (uTitleBar.pas:474) przesuwa
+  // tylko kontrolki z Top > LastLabelOrigTop, a radia sa wyzej niz ostatnia
+  // etykieta. Przesuwamy caly blok radia o brakujacy odstep liczony z tresci -
+  // ta sama idematma co CumShift (uTitleBar.pas:479). Dolna granica grupy
+  // wyznacza i tak czytnik suwaka (178-184 px vs 100-104 px radia), wiec
+  // Height grupy i ClientHeight pozostaja bez zmian.
+  Radios[0] := rbLZW;
+  Radios[1] := rbNone;
+  Radios[2] := rbJPEG;
+  Shift := Max(0, lblTIFFCompression.Top + lblTIFFCompression.Height +
+    RowGap - rbLZW.Top);
+  for I := Low(Radios) to High(Radios) do
+    Radios[I].Top := Radios[I].Top + Shift;
+
+  for I := Low(Groups) to High(Groups) do
+  begin
+    ReflowTrackBarRows(Groups[I]);
+    Bottom := 0;
+    for J := 0 to Groups[I].ControlCount - 1 do
+      Bottom := Max(Bottom, Groups[I].Controls[J].Top + Groups[I].Controls[J].Height);
+    Groups[I].Height := Bottom + CtrlGap * 2;
+  end;
+
+  Y := Groups[0].Left;
+  for I := Low(Groups) to High(Groups) do
+  begin
+    Groups[I].Top := Y;
+    Inc(Y, Groups[I].Height + SectionGap);
+  end;
+
+  btnOK.Top := Y;
+  btnCancel.Top := Y;
+  AlignButtonsRight([btnOK, btnCancel], CtrlGap * 3);
+  FitHeight(CtrlGap * 3);
 end;
 
 procedure TQualityDlg.UpdateJPGDisplay;

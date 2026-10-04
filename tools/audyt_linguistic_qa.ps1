@@ -42,6 +42,23 @@ $QUOTE_R_LO= [string][char]0x201D      # ”
 $GUILL_L   = [string][char]0x00AB      # <<
 $GUILL_R   = [string][char]0x00BB      # >>
 
+# L5: kreski i znaki niewidoczne.
+# Trzy rodzaje "kreski" maja trzy rozne role, wiec trzy rozne znaki:
+#   U+002D hyphen-minus - zlozenie w wyrazie (Floyd-Steinberg)
+#   U+2013 en dash       - zakres liczbowy, bez spacji (0-10)
+#   U+2014 em dash       - separator "termin - wyjasnienie", ze spacjami
+# Te pozostale U+2010/2012/2015 nie maja tu zadania - traktowane jak blad.
+$DASH_HY   = [string][char]0x002D
+$DASH_EN   = [string][char]0x2013
+$DASH_EM   = [string][char]0x2014
+$DASH_ODD  = @([string][char]0x2010,[string][char]0x2012,[string][char]0x2015)
+# Znaki niewidoczne - nigdy nie powinny wystapic w katalogu.
+$INVISIBLE = @{
+  [int]0x200B = 'ZERO WIDTH SPACE'
+  [int]0x200C = 'ZERO WIDTH NON-JOINER'
+  [int]0x00AD = 'SOFT HYPHEN'
+}
+
 # L3b: konwencja cudzyslowu na jezyk - ZATWIERDZONA przez uzytkownika 2026-10-01.
 # Tabela jest BINARNA: dokladnie jedna poprawna para glifow na jezyk. U+201D
 # w katalogu DE/CS to nie "wariant stylistyczny" tylko blad - patrz sekcja
@@ -89,7 +106,41 @@ function Vis {
   $s = $s -replace ([regex]::Escape($QUOTE_R_LO)), '[^^]'
   $s = $s -replace ([regex]::Escape($GUILL_L)),    '[<<]'
   $s = $s -replace ([regex]::Escape($GUILL_R)),    '[>>]'
+  $s = $s -replace ([regex]::Escape($DASH_EM)),    '[MD]'
+  $s = $s -replace ([regex]::Escape($DASH_EN)),    '[ND]'
+  $s = $s -replace ([regex]::Escape($DASH_HY)),    '[HY]'
+  foreach ($k in $INVISIBLE.Keys) {
+    $s = $s -replace ([regex]::Escape([string][char]$k)), ('[{0}]' -f $INVISIBLE[$k])
+  }
   return $s
+}
+
+# Klasyfikuje kazdy znak kreski w stringu po ROLI, ktora w nim pełni.
+# Zwraca liste hashtable @{ Role; Glyph; Pos }.
+# Kontekst liczony na znakach w obie strony (nie regex na calym stringu),
+# bo role rozrozniuja sie wlasnie spacjami:
+#   cyfra  , kreska, cyfra  -> ZAKRES      (bez spacji)
+#   spacja , kreska, spacja -> SEPARATOR   (ze spacjami)
+#   alnum  , kreska, alnum  -> ZLOZENIE    (Floyd-Steinberg)
+#   cokolwiek innego        -> INNE        (minusy: '+/-', '-10')
+function Get-DashRole {
+  param([string]$v)
+  $res = @()
+  for ($k = 0; $k -lt $v.Length; $k++) {
+    $c = [int][char]$v[$k]
+    if ($c -ne 0x002D -and $c -ne 0x2013 -and $c -ne 0x2014) { continue }
+    $prev = if ($k -gt 0) { $v[$k-1] } else { [char]0xA0 }
+    $next = if ($k -lt $v.Length-1) { $v[$k+1] } else { [char]0xA0 }
+    $wsP = [char]::IsWhiteSpace($prev); $wsN = [char]::IsWhiteSpace($next)
+    $dgP = [char]::IsDigit($prev);    $dgN = [char]::IsDigit($next)
+    $alP = [char]::IsLetterOrDigit($prev); $alN = [char]::IsLetterOrDigit($next)
+    if ((-not $wsP) -and (-not $wsN) -and $dgP -and $dgN)      { $role = 'ZAKRES' }
+    elseif ($wsP -and $wsN)                                     { $role = 'SEPARATOR' }
+    elseif ((-not $wsP) -and (-not $wsN) -and $alP -and $alN)  { $role = 'ZLOZENIE' }
+    else                                                       { $role = 'INNE' }
+    $res += @{ Role = $role; Glyph = [string]$v[$k]; Pos = $k }
+  }
+  return $res
 }
 
 # Prosty cudzyslow dziala jako cytat tylko gdy tworzy pare; cale w calosci
@@ -136,6 +187,11 @@ $cat = [ordered]@{
   'L3a niespojnosc katalogu: glify cudzyslowu i proste " naraz' = @()
   'L3b proste " w katalogu z konwencja typograficzna' = @()
   'L3c zly glif zamkniecia cudzyslowu (tabela binarna)' = @()
+  'L5a kreska: jedna rola, rozne glify w jednym katalogu' = @()
+  'L5b polski: rola kreski niezgodna z konwencja PWN (ratyfikowana 2026-10-03)' = @()
+  'L5c znak niewidoczny w katalogu (U+200B i wsp.)' = @()
+  'L5d przecinek bez spacji po sobie' = @()
+  'L5e kreska spoza puli U+002D/U+2013/U+2014' = @()
 }
 
 # Wszystkie glify cudzyslowu (prawidlowe i bledne) - wspolna lista zrodlowa dla
@@ -148,6 +204,8 @@ foreach ($lg in $langs) {
   $ids = @($t.Keys | Sort-Object { [int]$_ })
   $hasTypographic = $false
   $straightUse = @()
+  # L5a: role -> { glif -> lista ID } w obrebie jednego katalogu
+  $dashGlyphs = @{}
 
   foreach ($id in $ids) {
     $v = $t[$id]
@@ -197,6 +255,49 @@ foreach ($lg in $langs) {
     # --- zbiorek dla L3: jakich glifow uzywa katalog ---
     if ($v.Contains($QUOTE_L) -or $v.Contains($QUOTE_R_HI) -or $v.Contains($QUOTE_R_LO) -or $v.Contains($GUILL_L) -or $v.Contains($GUILL_R)) { $hasTypographic = $true }
     if ((Test-QuotationUse $v)) { $straightUse += $id }
+
+    # --- L5: kreski i znaki niewidoczne ---
+    foreach ($d in (Get-DashRole $v)) {
+      # L5a - zliczanie glifow na role (raport po petli katalogow)
+      if (-not $dashGlyphs.ContainsKey($d.Role)) { $dashGlyphs[$d.Role] = @{} }
+      if (-not $dashGlyphs[$d.Role].ContainsKey($d.Glyph)) { $dashGlyphs[$d.Role][$d.Glyph] = @() }
+      $dashGlyphs[$d.Role][$d.Glyph] += $id
+
+      # L5b - polski: rola ma swoj glif ustalony konwencja PWN
+      if ($lg -eq 'polish') {
+        $want = switch ($d.Role) {
+          'ZAKRES'    { $DASH_EN }
+          'SEPARATOR' { $DASH_EM }
+          'ZLOZENIE'  { $DASH_HY }
+          default     { $null }
+        }
+        if ($want -and $d.Glyph -ne $want) {
+          $roleName = @{ 'ZAKRES'='zakres liczbowy (bez spacji)'; 'SEPARATOR'='separator (ze spacjami)'; 'ZLOZENIE'='zlozenie w wyrazie' }[$d.Role]
+          $cat['L5b polski: rola kreski niezgodna z konwencja PWN (ratyfikowana 2026-10-03)'] += ("  {0,-5} PL='{1}'   rola {2} ma byc U+{3:X4}, jest U+{4:X4}" -f $id,(Vis $v),$roleName,[int][char]$want,[int][char]$d.Glyph)
+        }
+      }
+
+      # L5e - kreska spoza puli
+      if ($DASH_ODD -contains $d.Glyph) {
+        $cat['L5e kreska spoza puli U+002D/U+2013/U+2014'] += ("  {0,-5} {1}='{2}'   U+{3:X4} nie ma zadanej roli" -f $id,$lg.ToUpper(),(Vis $v),[int][char]$d.Glyph)
+      }
+    }
+
+    # --- L5c: znaki niewidoczne (pozycyjnie, nie skanem) ---
+    foreach ($g in $INVISIBLE.Keys) {
+      $p = $v.IndexOf($g)
+      while ($p -ge 0) {
+        $cat['L5c znak niewidoczny w katalogu (U+200B i wsp.)'] += ("  {0,-5} {1}='{2}'   {3} na pozycji {4}" -f $id,$lg.ToUpper(),(Vis $v),$INVISIBLE[$g],$p)
+        $p = $v.IndexOf($g, $p + 1)
+      }
+    }
+
+    # --- L5d: przecinek bez spacji (przecinek + litera malego bez spacji) ---
+    for ($k = 0; $k -lt $v.Length - 1; $k++) {
+      if ($v[$k] -eq ',' -and [char]::IsLower($v[$k+1])) {
+        $cat['L5d przecinek bez spacji po sobie'] += ("  {0,-5} {1}='{2}'   przecinek na pozycji {3} bez spacji" -f $id,$lg.ToUpper(),(Vis $v),$k)
+      }
+    }
   }
 
   # --- L3a: katalog ma i glify, i proste " => sprzecznosc, bez tabeli konwencji ---
@@ -259,7 +360,7 @@ foreach ($lg in $langs) {
 # dziesietnym = 1 na katalog (to specyfikatory printf, nie tekst uzytkownika),
 # kandydaci na grupowanie = 0. Brak danych => regula byly martwa. Nie pisac
 # reguly bez realnego case'a - dokladnie ta zasada zostala przy "700" w
-# formule Cell.
+# formule Cell (patrz AGENTS.md, sekcja Raster).
 
 foreach ($k in $cat.Keys) {
   $items = @($cat[$k])

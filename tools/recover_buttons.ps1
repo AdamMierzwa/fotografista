@@ -1,6 +1,6 @@
 ﻿# recover_buttons.ps1 v3 — hardcoded button reconstruction
 
-$ProjectDir = (Split-Path -Parent $PSScriptRoot)
+$ProjectDir = "C:\Fotografista\Delphi"
 
 $jobs = @(
     # Format: file, btn1_name, btn1_left, btn1_top, btn1_props..., "---", btn2_name, btn2_left, btn2_top, btn2_props...

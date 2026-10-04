@@ -99,7 +99,7 @@ end;
 
 procedure TAmigaBGDlg.FormCreate(Sender: TObject);
 var
-  I: Integer;
+  I, MaxItemW, ComboW, ContentW, Gap, SectionGap, Margin, Pad: Integer;
 begin
   cbRes.Items.Clear;
   cbRes.Items.Add('320 x 256 (OCS/ECS PAL Lo-Res)');
@@ -115,6 +115,58 @@ begin
   cbColor.ItemIndex := 0;
 
   FCustomColor := RgbToColor(MagicColors[0].RGB);
+
+  TranslateForm(Self);
+
+  Margin := 15;
+  Gap := Canvas.TextHeight('Wg') div 3;
+  SectionGap := Canvas.TextHeight('Wg');
+  Pad := 2 * Canvas.TextWidth('W');
+
+  MaxItemW := 0;
+  for I := 0 to cbRes.Items.Count - 1 do
+    if Canvas.TextWidth(cbRes.Items[I]) > MaxItemW then
+      MaxItemW := Canvas.TextWidth(cbRes.Items[I]);
+  for I := 0 to cbColor.Items.Count - 1 do
+    if Canvas.TextWidth(cbColor.Items[I]) > MaxItemW then
+      MaxItemW := Canvas.TextWidth(cbColor.Items[I]);
+
+  btnCustomColor.Width := Max(85, Canvas.TextWidth(btnCustomColor.Caption) + Pad);
+  btnOK.Width := Max(85, Canvas.TextWidth(btnOK.Caption) + Pad);
+  btnCancel.Width := Max(85, Canvas.TextWidth(btnCancel.Caption) + Pad);
+
+  ComboW := MaxItemW + SectionGap * 2 + 8;
+  cbRes.Width := ComboW;
+  cbColor.Width := ComboW;
+
+  ContentW := Max(lblRes.Width, lblColor.Width);
+  if ComboW > ContentW then
+    ContentW := ComboW;
+  if btnCustomColor.Width > ContentW then
+    ContentW := btnCustomColor.Width;
+  if btnOK.Width + Gap + btnCancel.Width > ContentW then
+    ContentW := btnOK.Width + Gap + btnCancel.Width;
+  ClientWidth := ContentW + 2 * Margin;
+
+  lblRes.Left := Margin;
+  lblRes.Top := Margin;
+  cbRes.Left := Margin;
+  cbRes.Top := lblRes.Top + lblRes.Height + Gap;
+
+  lblColor.Left := Margin;
+  lblColor.Top := cbRes.Top + cbRes.Height + SectionGap;
+  cbColor.Left := Margin;
+  cbColor.Top := lblColor.Top + lblColor.Height + Gap;
+
+  btnCustomColor.Left := Margin;
+  btnCustomColor.Top := cbColor.Top + cbColor.Height + SectionGap;
+
+  btnCancel.Left := ClientWidth - Margin - btnCancel.Width;
+  btnOK.Left := btnCancel.Left - Gap - btnOK.Width;
+  btnOK.Top := btnCustomColor.Top + btnCustomColor.Height + Gap;
+  btnCancel.Top := btnOK.Top;
+
+  ClientHeight := btnOK.Top + btnOK.Height + Margin;
 end;
 
 function TAmigaBGDlg.GetFillColor: TColor;

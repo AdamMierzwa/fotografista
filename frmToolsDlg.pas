@@ -46,6 +46,8 @@ type
     procedure btnColorChooseClick(Sender: TObject);
     procedure btnColorChoose2Click(Sender: TObject);
     procedure chkRetainShadingClick(Sender: TObject);
+  public
+    procedure RefitButtons; override;
   private
     FUpdating: Boolean;
     FActiveFam: TRetouchFamily;
@@ -364,7 +366,6 @@ begin
     chkRetainShading.Height := Self.Canvas.TextHeight(chkRetainShading.Caption) + RowGap;
     chkRetainShading.Left := ColLeft;
     chkRetainShading.Top := StackBelow(pboxColor2, SectionGap);
-    ColW := Max(ColW, chkRetainShading.Width);
   end;
 
   FitToContent(CtrlGap * 3, CtrlGap * 3);
@@ -531,6 +532,13 @@ begin
   if frmMain = nil then Exit;
   if FUpdating then Exit;
   frmMain.SetReplaceRetainShading(chkRetainShading.Checked);
+end;
+
+procedure TToolsDlg.RefitButtons;
+begin
+  inherited;
+  FitButton(btnColorChoose);
+  FitButton(btnColorChoose2);
 end;
 
 end.

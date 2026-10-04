@@ -3,7 +3,7 @@
   Top = 0
   BorderStyle = bsDialog
   Caption = 'Colorize'
-  ClientHeight = 480
+  ClientHeight = 460
   ClientWidth = 430
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -23,17 +23,9 @@
     Height = 300
     OnPaint = pboxPreviewPaint
   end
-  object lblColor: TLabel
-    Left = 15
-    Top = 331
-    Width = 77
-    Height = 15
-    Caption = 'Choose color:'
-    StyleElements = [seClient, seBorder]
-  end
   object btnPickColor: TButton
     Left = 15
-    Top = 351
+    Top = 327
     Width = 130
     Height = 25
     Caption = 'Choose color...'
@@ -42,7 +34,7 @@
   end
   object lblIntensity: TLabel
     Left = 15
-    Top = 392
+    Top = 360
     Width = 134
     Height = 15
     Caption = 'Intensity (0-100):'
@@ -50,7 +42,7 @@
   end
   object tbIntensity: TTrackBar
     Left = 15
-    Top = 409
+    Top = 383
     Width = 340
     Height = 25
     Min = 0
@@ -61,7 +53,7 @@
   end
   object lblValIntensity: TLabel
     Left = 361
-    Top = 413
+    Top = 386
     Width = 48
     Height = 18
     Alignment = taCenter
@@ -71,7 +63,7 @@
   end
   object btnOK: TButton
     Left = 240
-    Top = 445
+    Top = 420
     Width = 85
     Height = 25
     Caption = 'OK'
@@ -81,7 +73,7 @@
   end
   object btnCancel: TButton
     Left = 331
-    Top = 445
+    Top = 420
     Width = 85
     Height = 25
     Cancel = True

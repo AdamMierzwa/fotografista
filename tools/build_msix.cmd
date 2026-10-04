@@ -10,9 +10,9 @@ rem   4) weryfikuje podpis przez makeappx unpack (tools\tmp)
 rem   UWAGA: uruchamiac TYLKO po przebudowie Release w IDE.
 rem ============================================================
 
-set VER=1.1.0.0
+set VER=1.1.1.0
 
-set ROOT=%~dp0..
+set ROOT=C:\Fotografista\Delphi
 set RELEASE=%ROOT%\Win64\Release
 set STAGE=%ROOT%\packaging\x64
 set OUTDIR=%ROOT%\dist

@@ -6,7 +6,7 @@ uses
   Winapi.Windows,
   System.SysUtils, System.Classes, System.Math,
   Vcl.Graphics, Vcl.Controls, Vcl.Forms, Vcl.Dialogs,
-  Vcl.StdCtrls, Vcl.ComCtrls, Vcl.ExtCtrls, uTitleBar;
+  Vcl.StdCtrls, Vcl.ComCtrls, Vcl.ExtCtrls, uTitleBar, uI18n;
 
 type
   TResizeDlg = class(TFotoForm)
@@ -32,6 +32,7 @@ type
     procedure edHeightChange(Sender: TObject);
     procedure tbPercentChange(Sender: TObject);
     procedure chkAspectClick(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
   private
     FOrigW, FOrigH: Integer;
     FUpdating: Boolean;
@@ -40,6 +41,7 @@ type
     procedure SyncAspectFromWidth;
     procedure SyncAspectFromHeight;
   public
+    procedure LayoutDialog;
     property OrigWidth: Integer read FOrigW write FOrigW;
     property OrigHeight: Integer read FOrigH write FOrigH;
   end;
@@ -52,6 +54,91 @@ function ShowResizeDlg(out NewW, NewH: Integer): Boolean;
 implementation
 
 {$R *.dfm}
+
+procedure TResizeDlg.FormCreate(Sender: TObject);
+begin
+  { Podmiana napisow musi sie odbyc przed LayoutDialog - tam sa mierzone
+    szerokosci. Wzorzec: frmAmigaBGDlg, frmLauncherDlg. }
+  TranslateForm(Self);
+end;
+
+{ Jawny layout liczony z fontu, wzorzec frmStereogramDlg.LayoutDialog.
+  Panele nie maja Align - inaczej FitToContent mierzylby panel rozciagniety
+  do ClientWidth i okno roslo by o margines przy kazdym wywolaniu. }
+procedure TResizeDlg.LayoutDialog;
+var
+  Margin, ColLeft, ColW, LblColW, PadT, W: Integer;
+begin
+  Margin := CtrlGap * 3;
+  ColLeft := Margin;
+  PadT := CtrlGap * 2;
+
+  { Radio i checkbox nie skaluja sie automatycznie - liczymy szerokosc
+    z przetlumaczonego captiona plus ButtonPad na kółko i odstep. }
+  Self.Canvas.Font.Assign(rbManual.Font);
+  rbManual.Width := Self.Canvas.TextWidth(rbManual.Caption) + ButtonPad;
+  Self.Canvas.Font.Assign(rbAutoPct.Font);
+  rbAutoPct.Width := Self.Canvas.TextWidth(rbAutoPct.Caption) + ButtonPad;
+  Self.Canvas.Font.Assign(chkAspect.Font);
+  chkAspect.Width := Self.Canvas.TextWidth(chkAspect.Caption) + ButtonPad;
+
+  FitButtonGroup([btnOK, btnCancel]);
+
+  { TLabel ma AutoSize = True, wiec po TranslateForm jego Width jest juz
+    zmierzone przez VCL - tutaj tylko czytamy. }
+  LblColW := Max(lblWidth.Width, lblHeight.Width);
+
+  ColW := LblColW + CtrlGap * 2 + edWidth.Width;
+  W := rbManual.Width + CtrlGap * 2 + rbAutoPct.Width;
+  if W > ColW then ColW := W;
+  if chkAspect.Width > ColW then ColW := chkAspect.Width;
+  if lblPercent.Width > ColW then ColW := lblPercent.Width;
+
+  pnlRadio.Left := 0;
+  pnlRadio.Top := 0;
+  pnlRadio.Width := ColLeft + ColW;
+  lblMethod.Left := ColLeft;
+  lblMethod.Top := PadT;
+  rbManual.Left := ColLeft;
+  rbManual.Top := StackBelow(lblMethod, RowGap);
+  rbAutoPct.Left := ColLeft + rbManual.Width + CtrlGap * 2;
+  rbAutoPct.Top := rbManual.Top;
+  pnlRadio.Height := StackBelow(rbManual, PadT);
+
+  pnlInput.Left := 0;
+  pnlInput.Top := pnlRadio.Height;
+  pnlInput.Width := ColLeft + ColW;
+  edWidth.Left := ColLeft + LblColW + CtrlGap * 2;
+  edHeight.Left := edWidth.Left;
+  lblWidth.Left := ColLeft;
+  lblHeight.Left := ColLeft;
+  edWidth.Top := PadT;
+  edHeight.Top := PadT + edWidth.Height + RowGap;
+  lblWidth.Top := PadT + (edWidth.Height - lblWidth.Height) div 2;
+  lblHeight.Top := PadT + edWidth.Height + RowGap + (edHeight.Height - lblHeight.Height) div 2;
+  pnlInput.Height := StackBelow(edHeight, PadT);
+
+  chkAspect.Left := ColLeft;
+  chkAspect.Top := StackBelow(pnlInput, SectionGap);
+  lblPercent.Left := ColLeft;
+  lblPercent.Top := StackBelow(chkAspect, RowGap);
+  tbPercent.Left := ColLeft;
+  tbPercent.Top := StackBelow(lblPercent, RowGap);
+  tbPercent.Width := ColW;
+  lblPctValue.Left := ColLeft + (ColW - lblPctValue.Width) div 2;
+  lblPctValue.Top := StackBelow(tbPercent, RowGap);
+
+  pnlBottom.Left := 0;
+  pnlBottom.Top := StackBelow(lblPctValue, SectionGap);
+  pnlBottom.Width := ColLeft + ColW;
+  btnCancel.Top := PadT;
+  btnOK.Top := PadT;
+  pnlBottom.Height := StackBelow(btnOK, PadT);
+
+  FitToContent(CtrlGap * 3, CtrlGap * 3);
+  AlignButtonsRight([btnOK, btnCancel], CtrlGap * 3);
+  FitHeight(CtrlGap * 3);
+end;
 
 function ShowResizeDlg(out NewW, NewH: Integer): Boolean;
 var
@@ -70,6 +157,7 @@ begin
     Dlg.lblPctValue.Caption := '100%';
     Dlg.rbManual.Checked := True;
     Dlg.SetMode(False);
+    Dlg.LayoutDialog;
     Result := Dlg.ShowModal = mrOk;
     if Result then
     begin

@@ -8,7 +8,7 @@ rem   2) pakuje do dist\Fotografista_Win64.zip
 rem   UWAGA: uruchamiac TYLKO po przebudowie Release w IDE.
 rem ============================================================
 
-set ROOT=%~dp0..
+set ROOT=C:\Fotografista\Delphi
 set RELEASE=%ROOT%\Win64\Release
 set DIST=%ROOT%\dist
 set STAGE=%DIST%\Fotografista_Win64

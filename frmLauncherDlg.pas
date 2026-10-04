@@ -51,7 +51,7 @@ type
 implementation
 
 uses
-  fMain;
+  fMain, uI18n;
 
 {$R *.dfm}
 
@@ -129,6 +129,7 @@ end;
 
 procedure TLauncherDlg.FormCreate(Sender: TObject);
 begin
+  TranslateForm(Self);
   LoadIcons;
   FitButtons;
   RefreshZoom;
@@ -190,6 +191,10 @@ end;
 // Wzorca z frmShortcutsDlg (Canvas.TextWidth). Re-fit odpala sie co 250ms
 // (Timer), wiec po zmianie jezyka (SetLanguage -> TranslateForm na wszystkich
 // formach) przyciski same sie dostosuja. Zachowane minimalne szerokosci z dfm.
+// Szerokosc grupy liczona jako 4 px ramki (TCustomGroupBox.AdjustClientRect
+// wykonuje dwa InflateRect(-1,-1), wiec ClientWidth = Width - 4) + 8 px
+// marginesu wewnetrznego + szerokosc najszerszego przycisku + 8 px marginesu.
+// Bez tych 4 px prawy margines wychodzil 4 px zamiast 8.
 procedure TLauncherDlg.FitButtons;
 var
   Bmp: TBitmap;
@@ -217,8 +222,8 @@ begin
     btnZoomFit.Width := MaxW;
     btnUndo.Width := MaxW;
     btnRevert.Width := MaxW;
-    grpZoom.Width := 8 + btnZoomFit.Width + 8;
-    grpEdit.Width := 8 + btnUndo.Width + 8;
+    grpZoom.Width := 12 + btnZoomFit.Width + 8;
+    grpEdit.Width := 12 + btnUndo.Width + 8;
     btnZoomIn.Left := grpZoom.ClientWidth - 8 - btnZoomIn.Width;
     ClientWidth := grpZoom.Left + grpZoom.Width + 6;
   finally

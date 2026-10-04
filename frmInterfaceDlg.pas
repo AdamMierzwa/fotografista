@@ -25,6 +25,8 @@ type
     procedure btnCanvasBGClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure spinFontSizeChange(Sender: TObject);
+  public
+    procedure RefitButtons; override;
   private
     FCanvasBG: TColor;
     FTheme: string;
@@ -58,6 +60,12 @@ begin
   for S in TStyleManager.StyleNames do
     cmbTheme.Items.Add(S);
   cmbTheme.ItemIndex := 0;
+end;
+
+procedure TInterfaceDlg.RefitButtons;
+begin
+  inherited;
+  FitButton(btnCanvasBG);
 end;
 
 procedure TInterfaceDlg.DoPreview;

@@ -191,7 +191,7 @@ end;
 
 function TSelDlg.DebounceDelay: Integer;
 begin
-  Result := 200; // live z debounce dla różdżki.
+  Result := 200; // ms - patrz AGENTS.md: live z debounce dla różdżki.
 end;
 
 procedure TSelDlg.SyncStatus;

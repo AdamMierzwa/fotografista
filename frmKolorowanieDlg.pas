@@ -10,7 +10,6 @@ uses
 type
   TKolorowanieDlg = class(TFotoForm)
     pboxPreview: TPaintBox;
-    lblColor: TLabel;
     btnPickColor: TButton;
     lblIntensity: TLabel;
     tbIntensity: TTrackBar;
@@ -22,6 +21,8 @@ type
     procedure btnPickColorClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
+  public
+    procedure RefitButtons; override;
   private
     FOriginalPreview: TBitmap;
     FWorkingPreview: TBitmap;
@@ -168,6 +169,12 @@ procedure TKolorowanieDlg.FormDestroy(Sender: TObject);
 begin
   FOriginalPreview.Free;
   FWorkingPreview.Free;
+end;
+
+procedure TKolorowanieDlg.RefitButtons;
+begin
+  inherited;
+  FitButton(btnPickColor);
 end;
 
 procedure TKolorowanieDlg.tbIntensityChange(Sender: TObject);

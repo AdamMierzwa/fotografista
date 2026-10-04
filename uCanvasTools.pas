@@ -62,7 +62,7 @@ begin
   FTrackBar.Max := 100;
   FTrackBar.Position := 10;
   FTrackBar.Frequency := 10;
-  FTrackBar.TickStyle := tsAuto;
+  FTrackBar.TickStyle := tsNone;
   FTrackBar.ShowSelRange := False;
   FTrackBar.OnChange := TrackBarChange;
 

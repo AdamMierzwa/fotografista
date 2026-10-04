@@ -12,7 +12,7 @@
 # uszkodzone kodowanie (np. podwojny BOM) przechodzilo po cichu.
 # Kontrola "dokladnie jeden ciag EF BB BF w calym pliku" zamyka te klase bledu.
 #
-# Konwencja formatowania plikow .tsv: UTF-8 BOM + CRLF.
+# Konwencja formatowania plikow .tsv: UTF-8 BOM + CRLF (patrz AGENTS.md regula 10).
 # Ten modul jest UTF-8 z BOM, koniec linii LF (jak pozostale .ps1 w tools\).
 
 $script:I18nExpectedRecords = 1048

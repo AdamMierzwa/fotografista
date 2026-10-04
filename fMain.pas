@@ -542,6 +542,8 @@ type
     procedure RecalcProtCoverCount;
     procedure ProtFlipH;
     procedure ProtFlipV;
+    procedure AlphaFlipH;
+    procedure AlphaFlipV;
     procedure ProtRotateLeft;
     procedure ProtRotateRight;
     procedure ProtRotate180;
@@ -549,6 +551,19 @@ type
     procedure ProtResize(NewW, NewH: Integer);
     procedure ProtResizeCrop(TargetW, TargetH, Corner: Integer);
     procedure ProtRotateAngle(AngleDeg: Double);
+    procedure NotifyBitmapResized;
+    { Maska alfa (FAlphaMask) - te same przeksztalcenia co FProtMask wyzej.
+      Obie maski maja wspolne wartowniki rozmiaru przy renderze
+      (DrawCheckerRect / DrawProtMaskOverlay) i przy niezgodnosci cicho koncza
+      rysowanie. Brak odpowiednika dla FProtMask = cicha utrata nakladki,
+      a nie widoczny blad. }
+    procedure AlphaRotateAngle(AngleDeg: Double);
+    procedure AlphaRotateLeft;
+    procedure AlphaRotateRight;
+    procedure AlphaRotate180;
+    procedure AlphaCrop(const R: TRect);
+    procedure AlphaResize(NewW, NewH: Integer);
+    procedure AlphaResizeCrop(TargetW, TargetH, Corner: Integer);
     procedure DrawTransparencyChecker(Canvas: TCanvas);
     procedure DrawProtMaskOverlay(Canvas: TCanvas);
     procedure DrawCheckerRect(Canvas: TCanvas; ScreenR: TRect);
@@ -3525,6 +3540,7 @@ begin
   UpdateCaption;
   DoFlipH(FBitmap);
   ProtFlipH;
+  AlphaFlipH;
   FinishEffect(T('Mirror horizontally'), 0);
 end;
 
@@ -3536,6 +3552,7 @@ begin
   UpdateCaption;
   DoFlipV(FBitmap);
   ProtFlipV;
+  AlphaFlipV;
   FinishEffect(T('Mirror vertically'), 0);
 end;
 
@@ -3551,8 +3568,9 @@ begin
 
   DoRotateLeft(FBitmap);
   ProtRotateLeft;
+  AlphaRotateLeft;
 
-  UpdateZoomFit;
+  NotifyBitmapResized;
   SW.Stop;
   FinishEffect(T('Rotate left'), SW.Elapsed.TotalSeconds);
 end;
@@ -3569,8 +3587,9 @@ begin
 
   DoRotateRight(FBitmap);
   ProtRotateRight;
+  AlphaRotateRight;
 
-  UpdateZoomFit;
+  NotifyBitmapResized;
   SW.Stop;
   FinishEffect(T('Rotate right'), SW.Elapsed.TotalSeconds);
 end;
@@ -3583,6 +3602,7 @@ begin
   UpdateCaption;
   DoRotate180(FBitmap);
   ProtRotate180;
+  AlphaRotate180;
   FinishEffect(T('Rotate 180'), 0);
 end;
 
@@ -3604,6 +3624,8 @@ begin
     UpdateCaption;
     RotateAndCrop(FBitmap, Angle);
     ProtRotateAngle(Angle);
+    AlphaRotateAngle(Angle);
+    NotifyBitmapResized;
     UpdateStatusBar; // Odświeża wymiary (1440x1920)
   finally
     SW.Stop; // 2. Zatrzymujemy stoper
@@ -3942,10 +3964,11 @@ begin
   begin
     R := FSelection.ClampedRect(FBitmap.Width, FBitmap.Height);
     ProtCrop(R);
+    AlphaCrop(R);
     FSelection.Clear;
     FBitmap.Assign(Cropped);
     Cropped.Free;
-    UpdateZoomFit;
+    NotifyBitmapResized;
     UpdateStatusBar;
     FinishEffect(T('Crop'), 0);
   end;
@@ -4028,8 +4051,9 @@ begin
     UndoPushMasked(FBitmap, FAlphaMask, FProtMask);
     ImageResize(FBitmap, NewW, NewH);
     ProtResize(NewW, NewH);
+    AlphaResize(NewW, NewH);
     FSelection.Clear;
-    UpdateZoomFit; FinishEffect(T('Resize'), 0);
+    NotifyBitmapResized; FinishEffect(T('Resize'), 0);
   end;
   ResizeSourceBmp := nil;
 end;
@@ -4045,8 +4069,9 @@ begin
     UndoPushMasked(FBitmap, FAlphaMask, FProtMask);
     ImageResizeCrop(FBitmap, NewW, NewH, Corner);
     ProtResizeCrop(NewW, NewH, Corner);
+    AlphaResizeCrop(NewW, NewH, Corner);
     FSelection.Clear;
-    UpdateZoomFit; FinishEffect(T('Fit to size with cropping'), 0);
+    NotifyBitmapResized; FinishEffect(T('Fit to size with cropping'), 0);
   end;
   ResizeCropSourceBmp := nil;
 end;
@@ -5487,11 +5512,17 @@ begin
   if Length(M.Steps) = 0 then Exit;
   W0 := FBitmap.Width;
   H0 := FBitmap.Height;
-  UndoPush(FBitmap);
+  { UndoPushMasked, nie UndoPush: kroki makra potrafia przeksztalcic maski
+    (ROTL/ROTR/ROT180/STRAIGHTEN). Przy zwyklym UndoPush maski nie trafiaja
+    na stos, a cofniecie przywraca tylko bitmape i zostawia maske w nowym
+    rozmiarze - stan gorszy niz brak maski. UUndoPushMasked przyjmuje nil dla
+    obu masek (uUndo.pas:79-91), wiec kroki ktore ich nie dotykaja nie placi
+    za to zadnym kosztem. }
+  UndoPushMasked(FBitmap, FAlphaMask, FProtMask);
   for i := 0 to High(M.Steps) do
     RunMacroStep(M.Steps[i]);
   if (FBitmap.Width <> W0) or (FBitmap.Height <> H0) then
-    UpdateZoomFit;
+    NotifyBitmapResized;
 end;
 
 procedure TfrmMain.RunMacroStep(const Step: TMacroStep);
@@ -5555,12 +5586,45 @@ begin
   else if SameText(Step.Code, 'MAGICWB') then ApplyMagicWB(Bitmap, StrToBoolDef(P[0], False))
   else if SameText(Step.Code, 'HAM6') then ApplyHAM(Bitmap, 4)
   else if SameText(Step.Code, 'HAM8') then ApplyHAM(Bitmap, 6)
-  else if SameText(Step.Code, 'FLIPH') then DoFlipH(Bitmap)
-  else if SameText(Step.Code, 'FLIPV') then DoFlipV(Bitmap)
-  else if SameText(Step.Code, 'ROTL') then DoRotateLeft(Bitmap)
-  else if SameText(Step.Code, 'ROTR') then DoRotateRight(Bitmap)
-  else if SameText(Step.Code, 'ROT180') then DoRotate180(Bitmap)
-  else if SameText(Step.Code, 'STRAIGHTEN') then RotateAndCrop(Bitmap, StrToIntDef(P[0], 0))
+  else if SameText(Step.Code, 'FLIPH') then
+  begin
+    DoFlipH(Bitmap);
+    ProtFlipH;
+    AlphaFlipH;
+  end
+  else if SameText(Step.Code, 'FLIPV') then
+  begin
+    DoFlipV(Bitmap);
+    ProtFlipV;
+    AlphaFlipV;
+  end
+  else if SameText(Step.Code, 'ROTL') then
+  begin
+    DoRotateLeft(Bitmap);
+    ProtRotateLeft;
+    AlphaRotateLeft;
+  end
+  else if SameText(Step.Code, 'ROTR') then
+  begin
+    DoRotateRight(Bitmap);
+    ProtRotateRight;
+    AlphaRotateRight;
+  end
+  else if SameText(Step.Code, 'ROT180') then
+  begin
+    DoRotate180(Bitmap);
+    ProtRotate180;
+    AlphaRotate180;
+  end
+  else if SameText(Step.Code, 'STRAIGHTEN') then
+  begin
+    { Geometria idzie w trzech warstwach: obraz, maska ochronna, maska alfa.
+      Wszystkie trzy musza dostac identyczne przeksztalcenie, bo render
+      porownuje ich rozmiary i przy niezgodnosci cicho konczy rysowanie. }
+    RotateAndCrop(Bitmap, StrToIntDef(P[0], 0));
+    ProtRotateAngle(StrToIntDef(P[0], 0));
+    AlphaRotateAngle(StrToIntDef(P[0], 0));
+  end
   else if SameText(Step.Code, 'STEREOGRAM') then DoStereogram(Bitmap, StrToIntDef(P[0], 0), StrToIntDef(P[1], 0), StrToIntDef(P[2], 0), StrToIntDef(P[3], 0))
   else if SameText(Step.Code, 'CHARCOAL') then DoCharcoal(Bitmap, StrToIntDef(P[0], 0))
   else if SameText(Step.Code, 'QUANTIZE') then DoQuantize(Bitmap, StrToIntDef(P[0], 0), StrToBoolDef(P[1], False))
@@ -6687,6 +6751,44 @@ begin
   RecalcProtCoverCount;
 end;
 
+procedure TfrmMain.AlphaFlipH;
+var
+  Y, X: Integer;
+  Row: PByte;
+  Tmp: Byte;
+begin
+  if FAlphaMask = nil then Exit;
+  for Y := 0 to FAlphaMask.Height - 1 do
+  begin
+    Row := FAlphaMask.ScanLine[Y];
+    for X := 0 to (FAlphaMask.Width div 2) - 1 do
+    begin
+      Tmp := Row[X];
+      Row[X] := Row[FAlphaMask.Width - 1 - X];
+      Row[FAlphaMask.Width - 1 - X] := Tmp;
+    end;
+  end;
+  FAlphaDirtyRect := Rect(0, 0, FAlphaMask.Width, FAlphaMask.Height);
+end;
+
+procedure TfrmMain.AlphaFlipV;
+var
+  Y, RowSize: Integer;
+  TmpRow: array of Byte;
+begin
+  if FAlphaMask = nil then Exit;
+  RowSize := FAlphaMask.Width;
+  SetLength(TmpRow, RowSize);
+  for Y := 0 to (FAlphaMask.Height div 2) - 1 do
+  begin
+    Move(FAlphaMask.ScanLine[Y]^, TmpRow[0], RowSize);
+    Move(FAlphaMask.ScanLine[FAlphaMask.Height - 1 - Y]^,
+      FAlphaMask.ScanLine[Y]^, RowSize);
+    Move(TmpRow[0], FAlphaMask.ScanLine[FAlphaMask.Height - 1 - Y]^, RowSize);
+  end;
+  FAlphaDirtyRect := Rect(0, 0, FAlphaMask.Width, FAlphaMask.Height);
+end;
+
 procedure TfrmMain.ProtRotateLeft;
 var
   Src: TBitmap;
@@ -6843,7 +6945,7 @@ end;
 procedure TfrmMain.ProtResizeCrop(TargetW, TargetH, Corner: Integer);
 var
   Scale, SW, SH: Double;
-  ScaledW, ScaledH, ExcessH, CropY: Integer;
+  ScaledW, ScaledH, ExcessW, ExcessH, CropX, CropY: Integer;
   New, Scaled: TBitmap;
   W, H, Y, X, SX, SY: Integer;
   SrcRow, DstRow: PByte;
@@ -6852,19 +6954,22 @@ begin
   if (TargetW < 1) or (TargetH < 1) then Exit;
   W := FProtMask.Width;
   H := FProtMask.Height;
+  if (W = 0) or (H = 0) then Exit;
   SW := TargetW / W;
   SH := TargetH / H;
   if SW > SH then Scale := SW else Scale := SH;
   ScaledW := Max(1, Round(W * Scale));
   ScaledH := Max(1, Round(H * Scale));
+  ExcessW := ScaledW - TargetW;
   ExcessH := ScaledH - TargetH;
   case Corner of
-    0:     CropY := 0;
-    1:     CropY := 0;
-    2:     CropY := ExcessH;
+    0: begin CropX := 0;       CropY := 0;       end;
+    1: begin CropX := ExcessW; CropY := 0;       end;
+    2: begin CropX := 0;       CropY := ExcessH; end;
   else
-    CropY := ExcessH;
+    begin CropX := ExcessW;   CropY := ExcessH; end;
   end;
+  if CropX < 0 then CropX := 0;
   if CropY < 0 then CropY := 0;
   Scaled := TBitmap.Create;
   try
@@ -6886,7 +6991,10 @@ begin
       New.PixelFormat := pf8bit;
       New.SetSize(TargetW, TargetH);
       for Y := 0 to TargetH - 1 do
-        Move(Scaled.ScanLine[CropY + Y]^, New.ScanLine[Y]^, TargetW);
+      begin
+        SrcRow := Scaled.ScanLine[CropY + Y];
+        Move((SrcRow + CropX)^, New.ScanLine[Y]^, TargetW);
+      end;
       FProtMask.Free;
       FProtMask := New;
     except
@@ -7018,6 +7126,372 @@ begin
   finally
     Src.Free;
   end;
+end;
+
+procedure TfrmMain.AlphaRotateAngle(AngleDeg: Double); // naprawa prostowania skanu 
+var
+  Src, RotBmp, NewMask: TBitmap;
+  SrcGP: TGPBitmap;
+  G: TGPGraphics;
+  RotM: TGPMatrix;
+  W, H: Integer;
+  Rad, AbsCos, AbsSin, Cos2: Double;
+  IW, IH: Double;
+  CW, CH, CropX, CropY: Integer;
+  Y, X: Integer;
+  SrcRow, DstRow: PByte;
+  V: Byte;
+begin
+  if FAlphaMask = nil then Exit;
+  if (FAlphaMask.Width = 0) or (FAlphaMask.Height = 0) or (AngleDeg = 0) then Exit;
+  W := FAlphaMask.Width;
+  H := FAlphaMask.Height;
+
+  // 1. Kopia w pf24bit do obrotu GDI+, tak jak w ProtRotateAngle
+  Src := TBitmap.Create;
+  try
+    Src.PixelFormat := pf24bit;
+    Src.SetSize(W, H);
+    for Y := 0 to H - 1 do
+    begin
+      SrcRow := FAlphaMask.ScanLine[Y];
+      DstRow := Src.ScanLine[Y];
+      for X := 0 to W - 1 do
+      begin
+        V := SrcRow[X];
+        if V > 127 then V := 255 else V := 0;
+        DstRow[X * 3] := V;
+        DstRow[X * 3 + 1] := V;
+        DstRow[X * 3 + 2] := V;
+      end;
+    end;
+
+    // 2. Obrót GDI+ — identyczny wzór jak w RotateAndCrop/ProtRotateAngle
+    RotBmp := TBitmap.Create;
+    try
+      RotBmp.PixelFormat := pf24bit;
+      RotBmp.SetSize(W, H);
+
+      SrcGP := TGPBitmap.Create(Src.Handle, Src.Palette);
+      try
+        G := TGPGraphics.Create(RotBmp.Canvas.Handle);
+        try
+          G.SetInterpolationMode(InterpolationModeHighQualityBilinear);
+          G.Clear(MakeColor(255, 0, 0, 0)); // obszar poza obrotem = 0 = przezroczysty (fMain.pas:638)
+
+          RotM := TGPMatrix.Create;
+          try
+            RotM.RotateAt(AngleDeg, MakePoint(W / 2.0, H / 2.0));
+            G.SetTransform(RotM);
+            G.DrawImage(SrcGP, 0, 0, W, H);
+          finally
+            RotM.Free;
+          end;
+        finally
+          G.Free;
+        end;
+      finally
+        SrcGP.Free;
+      end;
+
+      // 3. Wpisany prostokąt — ten sam wzór co RotateAndCrop/ProtRotateAngle
+      Rad := AngleDeg * Pi / 180.0;
+      AbsCos := Abs(Cos(Rad));
+      AbsSin := Abs(Sin(Rad));
+      Cos2 := Cos(2 * Rad);
+
+      CW := W;
+      CH := H;
+      CropX := 0;
+      CropY := 0;
+
+      if Abs(Cos2) > 0.01 then
+      begin
+        IW := (W * AbsCos - H * AbsSin) / Cos2;
+        IH := (H * AbsCos - W * AbsSin) / Cos2;
+
+        if (IW > W * 0.5) and (IH > H * 0.5) then
+        begin
+          CropX := Integer(Trunc((W - IW) / 2));
+          CropY := Integer(Trunc((H - IH) / 2));
+          CW := Min(Integer(Trunc(IW)), W - CropX);
+          CH := Min(Integer(Trunc(IH)), H - CropY);
+        end;
+      end;
+
+      // 4. Przepisanie przyciętego wyniku, powrót do pf8bit 0/255
+      NewMask := TBitmap.Create;
+      try
+        NewMask.PixelFormat := pf8bit;
+        NewMask.SetSize(CW, CH);
+        for Y := 0 to CH - 1 do
+        begin
+          SrcRow := RotBmp.ScanLine[CropY + Y];
+          DstRow := NewMask.ScanLine[Y];
+          for X := 0 to CW - 1 do
+          begin
+            V := SrcRow[(CropX + X) * 3];
+            if V > 127 then DstRow[X] := 255 else DstRow[X] := 0;
+          end;
+        end;
+        FAlphaDirtyRect := Rect(0, 0, CW, CH);
+        FAlphaMask.Free;
+        FAlphaMask := NewMask;
+      except
+        NewMask.Free;
+        raise;
+      end;
+    finally
+      RotBmp.Free;
+    end;
+  finally
+    Src.Free;
+  end;
+end;
+
+{ Alpha* dla FAlphaMask. Geometria identyczna jak Prot* dla FProtMask (te same
+  indeksy, ten sam nearest-neighbour), z jednym dodatkiem: po kazdej zmianie
+  maski caly nowy prostokat dostaje FAlphaDirtyRect. Pozostale wartowniki
+  rozmiaru przy renderze koncza cicho, a DrawCheckerRect pomija pusty rect
+  (pusty = zero kosztu) - bez tego szachownica zostalaby stara.
+  Wewnatrz try przypisanie FAlphaMask musi byc OSTATNIE: cokolwiek po nim
+  rzucajace daloby wyjatkiem juz z przypisana nowa bitmapa, a except zwolnilby
+  ja drugi raz. }
+procedure TfrmMain.AlphaRotateLeft;
+var
+  Src: TBitmap;
+  X, Y, W, H: Integer;
+  SrcRow: PByte;
+  New: TBitmap;
+begin
+  if FAlphaMask = nil then Exit;
+  W := FAlphaMask.Width;
+  H := FAlphaMask.Height;
+  Src := FAlphaMask;
+  New := TBitmap.Create;
+  try
+    New.PixelFormat := pf8bit;
+    New.SetSize(H, W);
+    for Y := 0 to H - 1 do
+    begin
+      SrcRow := Src.ScanLine[Y];
+      for X := 0 to W - 1 do
+        PByte(New.ScanLine[W - 1 - X])[Y] := SrcRow[X];
+    end;
+    FAlphaDirtyRect := Rect(0, 0, H, W);
+    FAlphaMask.Free;
+    FAlphaMask := New;
+  except
+    New.Free;
+    raise;
+  end;
+end;
+
+procedure TfrmMain.AlphaRotateRight;
+var
+  X, Y, W, H: Integer;
+  SrcRow: PByte;
+  New: TBitmap;
+begin
+  if FAlphaMask = nil then Exit;
+  W := FAlphaMask.Width;
+  H := FAlphaMask.Height;
+  New := TBitmap.Create;
+  try
+    New.PixelFormat := pf8bit;
+    New.SetSize(H, W);
+    for Y := 0 to H - 1 do
+    begin
+      SrcRow := FAlphaMask.ScanLine[Y];
+      for X := 0 to W - 1 do
+        PByte(New.ScanLine[X])[H - 1 - Y] := SrcRow[X];
+    end;
+    FAlphaDirtyRect := Rect(0, 0, H, W);
+    FAlphaMask.Free;
+    FAlphaMask := New;
+  except
+    New.Free;
+    raise;
+  end;
+end;
+
+procedure TfrmMain.AlphaRotate180;
+var
+  Src: TBitmap;
+  X, Y, W, H: Integer;
+  SrcRow, DstRow: PByte;
+begin
+  if FAlphaMask = nil then Exit;
+  Src := TBitmap.Create;
+  try
+    Src.Assign(FAlphaMask);
+    Src.PixelFormat := pf8bit;
+    W := Src.Width;
+    H := Src.Height;
+    for Y := 0 to H - 1 do
+    begin
+      SrcRow := Src.ScanLine[Y];
+      DstRow := FAlphaMask.ScanLine[H - 1 - Y];
+      for X := 0 to W - 1 do
+        DstRow[W - 1 - X] := SrcRow[X];
+    end;
+    FAlphaDirtyRect := Rect(0, 0, W, H);
+  finally
+    Src.Free;
+  end;
+end;
+
+procedure TfrmMain.AlphaCrop(const R: TRect);
+var
+  W, H, Y, X: Integer;
+  New: TBitmap;
+  SrcRow, DstRow: PByte;
+begin
+  if FAlphaMask = nil then Exit;
+  W := R.Right - R.Left + 1;
+  H := R.Bottom - R.Top + 1;
+  if (W < 1) or (H < 1) then Exit;
+  if (R.Left < 0) or (R.Top < 0) or
+     (R.Right >= FAlphaMask.Width) or (R.Bottom >= FAlphaMask.Height) then Exit;
+  New := TBitmap.Create;
+  try
+    New.PixelFormat := pf8bit;
+    New.SetSize(W, H);
+    for Y := 0 to H - 1 do
+    begin
+      SrcRow := FAlphaMask.ScanLine[R.Top + Y];
+      DstRow := New.ScanLine[Y];
+      for X := 0 to W - 1 do
+        DstRow[X] := SrcRow[R.Left + X];
+    end;
+    FAlphaDirtyRect := Rect(0, 0, W, H);
+    FAlphaMask.Free;
+    FAlphaMask := New;
+  except
+    New.Free;
+    raise;
+  end;
+end;
+
+procedure TfrmMain.AlphaResize(NewW, NewH: Integer);
+var
+  Src: TBitmap;
+  W, H, Y, X, SX, SY: Integer;
+  New: TBitmap;
+  SrcRow, DstRow: PByte;
+begin
+  if FAlphaMask = nil then Exit;
+  if (NewW < 1) or (NewH < 1) then Exit;
+  if (NewW = FAlphaMask.Width) and (NewH = FAlphaMask.Height) then Exit;
+  Src := FAlphaMask;
+  W := Src.Width;
+  H := Src.Height;
+  New := TBitmap.Create;
+  try
+    New.PixelFormat := pf8bit;
+    New.SetSize(NewW, NewH);
+    for Y := 0 to NewH - 1 do
+    begin
+      SY := Y * H div NewH;
+      SrcRow := Src.ScanLine[SY];
+      DstRow := New.ScanLine[Y];
+      for X := 0 to NewW - 1 do
+      begin
+        SX := X * W div NewW;
+        DstRow[X] := SrcRow[SX];
+      end;
+    end;
+    FAlphaDirtyRect := Rect(0, 0, NewW, NewH);
+    FAlphaMask.Free;
+    FAlphaMask := New;
+  except
+    New.Free;
+    raise;
+  end;
+end;
+
+{ UWAGA - ProtResizeCrop (fMain.pas:6945) musi utrzymywac identyczna geometrie
+  z ImageResizeCrop (uTransform.pas:153-159), bo obraz wyznacza
+  przeksztalcenie. Obie licza ExcessW/ExcessH i mapuja Corner tak samo - przy
+  rozbieznosci maska przestaje dostawac ten sam kadr co obraz. }
+procedure TfrmMain.AlphaResizeCrop(TargetW, TargetH, Corner: Integer);
+var
+  Scale, SW, SH: Double;
+  ScaledW, ScaledH, ExcessW, ExcessH, CropX, CropY: Integer;
+  New, Scaled: TBitmap;
+  W, H, Y, X, SX, SY: Integer;
+  SrcRow, DstRow: PByte;
+begin
+  if FAlphaMask = nil then Exit;
+  if (TargetW < 1) or (TargetH < 1) then Exit;
+  W := FAlphaMask.Width;
+  H := FAlphaMask.Height;
+  if (W = 0) or (H = 0) then Exit;
+  SW := TargetW / W;
+  SH := TargetH / H;
+  if SW > SH then Scale := SW else Scale := SH;
+  ScaledW := Max(1, Round(W * Scale));
+  ScaledH := Max(1, Round(H * Scale));
+  ExcessW := ScaledW - TargetW;
+  ExcessH := ScaledH - TargetH;
+  case Corner of
+    0: begin CropX := 0;       CropY := 0;       end;
+    1: begin CropX := ExcessW; CropY := 0;       end;
+    2: begin CropX := 0;       CropY := ExcessH; end;
+  else
+    begin CropX := ExcessW;   CropY := ExcessH; end;
+  end;
+  if CropX < 0 then CropX := 0;
+  if CropY < 0 then CropY := 0;
+  Scaled := TBitmap.Create;
+  try
+    Scaled.PixelFormat := pf8bit;
+    Scaled.SetSize(ScaledW, ScaledH);
+    for Y := 0 to ScaledH - 1 do
+    begin
+      SY := Y * H div ScaledH;
+      SrcRow := FAlphaMask.ScanLine[SY];
+      DstRow := Scaled.ScanLine[Y];
+      for X := 0 to ScaledW - 1 do
+      begin
+        SX := X * W div ScaledW;
+        DstRow[X] := SrcRow[SX];
+      end;
+    end;
+    New := TBitmap.Create;
+    try
+      New.PixelFormat := pf8bit;
+      New.SetSize(TargetW, TargetH);
+      for Y := 0 to TargetH - 1 do
+      begin
+        SrcRow := Scaled.ScanLine[CropY + Y];
+        Move((SrcRow + CropX)^, New.ScanLine[Y]^, TargetW);
+      end;
+      FAlphaDirtyRect := Rect(0, 0, TargetW, TargetH);
+      FAlphaMask.Free;
+      FAlphaMask := New;
+    except
+      New.Free;
+      raise;
+    end;
+  finally
+    Scaled.Free;
+  end;
+end;
+
+{ Jedyna brama dla "FBitmap ma teraz inny rozmiar". Wywolywana JAWNIE z kazdego
+  miejsca, ktore realnie zmienia wymiary - obrot 90 (zamiana osi), kadrowanie,
+  resize, resize z przycieciem, prostowanie skanu, makro.
+  Celowo NIE w FinishEffect: maska potrzebuje kata/geometrii, ktore zna tylko
+  miejsce wywolania, a FinishEffect dostaje tylko nazwe operacji i czas.
+  Dlatego wrappery Prot*/Alpha* stoją obok wywolan, a ta funkcja zamyka wylacznie
+  to, co wspolne: przeliczenie zoomu i geometrii PaintBox.
+  Uwaga: ROT180 i FLIP sa tu swiadomie pominiete - nie zmieniaja wymiarow
+  (podwojna zamiana osi / odbicie), a UpdateZoomFit zresetowalby zoom,
+  ktorego uzytkownik nie zmienial. Maske i tak odswieza FinishEffect. }
+procedure TfrmMain.NotifyBitmapResized;
+begin
+  UpdateZoomFit;
 end;
 
 procedure TfrmMain.DrawTransparencyChecker(Canvas: TCanvas);

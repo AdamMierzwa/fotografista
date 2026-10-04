@@ -30,6 +30,8 @@ type
     procedure FormCreate(Sender: TObject);
     procedure btnEqLumClick(Sender: TObject);
     procedure btnEqRGBClick(Sender: TObject);
+  public
+    procedure RefitButtons; override;
   private
     FDataR: array[0..255] of Integer;
     FDataG: array[0..255] of Integer;
@@ -85,6 +87,21 @@ end;
 procedure THistogramDlg.FormCreate(Sender: TObject);
 begin
   FMode := 'all';
+end;
+
+procedure THistogramDlg.RefitButtons;
+const
+  Gap = 6;
+begin
+  inherited;
+  FitButton(btnAll, 75);
+  FitButton(btnLum, 85);
+  FitButton(btnClose, 75);
+
+  btnR.Left := btnAll.Left + btnAll.Width + Gap;
+  btnG.Left := btnR.Left + btnR.Width + Gap;
+  btnB.Left := btnG.Left + btnG.Width + Gap;
+  btnLum.Left := btnB.Left + btnB.Width + Gap;
 end;
 
 procedure THistogramDlg.CalcHistogram;

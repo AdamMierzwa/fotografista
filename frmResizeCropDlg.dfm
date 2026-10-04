@@ -21,19 +21,18 @@
     Top = 0
     Width = 420
     Height = 90
-    Align = alTop
     BevelOuter = bvNone
     TabOrder = 0
     object lblWidth: TLabel
       Left = 14
       Top = 10
-      Width = 83
+      Width = 105
       Height = 15
       Caption = 'Width (px):'
       StyleElements = [seClient, seBorder]
     end
     object edWidth: TEdit
-      Left = 110
+      Left = 132
       Top = 7
       Width = 70
       Height = 23
@@ -42,20 +41,20 @@
     object lblHeight: TLabel
       Left = 14
       Top = 38
-      Width = 79
+      Width = 105
       Height = 15
       Caption = 'Height (px):'
       StyleElements = [seClient, seBorder]
     end
     object edHeight: TEdit
-      Left = 110
+      Left = 132
       Top = 35
       Width = 70
       Height = 23
       TabOrder = 1
     end
     object btnFullHD: TButton
-      Left = 200
+      Left = 216
       Top = 7
       Width = 130
       Height = 50
@@ -70,7 +69,6 @@
     Top = 90
     Width = 420
     Height = 140
-    Align = alClient
     BevelOuter = bvNone
     TabOrder = 1
     object lblAnchor: TLabel
@@ -94,8 +92,7 @@
     Left = 0
     Top = 240
     Width = 420
-    Height = 40
-    Align = alBottom
+    Height = 41
     BevelOuter = bvNone
     TabOrder = 2
     Padding.Left = 8
@@ -103,26 +100,24 @@
     Padding.Right = 8
     Padding.Bottom = 8
     object btnCancel: TButton
-      Left = 234
+      Left = 321
       Top = 8
       Width = 85
       Height = 25
-      Align = alRight
       Cancel = True
       Caption = 'Cancel'
       ModalResult = 2
-      TabOrder = 0
+      TabOrder = 1
     end
     object btnOK: TButton
-      Left = 319
+      Left = 230
       Top = 8
       Width = 85
       Height = 25
-      Align = alRight
       Caption = 'OK'
       Default = True
       ModalResult = 1
-      TabOrder = 1
+      TabOrder = 0
     end
   end
 end

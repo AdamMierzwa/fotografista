@@ -1,6 +1,6 @@
 ﻿# fix_buttons.ps1 - wrap root-level action buttons into pnlBottom
 
-$ProjectDir = (Split-Path -Parent $PSScriptRoot)
+$ProjectDir = "C:\Fotografista\Delphi"
 
 $ActionNames = @("btnOK","btnCancel","btnClose","btnAnuluj","btnZamknij","btnApply")
 

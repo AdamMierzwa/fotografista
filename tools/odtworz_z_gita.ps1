@@ -9,7 +9,7 @@
 #
 # Użycie:
 #   powershell -ExecutionPolicy Bypass -File tools\odtworz_z_gita.ps1 `
-#       -GitSource E:\Fotografista_git_backup -Dest D:\odtworzone
+#       -GitSource E:\Fotografista_git_backup -Dest C:\Fotografista_odtworzone
 #   (lub -GitSource wskazujący bezpośrednio folder .git; add -TestBuild by skompilować)
 #
 # parametry:

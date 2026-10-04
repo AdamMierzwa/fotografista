@@ -4,8 +4,8 @@
   BorderIcons = [biSystemMenu]
   BorderStyle = bsSingle
   Caption = 'Launcher'
-  ClientHeight = 230
-  ClientWidth = 172
+  ClientHeight = 252
+  ClientWidth = 176
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -22,7 +22,7 @@
   object ToolBar: TToolBar
     Left = 0
     Top = 0
-    Width = 172
+    Width = 176
     Height = 29
     AutoSize = True
     BorderWidth = 1
@@ -86,13 +86,13 @@
   object grpZoom: TGroupBox
     Left = 6
     Top = 40
-    Width = 160
-    Height = 74
+    Width = 164
+    Height = 92
     Caption = 'Zoom'
     TabOrder = 1
     object btnZoomOut: TButton
       Left = 8
-      Top = 18
+      Top = 26
       Width = 28
       Height = 25
       Caption = '-'
@@ -101,7 +101,7 @@
     end
     object lblZoom: TLabel
       Left = 42
-      Top = 23
+      Top = 31
       Width = 76
       Height = 18
       Alignment = taCenter
@@ -111,7 +111,7 @@
     end
     object btnZoomIn: TButton
       Left = 124
-      Top = 18
+      Top = 26
       Width = 28
       Height = 25
       Caption = '+'
@@ -120,7 +120,7 @@
     end
     object btnZoomFit: TButton
       Left = 8
-      Top = 44
+      Top = 57
       Height = 25
       Caption = 'Fit to window'
       Constraints.MinWidth = 144
@@ -130,14 +130,14 @@
   end
   object grpEdit: TGroupBox
     Left = 6
-    Top = 130
-    Width = 160
-    Height = 88
+    Top = 148
+    Width = 164
+    Height = 92
     Caption = 'Edit'
     TabOrder = 2
     object btnUndo: TButton
       Left = 8
-      Top = 18
+      Top = 26
       Height = 25
       Caption = 'Undo'
       Constraints.MinWidth = 144
@@ -146,7 +146,7 @@
     end
     object btnRevert: TButton
       Left = 8
-      Top = 48
+      Top = 57
       Height = 25
       Caption = 'Restore original'
       Constraints.MinWidth = 144

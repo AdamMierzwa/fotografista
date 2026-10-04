@@ -8,7 +8,7 @@ $i18n = Join-Path $root 'i18n'
 $tmpd = Join-Path $root 'tools\tmp'
 $out = Join-Path $tmpd 'audyt_missing_keys_all.txt'
 
-$exclude = @('fpdf.pas','uI18n.pas')
+$exclude = @('fpdf.pas','bluenoise.pas','uI18n.pas')
 
 $known = New-Object 'System.Collections.Generic.HashSet[string]'
 foreach ($l in (Get-Content -Encoding UTF8 (Join-Path $i18n 'english.tsv'))) {

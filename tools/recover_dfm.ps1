@@ -1,6 +1,6 @@
 ﻿# recover_dfm.ps1 v2 — rebuild DFMs corrupted by fix_buttons.ps1
 
-$ProjectDir = (Split-Path -Parent $PSScriptRoot)
+$ProjectDir = "C:\Fotografista\Delphi"
 
 $files = @(
     "frmSelSizeDlg.dfm","frmGammaDlg.dfm","frmHSBDlg.dfm","frmWBDlg.dfm",

@@ -63,6 +63,8 @@ type
     procedure tbCellMultChange(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
+  public
+    procedure RefitButtons; override;
   private
     FOriginalPreview: TBitmap;
     FWorkingPreview: TBitmap;
@@ -608,6 +610,12 @@ begin
       StretchDraw(DestRect, FWorkingPreview);
     end;
   end;
+end;
+
+procedure TTshirtDlg.RefitButtons;
+begin
+  inherited;
+  FitButtonGroup([btnInk0, btnInk1, btnInk2, btnInk3, btnInk4, btnInk5]);
 end;
 
 end.

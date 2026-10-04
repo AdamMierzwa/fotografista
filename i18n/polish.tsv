@@ -97,7 +97,7 @@
 99	Paleta Workbench 256 kolorów...
 100	Paleta MagicWB (8 kolorów)...
 101	O programie
-102	Otwórzplik obrazu
+102	Otwórz plik obrazu
 103	Zapisz obraz pod nową nazwą
 104	Pokaż szczegóły obrazu
 105	Zamknij bieżący obraz
@@ -108,7 +108,7 @@
 110	Kopiuj obraz do schowka
 111	Wklej obraz ze schowka jako nową warstwę
 112	Przywróć obraz do stanu pierwotnego
-113	Usuń historieoperacji - nieodwracalne
+113	Usuń historię operacji — nieodwracalne
 114	Połącz dwa efekty za pomocą suwaka
 115	Čeština (czeski)
 116	Português (portugalski)
@@ -122,67 +122,67 @@
 124	Podgląd w skali 200%
 125	Podgląd w skali 400%
 126	Pokaż historię
-127	Wyrównaj histogram -popraw kontrast
+127	Wyrównaj histogram — popraw kontrast
 128	Odbij obraz w poziomie
 129	Odbij obraz w pionie
 130	Obróć obraz o 90° w lewo
 131	Obróć obraz o 90° w prawo
 132	Obróć obraz o 180°
-133	Prostuj skan - obrót o +/- 10 stopni z automatycznym przycinaniem
+133	Prostuj skan — obrót o +/- 10 stopni z automatycznym przycinaniem
 134	Dostosuj kontrast
 135	Dostosuj jasność
 136	Korekcja gamma
-137	Ustaw czarny punkt, gamma, biały punkt - pełna kontrola tonalna
-138	Balans bieli - korekcja temperatury barwowej
+137	Ustaw czarny punkt, gamma, biały punkt — pełna kontrola tonalna
+138	Balans bieli — korekcja temperatury barwowej
 139	Wyostrz obraz
-140	Soczystość - nasycone, żywe kolory
+140	Soczystość — nasycone, żywe kolory
 141	Wzmocnienie zdjęcia (Multiply)
 142	Przytnij obraz
 143	Zmień rozmiar obrazu
 144	Pokoloruj obraz wybranym kolorem
 145	Dostosuj jasność, nasycenie i odcień
-146	Solaryzacja – odwrócenie jasnych tonów światła
-147	Dwukolorowy efekt - cienie i światła
-148	Sepia - ciepły brązowy monochromat
-149	Cyjanotypia - niebieski monochromat
-150	Fotografia solna - ciepły brąz
-151	Rentgen - odwrócone kolory
-152	Fałszywe kolory IR – zamiana kanałów, czerwone rośliny, błękitne niebo
-153	Nocne widzenie - szarość i zielony fosfor
-154	Termiczny - podgląd we fałszywych kolorach
-155	Efekt Ortona - rozmyta poświata,bajkowy nastrój
+146	Solaryzacja — odwrócenie jasnych tonów światła
+147	Dwukolorowy efekt — cienie i światła
+148	Sepia — ciepły brązowy monochromat
+149	Cyjanotypia — niebieski monochromat
+150	Fotografia solna — ciepły brąz
+151	Rentgen — odwrócone kolory
+152	Fałszywe kolory IR — zamiana kanałów, czerwone rośliny, błękitne niebo
+153	Nocne widzenie — szarość i zielony fosfor
+154	Termiczny — podgląd we fałszywych kolorach
+155	Efekt Ortona — rozmyta poświata, bajkowy nastrój
 156	Konawersja do czarno-białego z opcją roztrząsania
 157	Konswersja doskali szarości
-158	Odwrócone kolory - negatyw
-159	Dodaj ziarno filmowe - szum losowy
-160	Efekt olejny - symulacja pędzla
-161	Węgiel - symulacja rysunku węglowego
+158	Odwrócone kolory — negatyw
+159	Dodaj ziarno filmowe — szum losowy
+160	Efekt olejny — symulacja pędzla
+161	Węgiel — symulacja rysunku węglowego
 162	Rozmycie obrazu
-163	Efekt wypukłości - relief
-164	Pikselizacja - efekt mozaiki
-165	Winietowanie - przyciemnianie krawędzi
-166	Posteryzacja - redukcja liczby kolorów
-167	Detekcja krawędzi - efekt szkicu
-168	Linoryt - ostry, czarno-biały kontrast
-169	Grawerowanie -symulacja linii rytowniczych
+163	Efekt wypukłości — relief
+164	Pikselizacja — efekt mozaiki
+165	Winietowanie — przyciemnianie krawędzi
+166	Posteryzacja — redukcja liczby kolorów
+167	Detekcja krawędzi — efekt szkicu
+168	Linoryt — ostry, czarno-biały kontrast
+169	Grawerowanie — symulacja linii rytowniczych
 170	Krzyżowanie linii pod dwoma kątami
-171	Raster - rosnące kropki zależnie od jasności
-172	Kropkowanie - gęstość kropek zależnie od jasności
-173	Kostkowanie - oczka kostki do gry
-174	Rizograf - druk warstwowy z offsetem kolorów
-175	Sitodruk jednokolorowy - szary + tło ​​półtonowe
+171	Raster — rosnące kropki zależnie od jasności
+172	Kropkowanie — gęstość kropek zależnie od jasności
+173	Kostkowanie — oczka kostki do gry
+174	Rizograf — druk warstwowy z offsetem kolorów
+175	Sitodruk jednokolorowy — szary + tło  półtonowe
 176	Zniekształcenie beczkowate / poduszkowe
-177	Zniekształcenie łukowe – zginanie obrazu
-178	Wiruj - przekręć obraz
+177	Zniekształcenie łukowe — zginanie obrazu
+178	Wiruj — przekręć obraz
 179	Fale wodne
-180	Zniekształcenia biegunowe - tunel, rybie oko
-181	Paleta 4 kolorów - Workbench 1.x (OCS)
-182	Paleta 4 kolorów - Workbench 2.x/3.x
-183	Paleta 32 kolorów (4x4x2) - OCS
-184	Paleta 64 kolorów (4x4x4) - EHB
-185	Paleta 256 kolorów - AGA
-186	Paleta 256 kolorów - Workbench 3.x
-187	Paleta 8 kolorów - MagicWB (MUI)
+180	Zniekształcenia biegunowe — tunel, rybie oko
+181	Paleta 4 kolorów — Workbench 1.x (OCS)
+182	Paleta 4 kolorów — Workbench 2.x/3.x
+183	Paleta 32 kolorów (4x4x2) — OCS
+184	Paleta 64 kolorów (4x4x4) — EHB
+185	Paleta 256 kolorów — AGA
+186	Paleta 256 kolorów — Workbench 3.x
+187	Paleta 8 kolorów — MagicWB (MUI)
 188	Fotografista
 189	Brak obrazu
 190	OK
@@ -213,31 +213,31 @@
 217	Bez roztrząsania
 218	Włączone
 219	Wyłączone
-220	Intensywność (1-10):
-221	Jasność (0-200, domyślnie 100):
+220	Intensywność (1–10):
+221	Jasność (0–200, domyślnie 100):
 222	Gamma (100 = brak zmian):
 223	Czerwony (100 = brak zmian):
 224	Zielony (100 = brak zmian):
 225	Niebieski (100 = brak zmian):
-226	Intensywność (1-100):
-227	Intensywność (0-100):
-228	Promień (1-5)
-229	Intensywność (1-50):
-230	Rozmiar komórki (1-100):
+226	Intensywność (1–100):
+227	Intensywność (0–100):
+228	Promień (1–5)
+229	Intensywność (1–50):
+230	Rozmiar komórki (1–100):
 231	Kąt linii (0–179°):
 232	Rozmiar komórki (4–16 px):
 233	Maksymalna grubość linii (1–8):
 234	Rozmiar komórki (4–64 px):
 235	Rozmiar podkomórki kropki (3–8 px):
-236	Prog (1-100):
+236	Prog (1–100):
 237	Ilość tuszu (jaśniejsze = mniej):
-238	Siła efektu (0-100):
-239	Nasycenie (0-100):
-240	Kontrast (0-100):
-241	Krzywa (1-5):
-242	Sprytne krzywe (0-100):
-243	Czarny punkt (0-255):
-244	Biały punkt (0-255):
+238	Siła efektu (0–100):
+239	Nasycenie (0–100):
+240	Kontrast (0–100):
+241	Krzywa (1–5):
+242	Sprytne krzywe (0–100):
+243	Czarny punkt (0–255):
+244	Biały punkt (0–255):
 245	Kąt prostowania (-10 do +10 stopni):
 248	Zastosuj prostowanie i zamknij
 249	Zastosuj zmiany warstw i zamknij
@@ -295,10 +295,10 @@
 308	Fale wodne
 309	Zniekształcenie biegunowe
 310	Jakość zapisu
-311	Nasycenie (0-200, domyślnie 100):
-312	Odcień (0-200, domyślnie 100):
-313	Kontrast przed konwersją (0-10):
-314	Liczba kolorów (2-64):
+311	Nasycenie (0–200, domyślnie 100):
+312	Odcień (0–200, domyślnie 100):
+313	Kontrast przed konwersją (0–10):
+314	Liczba kolorów (2–64):
 315	Krycie
 316	Tryb:
 317	Wybierz kolor...
@@ -343,7 +343,7 @@
 359	Nieobsługiwany format pliku
 360	Migawka
 361	Oryginał
-362	Gamma (10-500, 100=1.0):
+362	Gamma (10–500, 100=1.0):
 363	Efekt A
 364	Efekt B
 365	Wyrównanie histogramu
@@ -398,7 +398,7 @@
 434	Gotowe
 435	Miniatura zapisana
 436	Zapisz miniaturę jako
-437	Jakość zapisu JPEG (0-100):
+437	Jakość zapisu JPEG (0–100):
 438	Normalna
 439	Mnożenie
 440	Ekran
@@ -435,8 +435,8 @@
 475	Nie wczytano obrazu.
 476	kroków
 477	Nagrywanie makra
-478	HAM6 - 16 kolorów + Hold-Modify
-479	HAM8 - 64 kolory + Hold-Modify
+478	HAM6 — 16 kolorów + Hold-Modify
+479	HAM8 — 64 kolory + Hold-Modify
 480	Symulacja HAM6 (16 kolorów podstawowych z trybami hold-modify)
 481	Symulacja HAM8 (64 kolory podstawowe z trybami hold-modify)
 482	HAM6
@@ -447,7 +447,7 @@
 487	Rozmiar ikony:
 488	Format ikony:
 489	Ikona zapisana.
-491	Ten efekt jest bardzo wymagający obliczeniowo.\nDla zdjęć powyżej 6 MP czas może przekroczyć 30-60 sekund.
+491	Ten efekt jest bardzo wymagający obliczeniowo.\nDla zdjęć powyżej 6 MP czas może przekroczyć 30–60 sekund.
 492	Kontynuuj
 493	Blask...
 494	Promień poświaty:
@@ -456,7 +456,7 @@
 497	Amiga gradient (Agony)...
 498	Gradient copper w stylu Agony
 499	Zapisz jako ikonę Windows...
-501	Jakość zapisu JPEG 2000 (0-100, 100=bezstratny):
+501	Jakość zapisu JPEG 2000 (0–100, 100=bezstratny):
 502	Błędne wywołanie...
 503	Nieprawidłowe wywołanie — symulacja E-6/C-41
 504	Zapisz pakiet ikon (ZIP)...
@@ -503,9 +503,9 @@
 556	Mapowanie do palety AGA 256 kolorów
 557	Mapowanie do palety Workbench 256 kolorów
 558	Mapowanie do palety MagicWB 8 kolorów
-559	Odcień górny (0-360):
-560	Odcień dół (0-360):
-561	Liczba pasów (32-256):
+559	Odcień górny (0–360):
+560	Odcień dół (0–360):
+561	Liczba pasów (32–256):
 562	E-6 w C-41
 563	C-41 w E-6
 564	Kodak w wywoływaczu Fuji
@@ -543,7 +543,7 @@
 597	Wyjście bez zapisanych zmian
 598	Płaskorzeźba...
 599	Płaskorzeźba materiałowa z jasności obrazu
-600	Głębokość (1-100):
+600	Głębokość (1–100):
 601	Gips / biały kamień
 602	Biały marmur
 603	Szary kamień
@@ -623,7 +623,7 @@
 679	NES — Nestopia
 680	Mapowanie do palety NES Nestopia
 681	Wzór (retro)
-682	Floyd–Steinberg (wygładzony)
+682	Floyd-Steinberg (wygładzony)
 683	Wybrany tryb jest bardzo wolny dla dużych zdjęć.\nDla zdjęć powyżej 2 MP podgląd i zastosowanie efektu mogą zająć kilka minut.\nInne tryby są znacznie szybsze.
 684	Wydajność...
 685	Maksymalna rozdzielczość robocza:
@@ -686,7 +686,7 @@
 753	Emergo
 754	Zmierz wydajność efektów graficznych
 755	Przetwarzanie
-756	Promień pędzla (1-30):
+756	Promień pędzla (1–30):
 757	Glitch...
 758	Cyfrowe zakłócenia obrazu — przesunięcie RGB, szum, pasma poziome
 759	Przesunięcie kanałów RGB:
@@ -779,36 +779,36 @@
 852	Przypisz farbę 6
 853	Błędne wywołanie
 854	Blokowanie
-855	Jasność przed konwersją (0-200):
-856	Środek X (0-100):
-857	Środek Y (0-100):
+855	Jasność przed konwersją (0–200):
+856	Środek X (0–100):
+857	Środek Y (0–100):
 858	Wybierz kolor...
 859	Wybierz kolor:
 860	Wybierz motyw:
 861	Wybierz...
 862	Błąd CMYK
-863	Kontrast przed konwersją (0-10):
+863	Kontrast przed konwersją (0–10):
 864	Tworzenie nadruku
 865	Kreskowanie
 866	Folder docelowy:
-867	Czułość detekcji (1-100):
+867	Czułość detekcji (1–100):
 868	Mnożnik rozmiaru punktu:
-869	Rozmiar podkomórki rastra (3-8 px):
+869	Rozmiar podkomórki rastra (3–8 px):
 870	Duplikator
 871	Efekt A:
 872	Efekt B:
 873	Mieszanie efektów
-874	Siła efektu (0-100):
+874	Siła efektu (0–100):
 875	Tłoczenie
-876	Zanikanie (0-100):
+876	Zanikanie (0–100):
 877	Dopasuj do rozmiaru z przycięciem
 878	Ziarnistość:
 879	Informacje o obrazie
 880	Rozmiar czcionki interfejsu (pt):
 881	Jakość JPEG w TIFF:
-882	Kąt linii (0-179):
+882	Kąt linii (0–179):
 883	Materiał:
-884	Maksymalna grubość linii (1-8):
+884	Maksymalna grubość linii (1–8):
 885	Makieta
 886	Bez kompresji
 887	Obraz olejny
@@ -835,21 +835,21 @@
 908	Soczystość
 909	Bez uruchamiania makra
 910	Powiększenie
-911	Siła efektu (1-100):
-912	Promień (1-100):
-913	Pozycja pasa (0-100):
-914	Wysokość pasa (1-100):
+911	Siła efektu (1–100):
+912	Promień (1–100):
+913	Pozycja pasa (0–100):
+914	Wysokość pasa (1–100):
 915	Siła efektu (0 = brak, 100 = maks.):
 916	Kontrast (0 = brak, 100):
-917	Promień pędzla (1-10):
-918	Promień poświaty (1-20):
-919	Drżenie linii (0-100):
-920	Szum (0-100):
-921	Efekt kineskopu (0-100):
-922	Utrata bloków (0-100):
-923	Przesunięcia pasm poziomych (0-100):
-924	Przesunięcie kanałów RGB (0-30):
-925	Jakość zapisu WebP (0-100):
+917	Promień pędzla (1–10):
+918	Promień poświaty (1–20):
+919	Drżenie linii (0–100):
+920	Szum (0–100):
+921	Efekt kineskopu (0–100):
+922	Utrata bloków (0–100):
+923	Przesunięcia pasm poziomych (0–100):
+924	Przesunięcie kanałów RGB (0–30):
+925	Jakość zapisu WebP (0–100):
 926	4. Sitodruk
 927	Profesjonalny edytor grafik
 928	Architektura: 100% natywna (VCL / Object Pascal)
@@ -888,16 +888,16 @@
 963	Glitch
 964	Gradient Amiga
 965	Gradient Amiga (Agony)
-966	NES - Nestopia
+966	NES — Nestopia
 967	Nieobsługiwany krok: 
-968	Nie można porównać - obraz nie został otwarty z pliku.
+968	Nie można porównać — obraz nie został otwarty z pliku.
 969	Plik nie istnieje:
 970	Brak pliku źródłowego na dysku do przywrócenia oryginału.
 971	Najpierw otwórz obraz.
-972	Makro jest puste - nie zapisano.
+972	Makro jest puste — nie zapisano.
 973	Nazwa makra
 974	Podaj nazwę makra:
-975	Anulowano - makro nie zostało zapisane.
+975	Anulowano — makro nie zostało zapisane.
 976	Brak obrazów w folderze źródłowym.
 977	Nowa nazwa makra:
 978	Usunąć makro „%s“?
@@ -955,7 +955,7 @@
 1021	Timelapse...
 1022	Stereogram...
 1023	Usuń tło...
-1024	Rozmiar siatki (1-32 px):
+1024	Rozmiar siatki (1–32 px):
 1025	Skala kropki [%]:
 1026	Stereogram
 1027	Tryb wyjścia:

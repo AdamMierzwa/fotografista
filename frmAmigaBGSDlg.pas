@@ -3,9 +3,9 @@
 interface
 
 uses
-  Winapi.Windows, System.SysUtils, System.Classes, System.Diagnostics,
+  Winapi.Windows, System.SysUtils, System.Classes, System.Math, System.Diagnostics,
   Vcl.Graphics, Vcl.Controls, Vcl.Forms, Vcl.Dialogs,
-  Vcl.StdCtrls, uAmiga, uMacros;
+  Vcl.StdCtrls, uAmiga, uI18n, uMacros;
 
 type
   TAmigaBGSDlg = class(TForm)
@@ -65,6 +65,8 @@ end;
 { TAmigaBGSDlg }
 
 procedure TAmigaBGSDlg.FormCreate(Sender: TObject);
+var
+  I, MaxItemW, ComboW, ContentW, Gap, SectionGap, Margin, Pad: Integer;
 begin
   cbRes.Items.Clear;
   cbRes.Items.Add('320 x 256 (OCS/ECS PAL Lo-Res)');
@@ -73,6 +75,41 @@ begin
   cbRes.Items.Add('800 x 600 (AGA/RTG)');
   cbRes.Items.Add('1024 x 768 (AGA/RTG)');
   cbRes.ItemIndex := 0;
+
+  TranslateForm(Self);
+
+  Margin := 15;
+  Gap := Canvas.TextHeight('Wg') div 3;
+  SectionGap := Canvas.TextHeight('Wg');
+  Pad := 2 * Canvas.TextWidth('W');
+
+  MaxItemW := 0;
+  for I := 0 to cbRes.Items.Count - 1 do
+    if Canvas.TextWidth(cbRes.Items[I]) > MaxItemW then
+      MaxItemW := Canvas.TextWidth(cbRes.Items[I]);
+
+  btnOK.Width := Max(85, Canvas.TextWidth(btnOK.Caption) + Pad);
+  btnCancel.Width := Max(85, Canvas.TextWidth(btnCancel.Caption) + Pad);
+
+  ComboW := MaxItemW + SectionGap * 2 + 8;
+  cbRes.Width := ComboW;
+
+  ContentW := Max(lblRes.Width, ComboW);
+  if btnOK.Width + Gap + btnCancel.Width > ContentW then
+    ContentW := btnOK.Width + Gap + btnCancel.Width;
+  ClientWidth := ContentW + 2 * Margin;
+
+  lblRes.Left := Margin;
+  lblRes.Top := Margin;
+  cbRes.Left := Margin;
+  cbRes.Top := lblRes.Top + lblRes.Height + Gap;
+
+  btnCancel.Left := ClientWidth - Margin - btnCancel.Width;
+  btnOK.Left := btnCancel.Left - Gap - btnOK.Width;
+  btnOK.Top := cbRes.Top + cbRes.Height + SectionGap;
+  btnCancel.Top := btnOK.Top;
+
+  ClientHeight := btnOK.Top + btnOK.Height + Margin;
 end;
 
 procedure TAmigaBGSDlg.ApplyFull(Tw, Th: Integer);
