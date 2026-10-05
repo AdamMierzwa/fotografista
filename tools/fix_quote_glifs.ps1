@@ -25,7 +25,7 @@
 # cudzyslow delimituje string = dwa znaki). Dostęp tylko przez kod punktowy.
 
 $ErrorActionPreference = 'Stop'
-$root = 'C:\Fotografista\Delphi'
+$root = Split-Path -Parent $PSScriptRoot
 . (Join-Path $root 'tools\i18n_common.ps1')
 $encb = New-Object System.Text.UTF8Encoding($true)
 

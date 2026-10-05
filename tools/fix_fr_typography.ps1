@@ -12,7 +12,7 @@
 # jesli katalog byl uszkodzony PRZED zmiana.
 
 $ErrorActionPreference = 'Stop'
-$root = 'C:\Fotografista\Delphi'
+$root = Split-Path -Parent $PSScriptRoot
 . (Join-Path $root 'tools\i18n_common.ps1')
 
 $path = Join-Path $root 'i18n\french.tsv'

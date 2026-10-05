@@ -83,6 +83,40 @@ raport każdej zmienionej komórki.
 
 ### Changed
 
+**Wersja EXE nie zgadzała się z wersją paczki** (`Fotografista.dproj`) —
+`FileVersion`/`ProductVersion` w `Win64|Release` stały na `1.0.6.0` od pierwszego
+commita, m.in. w commitach „O programie: wersja 1.1" i „MSIX 1.1.0.0". Skutek
+realny, nie teoretyczny: opublikowana paczka miała w manifeście `1.1.0.0`, a
+`Fotografista.exe` w środku `1.0.6.0`. Ustawione `1.1.1.0`.
+- `tools/check_version.ps1` — nowy strażnik krzyżujący cztery źródła numeru:
+  `dproj` `Win64|Release` (referencja: `FileVersion` **i** `ProductVersion` w tej
+  samej linijce, bo obie trafiają do EXE i obie widać we Właściwościach
+  pliku), `RealAppVersion`, `AppxManifest` `Identity/@Version`, `set VER` w
+  `build_msix.cmd`. Wypisuje plik, linię i wartość do poprawy. Brak pliku to
+  „pominięto", nie błąd — `packaging/` jest gitignorowany, więc czysty clone
+  nadal musi umieć zbudować paczkę ZIP
+- `tools/test_check_version.ps1` — regresja na własnym drzewie w `tools\tmp\`
+  (prawdziwe repo nietknięte). Trzy wstrzyknięte uszkodzenia: rozdzaj
+  `FileVersion`/`ProductVersion` w jednej linijce, całkowity brak
+  `ProductVersion`, stan czysty. 3/3
+- `build_msix.cmd` woła strażnika jako **pierwszy** test sekcji „kontrola
+  wejścia", przed kopiowaniem do `packaging\x64` i przed pytaniem o hasło;
+  rozjazd kończy się `exit 1`. Twardy blok, nie ostrzeżenie: `1.0.6.0`
+  przeszło całą ścieżkę publikacji aż do Storea właśnie dlatego, że nikt tego
+  nie porównał
+- `release/` ma `dproj` celowo na `1.1.0.0` (tag `v1.1`) i strażnik raportuje
+  tam rozjazd. To prawda, nie usterka: `release/` nie służy do budowania, a
+  numer faktycznie opublikowany nie może być cofnięty
+
+**Skrypty buildowe były związane z jednym dyskiem** (`tools/build_msix.cmd`,
+`tools/build_dist.cmd`, `tools/fix_buttons.ps1`, `tools/fix_fr_typography.ps1`,
+`tools/fix_quote_glifs.ps1`, `tools/recover_buttons.ps1`,
+`tools/recover_dfm.ps1`) — `C:\Fotografista\Delphi` zastąpione `%~dp0` (`.cmd`)
+i `$PSScriptRoot` (`.ps1`), więc działają w każdym sklonowanym repo, niezależnie
+od dysku. Wariant `.ps1` to wzorzec już obecny w 12 skryptach `tools/`.
+- hasło do certyfikatu nie jest już zapisane w `build_msix.cmd`; bramka pyta je
+  interaktywnie (`set /p`) i odmawia pakowania przy pustym
+
 **Maska alfa nie podążała za obrazem przy zmianach geometrii** (`fMain.pas`) —
 osiem nowych wrapperów `Alpha*` dla `FAlphaMask`, podpiętych wszędzie tam, gdzie
 przepuszczano już `Prot*` dla `FProtMask`.
