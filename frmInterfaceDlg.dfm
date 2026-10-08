@@ -3,7 +3,7 @@
   Top = 0
   BorderStyle = bsDialog
   Caption = 'Interface'
-  ClientHeight = 392
+  ClientHeight = 484
   ClientWidth = 340
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -47,6 +47,14 @@
     Width = 82
     Height = 15
     Caption = 'Choose theme:'
+    StyleElements = [seClient, seBorder]
+  end
+  object lblBrushCursor: TLabel
+    Left = 16
+    Top = 340
+    Width = 90
+    Height = 15
+    Caption = 'Brush cursor:'
     StyleElements = [seClient, seBorder]
   end
   object btnCanvasBG: TButton
@@ -96,24 +104,42 @@
     Style = csDropDownList
     TabOrder = 4
   end
+  object cmbBrushCursor: TComboBox
+    Left = 16
+    Top = 364
+    Width = 224
+    Height = 23
+    AutoDropDownWidth = True
+    Style = csDropDownList
+    TabOrder = 5
+    OnChange = cmbBrushCursorChange
+  end
+  object chkBrushCrosshairCenter: TCheckBox
+    Left = 16
+    Top = 398
+    Width = 300
+    Height = 17
+    Caption = 'Show crosshair in brush outline'
+    TabOrder = 6
+  end
   object btnOK: TButton
     Left = 150
-    Top = 348
+    Top = 440
     Width = 85
     Height = 25
     Caption = 'OK'
     Default = True
     ModalResult = 1
-    TabOrder = 5
+    TabOrder = 7
   end
   object btnCancel: TButton
     Left = 242
-    Top = 348
+    Top = 440
     Width = 85
     Height = 25
     Cancel = True
     Caption = 'Cancel'
     ModalResult = 2
-    TabOrder = 6
+    TabOrder = 8
   end
 end

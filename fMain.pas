@@ -1091,6 +1091,12 @@ procedure TEraserTool.Activate;
 var
   P: TPoint;
 begin
+  if Prefs.BrushCursorMode = 1 then
+  begin
+    if FOwner.FBrushCursorOn then FOwner.ClearBrushCursor;
+    FOwner.PaintBox.Cursor := crCross;
+    Exit;
+  end;
   // Ukryj kursor systemowy - zamiast niego renderer rysuje kółko pędzla
   // (wzorzec Hollywood: przezroczysty okrąg zamiast wskaźnika myszy).
   FOwner.FBrushCursorOn := False;
@@ -1294,6 +1300,12 @@ procedure TProtectTool.Activate;
 var
   P: TPoint;
 begin
+  if Prefs.BrushCursorMode = 1 then
+  begin
+    if FOwner.FBrushCursorOn then FOwner.ClearBrushCursor;
+    FOwner.PaintBox.Cursor := crCross;
+    Exit;
+  end;
   FOwner.FBrushCursorOn := False;
   FOwner.PaintBox.Cursor := crNone;
   if (FOwner.FBitmap.Width > 0) and (FOwner.FBitmap.Height > 0) then
@@ -1468,6 +1480,12 @@ end;
 
 procedure TBrushTool.Activate;
 begin
+  if Prefs.BrushCursorMode = 1 then
+  begin
+    if FOwner.FBrushCursorOn then FOwner.ClearBrushCursor;
+    FOwner.PaintBox.Cursor := crCross;
+    Exit;
+  end;
   // Kursor kółka jak w gumce: renderer rysuje okrąg pędzla zamiast kursora.
   FOwner.FBrushCursorOn := False;
   FOwner.PaintBox.Cursor := crNone;
@@ -6084,6 +6102,8 @@ var
   NewRemember: Boolean;
   NewFontSize, NewRecentCount: Integer;
   NewTheme: string;
+  NewBrushCursorMode: Integer;
+  NewBrushCrosshairCenter: Boolean;
   OldBG: TColor;
   OldFontSize: Integer;
   OldTheme: string;
@@ -6097,15 +6117,19 @@ begin
   NewFontSize := Prefs.UIFontSize;
   NewRecentCount := Prefs.RecentFilesCount;
   NewTheme := Prefs.ThemeName;
+  NewBrushCursorMode := Prefs.BrushCursorMode;
+  NewBrushCrosshairCenter := Prefs.BrushCrosshairCenter;
 
   if ShowInterfaceDlg(NewBG, NewRemember, NewFontSize, NewRecentCount,
-    NewTheme, InterfacePreview) then
+    NewTheme, NewBrushCursorMode, NewBrushCrosshairCenter, InterfacePreview) then
   begin
     Prefs.CanvasBG := NewBG;
     Prefs.RememberWin := NewRemember;
     Prefs.UIFontSize := NewFontSize;
     Prefs.RecentFilesCount := NewRecentCount;
     Prefs.ThemeName := NewTheme;
+    Prefs.BrushCursorMode := NewBrushCursorMode;
+    Prefs.BrushCrosshairCenter := NewBrushCrosshairCenter;
     SavePrefs;
 
     Self.Color := Prefs.CanvasBG;
@@ -6119,6 +6143,9 @@ begin
     RebuildRecentMenu(mnuFile, mnuFileSepRecent, HandleRecentFileClick);
     TStyleManager.TrySetStyle(Prefs.ThemeName);
     ApplyThemeLabelColors(Self);
+    case FActiveToolKind of
+      tkBrush, tkEraser, tkProtect: FActiveTool.Activate;
+    end;
   end
   else
   begin
@@ -6440,6 +6467,7 @@ procedure TfrmMain.UpdateBrushCursor(AX, AY: Integer);
 var
   R: Integer;
 begin
+  if Prefs.BrushCursorMode <> 0 then Exit;
   R := Round(RetouchEffectiveRadius * FZoomFactor) + 3;
   if R < 5 then R := 5;
   // Pierścień rysowany bezpośrednio na płótnie, bez invalidation: każdy WM_PAINT
@@ -6483,6 +6511,22 @@ begin
     Pen.Width := 1;
     Pen.Color := clWhite;
     Ellipse(Cx - R + 1, Cy - R + 1, Cx + R - 1, Cy + R - 1);
+    if Prefs.BrushCrosshairCenter and (R >= 5) then
+    begin
+      Pen.Style := psSolid;
+      Pen.Width := 2;
+      Pen.Color := clBlack;
+      MoveTo(Cx - R + 3, Cy);
+      LineTo(Cx + R - 3, Cy);
+      MoveTo(Cx, Cy - R + 3);
+      LineTo(Cx, Cy + R - 3);
+      Pen.Width := 1;
+      Pen.Color := clWhite;
+      MoveTo(Cx - R + 3, Cy);
+      LineTo(Cx + R - 3, Cy);
+      MoveTo(Cx, Cy - R + 3);
+      LineTo(Cx, Cy + R - 3);
+    end;
     Pen.Style := psSolid;
     Brush.Style := bsSolid;
   end;
@@ -6554,7 +6598,7 @@ end;
 
 procedure TfrmMain.mnuHelpOnlineDocsClick(Sender: TObject);
 begin
-  ShellExecute(0, 'open', 'https://amiga.org.pl/fotografista/', nil, nil,
+  ShellExecute(0, 'open', 'https://fotografista.com.pl', nil, nil,
     SW_SHOWNORMAL);
 end;
 

@@ -15,7 +15,7 @@
 # Konwencja formatowania plikow .tsv: UTF-8 BOM + CRLF (patrz AGENTS.md regula 10).
 # Ten modul jest UTF-8 z BOM, koniec linii LF (jak pozostale .ps1 w tools\).
 
-$script:I18nExpectedRecords = 1048
+$script:I18nExpectedRecords = 1052
 
 # Zwraca liste problemow. Pusta lista = plik w pelni poprawny.
 # Funkcja NIGDY nie konczy skryptu - decyzje podejmuje wolajacy.
@@ -23,7 +23,7 @@ function Test-TsvIntegrity {
   [CmdletBinding()]
   param(
     [Parameter(Mandatory=$true)][string]$Path,
-    [int]$Expected = 1048
+    [int]$Expected = 1052
   )
 
   $problems = New-Object System.Collections.Generic.List[string]
@@ -104,7 +104,7 @@ function Assert-TsvIntegrity {
   [CmdletBinding()]
   param(
     [Parameter(Mandatory=$true)][string]$Path,
-    [int]$Expected = 1048
+    [int]$Expected = 1052
   )
 
   $p = Test-TsvIntegrity -Path $Path -Expected $Expected
@@ -120,7 +120,7 @@ function Read-TsvChecked {
   [CmdletBinding()]
   param(
     [Parameter(Mandatory=$true)][string]$Path,
-    [int]$Expected = 1048
+    [int]$Expected = 1052
   )
 
   Assert-TsvIntegrity -Path $Path -Expected $Expected

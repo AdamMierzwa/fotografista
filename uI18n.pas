@@ -53,7 +53,7 @@ uses
 
 const
   // BEGIN GENERATED TEXTABLE - nie edytować ręcznie, generuje tools\gen_i18n.ps1
-  TextTable: array[0..1047] of TTextRec = (
+  TextTable: array[0..1051] of TTextRec = (
     (EN: 'File'; PL: 'Plik'; CS: 'Soubor';
      FR: 'Fichier'; DE: 'Datei'; IT: 'File';
      ES: 'Archivo'; PT: 'Ficheiro'; AF: 'Lêer'),
@@ -3197,7 +3197,19 @@ const
      ES: 'Muestra las áreas protegidas con una trama roja diagonal'; PT: 'Mostra as áreas protegidas com uma sobreposição vermelha diagonal'; AF: 'Wys beskermde gebiede met ''n diagonale rooi oorlegk'),
     (EN: 'Remove all protected areas'; PL: 'Usuń wszystkie obszary chronione'; CS: 'Odebrat ochranu ze všech oblastí';
      FR: 'Supprimer toutes les zones protégées'; DE: 'Alle geschützten Bereiche entfernen'; IT: 'Rimuovi tutte le aree protette';
-     ES: 'Quitar todas las áreas protegidas'; PT: 'Remover todas as áreas protegidas'; AF: 'Verwyder alle beskermde gebiede')
+     ES: 'Quitar todas las áreas protegidas'; PT: 'Remover todas as áreas protegidas'; AF: 'Verwyder alle beskermde gebiede'),
+    (EN: 'Brush cursor:'; PL: 'Kursor pędzla:'; CS: 'Kurzor štětce:';
+     FR: 'Curseur du pinceau :'; DE: 'Pinsel-Cursor:'; IT: 'Cursore del pennello:';
+     ES: 'Cursor del pincel:'; PT: 'Cursor do pincel:'; AF: 'Kwaswyser:'),
+    (EN: 'Circle outline'; PL: 'Kontur okręgu'; CS: 'Obrys kruhu';
+     FR: 'Contour de cercle'; DE: 'Kreisumriss'; IT: 'Contorno del cerchio';
+     ES: 'Contorno del círculo'; PT: 'Contorno do círculo'; AF: 'Sirkelbuitelyn'),
+    (EN: 'Crosshair (precise)'; PL: 'Krzyżyk (precyzyjny)'; CS: 'Křížek (přesný)';
+     FR: 'Réticule (précis)'; DE: 'Fadenkreuz (präzise)'; IT: 'Mirino (preciso)';
+     ES: 'Punto de mira (preciso)'; PT: 'Retículo (preciso)'; AF: 'Kruisdraad (presies)'),
+    (EN: 'Show crosshair in brush outline'; PL: 'Pokaż krzyżyk w konturze pędzla'; CS: 'Zobrazit křížek v obrysu štětce';
+     FR: 'Afficher le réticule dans le contour du pinceau'; DE: 'Fadenkreuz im Pinselumriss anzeigen'; IT: 'Mostra il mirino nel contorno del pennello';
+     ES: 'Mostrar el punto de mira en el contorno del pincel'; PT: 'Mostrar o retículo no contorno do pincel'; AF: 'Wys kruisdraad in kwasbuitelyn')
   );
   // END GENERATED TEXTABLE
 type

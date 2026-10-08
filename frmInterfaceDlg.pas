@@ -5,7 +5,7 @@ interface
 uses
   Winapi.Windows, System.SysUtils, System.Classes,
   Vcl.Graphics, Vcl.Controls, Vcl.Forms, Vcl.Dialogs,
-  Vcl.StdCtrls, Vcl.Samples.Spin, Vcl.ExtCtrls, Vcl.Themes, uTitleBar;
+  Vcl.StdCtrls, Vcl.Samples.Spin, Vcl.ExtCtrls, Vcl.Themes, uTitleBar, uI18n;
 
 type
   TInterfacePreviewProc = procedure(AColor: TColor; AFontSize: Integer) of object;
@@ -20,11 +20,15 @@ type
     spinRecentCount: TSpinEdit;
     lblTheme: TLabel;
     cmbTheme: TComboBox;
+    lblBrushCursor: TLabel;
+    cmbBrushCursor: TComboBox;
+    chkBrushCrosshairCenter: TCheckBox;
     btnOK: TButton;
     btnCancel: TButton;
     procedure btnCanvasBGClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure spinFontSizeChange(Sender: TObject);
+    procedure cmbBrushCursorChange(Sender: TObject);
   public
     procedure RefitButtons; override;
   private
@@ -41,7 +45,8 @@ type
 
 function ShowInterfaceDlg(var ACanvasBG: TColor;
   out ARememberWin: Boolean; out AFontSize, ARecentCount: Integer;
-  var ATheme: string;
+  var ATheme: string; var ABrushCursorMode: Integer;
+  var ABrushCrosshairCenter: Boolean;
   AOnPreview: TInterfacePreviewProc = nil): Boolean;
 
 implementation
@@ -60,6 +65,8 @@ begin
   for S in TStyleManager.StyleNames do
     cmbTheme.Items.Add(S);
   cmbTheme.ItemIndex := 0;
+  cmbBrushCursor.Items.Add(T('Circle outline'));
+  cmbBrushCursor.Items.Add(T('Crosshair (precise)'));
 end;
 
 procedure TInterfaceDlg.RefitButtons;
@@ -97,9 +104,15 @@ begin
   DoPreview;
 end;
 
+procedure TInterfaceDlg.cmbBrushCursorChange(Sender: TObject);
+begin
+  chkBrushCrosshairCenter.Enabled := (cmbBrushCursor.ItemIndex = 0);
+end;
+
 function ShowInterfaceDlg(var ACanvasBG: TColor;
   out ARememberWin: Boolean; out AFontSize, ARecentCount: Integer;
-  var ATheme: string;
+  var ATheme: string; var ABrushCursorMode: Integer;
+  var ABrushCrosshairCenter: Boolean;
   AOnPreview: TInterfacePreviewProc): Boolean;
 var
   Dlg: TInterfaceDlg;
@@ -119,6 +132,9 @@ begin
     Idx := Dlg.cmbTheme.Items.IndexOf(Dlg.Theme);
     if Idx >= 0 then
       Dlg.cmbTheme.ItemIndex := Idx;
+    Dlg.cmbBrushCursor.ItemIndex := ABrushCursorMode;
+    Dlg.chkBrushCrosshairCenter.Checked := ABrushCrosshairCenter;
+    Dlg.cmbBrushCursorChange(Dlg.cmbBrushCursor);
     Dlg.OnPreview := AOnPreview;
     if Dlg.ShowModal = mrOk then
     begin
@@ -128,6 +144,8 @@ begin
       ARecentCount := Dlg.spinRecentCount.Value;
       if Dlg.cmbTheme.ItemIndex >= 0 then
         ATheme := Dlg.cmbTheme.Items[Dlg.cmbTheme.ItemIndex];
+      ABrushCursorMode := Dlg.cmbBrushCursor.ItemIndex;
+      ABrushCrosshairCenter := Dlg.chkBrushCrosshairCenter.Checked;
       Result := True;
     end;
   finally

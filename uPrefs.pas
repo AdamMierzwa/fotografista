@@ -24,6 +24,8 @@ type
     RecentFilesCount: Integer;
     ThemeName: string;
     Language: Integer; // -1 = auto (DetectLanguage), 0..8 = TLanguage
+    BrushCursorMode: Integer; // 0 = ring (default), 1 = crosshair
+    BrushCrosshairCenter: Boolean; // False = ring center empty (default)
     RecentFiles: array[0..MAX_RECENT - 1] of string;
     { Window position }
     WinLeft: Integer;
@@ -91,6 +93,8 @@ begin
   Prefs.SmoothPreview := False;
   Prefs.ThemeName := 'Windows';
   Prefs.Language := -1;
+  Prefs.BrushCursorMode := 0;
+  Prefs.BrushCrosshairCenter := False;
   SetLength(Prefs.DuotonePresets, 0);
 
   if not FileExists(GetPrefsPath) then
@@ -117,6 +121,10 @@ begin
     Prefs.Language := Ini.ReadInteger('Interface', 'Language', -1);
     if (Prefs.Language < -1) or (Prefs.Language > 8) then
       Prefs.Language := -1;
+    Prefs.BrushCursorMode := Ini.ReadInteger('Interface', 'BrushCursorMode', Prefs.BrushCursorMode);
+    if (Prefs.BrushCursorMode < 0) or (Prefs.BrushCursorMode > 1) then
+      Prefs.BrushCursorMode := 0;
+    Prefs.BrushCrosshairCenter := Ini.ReadBool('Interface', 'BrushCrosshairCenter', Prefs.BrushCrosshairCenter);
     Prefs.WinLeft := Ini.ReadInteger('Window', 'Left', Prefs.WinLeft);
     Prefs.WinTop := Ini.ReadInteger('Window', 'Top', Prefs.WinTop);
     Prefs.WinWidth := Ini.ReadInteger('Window', 'Width', Prefs.WinWidth);
@@ -149,6 +157,8 @@ begin
     Ini.WriteInteger('Interface', 'RecentFilesCount', Prefs.RecentFilesCount);
     Ini.WriteString('Interface', 'ThemeName', Prefs.ThemeName);
     Ini.WriteInteger('Interface', 'Language', Prefs.Language);
+    Ini.WriteInteger('Interface', 'BrushCursorMode', Prefs.BrushCursorMode);
+    Ini.WriteBool('Interface', 'BrushCrosshairCenter', Prefs.BrushCrosshairCenter);
     for I := 0 to MAX_RECENT - 1 do
       Ini.WriteString('Recent', IntToStr(I), Prefs.RecentFiles[I]);
     Ini.WriteInteger('Quality', 'JPGQuality', Prefs.JPGQuality);
