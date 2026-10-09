@@ -254,6 +254,11 @@
         Hint = 'Straighten scan - rotate up to +/- 10 degrees with auto-crop'
         OnClick = mnuStraightenClick
       end
+      object mnuPerspective: TMenuItem
+        Caption = 'Perspective correction...'
+        Hint = 'Correct converging lines - drag 4 corners'
+        OnClick = mnuPerspectiveClick
+      end
       object N9: TMenuItem
         Caption = '-'
       end

@@ -53,7 +53,7 @@ uses
 
 const
   // BEGIN GENERATED TEXTABLE - nie edytować ręcznie, generuje tools\gen_i18n.ps1
-  TextTable: array[0..1051] of TTextRec = (
+  TextTable: array[0..1055] of TTextRec = (
     (EN: 'File'; PL: 'Plik'; CS: 'Soubor';
      FR: 'Fichier'; DE: 'Datei'; IT: 'File';
      ES: 'Archivo'; PT: 'Ficheiro'; AF: 'Lêer'),
@@ -3209,7 +3209,19 @@ const
      ES: 'Punto de mira (preciso)'; PT: 'Retículo (preciso)'; AF: 'Kruisdraad (presies)'),
     (EN: 'Show crosshair in brush outline'; PL: 'Pokaż krzyżyk w konturze pędzla'; CS: 'Zobrazit křížek v obrysu štětce';
      FR: 'Afficher le réticule dans le contour du pinceau'; DE: 'Fadenkreuz im Pinselumriss anzeigen'; IT: 'Mostra il mirino nel contorno del pennello';
-     ES: 'Mostrar el punto de mira en el contorno del pincel'; PT: 'Mostrar o retículo no contorno do pincel'; AF: 'Wys kruisdraad in kwasbuitelyn')
+     ES: 'Mostrar el punto de mira en el contorno del pincel'; PT: 'Mostrar o retículo no contorno do pincel'; AF: 'Wys kruisdraad in kwasbuitelyn'),
+    (EN: 'Perspective correction...'; PL: 'Korekta perspektywy...'; CS: 'Korekce perspektivy...';
+     FR: 'Correction de la perspective...'; DE: 'Perspektivkorrektur...'; IT: 'Correzione prospettiva...';
+     ES: 'Corrección de perspectiva...'; PT: 'Correção de perspetiva...'; AF: 'Perspektiefkorreksie...'),
+    (EN: 'Perspective correction'; PL: 'Korekta perspektywy'; CS: 'Korekce perspektivy';
+     FR: 'Correction de la perspective'; DE: 'Perspektivkorrektur'; IT: 'Correzione prospettiva';
+     ES: 'Corrección de perspectiva'; PT: 'Correção de perspetiva'; AF: 'Perspektiefkorreksie'),
+    (EN: 'Correct converging lines - drag 4 corners'; PL: 'Popraw zbieżność linii - przeciągnij 4 narożniki'; CS: 'Opravte sbíhavé linie - přetáhněte 4 rohy';
+     FR: 'Corrigez les lignes convergentes - faites glisser les 4 coins'; DE: 'Konvergierende Linien korrigieren - 4 Ecken ziehen'; IT: 'Correggi le linee convergenti - trascina i 4 angoli';
+     ES: 'Corrige las líneas convergentes - arrastra los 4 vértices'; PT: 'Corrija as linhas convergentes - arraste os 4 cantos'; AF: 'Korrigeer konvergerende lyne - sleep 4 hoeke'),
+    (EN: 'Drag the four corners onto the rectangle edges'; PL: 'Przeciągnij cztery narożniki na krawędzie prostokąta'; CS: 'Přetáhněte čtyři rohy na okraje obdélníku';
+     FR: 'Faites glisser les quatre coins sur les bords du rectangle'; DE: 'Ziehen Sie die vier Ecken auf die Rechteckkanten'; IT: 'Trascina i quattro angoli sui bordi del rettangolo';
+     ES: 'Arrastra los cuatro vértices a los bordes del rectángulo'; PT: 'Arraste os quatro cantos para as margens do retângulo'; AF: 'Sleep die vier hoeke na die reghoek se rande')
   );
   // END GENERATED TEXTABLE
 type

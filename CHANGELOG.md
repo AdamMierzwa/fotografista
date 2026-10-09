@@ -10,11 +10,26 @@ lub zmieniło zachowanie.
 
 ### Added
 
+**Korekta perspektywy** (`uTransform.pas`, `frmPerspectiveDlg.pas`,
+`frmPerspectiveDlg.dfm`, `fMain.pas`, `fMain.dfm`, `Fotografista.dpr`,
+`i18n/*.tsv`, `uI18n.pas`) — nowe narzędzie w menu Korektor. Modalne okno
+podglądu z czterema uchwytami narożników; przeciąganie ich na krawędzie
+prostokąta usuwa zbieżność linii (perspektywa architektury, korekta kadru).
+Podgląd odświeżany w trakcie przeciągania. Przekształcenie przez homografię
+liczoną z prostokąta wyjściowego na czworokąt (`uTransform.pas`, macierz 3×3,
+konwencja współrzędnych krawędziowych). Czworokąt wklęsły wykrywany przez
+`QuadIsConvex` — wtedy warp zwraca `nil` i obraz zostaje bez zmian. Warp
+wymaga 24-bitowego źródła. Maski (alpha i ochronna) są czyszczone po
+przekształceniu, świadomie bez przenoszenia geometrii zaznaczenia. Ścieżka
+macro pominięta (brak mapowania w `MacroCodeForOpName`). Dodane 4 klucze i18n
+(ID 1122–1125) we wszystkich 9 katalogach; walidator integralności podniesiony
+do 1056 rekordów.
+
 **Wspólna bramka integralności katalogów** (`tools/i18n_common.ps1`,
 `tools/i18n_common_test.ps1`) — moduł używany przez wszystkie trzy skrypty i18n
 (`gen_i18n`, `audit_i18n`, `audyt_i18n_nietlumaczone`). Kontroluje: dokładnie
 jeden BOM w całym pliku, wyłącznie CRLF, końcowy CRLF, format `ID<TAB>tekst`,
-1048 rekordów, brak zduplikowanych ID, brak U+FFFD. Liczenie wystąpień BOM
+1056 rekordów, brak zduplikowanych ID, brak U+FFFD. Liczenie wystąpień BOM
 w całym pliku zamyka klasę błędów, która przechodziła po cichu — podwójny BOM
 nie wykrywał żaden wcześniejszy skrypt. Test regresyjny sprawdza 6 uszkodzeń
 na własnych fixture'ach, w tym podwójny BOM.
@@ -626,6 +641,25 @@ konwersja EN wymagałaby przebudowy kluczy i jest osobnym tematem.
   tylko barwę i nasycenie
 - klucz i18n 1113 „Retain shading" w 9 językach
 
+**Kursor pędzla — ustawienie wyglądu** (`uPrefs.pas`, `frmInterfaceDlg.pas`,
+`frmInterfaceDlg.dfm`, `fMain.pas`, `i18n/*.tsv`) — Ustawienia > Interfejs
+mają listę „Brush cursor" i pole krzyżyka w okręgu.
+- `Circle outline` (domyślnie, dotychczasowe zachowanie) rysuje własny okrąg
+  pędzla; `Crosshair (precise)` zostawia systemowy krzyżyk (`crCross`) bez
+  okręgu. Dotyczy pędzla, gumki i maski ochronnej
+- wybór zapisany jako indeks w `[Interface]\BrushCursorMode` (0/1, poza
+  zakresem → 0), więc kolejność pozycji listy nie może się zmieniać
+- pole „Show crosshair in brush outline" (`[Interface]\BrushCrosshairCenter`,
+  domyślnie wyłączone) dorysowuje w środku okręgu krzyżyk dwukolorowy,
+  tylko gdy promień ≥ 5 px. W trybie Crosshair pole jest wyszarzone, a jego
+  stan zostaje zachowany
+- zmiana działa od razu przy aktywnym pędzlu, gumce lub masce:
+  `mnuSettingsInterfaceClick` wywołuje ponownie `Activate` narzędzia
+- `UpdateBrushCursor` wychodzi na początku, gdy tryb ≠ 0, więc w trybie
+  Crosshair próbnik też nie rysuje okręgu (wcześniej go rysował mimo `crCross`)
+- klucze i18n 1118–1121 w 9 językach; licznik rekordów w bramce
+  (`tools/i18n_common.ps1`) 1048 → 1052
+
 ### Changed
 
 **Pędzel zamiany koloru** (`fMain.pas`, `bmColorReplace`) — powtarzalne
@@ -656,6 +690,10 @@ malowanie zamiast kumulowania farby
 
 **Menu** (`fMain.dfm`)
 - przywrócona pozycja „Retouch…" w menu Narzędzia
+
+**Adres dokumentacji online** (`fMain.pas`, `mnuHelpOnlineDocsClick`) — pozycja
+otwiera stronę programu na własnej domenie zamiast strony dokumentacji wersji
+Hollywood. Nazwa pozycji menu bez zmian, bo dokumentacja ma tam trafić
 
 **Tłumaczenia** (`i18n/*.tsv`, `uI18n.pas`, `frmAmigaBGDlg.dfm`,
 `frmAmigaBGSDlg.dfm`, `frmRisoV3Dlg.dfm`)

@@ -13,6 +13,7 @@ uses
   uMediaFoundation in 'uMediaFoundation.pas',
   uVideoWriter in 'uVideoWriter.pas',
   frmStraightenDlg in 'frmStraightenDlg.pas' {StraightenDlg},
+  frmPerspectiveDlg in 'frmPerspectiveDlg.pas' {PerspectiveDlg},
   uUndo in 'uUndo.pas',
   frmHistogramDlg in 'frmHistogramDlg.pas' {HistogramDlg},
   frmContrastDlg in 'frmContrastDlg.pas' {ContrastDlg},

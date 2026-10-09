@@ -9,7 +9,7 @@ uses
   Vcl.Graphics, Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ExtCtrls,
   Vcl.Menus, Vcl.ComCtrls, Vcl.Clipbrd, Vcl.AppEvnts,
    Vcl.StdCtrls, Vcl.Imaging.jpeg, Vcl.Themes, fpdf, uImageIO, uPrefs, uTransform, uUndo, frmInterfaceDlg, frmFileInfoDlg, frmKolorowanieDlg, uI18n, frmLanguageDlg,
-  frmQualityDlg, frmPerformanceDlg, frmStraightenDlg, frmHistogramDlg, frmContrastDlg,
+  frmQualityDlg, frmPerformanceDlg, frmStraightenDlg, frmPerspectiveDlg, frmHistogramDlg, frmContrastDlg,
   frmCmykDlg,
   frmLinocutDlg,
   frmStencilDlg,
@@ -97,6 +97,7 @@ type
     mnuRotateRight: TMenuItem;
     mnuRotate180: TMenuItem;
     mnuStraighten: TMenuItem;
+    mnuPerspective: TMenuItem;
     N9: TMenuItem;
     mnuHistogram: TMenuItem;
     N10: TMenuItem;
@@ -313,6 +314,7 @@ type
     procedure mnuRotateRightClick(Sender: TObject);
     procedure mnuRotate180Click(Sender: TObject);
     procedure mnuStraightenClick(Sender: TObject);
+    procedure mnuPerspectiveClick(Sender: TObject);
     procedure mnuHistogramClick(Sender: TObject);
     procedure mnuContrastClick(Sender: TObject);
     procedure mnuBrightnessClick(Sender: TObject);
@@ -3654,6 +3656,61 @@ begin
   gMacroPending.Code := 'STRAIGHTEN';
   gMacroPending.Params := IntToStr(Angle);
   FinishEffect(T('Straighten'), SW.Elapsed.TotalSeconds);
+end;
+
+procedure TfrmMain.mnuPerspectiveClick(Sender: TObject);
+var
+  Quad: TQuad;
+  OutW, OutH: Integer;
+  SW: TStopwatch;
+  Warped: TBitmap;
+begin
+  if FBitmap.Width = 0 then Exit;
+
+  PerspectiveSourceBmp := FBitmap;
+  try
+    if not ShowPerspectiveDlg(Quad) then Exit;
+  finally
+    PerspectiveSourceBmp := nil;
+  end;
+
+  PerspectiveOutputSize(Quad, OutW, OutH);
+  if (OutW < 1) or (OutH < 1) then Exit;
+
+  Screen.Cursor := crHourGlass;
+  SW := TStopwatch.StartNew;
+  Warped := nil;
+  try
+    Warped := PerspectiveWarp(FBitmap, Quad, OutW, OutH);
+    if Warped = nil then Exit;
+
+    UndoPushMasked(FBitmap, FAlphaMask, FProtMask);
+    FDirty := True;
+    UpdateCaption;
+
+    FBitmap.Free;
+    FBitmap := Warped;
+    Warped := nil;
+
+    // Obraz zmienil wymiary - maski sa nieaktualne, czyscimy je (jak LoadImage).
+    FAlphaMask.Free;
+    FAlphaMask := nil;
+    FAlphaDirtyRect := Rect(0, 0, 0, 0);
+    FProtMask.Free;
+    FProtMask := nil;
+    FProtDirtyRect := Rect(0, 0, 0, 0);
+    FProtCoverCount := 0;
+    FSelection.Clear;
+
+    NotifyBitmapResized;
+    UpdateStatusBar;
+  finally
+    Warped.Free;
+    SW.Stop;
+    Screen.Cursor := crDefault;
+  end;
+
+  FinishEffect(T('Perspective correction'), SW.Elapsed.TotalSeconds);
 end;
 
 procedure TfrmMain.mnuHistogramClick(Sender: TObject);
