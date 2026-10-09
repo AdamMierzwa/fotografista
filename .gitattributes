@@ -1,5 +1,4 @@
-# .gitattributes - Fotografista
-#
+# .gitattributes - Fotografista (Delphi)
 # Cel: swiezy clone == dokladnie ten working tree (bit-identycznosc).
 # * text=auto = parasol: pliki bez reguly -> auto-detekcja (NUL=binary),
 #   wiec nie doznaja zniszczen EOL. Reguly nizej nadpisuja parasol.
@@ -8,8 +7,9 @@
 /Lib/**            linguist-vendored
 /Styles/**         linguist-vendored
 
-# ===== EOL / binaria =====
 * text=auto
+
+# ===== BINARIA =====
 *.bmp   -text
 *.bw   -text
 *.chm   -text
@@ -56,6 +56,8 @@
 *.tub   -text
 *.vsf   -text
 *.xcf   -text
+
+# ===== TEKST eol=crlf (Delphi/IDE + dane) =====
 *.1   text eol=crlf
 *.bpr   text eol=crlf
 *.cbproj   text eol=crlf
@@ -88,6 +90,8 @@
 *.txt   text eol=crlf
 *.xml   text eol=crlf
 *LICENSE*   text eol=crlf
+
+# ===== TEKST eol=lf (skrypt/dok) =====
 *.bat   text eol=lf
 *.c   text eol=lf
 *.cmd   text eol=lf
@@ -97,6 +101,13 @@
 *.sh   text eol=lf
 *.xbm   text eol=lf
 .gitignore  text eol=lf
+
+# ===== WYJATKI LF: pliki LF-on-disk w grupach CRLF =====
+/Lib/AllGraphicStrings.pas   text eol=lf
+/Lib/DelphiZlib/ZLibEx.inc   text eol=lf
+/Lib/DelphiZlib/ZLibEx.pas   text eol=lf
+/Lib/DelphiZlib/ZLibExApi.pas   text eol=lf
+/Lib/DelphiZlib/ZLibExGZ.pas   text eol=lf
 "/Lib/GraphicEx-master/3rd party/AutoResourceStr/AutoResourceStr.pas"   text eol=lf
 "/Lib/GraphicEx-master/3rd party/AutoResourceStr/variantWrapper.pas"   text eol=lf
 "/Lib/GraphicEx-master/3rd party/DelphiZlib/ZLibEx.inc"   text eol=lf
@@ -104,15 +115,138 @@
 "/Lib/GraphicEx-master/3rd party/DelphiZlib/ZLibExApi.pas"   text eol=lf
 "/Lib/GraphicEx-master/3rd party/DelphiZlib/ZLibExGZ.pas"   text eol=lf
 "/Lib/GraphicEx-master/3rd party/DelphiZlib/readme.txt"   text eol=lf
+/Lib/GraphicEx-master/AllGraphicStrings.pas   text eol=lf
+/Lib/GraphicEx-master/Compilers.inc   text eol=lf
+/Lib/GraphicEx-master/Demos/Browser/Browser.dproj   text eol=lf
+/Lib/GraphicEx-master/Demos/OneImage/Main.dfm   text eol=lf
+/Lib/GraphicEx-master/Demos/OneImage/Main.pas   text eol=lf
+/Lib/GraphicEx-master/Demos/OneImage/OneImage.dpr   text eol=lf
+/Lib/GraphicEx-master/Demos/SaveAs/SaveAsDemo.dpr   text eol=lf
+/Lib/GraphicEx-master/Demos/SaveAs/mainform.dfm   text eol=lf
+/Lib/GraphicEx-master/Demos/SaveAs/mainform.pas   text eol=lf
+/Lib/GraphicEx-master/Demos/proj_common.pas   text eol=lf
 "/Lib/GraphicEx-master/For older (non-unicode) versions of Delphi.txt"   text eol=lf
+/Lib/GraphicEx-master/GraphicStringsEN.pas   text eol=lf
+/Lib/GraphicEx-master/GraphicStringsEnUk.pas   text eol=lf
+/Lib/GraphicEx-master/JpegCompression.pas   text eol=lf
+/Lib/GraphicEx-master/LICENSE   text eol=lf
+/Lib/GraphicEx-master/MZLib.pas   text eol=lf
 "/Lib/GraphicEx-master/TestSuite original/TIFF/Official test images/README.txt"   text eol=lf
+/Lib/Graphics32/DocProcessor/DocProcessor.dproj   text eol=lf
+/Lib/Graphics32/DocProcessor/DocProcessorC.dproj   text eol=lf
+/Lib/Graphics32/Examples/Blending/BlendVsMerge/BlendVsMerge.dproj   text eol=lf
+/Lib/Graphics32/Examples/Blending/PixelCombine/PixelCombine.dproj   text eol=lf
+/Lib/Graphics32/Examples/Blending/TextureBlend/TextureBlend.dproj   text eol=lf
+/Lib/Graphics32/Examples/Drawing/AntiAliasing/AntiAliasing.dproj   text eol=lf
+/Lib/Graphics32/Examples/Drawing/ArrowHead/ArrowHead.dproj   text eol=lf
+/Lib/Graphics32/Examples/Drawing/Benchmark/Benchmark.dproj   text eol=lf
+/Lib/Graphics32/Examples/Drawing/Clipper/ClipperDemo.dproj   text eol=lf
+/Lib/Graphics32/Examples/Drawing/CubicSpline/CubicSpline.dproj   text eol=lf
+/Lib/Graphics32/Examples/Drawing/Curves/Curves.dproj   text eol=lf
+/Lib/Graphics32/Examples/Drawing/GammaBlur/GammaBlur.dproj   text eol=lf
+/Lib/Graphics32/Examples/Drawing/GammaCorrection/GammaCorrection.dproj   text eol=lf
+/Lib/Graphics32/Examples/Drawing/GradLines/GradLines.dproj   text eol=lf
+/Lib/Graphics32/Examples/Drawing/GradSampler/GradSampler.dproj   text eol=lf
+/Lib/Graphics32/Examples/Drawing/LineStippling/LineStippling.dproj   text eol=lf
+/Lib/Graphics32/Examples/Drawing/MeshGradients/MeshGradients.dproj   text eol=lf
+/Lib/Graphics32/Examples/Drawing/RenderText/RenderText.dproj   text eol=lf
+/Lib/Graphics32/Examples/Drawing/ScatterPlot/ScatterPlot.dproj   text eol=lf
+/Lib/Graphics32/Examples/Drawing/TextVPR/TextVPR.dproj   text eol=lf
+/Lib/Graphics32/Examples/Drawing/VertexReduction/LineSimplification.dproj   text eol=lf
 "/Lib/Graphics32/Examples/General/Bitmap32 to PSD layers/PSD_bitmap_export.dproj"   text eol=lf
+/Lib/Graphics32/Examples/General/ByteMaps/ByteMaps.dproj   text eol=lf
 "/Lib/Graphics32/Examples/General/Color Picker/ColorPicker.dproj"   text eol=lf
 "/Lib/Graphics32/Examples/General/Image32 background/Image32Background.dproj"   text eol=lf
+/Lib/Graphics32/Examples/General/Image32/Image32.dproj   text eol=lf
+/Lib/Graphics32/Examples/General/Mandelbrot/Mandelbrot.dproj   text eol=lf
 "/Lib/Graphics32/Examples/General/Optimized repaint/OptimizedRepaint.dproj"   text eol=lf
 "/Lib/Graphics32/Examples/General/PNG Image32/PNG_GR32_Demo.dproj"   text eol=lf
 "/Lib/Graphics32/Examples/General/Pan & Zoom/PanAndZoom.dproj"   text eol=lf
+/Lib/Graphics32/Examples/General/Rotate/Rotate.dproj   text eol=lf
+/Lib/Graphics32/Examples/Layers/ImgView_Layers/ImgView_Layers.dproj   text eol=lf
+/Lib/Graphics32/Examples/Layers/RotLayer/RotLayer.dproj   text eol=lf
+/Lib/Graphics32/Examples/Layers/Sprites/Sprites.dproj   text eol=lf
+/Lib/Graphics32/Examples/Resampling/NestedSampling/NestedSampling.dproj   text eol=lf
+/Lib/Graphics32/Examples/Resampling/PixelF/PixelF.dproj   text eol=lf
+/Lib/Graphics32/Examples/Resampling/Resamplers/Resamplers.dproj   text eol=lf
+/Lib/Graphics32/Examples/Resampling/SharpenConvolution/SharpenConvolution.dproj   text eol=lf
+/Lib/Graphics32/Examples/Transformation/ImgWarping/ImgWarping.dproj   text eol=lf
+/Lib/Graphics32/Examples/Transformation/Transform/Transform.dproj   text eol=lf
+/Lib/Graphics32/Examples/Transformation/Visualization/Visualization.dproj   text eol=lf
+/Lib/Graphics32/Examples/template.dproj   text eol=lf
 "/Lib/Graphics32/Tests/Bitmap Test/BitmapTest.dproj"   text eol=lf
 "/Lib/Graphics32/Tests/Color Space Test/ColorSpaceTest.dproj"   text eol=lf
 "/Lib/Graphics32/Tests/LowLevel Test/LowLevelTest.dproj"   text eol=lf
 "/Lib/Graphics32/Tests/PNG Test/GuiPngTest.dproj"   text eol=lf
+/Lib/JpegCompression.pas   text eol=lf
+/Lib/MZLib.pas   text eol=lf
+/fpdf.pas   text eol=lf
+/frmAmigaBGDlg.pas   text eol=lf
+/frmAmigaBGSDlg.pas   text eol=lf
+/frmDistortDlg.dfm   text eol=lf
+/frmDistortDlg.pas   text eol=lf
+/frmFilmGrainDlg.pas   text eol=lf
+/frmLanguageDlg.dfm   text eol=lf
+/frmPaletteDlg.dfm   text eol=lf
+/frmPaletteDlg.pas   text eol=lf
+/frmRastrCmykDlg.dfm   text eol=lf
+/frmSelDlg.dfm   text eol=lf
+/frmSelDlg.pas   text eol=lf
+/frmStereogramDlg.dfm   text eol=lf
+/frmStereogramDlg.pas   text eol=lf
+/frmTimelapseDlg.dfm   text eol=lf
+/frmTimelapseDlg.pas   text eol=lf
+/frmToolsDlg.dfm   text eol=lf
+/frmToolsDlg.pas   text eol=lf
+/frmUsunTloDlg.dfm   text eol=lf
+/frmUsunTloDlg.pas   text eol=lf
+/frmWaterRippleDlg.dfm   text eol=lf
+/frmWaterRippleDlg.pas   text eol=lf
+/launcher_icons.rc   text eol=lf
+/uCanvasTools.pas   text eol=lf
+/uConvolution.pas   text eol=lf
+/uDuotone.pas   text eol=lf
+/uILBM.pas   text eol=lf
+/uImageIO.pas   text eol=lf
+/uMacros.pas   text eol=lf
+/uMediaFoundation.pas   text eol=lf
+/uMipMap.pas   text eol=lf
+/uPixelEngine.pas   text eol=lf
+/uPrefs.pas   text eol=lf
+/uPreviewFit.pas   text eol=lf
+/uQuantize.pas   text eol=lf
+/uRastrCMYK.pas   text eol=lf
+/uRiso.pas   text eol=lf
+/uSelection.pas   text eol=lf
+/uStereogram.pas   text eol=lf
+/uVideoWriter.pas   text eol=lf
+
+# ===== WYJATKI CRLF: pliki CRLF-on-disk w grupach LF (w tym .gitignore) =====
+/.gitignore   text eol=crlf
+/Lib/Graphics32/.gitignore   text eol=crlf
+/Lib/Graphics32/Examples/Blending/PixelCombine/createbundle.sh   text eol=crlf
+/Lib/Graphics32/Examples/Blending/TextureBlend/createbundle.sh   text eol=crlf
+/Lib/Graphics32/Examples/Drawing/GradLines/createbundle.sh   text eol=crlf
+/Lib/Graphics32/Examples/Drawing/LineStippling/createbundle.sh   text eol=crlf
+/Lib/Graphics32/Examples/Drawing/Polygons/createbundle.sh   text eol=crlf
+/Lib/Graphics32/Examples/Drawing/RenderText/createbundle.sh   text eol=crlf
+/Lib/Graphics32/Examples/General/ByteMaps/createbundle.sh   text eol=crlf
+/Lib/Graphics32/Examples/General/Image32/createbundle.sh   text eol=crlf
+/Lib/Graphics32/Examples/General/Mandelbrot/createbundle.sh   text eol=crlf
+/Lib/Graphics32/Examples/General/Rotate/createbundle.sh   text eol=crlf
+/Lib/Graphics32/Examples/Layers/ImgView_Layers/createbundle.sh   text eol=crlf
+/Lib/Graphics32/Examples/Layers/RotLayer/createbundle.sh   text eol=crlf
+/Lib/Graphics32/Examples/Layers/Sprites/createbundle.sh   text eol=crlf
+/Lib/Graphics32/Examples/Resampling/PixelF/createbundle.sh   text eol=crlf
+/Lib/Graphics32/Examples/Resampling/Resamplers/createbundle.sh   text eol=crlf
+/Lib/Graphics32/Examples/Transformation/ImgWarping/createbundle.sh   text eol=crlf
+/Lib/Graphics32/Examples/Transformation/Transform/createbundle.sh   text eol=crlf
+/Lib/Graphics32/Examples/Transformation/Visualization/createbundle.sh   text eol=crlf
+/Lib/Graphics32/Examples/setup_examples.ps1   text eol=crlf
+/Lib/Graphics32/README.md   text eol=crlf
+/Lib/Graphics32/Source/Packages/Gen.bat   text eol=crlf
+/Lib/Graphics32/Source/_clean.bat   text eol=crlf
+
+# ===== BINARNE DFM (TPF0, NIE tekst!) - nadpisuja *.dfm eol=crlf =====
+/Lib/GraphicEx-master/Demos/Browser/Main.dfm   -text
+/Lib/GraphicEx-master/Demos/Convert/Main.dfm   -text
