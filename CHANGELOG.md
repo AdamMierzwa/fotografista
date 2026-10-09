@@ -1,6 +1,6 @@
 ﻿# Changelog — Fotografista (wersja Delphi)
 
-## [Następna wersja]
+## [09-10.2026] — wersja 1.1.2
 
 Różnica względem wersji sklepowej z 08-09.2026. Elementy już opisane w tej
 sekcji — pędzle malowania, klonu, jasności i ostrości, siła per rodzina,
