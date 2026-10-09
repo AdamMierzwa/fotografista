@@ -33,11 +33,13 @@ type
     FScale: Double;
     FQuad: TQuad;
     FDragIdx: Integer;
+    FHoverIdx: Integer;
+    FDpiScale: Double;
     function PreviewQuad: TQuad;
     function HitTest(X, Y: Integer): Integer;
     procedure LayoutDialog;
     procedure UpdateWarp;
-    procedure DrawHandle(ACanvas: TCanvas; X, Y: Integer);
+    procedure DrawHandle(ACanvas: TCanvas; X, Y: Integer; Highlight: Boolean);
   end;
 
 var
@@ -51,8 +53,8 @@ implementation
 
 const
   cPreviewMax = 340;
-  cHandleR    = 4;
-  cHitR       = 7;
+  cHandleSize = 11;   // rozmiar uchwytu w px @96 DPI (skalowany)
+  cHitRadius  = 16;   // promien chwytania w px @96 DPI (skalowany)
 
 function ShowPerspectiveDlg(out Quad: TQuad): Boolean;
 var
@@ -72,6 +74,9 @@ end;
 procedure TPerspectiveDlg.FormCreate(Sender: TObject);
 begin
   FDragIdx := -1;
+  FHoverIdx := -1;
+  FDpiScale := Screen.PixelsPerInch / 96;
+  if FDpiScale <= 0 then FDpiScale := 1;
   if (PerspectiveSourceBmp = nil) or (PerspectiveSourceBmp.Width = 0) then Exit;
 
   FImgW := PerspectiveSourceBmp.Width;
@@ -172,22 +177,37 @@ end;
 
 function TPerspectiveDlg.HitTest(X, Y: Integer): Integer;
 var
-  I, PX, PY: Integer;
+  I, PX, PY, R, D, Best: Integer;
 begin
   Result := -1;
+  R := Round(cHitRadius * FDpiScale);
+  Best := Sqr(R);
   for I := 0 to 3 do
   begin
     PX := Round(FQuad[I].X * FScale);
     PY := Round(FQuad[I].Y * FScale);
-    if Sqr(X - PX) + Sqr(Y - PY) <= Sqr(cHitR) then Exit(I);
+    D := Sqr(X - PX) + Sqr(Y - PY);
+    if D <= Best then
+    begin
+      Best := D;
+      Result := I;
+    end;
   end;
 end;
 
-procedure TPerspectiveDlg.DrawHandle(ACanvas: TCanvas; X, Y: Integer);
+procedure TPerspectiveDlg.DrawHandle(ACanvas: TCanvas; X, Y: Integer;
+  Highlight: Boolean);
+var
+  HS, HH: Integer;
 begin
+  if Highlight then HS := Round((cHandleSize + 2) * FDpiScale)
+  else HS := Round(cHandleSize * FDpiScale);
+  if HS < 3 then HS := 3;
+  HH := HS div 2;
+  ACanvas.Brush.Color := clWhite;
+  ACanvas.FillRect(Rect(X - HH - 1, Y - HH - 1, X + HH + 2, Y + HH + 2));
   ACanvas.Brush.Color := clRed;
-  ACanvas.FillRect(
-    Rect(X - cHandleR, Y - cHandleR, X + cHandleR + 1, Y + cHandleR + 1));
+  ACanvas.FillRect(Rect(X - HH, Y - HH, X + HH + 1, Y + HH + 1));
 end;
 
 procedure TPerspectiveDlg.pboxSrcPaint(Sender: TObject);
@@ -216,7 +236,8 @@ begin
 
     for I := 0 to 3 do
       DrawHandle(pboxSrc.Canvas,
-        Round(FQuad[I].X * FScale), Round(FQuad[I].Y * FScale));
+        Round(FQuad[I].X * FScale), Round(FQuad[I].Y * FScale),
+        (I = FDragIdx) or ((FDragIdx < 0) and (I = FHoverIdx)));
   end;
 end;
 
@@ -249,16 +270,31 @@ procedure TPerspectiveDlg.pboxSrcMouseDown(Sender: TObject;
 begin
   if Button <> mbLeft then Exit;
   FDragIdx := HitTest(X, Y);
+  if FDragIdx >= 0 then
+  begin
+    FHoverIdx := FDragIdx;
+    pboxSrc.Cursor := crSizeAll;
+  end;
+  pboxSrc.Invalidate;
 end;
 
 procedure TPerspectiveDlg.pboxSrcMouseMove(Sender: TObject;
   Shift: TShiftState; X, Y: Integer);
 var
   IX, IY: Double;
+  NewHover: Integer;
 begin
   if not (ssLeft in Shift) then
   begin
     FDragIdx := -1;
+    NewHover := HitTest(X, Y);
+    if NewHover <> FHoverIdx then
+    begin
+      FHoverIdx := NewHover;
+      pboxSrc.Invalidate;
+    end;
+    if FHoverIdx >= 0 then pboxSrc.Cursor := crSizeAll
+    else pboxSrc.Cursor := crDefault;
     Exit;
   end;
   if FDragIdx < 0 then Exit;
@@ -269,6 +305,7 @@ begin
   if IY < 0 then IY := 0 else if IY > FImgH then IY := FImgH;
 
   FQuad[FDragIdx] := TPointF.Create(IX, IY);
+  pboxSrc.Cursor := crSizeAll;
   UpdateWarp;
   pboxSrc.Invalidate;
 end;
@@ -277,6 +314,10 @@ procedure TPerspectiveDlg.pboxSrcMouseUp(Sender: TObject;
   Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
 begin
   FDragIdx := -1;
+  FHoverIdx := HitTest(X, Y);
+  if FHoverIdx >= 0 then pboxSrc.Cursor := crSizeAll
+  else pboxSrc.Cursor := crDefault;
+  pboxSrc.Invalidate;
 end;
 
 end.

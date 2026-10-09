@@ -27,20 +27,31 @@ var
   Img: ISkImage;
   Bytes: TBytes;
   Stream: TMemoryStream;
+  PNG: TPngImage;
 begin
   Img := TSkImage.MakeFromEncodedFile(APath);
   if Img = nil then
     raise Exception.Create(T('No codec to read the file.') + #13#10 +
       T('Install the appropriate image extension from Microsoft Store.'));
-  Bytes := Img.Encode(TSkEncodedImageFormat.Bmp, 100);
+  Bytes := Img.Encode(TSkEncodedImageFormat.Png, 100);
+  if Length(Bytes) = 0 then
+    raise Exception.Create(T('No codec to read the file.'));
   Stream := TMemoryStream.Create;
   try
     Stream.Write(Bytes[0], Length(Bytes));
     Stream.Position := 0;
-    ADst.LoadFromStream(Stream);
+    PNG := TPngImage.Create;
+    try
+      PNG.LoadFromStream(Stream);
+      ADst.Assign(PNG);
+    finally
+      PNG.Free;
+    end;
   finally
     Stream.Free;
   end;
+  if ADst.PixelFormat <> pf24bit then
+    ADst.PixelFormat := pf24bit;
 end;
 
 procedure SaveBitmapAsPNG(ABmp: TBitmap; const APath: string);

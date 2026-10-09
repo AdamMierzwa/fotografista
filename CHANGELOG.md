@@ -19,8 +19,9 @@ Podgląd odświeżany w trakcie przeciągania. Przekształcenie przez homografi�
 liczoną z prostokąta wyjściowego na czworokąt (`uTransform.pas`, macierz 3×3,
 konwencja współrzędnych krawędziowych). Czworokąt wklęsły wykrywany przez
 `QuadIsConvex` — wtedy warp zwraca `nil` i obraz zostaje bez zmian. Warp
-wymaga 24-bitowego źródła. Maski (alpha i ochronna) są czyszczone po
-przekształceniu, świadomie bez przenoszenia geometrii zaznaczenia. Ścieżka
+wymaga 24-bitowego źródła. Maska alfa (wytarte miejsca) jest przekształcana
+razem z obrazem, maska ochronna jest odtwarzana jako pusta, świadomie bez
+przenoszenia geometrii zaznaczenia; Cofnij przywraca obie razem z obrazem. Ścieżka
 macro pominięta (brak mapowania w `MacroCodeForOpName`). Dodane 4 klucze i18n
 (ID 1122–1125) we wszystkich 9 katalogach; walidator integralności podniesiony
 do 1056 rekordów.
@@ -97,6 +98,11 @@ raport każdej zmienionej komórki.
   pary w żadnym z 7 języków
 
 ### Changed
+
+**„Zapisz jako" startował z rozszerzeniem w nazwie** (`fMain.pas`) — pole nazwy
+otwierało się z pełną nazwą pliku (np. `obraz.png`); teraz startuje bez
+rozszerzenia (`ChangeFileExt(FFilePath, '')`). Rozszerzenie nadal nadaje
+wybrany format przy zapisie (`FilterIndex`), więc zapisany plik jest bez zmian.
 
 **Wersja EXE nie zgadzała się z wersją paczki** (`Fotografista.dproj`) —
 `FileVersion`/`ProductVersion` w `Win64|Release` stały na `1.0.6.0` od pierwszego

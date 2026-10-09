@@ -566,6 +566,7 @@ type
     procedure AlphaCrop(const R: TRect);
     procedure AlphaResize(NewW, NewH: Integer);
     procedure AlphaResizeCrop(TargetW, TargetH, Corner: Integer);
+    procedure AlphaPerspective(const Quad: TQuad; OutW, OutH: Integer);
     procedure DrawTransparencyChecker(Canvas: TCanvas);
     procedure DrawProtMaskOverlay(Canvas: TCanvas);
     procedure DrawCheckerRect(Canvas: TCanvas; ScreenR: TRect);
@@ -2985,7 +2986,7 @@ begin
     Dlg.FilterIndex := 1;
     Dlg.Options := [ofHideReadOnly, ofPathMustExist];
     if FFilePath <> '' then
-      Dlg.FileName := FFilePath;
+      Dlg.FileName := ChangeFileExt(FFilePath, '');
     while Dlg.Execute do
     begin
       Dlg.FileName := ChangeFileExt(Dlg.FileName, SaveExts[Dlg.FilterIndex]);
@@ -3692,14 +3693,16 @@ begin
     FBitmap := Warped;
     Warped := nil;
 
-    // Obraz zmienil wymiary - maski sa nieaktualne, czyscimy je (jak LoadImage).
-    FAlphaMask.Free;
-    FAlphaMask := nil;
-    FAlphaDirtyRect := Rect(0, 0, 0, 0);
-    FProtMask.Free;
-    FProtMask := nil;
-    FProtDirtyRect := Rect(0, 0, 0, 0);
-    FProtCoverCount := 0;
+    // Maska alfa (wytarte miejsca) przechodzi razem z obrazem; maska ochronna
+    // jest odtwarzana jako pusta. Gdy warp maski sie nie powiedzie, FAlphaMask
+    // zostaje nil i odtwarzamy ja jako pelne krycie. Cofniecie przywraca obie
+    // maski razem z obrazem (snapshot w UndoPushMasked).
+    AlphaPerspective(Quad, OutW, OutH);
+    if (FAlphaMask = nil) or
+       (FAlphaMask.Width <> FBitmap.Width) or
+       (FAlphaMask.Height <> FBitmap.Height) then
+      EnsureAlphaMask;
+    EnsureProtMask;
     FSelection.Clear;
 
     NotifyBitmapResized;
@@ -7344,6 +7347,79 @@ begin
       end;
     finally
       RotBmp.Free;
+    end;
+  finally
+    Src.Free;
+  end;
+end;
+
+procedure TfrmMain.AlphaPerspective(const Quad: TQuad; OutW, OutH: Integer);
+var
+  Src, Warped, NewMask: TBitmap;
+  W, H, Y, X: Integer;
+  SrcRow, DstRow: PByte;
+  V: Byte;
+begin
+  if FAlphaMask = nil then Exit;
+  if (FAlphaMask.Width = 0) or (FAlphaMask.Height = 0) then Exit;
+  if (OutW < 1) or (OutH < 1) then Exit;
+  W := FAlphaMask.Width;
+  H := FAlphaMask.Height;
+
+  // 1. Kopia w pf24bit do warpu, jak w AlphaRotateAngle: binaryzacja
+  //    (V > 127) i replikacja na R,G,B.
+  Src := TBitmap.Create;
+  try
+    Src.PixelFormat := pf24bit;
+    Src.SetSize(W, H);
+    for Y := 0 to H - 1 do
+    begin
+      SrcRow := FAlphaMask.ScanLine[Y];
+      DstRow := Src.ScanLine[Y];
+      for X := 0 to W - 1 do
+      begin
+        V := SrcRow[X];
+        if V > 127 then V := 255 else V := 0;
+        DstRow[X * 3] := V;
+        DstRow[X * 3 + 1] := V;
+        DstRow[X * 3 + 2] := V;
+      end;
+    end;
+
+    // 2. Ta sama homografia co obraz (PerspectiveWarp) zamiast obrotu GDI+;
+    //    wynik ma juz wymiary OutW x OutH, wiec krojenie jest zbedne.
+    Warped := PerspectiveWarp(Src, Quad, OutW, OutH);
+    if Warped = nil then
+    begin
+      FAlphaMask.Free;
+      FAlphaMask := nil;
+      Exit;
+    end;
+    try
+      // 3. Wynik do pf8bit z binaryzacja 0/255.
+      NewMask := TBitmap.Create;
+      try
+        NewMask.PixelFormat := pf8bit;
+        NewMask.SetSize(OutW, OutH);
+        for Y := 0 to OutH - 1 do
+        begin
+          SrcRow := Warped.ScanLine[Y];
+          DstRow := NewMask.ScanLine[Y];
+          for X := 0 to OutW - 1 do
+          begin
+            V := SrcRow[X * 3];
+            if V > 127 then DstRow[X] := 255 else DstRow[X] := 0;
+          end;
+        end;
+        FAlphaDirtyRect := Rect(0, 0, OutW, OutH);
+        FAlphaMask.Free;
+        FAlphaMask := NewMask;   // OSTATNIA instrukcja w try (wzorzec AlphaRotateAngle)
+      except
+        NewMask.Free;
+        raise;
+      end;
+    finally
+      Warped.Free;
     end;
   finally
     Src.Free;
