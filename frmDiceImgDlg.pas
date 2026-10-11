@@ -229,7 +229,7 @@ var
   pw, ph: Integer;
   Scaled: TBitmap;
   SW: TStopwatch;
-  Bottom, Delta: Integer;
+  Bottom: Integer;
 begin
   ElapsedSec := 0;
   Result := False;
