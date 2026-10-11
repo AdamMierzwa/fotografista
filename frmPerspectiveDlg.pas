@@ -35,6 +35,7 @@ type
     FDragIdx: Integer;
     FHoverIdx: Integer;
     FDpiScale: Double;
+    FPad: Integer;
     function PreviewQuad: TQuad;
     function HitTest(X, Y: Integer): Integer;
     procedure LayoutDialog;
@@ -115,18 +116,21 @@ begin
   end;
   FScale := PW / FImgW;
 
+  FPad := (Round((cHandleSize + 2) * FDpiScale) div 2) + 1;
+  if FPad < 2 then FPad := 2;
+
   FPreviewBmp := TBitmap.Create;
   FPreviewBmp.PixelFormat := pf24bit;
   FPreviewBmp.SetSize(PW, PH);
   SetStretchBltMode(FPreviewBmp.Canvas.Handle, HALFTONE);
   FPreviewBmp.Canvas.StretchDraw(Rect(0, 0, PW, PH), PerspectiveSourceBmp);
 
-  pboxSrc.SetBounds(Margin, Margin, PW, PH);
-  pboxDst.SetBounds(Margin + PW + CtrlGap * 4, Margin, PW, PH);
+  pboxSrc.SetBounds(Margin, Margin, PW + 2 * FPad, PH + 2 * FPad);
+  pboxDst.SetBounds(Margin + FPad + PW + CtrlGap * 4, Margin + FPad, PW, PH);
 
   lblHint.Left := Margin;
-  lblHint.Width := PW * 2 + CtrlGap * 4;
-  lblHint.Top := Margin + PH + RowGap;
+  lblHint.Width := PW * 2 + FPad + CtrlGap * 4;
+  lblHint.Top := Margin + PH + 2 * FPad + RowGap;
   lblHint.Height := Canvas.TextHeight('Wg') * 2 + 2;
 
   FitToContent(CtrlGap * 3, CtrlGap * 3);
@@ -184,8 +188,8 @@ begin
   Best := Sqr(R);
   for I := 0 to 3 do
   begin
-    PX := Round(FQuad[I].X * FScale);
-    PY := Round(FQuad[I].Y * FScale);
+    PX := FPad + Round(FQuad[I].X * FScale);
+    PY := FPad + Round(FQuad[I].Y * FScale);
     D := Sqr(X - PX) + Sqr(Y - PY);
     if D <= Best then
     begin
@@ -212,31 +216,46 @@ end;
 
 procedure TPerspectiveDlg.pboxSrcPaint(Sender: TObject);
 var
-  I, J, PX, PY, QX, QY: Integer;
+  I, J: Integer;
+  PX, PY: array[0..3] of Integer;
 begin
   with pboxSrc.Canvas do
   begin
     Brush.Color := clBtnFace;
     FillRect(pboxSrc.ClientRect);
     if FPreviewBmp <> nil then
-      Draw(0, 0, FPreviewBmp);
+      Draw(FPad, FPad, FPreviewBmp);
+
+    for I := 0 to 3 do
+    begin
+      PX[I] := FPad + Round(FQuad[I].X * FScale);
+      PY[I] := FPad + Round(FQuad[I].Y * FScale);
+      if FQuad[I].X <= 0 then Dec(PX[I]);
+      if FQuad[I].Y <= 0 then Dec(PY[I]);
+    end;
+
+    Pen.Color := clBlack;
+    Pen.Width := 3;
+    for I := 0 to 3 do
+    begin
+      J := (I + 1) mod 4;
+      MoveTo(PX[I], PY[I]);
+      LineTo(PX[J], PY[J]);
+    end;
 
     Pen.Color := clWhite;
     Pen.Width := 1;
     for I := 0 to 3 do
     begin
       J := (I + 1) mod 4;
-      PX := Round(FQuad[I].X * FScale);
-      PY := Round(FQuad[I].Y * FScale);
-      QX := Round(FQuad[J].X * FScale);
-      QY := Round(FQuad[J].Y * FScale);
-      MoveTo(PX, PY);
-      LineTo(QX, QY);
+      MoveTo(PX[I], PY[I]);
+      LineTo(PX[J], PY[J]);
     end;
 
     for I := 0 to 3 do
       DrawHandle(pboxSrc.Canvas,
-        Round(FQuad[I].X * FScale), Round(FQuad[I].Y * FScale),
+        FPad + Round(FQuad[I].X * FScale),
+        FPad + Round(FQuad[I].Y * FScale),
         (I = FDragIdx) or ((FDragIdx < 0) and (I = FHoverIdx)));
   end;
 end;
@@ -299,8 +318,8 @@ begin
   end;
   if FDragIdx < 0 then Exit;
 
-  IX := X / FScale;
-  IY := Y / FScale;
+  IX := (X - FPad) / FScale;
+  IY := (Y - FPad) / FScale;
   if IX < 0 then IX := 0 else if IX > FImgW then IX := FImgW;
   if IY < 0 then IY := 0 else if IY > FImgH then IY := FImgH;
 

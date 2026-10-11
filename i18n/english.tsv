@@ -1054,3 +1054,31 @@
 1123	Perspective correction
 1124	Correct converging lines - drag 4 corners
 1125	Drag the four corners onto the rectangle edges
+1126	Follow shape (0-100):
+1127	Line raster...
+1128	Line raster - lines of varying thickness
+1129	Line raster
+1130	Pattern rasters
+1131	Image from dice...
+1132	Image from dice
+1136	Number of dice:
+1133	Cell size (24-64 px):
+1137	Cross raster...
+1138	Cross raster
+1139	Maximum line thickness (1-64):
+1140	Line angle 1 (0-179°):
+1141	Line angle 2 (0-179°):
+1142	Dot raster...
+1143	Dot raster
+1144	Dot screen angle (0-45°):
+1145	Maximum dot size (10-100%):
+1146	Tone curve (30-300, 100 = linear):
+1147	Edge smoothing (0.0-2.0 px):
+1148	Cross raster - two line sets at adjustable angles
+1149	Dot raster - rotated dot screen with tone curve
+1150	Dotted raster...
+1151	Dotted raster
+1152	Poisson dots (experimental)
+1153	Dot size (0.1-10.0% of short side):
+1154	Tone curve (10-500, 100 = linear):
+1155	Dotted raster - scattered dots using Poisson distribution

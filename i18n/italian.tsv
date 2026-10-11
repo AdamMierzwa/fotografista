@@ -1054,3 +1054,31 @@
 1123	Correzione prospettiva
 1124	Correggi le linee convergenti - trascina i 4 angoli
 1125	Trascina i quattro angoli sui bordi del rettangolo
+1126	Segui la forma (0–100):
+1127	Retino a linee...
+1128	Retino a linee - linee di spessore variabile
+1129	Retino a linee
+1130	Retini a motivo
+1131	Immagine da dadi...
+1132	Immagine da dadi
+1136	Numero di dadi:
+1133	Dimensione cella (24–64 px):
+1137	Retino incrociato...
+1138	Retino incrociato
+1139	Spessore massimo linee (1–64):
+1140	Angolo linea 1 (0–179°):
+1141	Angolo linea 2 (0–179°):
+1142	Retino a punti...
+1143	Retino a punti
+1144	Angolo retino a punti (0–45°):
+1145	Dimensione massima dei punti (10–100%):
+1146	Curva tonale (30–300, 100 = lineare):
+1147	Smussatura dei bordi (0,0–2,0 px):
+1148	Retino incrociato - due set di linee con angoli regolabili
+1149	Retino a punti - retino a punti ruotato con curva tonale
+1150	Retino puntinato...
+1151	Retino puntinato
+1152	Punti di Poisson (sperimentale)
+1153	Dimensione del punto (0,1–10,0% del lato corto):
+1154	Curva tonale (10–500, 100 = lineare):
+1155	Retino a punti - punti sparsi con distribuzione di Poisson

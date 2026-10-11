@@ -1054,3 +1054,31 @@
 1123	Correction de la perspective
 1124	Corrigez les lignes convergentes - faites glisser les 4 coins
 1125	Faites glisser les quatre coins sur les bords du rectangle
+1126	Suivi des formes (0–100) :
+1127	Trame linéaire...
+1128	Trame linéaire - lignes à épaisseur variable
+1129	Trame linéaire
+1130	Trames à motifs
+1131	Image à partir de dés...
+1132	Image à partir de dés
+1136	Nombre de dés:
+1133	Taille de la cellule (24–64 px):
+1137	Trame croisée...
+1138	Trame croisée
+1139	Épaisseur maximale des traits (1–64):
+1140	Angle du trait 1 (0–179°):
+1141	Angle du trait 2 (0–179°):
+1142	Trame à points...
+1143	Trame à points
+1144	Angle de la trame (0–45°):
+1145	Taille maximale des points (10–100 %):
+1146	Courbe tonale (30–300, 100 = linéaire):
+1147	Lissage des bords (0,0–2,0 px):
+1148	Trame croisée - deux jeux de traits à angles réglables
+1149	Trame à points - trame de points pivotée avec courbe tonale
+1150	Trame pointillée...
+1151	Trame pointillée
+1152	Points de Poisson (expérimental)
+1153	Taille du point (0,1–10,0 % du petit côté) :
+1154	Courbe tonale (10–500, 100 = linéaire) :
+1155	Trame pointillée - points dispersés selon une loi de Poisson

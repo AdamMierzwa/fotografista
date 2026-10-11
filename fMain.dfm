@@ -47,9 +47,9 @@
   end
   object ScrollBox: TScrollBox
     Left = 0
-    Top = 30
+    Top = 0
     Width = 900
-    Height = 491
+    Height = 521
     Align = alClient
     BorderStyle = bsNone
     TabOrder = 1
@@ -570,30 +570,53 @@
       object N18: TMenuItem
         Caption = '-'
       end
-      object mnuEngraving: TMenuItem
-        Caption = 'Engraving...'
-        Hint = 'Engraving - line engraving simulation'
-        OnClick = mnuEngravingClick
+      object mnuLineRaster: TMenuItem
+        Caption = 'Line raster...'
+        Hint = 'Line raster - lines of varying thickness'
+        OnClick = mnuLineRasterClick
       end
-      object mnuCrosshatch: TMenuItem
-        Caption = 'Crosshatch...'
-        Hint = 'Crosshatch lines at two angles'
-        OnClick = mnuCrosshatchClick
+      object mnuRasterKrzyzowy: TMenuItem
+        Caption = 'Cross raster...'
+        Hint = 'Cross raster - two line sets at adjustable angles'
+        OnClick = mnuRasterKrzyzowyClick
       end
-      object mnuHalftone: TMenuItem
-        Caption = 'Halftone...'
-        Hint = 'Halftone - growing dots based on brightness'
-        OnClick = mnuHalftoneClick
+      object mnuRasterPunktowy: TMenuItem
+        Caption = 'Dot raster...'
+        Hint = 'Dot raster - rotated dot screen with tone curve'
+        OnClick = mnuRasterPunktowyClick
       end
-      object mnuStipple: TMenuItem
-        Caption = 'Stipple...'
-        Hint = 'Stipple - dot density based on brightness'
-        OnClick = mnuStippleClick
+      object mnuPoisson: TMenuItem
+        Caption = 'Dotted raster...'
+        Hint = 'Dotted raster - scattered dots using Poisson distribution'
+        OnClick = mnuPoissonClick
       end
-      object mnuDice: TMenuItem
-        Caption = 'Dice...'
-        Hint = 'Dice - dice eyes pattern'
-        OnClick = mnuDiceClick
+      object mnuPatternRasters: TMenuItem
+        Caption = 'Pattern rasters'
+        object mnuEngraving: TMenuItem
+          Caption = 'Engraving...'
+          Hint = 'Engraving - line engraving simulation'
+          OnClick = mnuEngravingClick
+        end
+        object mnuCrosshatch: TMenuItem
+          Caption = 'Crosshatch...'
+          Hint = 'Crosshatch lines at two angles'
+          OnClick = mnuCrosshatchClick
+        end
+        object mnuHalftone: TMenuItem
+          Caption = 'Halftone...'
+          Hint = 'Halftone - growing dots based on brightness'
+          OnClick = mnuHalftoneClick
+        end
+        object mnuStipple: TMenuItem
+          Caption = 'Stipple...'
+          Hint = 'Stipple - dot density based on brightness'
+          OnClick = mnuStippleClick
+        end
+        object mnuDice: TMenuItem
+          Caption = 'Dice...'
+          Hint = 'Dice - dice eyes pattern'
+          OnClick = mnuDiceClick
+        end
       end
       object N19: TMenuItem
         Caption = '-'
@@ -690,6 +713,10 @@
         Caption = 'Tiling...'
         Hint = 'Tile image to fill target dimensions'
         OnClick = mnuTilesClick
+      end
+      object mnuImageFromDice: TMenuItem
+        Caption = 'Image from dice...'
+        OnClick = mnuImageFromDiceClick
       end
       object mnuStereogram: TMenuItem
         Caption = 'Stereogram...'

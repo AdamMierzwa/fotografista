@@ -14,10 +14,15 @@ uses
   frmLinocutDlg,
   frmStencilDlg,
   frmEngravingDlg,
+  frmLineRasterDlg,
   frmCrosshatchDlg,
+  frmRasterKrzyzowyDlg,
+  frmRasterPunktowyDlg,
+  frmPoissonDlg,
   frmHalftoneDlg,
   frmStippleDlg,
   frmDiceDlg,
+  frmDiceImgDlg,
   frmScreenPrintDlg,
   frmRastrCmykDlg,
   frmBatchDlg,
@@ -118,6 +123,7 @@ type
     mnuResize: TMenuItem;
     mnuResizeCrop: TMenuItem;
     mnuTiles: TMenuItem;
+    mnuImageFromDice: TMenuItem;
 
     { Efekty }
     mnuEffects: TMenuItem;
@@ -167,7 +173,11 @@ type
     mnuStencil: TMenuItem;
     N18: TMenuItem;
     mnuEngraving: TMenuItem;
+    mnuLineRaster: TMenuItem;
     mnuCrosshatch: TMenuItem;
+    mnuRasterKrzyzowy: TMenuItem;
+    mnuRasterPunktowy: TMenuItem;
+    mnuPoisson: TMenuItem;
     mnuHalftone: TMenuItem;
     mnuStipple: TMenuItem;
     mnuDice: TMenuItem;
@@ -218,10 +228,8 @@ type
     mnuAGA256: TMenuItem;
     mnuWB256: TMenuItem;
     mnuMagicWB: TMenuItem;
-    N21: TMenuItem;
     mnuHAM6: TMenuItem;
     mnuHAM8: TMenuItem;
-    N22: TMenuItem;
     mnuAmigaGradient: TMenuItem;
     mnuAmigaGradientAgony: TMenuItem;
     N23: TMenuItem;
@@ -381,10 +389,15 @@ type
     procedure mnuLinocutClick(Sender: TObject);
     procedure mnuStencilClick(Sender: TObject);
     procedure mnuEngravingClick(Sender: TObject);
+    procedure mnuLineRasterClick(Sender: TObject);
     procedure mnuCrosshatchClick(Sender: TObject);
+    procedure mnuRasterKrzyzowyClick(Sender: TObject);
+    procedure mnuRasterPunktowyClick(Sender: TObject);
+    procedure mnuPoissonClick(Sender: TObject);
     procedure mnuHalftoneClick(Sender: TObject);
     procedure mnuStippleClick(Sender: TObject);
     procedure mnuDiceClick(Sender: TObject);
+    procedure mnuImageFromDiceClick(Sender: TObject);
     procedure mnuScreenPrintClick(Sender: TObject);
     procedure mnuRastrCMYKClick(Sender: TObject);
     procedure mnuRisoClick(Sender: TObject);
@@ -5020,6 +5033,78 @@ begin
   else if Backup <> nil then Backup.Free;
 end;
 
+procedure TfrmMain.mnuLineRasterClick(Sender: TObject);
+var
+  Elapsed: Double;
+  Backup: TBitmap;
+begin
+  Backup := nil;
+  if FBitmap.Width = 0 then Exit;
+  if NeedEffectBackup then
+  begin Backup := TBitmap.Create; Backup.Assign(FBitmap); end;
+  UndoPush(FBitmap);
+  if ShowLineRasterDlg(FBitmap, Elapsed) then
+  begin
+    if Backup <> nil then begin RestoreOutsideSelection(Backup); Backup.Free; end;
+    FinishEffect(T('Line raster'), Elapsed);
+  end
+  else if Backup <> nil then Backup.Free;
+end;
+
+procedure TfrmMain.mnuRasterPunktowyClick(Sender: TObject);
+var
+  Elapsed: Double;
+  Backup: TBitmap;
+begin
+  Backup := nil;
+  if FBitmap.Width = 0 then Exit;
+  if NeedEffectBackup then
+  begin Backup := TBitmap.Create; Backup.Assign(FBitmap); end;
+  UndoPush(FBitmap);
+  if ShowRasterPunktowyDlg(FBitmap, Elapsed) then
+  begin
+    if Backup <> nil then begin RestoreOutsideSelection(Backup); Backup.Free; end;
+    FinishEffect(T('Dot raster'), Elapsed);
+  end
+  else if Backup <> nil then Backup.Free;
+end;
+
+procedure TfrmMain.mnuPoissonClick(Sender: TObject);
+var
+  Elapsed: Double;
+  Backup: TBitmap;
+begin
+  Backup := nil;
+  if FBitmap.Width = 0 then Exit;
+  if NeedEffectBackup then
+  begin Backup := TBitmap.Create; Backup.Assign(FBitmap); end;
+  UndoPush(FBitmap);
+  if ShowPoissonDlg(FBitmap, Elapsed) then
+  begin
+    if Backup <> nil then begin RestoreOutsideSelection(Backup); Backup.Free; end;
+    FinishEffect(T('Dotted raster'), Elapsed);
+  end
+  else if Backup <> nil then Backup.Free;
+end;
+
+procedure TfrmMain.mnuRasterKrzyzowyClick(Sender: TObject);
+var
+  Elapsed: Double;
+  Backup: TBitmap;
+begin
+  Backup := nil;
+  if FBitmap.Width = 0 then Exit;
+  if NeedEffectBackup then
+  begin Backup := TBitmap.Create; Backup.Assign(FBitmap); end;
+  UndoPush(FBitmap);
+  if ShowRasterKrzyzowyDlg(FBitmap, Elapsed) then
+  begin
+    if Backup <> nil then begin RestoreOutsideSelection(Backup); Backup.Free; end;
+    FinishEffect(T('Cross raster'), Elapsed);
+  end
+  else if Backup <> nil then Backup.Free;
+end;
+
 procedure TfrmMain.mnuCrosshatchClick(Sender: TObject);
 var
   Elapsed: Double;
@@ -5088,6 +5173,24 @@ begin
   begin
     if Backup <> nil then begin RestoreOutsideSelection(Backup); Backup.Free; end;
     FinishEffect(T('Dice'), Elapsed);
+  end
+  else if Backup <> nil then Backup.Free;
+end;
+
+procedure TfrmMain.mnuImageFromDiceClick(Sender: TObject);
+var
+  Elapsed: Double;
+  Backup: TBitmap;
+begin
+  Backup := nil;
+  if FBitmap.Width = 0 then Exit;
+  if NeedEffectBackup then
+  begin Backup := TBitmap.Create; Backup.Assign(FBitmap); end;
+  UndoPush(FBitmap);
+  if ShowDiceImgDlg(FBitmap, Elapsed) then
+  begin
+    if Backup <> nil then begin RestoreOutsideSelection(Backup); Backup.Free; end;
+    FinishEffect(T('Image from dice'), Elapsed);
   end
   else if Backup <> nil then Backup.Free;
 end;
@@ -5623,6 +5726,13 @@ var
 begin
   if Bitmap.Width = 0 then Exit('');
   P := Step.Params.Split(['|']);
+  if SameText(Step.Code, 'RASTERKRZ') and (Length(P) < 4) then SetLength(P, 4);   // brakujace = domyslne
+  if SameText(Step.Code, 'RASTERPUNKT') and (Length(P) < 5) then SetLength(P, 5);   // brakujace = domyslne
+  if SameText(Step.Code, 'LINERASTER') and (Length(P) < 4) then
+  begin
+    SetLength(P, 4);   // brakujacy czwarty parametr (Follow) = domyslne 40
+    P[3] := '40';
+  end;
   if SameText(Step.Code, 'BLUR') then DoBlur(Bitmap, StrToIntDef(P[0], 0))
   else if SameText(Step.Code, 'BRIGHTNESS') then DoBrightness(Bitmap, StrToIntDef(P[0], 0))
   else if SameText(Step.Code, 'GAMMA') then DoGamma(Bitmap, StrToIntDef(P[0], 0))
@@ -5707,11 +5817,15 @@ begin
   else if SameText(Step.Code, 'CHARCOAL') then DoCharcoal(Bitmap, StrToIntDef(P[0], 0))
   else if SameText(Step.Code, 'QUANTIZE') then DoQuantize(Bitmap, StrToIntDef(P[0], 0), StrToBoolDef(P[1], False))
   else if SameText(Step.Code, 'BOKEH') then DoBokeh(Bitmap, StrToIntDef(P[0], 0), StrToIntDef(P[1], 0), StrToIntDef(P[2], 0), StrToIntDef(P[3], 0), StrToIntDef(P[4], 0))
-  else if SameText(Step.Code, 'ENGRAVING') then DoEngraving(Bitmap, StrToIntDef(P[0], 0), StrToIntDef(P[1], 0), StrToIntDef(P[2], 0))
+   else if SameText(Step.Code, 'ENGRAVING') then DoEngraving(Bitmap, StrToIntDef(P[0], 0), StrToIntDef(P[1], 0), StrToIntDef(P[2], 0))
+  else if SameText(Step.Code, 'LINERASTER') then DoLineRaster(Bitmap, StrToIntDef(P[0], 0), StrToIntDef(P[1], 0), StrToIntDef(P[2], 0), StrToIntDef(P[3], 0))
   else if SameText(Step.Code, 'CROSSHATCH') then DoCrosshatch(Bitmap, StrToIntDef(P[0], 0), StrToIntDef(P[1], 0))
+  else if SameText(Step.Code, 'RASTERKRZ') then DoRasterKrzyzowy(Bitmap, StrToIntDef(P[0], 8), StrToIntDef(P[1], 4), StrToIntDef(P[2], 45), StrToIntDef(P[3], 135))
+  else if SameText(Step.Code, 'RASTERPUNKT') then DoRasterPunktowy(Bitmap, StrToIntDef(P[0], 8), StrToIntDef(P[1], 45), StrToIntDef(P[2], 70), StrToIntDef(P[3], 100), StrToIntDef(P[4], 10))
   else if SameText(Step.Code, 'HALFTONE') then DoHalftone(Bitmap, StrToIntDef(P[0], 0))
   else if SameText(Step.Code, 'STIPPLE') then DoStipple(Bitmap, StrToIntDef(P[0], 0))
   else if SameText(Step.Code, 'DICE') then DoDice(Bitmap, StrToIntDef(P[0], 0))
+  else if SameText(Step.Code, 'DICEIMG') then DoDiceImage(Bitmap, StrToIntDef(P[0], 0))
   else if SameText(Step.Code, 'RASTRCMYK') then DoRastrCmyk(Bitmap, StrToIntDef(P[0], 0), StrToIntDef(P[1], 0))
   else if SameText(Step.Code, 'COLORIZE') then DoTint(Bitmap, TColor(StrToIntDef(P[0], 0)), StrToIntDef(P[1], 0))
   else if SameText(Step.Code, 'SCREENPRINT') then DoScreenPrint(Bitmap, TColor(StrToIntDef(P[0], 0)), TColor(StrToIntDef(P[1], 0)), StrToIntDef(P[2], 0))

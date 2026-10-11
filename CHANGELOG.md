@@ -1,14 +1,62 @@
 ﻿# Changelog — Fotografista (wersja Delphi)
 
-## [09-10.2026] — wersja 1.1.2
+## [09-10.2026] — wersja 1.2.0
 
-Różnica względem wersji sklepowej z 08-09.2026. Elementy już opisane w tej
-sekcji — pędzle malowania, klonu, jasności i ostrości, siła per rodzina,
-limit skoku dodge/burn, pędzel zamiany koloru, balans bieli, maska ochronna,
-zaznaczenia, usuwanie tła — nie są powtarzane. Poniżej tylko to, co doszło
-lub zmieniło zachowanie.
+Różnica względem wersji 1.1.1 ze sklepu.
 
 ### Added
+
+**Reorganizacja rastrów wzorkowych** (`fMain.pas`, `fMain.dfm`, `i18n/*.tsv`,
+`uI18n.pas`, `tools/i18n_common.ps1`) — dotychczasowe efekty rastrowe
+przeniesione z menu Druk do nowego podmenu „Rastry wzorkowe” („Pattern
+rasters”): Grawerowanie, Krzyżowanie, Raster, Kropkowanie, Kostkowanie. W menu
+Druk w ich miejscu pojawiły się nowe, rozszerzone wersje (poniżej); Kostkowanie
+zyskało nową wersję w menu Narzędzia. Dodano klucze i18n z zakresu 1126–1155 we
+wszystkich 9 katalogach; walidator integralności (`i18n_common.ps1`) ustawiony
+na 1084 rekordy.
+
+**Raster liniowy** (`frmLineRasterDlg.pas`, `frmLineRasterDlg.dfm`, `fMain.pas`,
+`fMain.dfm`, `uMacros.pas`, `Fotografista.dpr`, `i18n/*.tsv`, `uI18n.pas`) —
+nowa wersja Grawerowania. Linie o zmiennej grubości zależnej od jasności;
+suwaki: rozmiar komórki (4–16 px), maksymalna grubość linii (1–8), kąt linii
+(0–179°), dopasowanie do kształtu (0–100). Makro `LINERASTER`.
+
+**Raster krzyżowy** (`frmRasterKrzyzowyDlg.pas`, `frmRasterKrzyzowyDlg.dfm`,
+`fMain.pas`, `fMain.dfm`, `uMacros.pas`, `Fotografista.dpr`, `i18n/*.tsv`,
+`uI18n.pas`) — nowa wersja Krzyżowania. Dwa zestawy linii pod kątami 0–179°;
+rozmiar komórki (4–64 px), maksymalna grubość linii (1–64). Makro `RASTERKRZ`.
+
+**Raster punktowy** (`frmRasterPunktowyDlg.pas`, `frmRasterPunktowyDlg.dfm`,
+`fMain.pas`, `fMain.dfm`, `uMacros.pas`, `Fotografista.dpr`, `i18n/*.tsv`,
+`uI18n.pas`) — nowa wersja Rastra (dawnego Halftone). Obrócona siatka punktów
+o rozmiarze zależnym od jasności; rozmiar komórki (4–64 px), kąt siatki
+(0–45°), maksymalny rozmiar punktu (10–100%), krzywa tonalna (30–300),
+wygładzenie krawędzi (0,0–2,0 px). Makro `RASTERPUNKT`.
+
+**Raster kropkowany (Poisson)** (`frmPoissonDlg.pas`, `frmPoissonDlg.dfm`,
+`uPoissonStipple.pas`, `fMain.pas`, `fMain.dfm`, `Fotografista.dpr`,
+`i18n/*.tsv`, `uI18n.pas`) — nowa wersja Kropkowania. Rozkład punktów Poissona
+o promieniu zależnym od jasności (ciemno małe, jasno duże kropki); wielkość
+kropki (0,1–10,0% krótszego boku), krzywa tonalna (10–500, 100 = liniowa).
+Deterministyczne ziarno lokalne (bez globalnego RandSeed). Okno z podglądem
+nawigatora i fragmentem 1:1 liczonym w tle; pełny wynik przy OK liczony w
+wątku roboczym, Cancel przerywa bez zmiany obrazu. Bez wpisu w makrach.
+
+**Obraz z kostek do gry** (`frmDiceImgDlg.pas`, `frmDiceImgDlg.dfm`,
+`uMacros.pas`, `fMain.pas`, `fMain.dfm`, `Fotografista.dpr`, `i18n/*.tsv`,
+`uI18n.pas`, `tools/i18n_common.ps1`) — nowa wersja Kostkowania w menu
+Narzędzia („Image from dice..."). Mozaika z kostek 1–6 oczek w 6 poziomach
+jasności (ciemne = 6 oczek, jasne = 1 oczko). Komórka = ściana kostki + 1 px
+białej przerwy; suwak „Cell size” (24–64 px, krok 2, domyślnie 32 px; wewnętrznie
+pozycja × 2) wybiera szczegółowość; wiersz „Number of dice:” pokazuje liczbę
+kostek = kolumny × wiersze, z zaokrągleniem w górę przy krawędziach (częściowa
+kostka renderowana w całości). Jasność komórki brana z obrazu zmniejszonego do
+siatki kolumny × wiersze (StretchDraw, HALFTONE). Wzorzec oczka jest jeden dla
+wszystkich kostek (maska „stamp”, okrąg w całkowitych współrzędnych), więc
+wszystkie oczka mają identyczny kształt; promień R = Round(ściana/11)
+zmniejszany tak, by oczka miały co najmniej 3 px marginesu od krawędzi ściany
+(odstęp między oczkami sąsiednich kostek = 2·3+1 = 7 px). Makro `DICEIMG`.
+Dodane 4 klucze i18n (ID 1131, 1132, 1133, 1136) we wszystkich 9 katalogach.
 
 **Korekta perspektywy** (`uTransform.pas`, `frmPerspectiveDlg.pas`,
 `frmPerspectiveDlg.dfm`, `fMain.pas`, `fMain.dfm`, `Fotografista.dpr`,
@@ -26,11 +74,78 @@ macro pominięta (brak mapowania w `MacroCodeForOpName`). Dodane 4 klucze i18n
 (ID 1122–1125) we wszystkich 9 katalogach; walidator integralności podniesiony
 do 1056 rekordów.
 
+**Kursor pędzla — ustawienie wyglądu** (`uPrefs.pas`, `frmInterfaceDlg.pas`,
+`frmInterfaceDlg.dfm`, `fMain.pas`, `i18n/*.tsv`) — Ustawienia > Interfejs
+mają listę „Brush cursor" i pole krzyżyka w okręgu.
+- `Circle outline` (domyślnie, dotychczasowe zachowanie) rysuje własny okrąg
+  pędzla; `Crosshair (precise)` zostawia systemowy krzyżyk (`crCross`) bez
+  okręgu. Dotyczy pędzla, gumki i maski ochronnej
+- wybór zapisany jako indeks w `[Interface]\BrushCursorMode` (0/1, poza
+  zakresem → 0), więc kolejność pozycji listy nie może się zmieniać
+- pole „Show crosshair in brush outline" (`[Interface]\BrushCrosshairCenter`,
+  domyślnie wyłączone) dorysowuje w środku okręgu krzyżyk dwukolorowy,
+  tylko gdy promień ≥ 5 px. W trybie Crosshair pole jest wyszarzone, a jego
+  stan zostaje zachowany
+- zmiana działa od razu przy aktywnym pędzlu, gumce lub masce:
+  `mnuSettingsInterfaceClick` wywołuje ponownie `Activate` narzędzia
+- `UpdateBrushCursor` wychodzi na początku, gdy tryb ≠ 0, więc w trybie
+  Crosshair próbnik też nie rysuje okręgu (wcześniej go rysował mimo `crCross`)
+- klucze i18n 1118–1121 w 9 językach; licznik rekordów w bramce
+  (`tools/i18n_common.ps1`) 1048 → 1052
+
+### Changed
+
+**Domknięcie rastrów wzorkowych** (`Fotografista.dproj`, `fMain.dfm`,
+`i18n/*.tsv`, `uI18n.pas`, `tools/i18n_common.ps1`) — dopisano brakujące 5
+unitów do listy `DCCReference` w `.dproj` (`frmDiceImgDlg`,
+`frmRasterKrzyzowyDlg`, `frmRasterPunktowyDlg`, `frmPoissonDlg`,
+`uPoissonStipple`); wcześniej `.dproj` miał 57 wpisów wobec 62 w `.dpr`, więc
+IDE nie pokazywało tych formularzy w Menedżerze projektów. Dodano też
+podpowiedź (`Hint`) dla pozycji „Raster kropkowany” (`mnuPoisson`) — jedynej
+nowej pozycji menu bez podpowiedzi (klucz i18n 1155 we wszystkich 9 katalogach;
+walidator integralności na 1084 rekordy).
+
+**Korekta perspektywy — margines i obrys podglądu** (`frmPerspectiveDlg.pas`) —
+obraz w oknie źródłowym odsunięty o margines `FPad` równy zasięgowi narożnego
+uchwytu (`(Round((cHandleSize + 2) * FDpiScale) div 2) + 1`, 7 px @100% DPI),
+dzięki czemu wszystkie cztery krawędzie quada i wszystkie narożne uchwyty są w
+pełni widoczne; wcześniej prawa i dolna krawędź oraz uchwyty narożne były
+obcinane przez GDI na granicy canvasu. Obrys kadru dwuwarstwowy — 3 px czarny
+pod spodem i 1 px biały na wierzchu — jest widoczny zarówno na jasnym, jak i
+ciemnym tle zdjęcia. Linia rysowana 1 px poza obrazem na krawędziach
+lewej/górnej (korekta `X<=0`/`Y<=0`). Bez zmian w wyniku przekształcenia.
+
+**„Zapisz jako" startował z rozszerzeniem w nazwie** (`fMain.pas`) — pole nazwy
+otwierało się z pełną nazwą pliku (np. `obraz.png`); teraz startuje bez
+rozszerzenia (`ChangeFileExt(FFilePath, '')`). Rozszerzenie nadal nadaje
+wybrany format przy zapisie (`FilterIndex`), więc zapisany plik jest bez zmian.
+
+**Wczytywanie WebP, HEIC, HEIF i AVIF** (`uImageIO.pas`) — program nie otwierał
+tych plików (komunikat „Range check error"). `LoadSkiaImageToBitmap` kodowała obraz
+do BMP, a Skia4Delphi nie koduje BMP, więc wynik był pustą tablicą, a `Bytes[0]`
+wychodziło poza zakres. Teraz kodowanie do PNG, sprawdzenie pustego wyniku i
+wczytanie przez `TPngImage`, wynik w `pf24bit`. Wczytanie jest wolniejsze niż PNG
+(ok. 1,5 s wobec 0,5 s w teście).
+
+**Adres dokumentacji online** (`fMain.pas`, `mnuHelpOnlineDocsClick`) — pozycja
+otwiera stronę programu na własnej domenie zamiast strony dokumentacji wersji
+Hollywood. Nazwa pozycji menu bez zmian, bo dokumentacja ma tam trafić
+
+## [10.2026] — wersja 1.1.1
+
+Różnica względem wersji sklepowej z 08-09.2026. Elementy już opisane w tej
+sekcji — pędzle malowania, klonu, jasności i ostrości, siła per rodzina,
+limit skoku dodge/burn, pędzel zamiany koloru, balans bieli, maska ochronna,
+zaznaczenia, usuwanie tła — nie są powtarzane. Poniżej tylko to, co doszło
+lub zmieniło zachowanie.
+
+### Added
+
 **Wspólna bramka integralności katalogów** (`tools/i18n_common.ps1`,
 `tools/i18n_common_test.ps1`) — moduł używany przez wszystkie trzy skrypty i18n
 (`gen_i18n`, `audit_i18n`, `audyt_i18n_nietlumaczone`). Kontroluje: dokładnie
 jeden BOM w całym pliku, wyłącznie CRLF, końcowy CRLF, format `ID<TAB>tekst`,
-1056 rekordów, brak zduplikowanych ID, brak U+FFFD. Liczenie wystąpień BOM
+1048 rekordów, brak zduplikowanych ID, brak U+FFFD. Liczenie wystąpień BOM
 w całym pliku zamyka klasę błędów, która przechodziła po cichu — podwójny BOM
 nie wykrywał żaden wcześniejszy skrypt. Test regresyjny sprawdza 6 uszkodzeń
 na własnych fixture'ach, w tym podwójny BOM.
@@ -98,11 +213,6 @@ raport każdej zmienionej komórki.
   pary w żadnym z 7 języków
 
 ### Changed
-
-**„Zapisz jako" startował z rozszerzeniem w nazwie** (`fMain.pas`) — pole nazwy
-otwierało się z pełną nazwą pliku (np. `obraz.png`); teraz startuje bez
-rozszerzenia (`ChangeFileExt(FFilePath, '')`). Rozszerzenie nadal nadaje
-wybrany format przy zapisie (`FilterIndex`), więc zapisany plik jest bez zmian.
 
 **Wersja EXE nie zgadzała się z wersją paczki** (`Fotografista.dproj`) —
 `FileVersion`/`ProductVersion` w `Win64|Release` stały na `1.0.6.0` od pierwszego
@@ -647,25 +757,6 @@ konwersja EN wymagałaby przebudowy kluczy i jest osobnym tematem.
   tylko barwę i nasycenie
 - klucz i18n 1113 „Retain shading" w 9 językach
 
-**Kursor pędzla — ustawienie wyglądu** (`uPrefs.pas`, `frmInterfaceDlg.pas`,
-`frmInterfaceDlg.dfm`, `fMain.pas`, `i18n/*.tsv`) — Ustawienia > Interfejs
-mają listę „Brush cursor" i pole krzyżyka w okręgu.
-- `Circle outline` (domyślnie, dotychczasowe zachowanie) rysuje własny okrąg
-  pędzla; `Crosshair (precise)` zostawia systemowy krzyżyk (`crCross`) bez
-  okręgu. Dotyczy pędzla, gumki i maski ochronnej
-- wybór zapisany jako indeks w `[Interface]\BrushCursorMode` (0/1, poza
-  zakresem → 0), więc kolejność pozycji listy nie może się zmieniać
-- pole „Show crosshair in brush outline" (`[Interface]\BrushCrosshairCenter`,
-  domyślnie wyłączone) dorysowuje w środku okręgu krzyżyk dwukolorowy,
-  tylko gdy promień ≥ 5 px. W trybie Crosshair pole jest wyszarzone, a jego
-  stan zostaje zachowany
-- zmiana działa od razu przy aktywnym pędzlu, gumce lub masce:
-  `mnuSettingsInterfaceClick` wywołuje ponownie `Activate` narzędzia
-- `UpdateBrushCursor` wychodzi na początku, gdy tryb ≠ 0, więc w trybie
-  Crosshair próbnik też nie rysuje okręgu (wcześniej go rysował mimo `crCross`)
-- klucze i18n 1118–1121 w 9 językach; licznik rekordów w bramce
-  (`tools/i18n_common.ps1`) 1048 → 1052
-
 ### Changed
 
 **Pędzel zamiany koloru** (`fMain.pas`, `bmColorReplace`) — powtarzalne
@@ -696,10 +787,6 @@ malowanie zamiast kumulowania farby
 
 **Menu** (`fMain.dfm`)
 - przywrócona pozycja „Retouch…" w menu Narzędzia
-
-**Adres dokumentacji online** (`fMain.pas`, `mnuHelpOnlineDocsClick`) — pozycja
-otwiera stronę programu na własnej domenie zamiast strony dokumentacji wersji
-Hollywood. Nazwa pozycji menu bez zmian, bo dokumentacja ma tam trafić
 
 **Tłumaczenia** (`i18n/*.tsv`, `uI18n.pas`, `frmAmigaBGDlg.dfm`,
 `frmAmigaBGSDlg.dfm`, `frmRisoV3Dlg.dfm`)
@@ -814,5 +901,4 @@ Delphi — przebudowa aplikacji, niezależna od wcześniejszej wersji Hollywood.
 
 - Rejestr commitów: `git log` w katalogu `Delphi/`.
 - Plan rozwoju: `ROADMAP.md`.
-
 

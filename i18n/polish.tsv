@@ -1054,3 +1054,31 @@
 1123	Korekta perspektywy
 1124	Popraw zbieżność linii - przeciągnij 4 narożniki
 1125	Przeciągnij cztery narożniki na krawędzie prostokąta
+1126	Podążanie za kształtem (0–100):
+1127	Raster liniowy...
+1128	Raster liniowy — linie o zmiennej grubości
+1129	Raster liniowy
+1130	Rastry wzorkowe
+1131	Obraz z kostek do gry...
+1132	Obraz z kostek do gry
+1136	Liczba kostek:
+1133	Rozmiar komórki (24–64 px):
+1137	Raster krzyżowy...
+1138	Raster krzyżowy
+1139	Maksymalna grubość linii (1–64):
+1140	Kąt linii 1 (0–179°):
+1141	Kąt linii 2 (0–179°):
+1142	Raster punktowy...
+1143	Raster punktowy
+1144	Kąt siatki punktów (0–45°):
+1145	Maksymalny rozmiar punktu (10–100%):
+1146	Krzywa tonalna (30–300, 100 = liniowa):
+1147	Wygładzenie krawędzi (0,0–2,0 px):
+1148	Raster krzyżowy - dwa zestawy linii pod regulowanymi kątami
+1149	Raster punktowy - obrócona siatka punktów z krzywą tonalną
+1150	Raster kropkowany...
+1151	Raster kropkowany
+1152	Punkty Poissona (eksperymentalne)
+1153	Wielkość kropki (0,1–10,0% krótszego boku):
+1154	Krzywa tonalna (10–500, 100 = liniowa):
+1155	Raster kropkowany - rozproszone kropki w rozkładzie Poissona

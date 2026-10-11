@@ -1,4 +1,4 @@
-unit uMacros;
+﻿unit uMacros;
 
 interface
 
@@ -58,7 +58,7 @@ type
   end;
 
 const
-  cMacroLabels: array[0..60] of TLabelRec = (
+  cMacroLabels: array[0..64] of TLabelRec = (
     (Code: 'BLUR';          LabelEN: 'Blur'),
     (Code: 'BRIGHTNESS';    LabelEN: 'Brightness'),
     (Code: 'GAMMA';         LabelEN: 'Gamma correction'),
@@ -107,10 +107,14 @@ const
     (Code: 'QUANTIZE';      LabelEN: 'Posterize'),
     (Code: 'BOKEH';         LabelEN: 'Artificial bokeh'),
     (Code: 'ENGRAVING';     LabelEN: 'Engraving'),
+    (Code: 'LINERASTER';    LabelEN: 'Line raster'),
     (Code: 'CROSSHATCH';    LabelEN: 'Crosshatch'),
+    (Code: 'RASTERKRZ';     LabelEN: 'Cross raster'),
+    (Code: 'RASTERPUNKT';   LabelEN: 'Dot raster'),
     (Code: 'HALFTONE';      LabelEN: 'Halftone'),
     (Code: 'STIPPLE';       LabelEN: 'Stipple'),
     (Code: 'DICE';          LabelEN: 'Dice'),
+    (Code: 'DICEIMG';       LabelEN: 'Image from dice'),
     (Code: 'RASTRCMYK';     LabelEN: 'Raster CMYK...'),
     (Code: 'COLORIZE';      LabelEN: 'Colorize'),
     (Code: 'SCREENPRINT';   LabelEN: 'Screen print'),

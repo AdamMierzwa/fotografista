@@ -1054,3 +1054,31 @@
 1123	Korekce perspektivy
 1124	Opravte sbíhavé linie - přetáhněte 4 rohy
 1125	Přetáhněte čtyři rohy na okraje obdélníku
+1126	Sledování tvaru (0–100):
+1127	Liniový raster...
+1128	Liniový raster - linie proměnné tloušťky
+1129	Liniový raster
+1130	Vzorové rastry
+1131	Obraz z kostek...
+1132	Obraz z kostek
+1136	Počet kostek:
+1133	Velikost buňky (24–64 px):
+1137	Křížový raster...
+1138	Křížový raster
+1139	Maximální tloušťka čar (1–64):
+1140	Úhel čáry 1 (0–179°):
+1141	Úhel čáry 2 (0–179°):
+1142	Tečkovaný raster...
+1143	Tečkovaný raster
+1144	Úhel tečkové sítě (0–45°):
+1145	Maximální velikost tečky (10–100 %):
+1146	Tónová křivka (30–300, 100 = lineární):
+1147	Vyhlazení hran (0,0–2,0 px):
+1148	Křížový raster - dva soubory čar nastavitelných úhlů
+1149	Tečkovaný raster - pootočená tečková síť s tónovou křivkou
+1150	Kropkovaný raster...
+1151	Kropkovaný raster
+1152	Poissonovy body (experimentální)
+1153	Velikost tečky (0,1–10,0 % kratší strany):
+1154	Tónová křivka (10–500, 100 = lineární):
+1155	Tečkovaný raster - rozptýlené tečky v Poissonově rozdělení

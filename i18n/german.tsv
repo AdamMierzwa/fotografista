@@ -1054,3 +1054,31 @@
 1123	Perspektivkorrektur
 1124	Konvergierende Linien korrigieren - 4 Ecken ziehen
 1125	Ziehen Sie die vier Ecken auf die Rechteckkanten
+1126	Formfolge (0–100):
+1127	Linienraster...
+1128	Linienraster - Linien mit variabler Stärke
+1129	Linienraster
+1130	Musterraster
+1131	Bild aus Würfeln...
+1132	Bild aus Würfeln
+1136	Anzahl Würfel:
+1133	Zellengröße (24–64 px):
+1137	Kreuzraster...
+1138	Kreuzraster
+1139	Maximale Linienstärke (1–64):
+1140	Linienwinkel 1 (0–179°):
+1141	Linienwinkel 2 (0–179°):
+1142	Punktraster...
+1143	Punktraster
+1144	Punktrasterwinkel (0–45°):
+1145	Maximale Punktgröße (10–100 %):
+1146	Tonkurve (30–300, 100 = linear):
+1147	Kantenglättung (0,0–2,0 px):
+1148	Kreuzraster - zwei Linienscharen mit einstellbaren Winkeln
+1149	Punktraster - gedrehtes Punktraster mit Tonkurve
+1150	Gepunktetes Raster...
+1151	Gepunktetes Raster
+1152	Poisson-Punkte (experimentell)
+1153	Punktgröße (0,1–10,0 % der kurzen Seite):
+1154	Tonkurve (10–500, 100 = linear):
+1155	Punktierter Raster - verstreute Punkte nach Poisson-Verteilung

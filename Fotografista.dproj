@@ -112,7 +112,7 @@
         <AppDPIAwarenessMode>PerMonitorV2</AppDPIAwarenessMode>
         <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
         <VerInfo_Locale>1033</VerInfo_Locale>
-        <VerInfo_Keys>CompanyName=;FileDescription=$(MSBuildProjectName);FileVersion=1.1.2.0;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProgramID=com.embarcadero.$(MSBuildProjectName);ProductName=$(MSBuildProjectName);ProductVersion=1.1.2.0;Comments=</VerInfo_Keys>
+        <VerInfo_Keys>CompanyName=;FileDescription=$(MSBuildProjectName);FileVersion=1.2.0.0;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProgramID=com.embarcadero.$(MSBuildProjectName);ProductName=$(MSBuildProjectName);ProductVersion=1.2.0.0;Comments=</VerInfo_Keys>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_2)'!=''">
         <DCC_Define>DEBUG;$(DCC_Define)</DCC_Define>
@@ -188,6 +188,9 @@
         <DCCReference Include="frmEngravingDlg.pas">
             <Form>EngravingDlg</Form>
         </DCCReference>
+        <DCCReference Include="frmLineRasterDlg.pas">
+            <Form>LineRasterDlg</Form>
+        </DCCReference>
         <DCCReference Include="frmCrosshatchDlg.pas">
             <Form>CrosshatchDlg</Form>
         </DCCReference>
@@ -200,6 +203,19 @@
         <DCCReference Include="frmDiceDlg.pas">
             <Form>DiceDlg</Form>
         </DCCReference>
+        <DCCReference Include="frmDiceImgDlg.pas">
+            <Form>DiceImgDlg</Form>
+        </DCCReference>
+        <DCCReference Include="frmRasterKrzyzowyDlg.pas">
+            <Form>RasterKrzyzowyDlg</Form>
+        </DCCReference>
+        <DCCReference Include="frmRasterPunktowyDlg.pas">
+            <Form>RasterPunktowyDlg</Form>
+        </DCCReference>
+        <DCCReference Include="frmPoissonDlg.pas">
+            <Form>PoissonDlg</Form>
+        </DCCReference>
+        <DCCReference Include="uPoissonStipple.pas"/>
         <DCCReference Include="frmScreenPrintDlg.pas">
             <Form>ScreenPrintDlg</Form>
         </DCCReference>

@@ -1054,3 +1054,31 @@
 1123	Corrección de perspectiva
 1124	Corrige las líneas convergentes - arrastra los 4 vértices
 1125	Arrastra los cuatro vértices a los bordes del rectángulo
+1126	Seguir la forma (0–100):
+1127	Trama de líneas...
+1128	Trama de líneas - líneas de grosor variable
+1129	Trama de líneas
+1130	Tramas de patrón
+1131	Imagen con dados...
+1132	Imagen con dados
+1136	Número de dados:
+1133	Tamaño de celda (24–64 px):
+1137	Trama cruzada...
+1138	Trama cruzada
+1139	Grosor máximo de línea (1–64):
+1140	Ángulo de línea 1 (0–179°):
+1141	Ángulo de línea 2 (0–179°):
+1142	Trama de puntos...
+1143	Trama de puntos
+1144	Ángulo de la trama (0–45°):
+1145	Tamaño máximo del punto (10–100 %):
+1146	Curva tonal (30–300, 100 = lineal):
+1147	Suavizado de bordes (0,0–2,0 px):
+1148	Trama cruzada - dos conjuntos de líneas con ángulos ajustables
+1149	Trama de puntos - trama de puntos girada con curva tonal
+1150	Trama punteada...
+1151	Trama punteada
+1152	Puntos de Poisson (experimental)
+1153	Tamaño del punto (0,1–10,0 % del lado corto):
+1154	Curva tonal (10–500, 100 = lineal):
+1155	Trama de puntos - puntos dispersos con distribución de Poisson

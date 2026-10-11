@@ -1054,3 +1054,31 @@
 1123	Perspektiefkorreksie
 1124	Korrigeer konvergerende lyne - sleep 4 hoeke
 1125	Sleep die vier hoeke na die reghoek se rande
+1126	Volg vorm (0–100):
+1127	Lynraster...
+1128	Lynraster - lyne met wisselende dikte
+1129	Lynraster
+1130	Patroonrasters
+1131	Beeld uit dobbelstene...
+1132	Beeld uit dobbelstene
+1136	Aantal dobbelstene:
+1133	Selgrootte (24–64 px):
+1137	Kruisraster...
+1138	Kruisraster
+1139	Maksimum lynbreedte (1–64):
+1140	Lynhoek 1 (0–179°):
+1141	Lynhoek 2 (0–179°):
+1142	Puntraster...
+1143	Puntraster
+1144	Puntrasterhoek (0–45°):
+1145	Maksimum puntgrootte (10–100%):
+1146	Toonkurwe (30–300, 100 = lineêr):
+1147	Randgladmaking (0,0–2,0 px):
+1148	Kruisraster - twee stelle lyne met verstelbare hoeke
+1149	Puntraster - geroteerde puntrooster met toonkurwe
+1150	Gepunkteerde raster...
+1151	Gepunkteerde raster
+1152	Poisson-punte (eksperimenteel)
+1153	Puntgrootte (0,1–10,0% van die kort sy):
+1154	Toonkurwe (10–500, 100 = lineêr):
+1155	Stippelraster - verstrooide kolletjies met Poisson-verspreiding

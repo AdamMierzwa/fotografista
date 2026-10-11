@@ -53,7 +53,7 @@ uses
 
 const
   // BEGIN GENERATED TEXTABLE - nie edytować ręcznie, generuje tools\gen_i18n.ps1
-  TextTable: array[0..1055] of TTextRec = (
+  TextTable: array[0..1083] of TTextRec = (
     (EN: 'File'; PL: 'Plik'; CS: 'Soubor';
      FR: 'Fichier'; DE: 'Datei'; IT: 'File';
      ES: 'Archivo'; PT: 'Ficheiro'; AF: 'Lêer'),
@@ -3221,7 +3221,91 @@ const
      ES: 'Corrige las líneas convergentes - arrastra los 4 vértices'; PT: 'Corrija as linhas convergentes - arraste os 4 cantos'; AF: 'Korrigeer konvergerende lyne - sleep 4 hoeke'),
     (EN: 'Drag the four corners onto the rectangle edges'; PL: 'Przeciągnij cztery narożniki na krawędzie prostokąta'; CS: 'Přetáhněte čtyři rohy na okraje obdélníku';
      FR: 'Faites glisser les quatre coins sur les bords du rectangle'; DE: 'Ziehen Sie die vier Ecken auf die Rechteckkanten'; IT: 'Trascina i quattro angoli sui bordi del rettangolo';
-     ES: 'Arrastra los cuatro vértices a los bordes del rectángulo'; PT: 'Arraste os quatro cantos para as margens do retângulo'; AF: 'Sleep die vier hoeke na die reghoek se rande')
+     ES: 'Arrastra los cuatro vértices a los bordes del rectángulo'; PT: 'Arraste os quatro cantos para as margens do retângulo'; AF: 'Sleep die vier hoeke na die reghoek se rande'),
+    (EN: 'Follow shape (0-100):'; PL: 'Podążanie za kształtem (0–100):'; CS: 'Sledování tvaru (0–100):';
+     FR: 'Suivi des formes (0–100) :'; DE: 'Formfolge (0–100):'; IT: 'Segui la forma (0–100):';
+     ES: 'Seguir la forma (0–100):'; PT: 'Seguir a forma (0–100):'; AF: 'Volg vorm (0–100):'),
+    (EN: 'Line raster...'; PL: 'Raster liniowy...'; CS: 'Liniový raster...';
+     FR: 'Trame linéaire...'; DE: 'Linienraster...'; IT: 'Retino a linee...';
+     ES: 'Trama de líneas...'; PT: 'Trama de linhas...'; AF: 'Lynraster...'),
+    (EN: 'Line raster - lines of varying thickness'; PL: 'Raster liniowy — linie o zmiennej grubości'; CS: 'Liniový raster - linie proměnné tloušťky';
+     FR: 'Trame linéaire - lignes à épaisseur variable'; DE: 'Linienraster - Linien mit variabler Stärke'; IT: 'Retino a linee - linee di spessore variabile';
+     ES: 'Trama de líneas - líneas de grosor variable'; PT: 'Trama de linhas - linhas de espessura variável'; AF: 'Lynraster - lyne met wisselende dikte'),
+    (EN: 'Line raster'; PL: 'Raster liniowy'; CS: 'Liniový raster';
+     FR: 'Trame linéaire'; DE: 'Linienraster'; IT: 'Retino a linee';
+     ES: 'Trama de líneas'; PT: 'Trama de linhas'; AF: 'Lynraster'),
+    (EN: 'Pattern rasters'; PL: 'Rastry wzorkowe'; CS: 'Vzorové rastry';
+     FR: 'Trames à motifs'; DE: 'Musterraster'; IT: 'Retini a motivo';
+     ES: 'Tramas de patrón'; PT: 'Tramas de padrão'; AF: 'Patroonrasters'),
+    (EN: 'Image from dice...'; PL: 'Obraz z kostek do gry...'; CS: 'Obraz z kostek...';
+     FR: 'Image à partir de dés...'; DE: 'Bild aus Würfeln...'; IT: 'Immagine da dadi...';
+     ES: 'Imagen con dados...'; PT: 'Imagem com dados...'; AF: 'Beeld uit dobbelstene...'),
+    (EN: 'Image from dice'; PL: 'Obraz z kostek do gry'; CS: 'Obraz z kostek';
+     FR: 'Image à partir de dés'; DE: 'Bild aus Würfeln'; IT: 'Immagine da dadi';
+     ES: 'Imagen con dados'; PT: 'Imagem com dados'; AF: 'Beeld uit dobbelstene'),
+    (EN: 'Cell size (24-64 px):'; PL: 'Rozmiar komórki (24–64 px):'; CS: 'Velikost buňky (24–64 px):';
+     FR: 'Taille de la cellule (24–64 px):'; DE: 'Zellengröße (24–64 px):'; IT: 'Dimensione cella (24–64 px):';
+     ES: 'Tamaño de celda (24–64 px):'; PT: 'Tamanho da célula (24–64 px):'; AF: 'Selgrootte (24–64 px):'),
+    (EN: 'Number of dice:'; PL: 'Liczba kostek:'; CS: 'Počet kostek:';
+     FR: 'Nombre de dés:'; DE: 'Anzahl Würfel:'; IT: 'Numero di dadi:';
+     ES: 'Número de dados:'; PT: 'Número de dados:'; AF: 'Aantal dobbelstene:'),
+    (EN: 'Cross raster...'; PL: 'Raster krzyżowy...'; CS: 'Křížový raster...';
+     FR: 'Trame croisée...'; DE: 'Kreuzraster...'; IT: 'Retino incrociato...';
+     ES: 'Trama cruzada...'; PT: 'Retícula cruzada...'; AF: 'Kruisraster...'),
+    (EN: 'Cross raster'; PL: 'Raster krzyżowy'; CS: 'Křížový raster';
+     FR: 'Trame croisée'; DE: 'Kreuzraster'; IT: 'Retino incrociato';
+     ES: 'Trama cruzada'; PT: 'Retícula cruzada'; AF: 'Kruisraster'),
+    (EN: 'Maximum line thickness (1-64):'; PL: 'Maksymalna grubość linii (1–64):'; CS: 'Maximální tloušťka čar (1–64):';
+     FR: 'Épaisseur maximale des traits (1–64):'; DE: 'Maximale Linienstärke (1–64):'; IT: 'Spessore massimo linee (1–64):';
+     ES: 'Grosor máximo de línea (1–64):'; PT: 'Espessura máxima da linha (1–64):'; AF: 'Maksimum lynbreedte (1–64):'),
+    (EN: 'Line angle 1 (0-179°):'; PL: 'Kąt linii 1 (0–179°):'; CS: 'Úhel čáry 1 (0–179°):';
+     FR: 'Angle du trait 1 (0–179°):'; DE: 'Linienwinkel 1 (0–179°):'; IT: 'Angolo linea 1 (0–179°):';
+     ES: 'Ángulo de línea 1 (0–179°):'; PT: 'Ângulo da linha 1 (0–179°):'; AF: 'Lynhoek 1 (0–179°):'),
+    (EN: 'Line angle 2 (0-179°):'; PL: 'Kąt linii 2 (0–179°):'; CS: 'Úhel čáry 2 (0–179°):';
+     FR: 'Angle du trait 2 (0–179°):'; DE: 'Linienwinkel 2 (0–179°):'; IT: 'Angolo linea 2 (0–179°):';
+     ES: 'Ángulo de línea 2 (0–179°):'; PT: 'Ângulo da linha 2 (0–179°):'; AF: 'Lynhoek 2 (0–179°):'),
+    (EN: 'Dot raster...'; PL: 'Raster punktowy...'; CS: 'Tečkovaný raster...';
+     FR: 'Trame à points...'; DE: 'Punktraster...'; IT: 'Retino a punti...';
+     ES: 'Trama de puntos...'; PT: 'Retícula de pontos...'; AF: 'Puntraster...'),
+    (EN: 'Dot raster'; PL: 'Raster punktowy'; CS: 'Tečkovaný raster';
+     FR: 'Trame à points'; DE: 'Punktraster'; IT: 'Retino a punti';
+     ES: 'Trama de puntos'; PT: 'Retícula de pontos'; AF: 'Puntraster'),
+    (EN: 'Dot screen angle (0-45°):'; PL: 'Kąt siatki punktów (0–45°):'; CS: 'Úhel tečkové sítě (0–45°):';
+     FR: 'Angle de la trame (0–45°):'; DE: 'Punktrasterwinkel (0–45°):'; IT: 'Angolo retino a punti (0–45°):';
+     ES: 'Ángulo de la trama (0–45°):'; PT: 'Ângulo da retícula (0–45°):'; AF: 'Puntrasterhoek (0–45°):'),
+    (EN: 'Maximum dot size (10-100%):'; PL: 'Maksymalny rozmiar punktu (10–100%):'; CS: 'Maximální velikost tečky (10–100 %):';
+     FR: 'Taille maximale des points (10–100 %):'; DE: 'Maximale Punktgröße (10–100 %):'; IT: 'Dimensione massima dei punti (10–100%):';
+     ES: 'Tamaño máximo del punto (10–100 %):'; PT: 'Tamanho máximo do ponto (10–100%):'; AF: 'Maksimum puntgrootte (10–100%):'),
+    (EN: 'Tone curve (30-300, 100 = linear):'; PL: 'Krzywa tonalna (30–300, 100 = liniowa):'; CS: 'Tónová křivka (30–300, 100 = lineární):';
+     FR: 'Courbe tonale (30–300, 100 = linéaire):'; DE: 'Tonkurve (30–300, 100 = linear):'; IT: 'Curva tonale (30–300, 100 = lineare):';
+     ES: 'Curva tonal (30–300, 100 = lineal):'; PT: 'Curva tonal (30–300, 100 = linear):'; AF: 'Toonkurwe (30–300, 100 = lineêr):'),
+    (EN: 'Edge smoothing (0.0-2.0 px):'; PL: 'Wygładzenie krawędzi (0,0–2,0 px):'; CS: 'Vyhlazení hran (0,0–2,0 px):';
+     FR: 'Lissage des bords (0,0–2,0 px):'; DE: 'Kantenglättung (0,0–2,0 px):'; IT: 'Smussatura dei bordi (0,0–2,0 px):';
+     ES: 'Suavizado de bordes (0,0–2,0 px):'; PT: 'Suavização das bordas (0,0–2,0 px):'; AF: 'Randgladmaking (0,0–2,0 px):'),
+    (EN: 'Cross raster - two line sets at adjustable angles'; PL: 'Raster krzyżowy - dwa zestawy linii pod regulowanymi kątami'; CS: 'Křížový raster - dva soubory čar nastavitelných úhlů';
+     FR: 'Trame croisée - deux jeux de traits à angles réglables'; DE: 'Kreuzraster - zwei Linienscharen mit einstellbaren Winkeln'; IT: 'Retino incrociato - due set di linee con angoli regolabili';
+     ES: 'Trama cruzada - dos conjuntos de líneas con ángulos ajustables'; PT: 'Retícula cruzada - dois conjuntos de linhas com ângulos ajustáveis'; AF: 'Kruisraster - twee stelle lyne met verstelbare hoeke'),
+    (EN: 'Dot raster - rotated dot screen with tone curve'; PL: 'Raster punktowy - obrócona siatka punktów z krzywą tonalną'; CS: 'Tečkovaný raster - pootočená tečková síť s tónovou křivkou';
+     FR: 'Trame à points - trame de points pivotée avec courbe tonale'; DE: 'Punktraster - gedrehtes Punktraster mit Tonkurve'; IT: 'Retino a punti - retino a punti ruotato con curva tonale';
+     ES: 'Trama de puntos - trama de puntos girada con curva tonal'; PT: 'Retícula de pontos - retícula de pontos rotada com curva tonal'; AF: 'Puntraster - geroteerde puntrooster met toonkurwe'),
+    (EN: 'Dotted raster...'; PL: 'Raster kropkowany...'; CS: 'Kropkovaný raster...';
+     FR: 'Trame pointillée...'; DE: 'Gepunktetes Raster...'; IT: 'Retino puntinato...';
+     ES: 'Trama punteada...'; PT: 'Retícula pontilhada...'; AF: 'Gepunkteerde raster...'),
+    (EN: 'Dotted raster'; PL: 'Raster kropkowany'; CS: 'Kropkovaný raster';
+     FR: 'Trame pointillée'; DE: 'Gepunktetes Raster'; IT: 'Retino puntinato';
+     ES: 'Trama punteada'; PT: 'Retícula pontilhada'; AF: 'Gepunkteerde raster'),
+    (EN: 'Poisson dots (experimental)'; PL: 'Punkty Poissona (eksperymentalne)'; CS: 'Poissonovy body (experimentální)';
+     FR: 'Points de Poisson (expérimental)'; DE: 'Poisson-Punkte (experimentell)'; IT: 'Punti di Poisson (sperimentale)';
+     ES: 'Puntos de Poisson (experimental)'; PT: 'Pontos de Poisson (experimental)'; AF: 'Poisson-punte (eksperimenteel)'),
+    (EN: 'Dot size (0.1-10.0% of short side):'; PL: 'Wielkość kropki (0,1–10,0% krótszego boku):'; CS: 'Velikost tečky (0,1–10,0 % kratší strany):';
+     FR: 'Taille du point (0,1–10,0 % du petit côté) :'; DE: 'Punktgröße (0,1–10,0 % der kurzen Seite):'; IT: 'Dimensione del punto (0,1–10,0% del lato corto):';
+     ES: 'Tamaño del punto (0,1–10,0 % del lado corto):'; PT: 'Tamanho do ponto (0,1–10,0% do lado menor):'; AF: 'Puntgrootte (0,1–10,0% van die kort sy):'),
+    (EN: 'Tone curve (10-500, 100 = linear):'; PL: 'Krzywa tonalna (10–500, 100 = liniowa):'; CS: 'Tónová křivka (10–500, 100 = lineární):';
+     FR: 'Courbe tonale (10–500, 100 = linéaire) :'; DE: 'Tonkurve (10–500, 100 = linear):'; IT: 'Curva tonale (10–500, 100 = lineare):';
+     ES: 'Curva tonal (10–500, 100 = lineal):'; PT: 'Curva tonal (10–500, 100 = linear):'; AF: 'Toonkurwe (10–500, 100 = lineêr):'),
+    (EN: 'Dotted raster - scattered dots using Poisson distribution'; PL: 'Raster kropkowany - rozproszone kropki w rozkładzie Poissona'; CS: 'Tečkovaný raster - rozptýlené tečky v Poissonově rozdělení';
+     FR: 'Trame pointillée - points dispersés selon une loi de Poisson'; DE: 'Punktierter Raster - verstreute Punkte nach Poisson-Verteilung'; IT: 'Retino a punti - punti sparsi con distribuzione di Poisson';
+     ES: 'Trama de puntos - puntos dispersos con distribución de Poisson'; PT: 'Raster pontilhado - pontos dispersos com distribuição de Poisson'; AF: 'Stippelraster - verstrooide kolletjies met Poisson-verspreiding')
   );
   // END GENERATED TEXTABLE
 type
