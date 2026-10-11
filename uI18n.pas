@@ -3198,9 +3198,9 @@ const
     (EN: 'Remove all protected areas'; PL: 'Usuń wszystkie obszary chronione'; CS: 'Odebrat ochranu ze všech oblastí';
      FR: 'Supprimer toutes les zones protégées'; DE: 'Alle geschützten Bereiche entfernen'; IT: 'Rimuovi tutte le aree protette';
      ES: 'Quitar todas las áreas protegidas'; PT: 'Remover todas as áreas protegidas'; AF: 'Verwyder alle beskermde gebiede'),
-    (EN: 'Brush cursor:'; PL: 'Kursor pędzla:'; CS: 'Kurzor štětce:';
-     FR: 'Curseur du pinceau :'; DE: 'Pinsel-Cursor:'; IT: 'Cursore del pennello:';
-     ES: 'Cursor del pincel:'; PT: 'Cursor do pincel:'; AF: 'Kwaswyser:'),
+    (EN: 'Brush crosshair:'; PL: 'Celownik pędzla:'; CS: 'Křížek štětce:';
+     FR: 'Réticule du pinceau :'; DE: 'Pinsel-Fadenkreuz:'; IT: 'Mirino del pennello:';
+     ES: 'Punto de mira del pincel:'; PT: 'Retículo do pincel:'; AF: 'Kwas-kruisdraad:'),
     (EN: 'Circle outline'; PL: 'Kontur okręgu'; CS: 'Obrys kruhu';
      FR: 'Contour de cercle'; DE: 'Kreisumriss'; IT: 'Contorno del cerchio';
      ES: 'Contorno del círculo'; PT: 'Contorno do círculo'; AF: 'Sirkelbuitelyn'),

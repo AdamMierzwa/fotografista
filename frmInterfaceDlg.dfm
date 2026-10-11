@@ -54,7 +54,7 @@
     Top = 340
     Width = 90
     Height = 15
-    Caption = 'Brush cursor:'
+    Caption = 'Brush crosshair:'
     StyleElements = [seClient, seBorder]
   end
   object btnCanvasBG: TButton

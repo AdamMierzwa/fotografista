@@ -74,9 +74,9 @@ macro pominięta (brak mapowania w `MacroCodeForOpName`). Dodane 4 klucze i18n
 (ID 1122–1125) we wszystkich 9 katalogach; walidator integralności podniesiony
 do 1056 rekordów.
 
-**Kursor pędzla — ustawienie wyglądu** (`uPrefs.pas`, `frmInterfaceDlg.pas`,
+**Celownik pędzla — ustawienie wyglądu** (`uPrefs.pas`, `frmInterfaceDlg.pas`,
 `frmInterfaceDlg.dfm`, `fMain.pas`, `i18n/*.tsv`) — Ustawienia > Interfejs
-mają listę „Brush cursor" i pole krzyżyka w okręgu.
+mają listę „Brush crosshair" i pole krzyżyka w okręgu.
 - `Circle outline` (domyślnie, dotychczasowe zachowanie) rysuje własny okrąg
   pędzla; `Crosshair (precise)` zostawia systemowy krzyżyk (`crCross`) bez
   okręgu. Dotyczy pędzla, gumki i maski ochronnej
