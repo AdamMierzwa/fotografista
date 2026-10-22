@@ -63,6 +63,7 @@ uses
   frmSepiaDlg in 'frmSepiaDlg.pas' {SepiaDlg},
   AboutBoxUnit in 'AboutBoxUnit.pas' {frmAbout},
   uI18n in 'uI18n.pas',
+  uLayoutCheck in 'uLayoutCheck.pas',
   frmLanguageDlg in 'frmLanguageDlg.pas' {LanguageDlg},
   Vcl.Themes,
   Vcl.Styles;
@@ -75,6 +76,9 @@ begin
   LoadPrefs;
   Application.DefaultFont.Size := Application.DefaultFont.Size + Prefs.UIFontSize;
   Screen.MenuFont.Size := Screen.MenuFont.Size + Prefs.UIFontSize;
+  // komunikaty i pytania VCL (MessageDlg, InputQuery) biora Screen.MessageFont
+  // (Vcl.Dialogs.pas:6123, 6294, 7062) - ten sam rozmiar co czcionka programu
+  Screen.MessageFont.Size := Application.DefaultFont.Size;
   Application.Title := 'Fotografista';
   Application.CreateForm(TfrmMain, frmMain);
   if Prefs.Language >= 0 then

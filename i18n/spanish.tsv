@@ -588,10 +588,10 @@
 644	Tritono
 645	Cuadritono...
 646	Cuadritono
-647	Color 1 (sombras):
-648	Color 2 (tonos medios):
-649	Color 3 (altas luces):
-650	Color 4 (luces extremas):
+647	Color 1 (sombras)
+648	Color 2 (tonos medios)
+649	Color 3 (altas luces)
+650	Color 4 (luces extremas)
 651	Aberración cromática...
 652	Aberración cromática
 653	Desplazamiento:
@@ -673,7 +673,7 @@
 734	Prueba de rendimiento
 735	Preparando la imagen...
 736	Imagen: %s (%d×%d)
-737	%s: %.2f ms (promedio de %d)
+737	%s: %.2n ms (promedio de %d)
 738	Tiempo: %d min %d s
 739	(abortada)
 740	Máxima exigencia: %s (%.2f ms).
@@ -872,7 +872,7 @@
 947	Resolución Y
 948	EXIF (%d propiedades)
 949	No se pudo abrir el archivo para leer los metadatos.
-950	Color 2 (altas luces):
+950	Color 2 (altas luces)
 951	Paleta WB 1.x
 952	Paleta WB 2.x/3.x
 953	Paleta OCS 32
@@ -1000,7 +1000,7 @@
 1069	Violeta (Occidente)
 1070	Azul marino (offset)
 1071	Rojo (sellos)
-1072	Samizdat de la RPP — multicopista de proteína, tinta hollinienta, matriz embadurnada
+1072	Samizdat de la PRL — multicopista de proteína, tinta hollinienta, matriz embadurnada
 1073	Multicopista de alcohol occidental — violeta cristal, olor a alcohol
 1074	Matriz de multicopista offset — copia de oficina
 1075	Sellos, encabezados y formularios oficiales
@@ -1082,3 +1082,21 @@
 1153	Tamaño del punto (0,1–10,0 % del lado corto):
 1154	Curva tonal (10–500, 100 = lineal):
 1155	Trama de puntos - puntos dispersos con distribución de Poisson
+1156	Cómic...
+1157	Cómic
+1158	Cómic - colores posterizados con contornos marcados
+1159	Estilo
+1160	Dibujo animado
+1161	Impresión antigua
+1162	Periódico
+1163	PRL – suave
+1164	PRL – trama
+1165	Pop art – negro
+1166	Pop art – dos tintas
+1167	Pop art – color
+1168	Marrón (desvaído)
+1169	Distribución de colores
+1170	Ecualización
+1171	Sin ecualización
+1172	Ecualizar canales RGB
+1173	Ecualizar el brillo

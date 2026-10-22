@@ -46,6 +46,7 @@ type
 
 function ShowOleoDlg(Bitmap: TBitmap; out ElapsedSec: Double): Boolean;
 procedure DoOilPaint(Bitmap: TBitmap; Radius: Integer);
+procedure DoOilPaintScaled(Bitmap: TBitmap; SliderValue: Integer);
 
 implementation
 
@@ -71,6 +72,13 @@ const
 function ScaledRadius(SliderValue, ImageWidth: Integer): Integer;
 begin
   Result := Max(1, Round(SliderValue * ImageWidth / REFERENCE_WIDTH));
+end;
+
+{ Krok makra OILPAINT: zapisana jest wartosc suwaka, promien liczony
+  z szerokosci obrazu przy wykonaniu - jak BLUR/SHARPEN/PIXELATE. }
+procedure DoOilPaintScaled(Bitmap: TBitmap; SliderValue: Integer);
+begin
+  DoOilPaint(Bitmap, ScaledRadius(SliderValue, Bitmap.Width));
 end;
 
 procedure DoOilPaint(Bitmap: TBitmap; Radius: Integer);
@@ -310,7 +318,7 @@ begin
       SW := TStopwatch.StartNew;
       Dlg.ApplyFull;
       gMacroPending.Code := 'OILPAINT';
-      gMacroPending.Params := IntToStr(ScaledRadius(Dlg.tbAmount.Position, Bitmap.Width));
+      gMacroPending.Params := IntToStr(Dlg.tbAmount.Position);
       ElapsedSec := SW.Elapsed.TotalSeconds;
       Result := True;
     end;

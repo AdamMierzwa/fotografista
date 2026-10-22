@@ -10,6 +10,7 @@ uses
 type
   TKolorowanieDlg = class(TFotoForm)
     pboxPreview: TPaintBox;
+    swColor: TShape;
     btnPickColor: TButton;
     lblIntensity: TLabel;
     tbIntensity: TTrackBar;
@@ -159,6 +160,7 @@ end;
 procedure TKolorowanieDlg.FormCreate(Sender: TObject);
 begin
   FTintColor := RGB(255, 0, 0);
+  swColor.Brush.Color := FTintColor;
   tbIntensity.Min := 0;
   tbIntensity.Max := 100;
   tbIntensity.Position := 50;
@@ -171,10 +173,15 @@ begin
   FWorkingPreview.Free;
 end;
 
+// Plakietka wybranego koloru tuz przed przyciskiem, jak pary plakietka +
+// przycisk w Dwu-/Troj-/Czterokolorze (2026-10-22; wczesniej sam przycisk,
+// kolor widac bylo tylko w podgladzie).
 procedure TKolorowanieDlg.RefitButtons;
 begin
   inherited;
   FitButton(btnPickColor);
+  btnPickColor.Left := swColor.Left + swColor.Width + CtrlGap;
+  swColor.Top := btnPickColor.Top + (btnPickColor.Height - swColor.Height) div 2;
 end;
 
 procedure TKolorowanieDlg.tbIntensityChange(Sender: TObject);
@@ -193,6 +200,7 @@ begin
     if Dlg.Execute then
     begin
       FTintColor := Dlg.Color;
+      swColor.Brush.Color := FTintColor;
       ApplyPreview;
     end;
   finally

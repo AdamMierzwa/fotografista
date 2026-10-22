@@ -41,6 +41,9 @@ function ShowWaterRippleDlg(const Title: string; const Items: array of string; E
 
 implementation
 
+uses
+  uMacros;
+
 {$R *.dfm}
 
 function ShowWaterRippleDlg(const Title: string; const Items: array of string; EffectProc: TDistortProcEx; Bitmap: TBitmap; out ElapsedSec: Double): Boolean;
@@ -54,6 +57,7 @@ var
 begin
   ElapsedSec := 0;
   Result := False;
+  gMacroPending.Code := '';
   if (Bitmap = nil) or (Bitmap.Width = 0) then Exit;
 
   Dlg := TWaterRippleDlg.Create(Application);
@@ -111,6 +115,10 @@ begin
     begin
       SW := TStopwatch.StartNew;
       Dlg.ApplyFull;
+      // wariant | sila | gestosc (pozycje suwakow, odtwarzanie dzieli przez 100)
+      gMacroPending.Code := 'WATERRIPPLE';
+      gMacroPending.Params := IntToStr(Max(0, Dlg.lbPresets.ItemIndex)) + '|' +
+        IntToStr(Dlg.trkStrength.Position) + '|' + IntToStr(Dlg.trkDensity.Position);
       ElapsedSec := SW.Elapsed.TotalSeconds;
       Result := True;
     end;

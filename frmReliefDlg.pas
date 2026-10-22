@@ -32,13 +32,34 @@ type
 
 function ShowReliefDlg(Bitmap: TBitmap; out ElapsedSec: Double): Boolean;
 procedure DoRelief(Bitmap: TBitmap; DepthPct, Material: Integer);
+// Nazwa materialu (pozycja listy Material w oknie); '' poza zakresem.
+function ReliefMaterialName(Index: Integer): string;
 
 implementation
 
 uses
-  uMacros;
+  uMacros, uI18n;
 
 {$R *.dfm}
+
+const
+  // pozycje listy Material (jedno zrodlo dla okna i opisu kroku makra) -
+  // klucze EN dla T() (i18n ID 601-605, tlumaczenia we wszystkich 9 jezykach).
+  // Do 2026-10-22 nazwy byly wpisane w kod po polsku, bez T(), wiec w kazdym
+  // jezyku byly po polsku, choc klucze juz istnialy.
+  cReliefMaterials: array[0..4] of string = (
+    'Plaster / white stone',
+    'White marble',
+    'Gray stone',
+    'Bronze / medal',
+    'Sandstone');
+
+function ReliefMaterialName(Index: Integer): string;
+begin
+  if (Index < Low(cReliefMaterials)) or (Index > High(cReliefMaterials)) then
+    Exit('');
+  Result := T(cReliefMaterials[Index]);
+end;
 
 type
   PRGBTriple = ^TRGBTriple;
@@ -223,12 +244,11 @@ end;
 { TReliefDlg }
 
 procedure TReliefDlg.FormCreate(Sender: TObject);
+var
+  I: Integer;
 begin
-  cbMaterial.Items.Add('Gips / bia'#322'y kamie'#324);
-  cbMaterial.Items.Add('Bia'#322'y marmur');
-  cbMaterial.Items.Add('Szary kamie'#324);
-  cbMaterial.Items.Add('Br'#261'z / medal');
-  cbMaterial.Items.Add('Piaskowiec');
+  for I := Low(cReliefMaterials) to High(cReliefMaterials) do
+    cbMaterial.Items.Add(ReliefMaterialName(I));
   cbMaterial.ItemIndex := 0;
   tbDepth.Min := 1;
   tbDepth.Max := 100;

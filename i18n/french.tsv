@@ -588,10 +588,10 @@
 644	Triton
 645	Quadrichromie tonale…
 646	Quadrichromie tonale
-647	Couleur 1 (ombres) :
-648	Couleur 2 (tons moyens) :
-649	Couleur 3 (hautes lumières) :
-650	Couleur 4 (hautes lumières extrêmes) :
+647	Couleur 1 (ombres)
+648	Couleur 2 (tons moyens)
+649	Couleur 3 (hautes lumières)
+650	Couleur 4 (hautes lumières extrêmes)
 651	Aberration chromatique…
 652	Aberration chromatique
 653	Décalage :
@@ -673,7 +673,7 @@
 734	Test de performances
 735	Préparation de l’image…
 736	Image : %s (%d×%d)
-737	%s : %.2f ms (moyenne sur %d)
+737	%s : %.2n ms (moyenne sur %d)
 738	Temps : %d min %d s
 739	(abandonné)
 740	Test le plus difficile : %s (%.2f ms).
@@ -872,7 +872,7 @@
 947	Résolution Y
 948	EXIF (%d propriétés)
 949	Impossible d’ouvrir le fichier pour lire les métadonnées.
-950	Couleur 2 (hautes lumières) :
+950	Couleur 2 (hautes lumières)
 951	Palette WB 1.x
 952	Palette WB 2.x/3.x
 953	Palette OCS 32
@@ -1000,7 +1000,7 @@
 1069	Violet (Ouest)
 1070	Bleu marine (offset)
 1071	Rouge (tampons)
-1072	Samizdat de la RPP — duplicateur à albumine, encre fuligineuse, stencil baveux
+1072	Samizdat de la PRL — duplicateur à albumine, encre fuligineuse, stencil baveux
 1073	Duplicateur à alcool occidental — violet de méthyle, odeur d’alcool
 1074	Matrice de duplicateur offset — copie de bureau
 1075	Tampons, en-têtes et formulaires officiels
@@ -1082,3 +1082,21 @@
 1153	Taille du point (0,1–10,0 % du petit côté) :
 1154	Courbe tonale (10–500, 100 = linéaire) :
 1155	Trame pointillée - points dispersés selon une loi de Poisson
+1156	Bande dessinée...
+1157	Bande dessinée
+1158	Bande dessinée - couleurs postérisées avec contours marqués
+1159	Style
+1160	Dessin animé
+1161	Vieille impression
+1162	Journal
+1163	PRL – doux
+1164	PRL – trame
+1165	Pop art – noir
+1166	Pop art – deux encres
+1167	Pop art – couleur
+1168	Brun (délavé)
+1169	Répartition des couleurs
+1170	Égalisation
+1171	Sans égalisation
+1172	Égaliser les canaux RVB
+1173	Égaliser la luminosité

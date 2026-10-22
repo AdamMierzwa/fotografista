@@ -116,6 +116,15 @@
     Caption = '100'
     StyleElements = [seClient, seBorder]
   end
+  object btnAuto: TButton
+    Left = 15
+    Top = 510
+    Width = 85
+    Height = 25
+    Caption = 'Automatic'
+    TabOrder = 3
+    OnClick = btnAutoClick
+  end
   object btnOK: TButton
     Left = 240
     Top = 510

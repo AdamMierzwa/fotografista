@@ -588,10 +588,10 @@
 644	Tritono
 645	Quadritono...
 646	Quadritono
-647	Colore 1 (ombre):
-648	Colore 2 (toni medi):
-649	Colore 3 (alte luci):
-650	Colore 4 (luci estreme):
+647	Colore 1 (ombre)
+648	Colore 2 (toni medi)
+649	Colore 3 (alte luci)
+650	Colore 4 (luci estreme)
 651	Aberrazione cromatica...
 652	Aberrazione cromatica
 653	Spostamento:
@@ -673,7 +673,7 @@
 734	Test delle prestazioni
 735	Preparazione dell'immagine...
 736	Immagine: %s (%d×%d)
-737	%s: %.2f ms (media di %d)
+737	%s: %.2n ms (media di %d)
 738	Tempo: %d min %d s
 739	(interrotto)
 740	Più difficile: %s (%.2f ms).
@@ -872,7 +872,7 @@
 947	Risoluzione Y
 948	EXIF (%d proprietà)
 949	Impossibile aprire il file per leggere i metadati.
-950	Colore 2 (alte luci):
+950	Colore 2 (alte luci)
 951	Palette WB 1.x
 952	Palette WB 2.x/3.x
 953	Palette OCS 32
@@ -1000,7 +1000,7 @@
 1069	Viola (Ovest)
 1070	Blu navy (offset)
 1071	Rosso (timbri)
-1072	Samizdat della RPP — duplicatore a proteine, inchiostro fuligginoso, matrice sbavata
+1072	Samizdat della PRL — duplicatore a proteine, inchiostro fuligginoso, matrice sbavata
 1073	Duplicatore ad alcol occidentale — violetto di metile, odore di alcol
 1074	Matrice per duplicatore offset — copia d'ufficio
 1075	Timbri, intestazioni e moduli ufficiali
@@ -1082,3 +1082,21 @@
 1153	Dimensione del punto (0,1–10,0% del lato corto):
 1154	Curva tonale (10–500, 100 = lineare):
 1155	Retino a punti - punti sparsi con distribuzione di Poisson
+1156	Fumetto...
+1157	Fumetto
+1158	Fumetto - colori posterizzati con contorni marcati
+1159	Stile
+1160	Cartone animato
+1161	Stampa antica
+1162	Giornale
+1163	PRL – morbido
+1164	PRL – retino
+1165	Pop art – nero
+1166	Pop art – due inchiostri
+1167	Pop art – colore
+1168	Marrone (sbiadito)
+1169	Distribuzione dei colori
+1170	Equalizzazione
+1171	Nessuna equalizzazione
+1172	Equalizza i canali RGB
+1173	Equalizza la luminosità

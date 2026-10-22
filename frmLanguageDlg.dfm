@@ -14,7 +14,7 @@
   ParentFont = True
   Position = poMainFormCenter
   TextHeight = 15
-  object rgLanguage: TRadioGroup
+  object grpLanguage: TGroupBox
     Left = 15
     Top = 15
     Width = 250

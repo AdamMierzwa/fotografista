@@ -3,7 +3,7 @@
   Top = 0
   BorderStyle = bsDialog
   Caption = 'Histogram'
-  ClientHeight = 395
+  ClientHeight = 440
   ClientWidth = 540
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -22,9 +22,25 @@
     Height = 256
     OnPaint = pboxHistogramPaint
   end
-  object btnAll: TButton
+  object lblInfo: TLabel
     Left = 14
-    Top = 285
+    Top = 282
+    Width = 70
+    Height = 15
+    Caption = 'Information'
+    StyleElements = [seClient, seBorder]
+  end
+  object lblDist: TLabel
+    Left = 24
+    Top = 309
+    Width = 100
+    Height = 15
+    Caption = 'Color distribution'
+    StyleElements = [seClient, seBorder]
+  end
+  object btnAll: TButton
+    Left = 140
+    Top = 304
     Width = 75
     Height = 25
     Caption = 'All'
@@ -32,8 +48,8 @@
     OnClick = btnAllClick
   end
   object btnR: TButton
-    Left = 95
-    Top = 285
+    Left = 221
+    Top = 304
     Width = 40
     Height = 25
     Caption = 'R'
@@ -41,8 +57,8 @@
     OnClick = btnRClick
   end
   object btnG: TButton
-    Left = 141
-    Top = 285
+    Left = 267
+    Top = 304
     Width = 40
     Height = 25
     Caption = 'G'
@@ -50,8 +66,8 @@
     OnClick = btnGClick
   end
   object btnB: TButton
-    Left = 187
-    Top = 285
+    Left = 313
+    Top = 304
     Width = 40
     Height = 25
     Caption = 'B'
@@ -59,48 +75,67 @@
     OnClick = btnBClick
   end
   object btnLum: TButton
-    Left = 233
-    Top = 285
+    Left = 380
+    Top = 304
     Width = 85
     Height = 25
-    Caption = 'Luminance'
+    Caption = 'Brightness'
     TabOrder = 4
     OnClick = btnLumClick
   end
-  object btnClose: TButton
-    Left = 451
-    Top = 343
-    Width = 75
-    Height = 25
-    Caption = 'Close'
-    Default = True
-    ModalResult = 1
-    TabOrder = 5
-  end
   object lblEqualize: TLabel
     Left = 14
-    Top = 322
-    Width = 121
+    Top = 342
+    Width = 70
     Height = 15
-    Caption = 'Histogram equalization'
+    Caption = 'Equalization'
     StyleElements = [seClient, seBorder]
   end
-  object btnEqLum: TButton
-    Left = 14
-    Top = 343
-    Width = 100
-    Height = 25
-    Caption = 'Luminance'
-    TabOrder = 6
-    OnClick = btnEqLumClick
+  object rbEqNone: TRadioButton
+    Left = 24
+    Top = 364
+    Width = 120
+    Height = 20
+    Caption = 'No equalization'
+    TabOrder = 5
+    OnClick = rbEqClick
   end
-  object btnEqRGB: TButton
-    Left = 120
-    Top = 343
-    Width = 100
-    Height = 25
-    Caption = 'RGB'
+  object rbEqRGB: TRadioButton
+    Left = 150
+    Top = 364
+    Width = 160
+    Height = 20
+    Caption = 'Equalize RGB channels'
+    TabOrder = 6
+    OnClick = rbEqClick
+  end
+  object rbEqLum: TRadioButton
+    Left = 316
+    Top = 364
+    Width = 150
+    Height = 20
+    Caption = 'Equalize brightness'
     TabOrder = 7
-    OnClick = btnEqRGBClick
+    OnClick = rbEqClick
+  end
+  object btnOK: TButton
+    Left = 360
+    Top = 398
+    Width = 80
+    Height = 25
+    Caption = 'OK'
+    Default = True
+    ModalResult = 1
+    TabOrder = 8
+  end
+  object btnCancel: TButton
+    Left = 446
+    Top = 398
+    Width = 80
+    Height = 25
+    Cancel = True
+    Caption = 'Cancel'
+    ModalResult = 2
+    TabOrder = 9
   end
 end

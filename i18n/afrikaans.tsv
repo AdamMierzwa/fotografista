@@ -588,10 +588,10 @@
 644	Driekleur
 645	Vierkleur...
 646	Vierkleur
-647	Kleur 1 (skaduwees):
-648	Kleur 2 (middeltone):
-649	Kleur 3 (hoogtepunte):
-650	Kleur 4 (uiterste hoogtepunte):
+647	Kleur 1 (skaduwees)
+648	Kleur 2 (middeltone)
+649	Kleur 3 (hoogtepunte)
+650	Kleur 4 (uiterste hoogtepunte)
 651	Chromatiese aberrasie...
 652	Chromatiese aberrasie
 653	Verskuiwing:
@@ -673,7 +673,7 @@
 734	Werkverrigtingstoets
 735	Berei beeld voor...
 736	Beeld: %s (%d×%d)
-737	%s: %.2f ms (gemiddeld van %d)
+737	%s: %.2n ms (gemiddeld van %d)
 738	Tyd: %d min %d s
 739	(gestop)
 740	Moeilikste: %s (%.2f ms).
@@ -872,7 +872,7 @@
 947	Resolusie Y
 948	EXIF (%d eienskappe)
 949	Kon nie die lêer oopmaak om metadata te lees nie.
-950	Kleur 2 (hoogtepunte):
+950	Kleur 2 (hoogtepunte)
 951	WB 1.x-palet
 952	WB 2.x/3.x-palet
 953	OCS 32-palet
@@ -1082,3 +1082,21 @@
 1153	Puntgrootte (0,1–10,0% van die kort sy):
 1154	Toonkurwe (10–500, 100 = lineêr):
 1155	Stippelraster - verstrooide kolletjies met Poisson-verspreiding
+1156	Strokiesprent...
+1157	Strokiesprent
+1158	Strokiesprent - geposteriseerde kleure met vet lyne
+1159	Styl
+1160	Spotprent
+1161	Ou druk
+1162	Koerant
+1163	PRL – sag
+1164	PRL – raster
+1165	Pop-art – swart
+1166	Pop-art – twee ink
+1167	Pop-art – kleur
+1168	Bruin (verbleik)
+1169	Kleurverspreiding
+1170	Egalisering
+1171	Geen egalisering
+1172	Egaliseer RGB-kanale
+1173	Egaliseer helderheid

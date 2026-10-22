@@ -18,7 +18,6 @@ procedure SaveImageFile(ABitmap: TBitmap; const APath: string);
 procedure ApplyMaxResolution(ABitmap: TBitmap);
 function GetImageFilter: string;
 function GetSaveImageFilter: string;
-function GetFileFormatName(const APath: string): string;
 
 implementation
 
@@ -356,23 +355,6 @@ begin
     'GIF|*.gif|' +
     'TIFF|*.tif;*.tiff|' +
     'WebP|*.webp';
-end;
-
-function GetFileFormatName(const APath: string): string;
-var
-  Ext: string;
-begin
-  Ext := LowerCase(ExtractFileExt(APath));
-  if (Ext = '.jpg') or (Ext = '.jpeg') then Result := 'JPEG'
-  else if Ext = '.png' then Result := 'PNG'
-  else if Ext = '.gif' then Result := 'GIF'
-  else if (Ext = '.tif') or (Ext = '.tiff') then Result := 'TIFF'
-  else if Ext = '.bmp' then Result := 'BMP'
-  else if Ext = '.webp' then Result := 'WebP'
-  else if (Ext = '.heic') or (Ext = '.heif') then Result := 'HEIC/HEIF'
-  else if Ext = '.avif' then Result := 'AVIF'
-  else if (Ext = '.iff') or (Ext = '.ilbm') or (Ext = '.lbm') then Result := 'IFF ILBM'
-  else Result := 'Unknown';
 end;
 
 initialization

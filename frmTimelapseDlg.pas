@@ -648,6 +648,10 @@ begin
   end;
   rbSortAlpha.Width := RadioW;
   rbSortDate.Width := RadioW;
+  // wysokosc z czcionki jak chkSmoothPreview w frmPerformanceDlg (TH + 4) -
+  // 17 px z .dfm obcinalo przy 12 pt dol liter (g, y)
+  rbSortAlpha.Height := Self.Canvas.TextHeight('Wg') + 4;
+  rbSortDate.Height := rbSortAlpha.Height;
   rbSortAlpha.Left := 0;
   rbSortAlpha.Top := 0;
   rbSortDate.Left := 0;
@@ -715,6 +719,8 @@ begin
   end;
   rbSave.Width := RadioW;
   rbPresent.Width := RadioW;
+  rbSave.Height := Self.Canvas.TextHeight('Wg') + 4;
+  rbPresent.Height := rbSave.Height;
   rbSave.Left := 0;
   rbSave.Top := 0;
   rbPresent.Left := 0;
@@ -814,6 +820,9 @@ begin
       Paths[i] := Files[i].Path;
     Player := TTimelapsePlayer.CreateNew(Application);
     try
+      // czcionka programu (forma bez .dfm i bez rodzica - ParentFont nie dziala)
+      Player.Font.Assign(Application.DefaultFont);
+      Player.ParentFont := True;
       Player.Init(Paths, FPS, Opts.HoldFirstSec, Opts.HoldLastSec,
         Opts.View = tlvFullscreen);
       Player.ShowModal;
@@ -848,19 +857,33 @@ begin
     Prog.Show;
     Application.ProcessMessages;
 
-    // Oryginalna rozdzielczość = wymiary pierwszego zdjęcia (parzyste).
+    // Oryginalna rozdzielczość = wymiary pierwszego zdjęcia, które da się
+    // wczytać (parzyste).
     if TW = 0 then
     begin
-      Bmp := nil;
-      try
-        Bmp := LoadImageFile(Files[0].Path);
-        TW := Bmp.Width;
-        TH := Bmp.Height;
-      except
+      for i := 0 to High(Files) do
+      begin
+        Bmp := nil;
+        try
+          Bmp := LoadImageFile(Files[i].Path);
+          TW := Bmp.Width;
+          TH := Bmp.Height;
+        except
+        end;
+        Bmp.Free;
+        if (TW >= 2) and (TH >= 2) then Break;
       end;
-      Bmp.Free;
       if (TW mod 2) <> 0 then Dec(TW);
       if (TH mod 2) <> 0 then Dec(TH);
+    end;
+
+    // Żadne zdjęcie się nie wczytało - TVideoWriter dostałby 0x0.
+    if (TW < 2) or (TH < 2) then
+    begin
+      Prog.Close;
+      MessageDlg(T('Processed') + ': 0/' + IntToStr(Length(Files)) + sLineBreak +
+        T('errors') + ': ' + IntToStr(Length(Files)), mtInformation, [mbOK], 0);
+      Exit;
     end;
 
     Writer := TVideoWriter.Create(DstPath, TW, TH, FPS);

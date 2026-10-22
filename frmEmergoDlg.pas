@@ -32,6 +32,9 @@ procedure DoEmergo(Bitmap: TBitmap; Saturation: Integer);
 
 implementation
 
+uses
+  uMacros;
+
 {$R *.dfm}
 
 type
@@ -131,6 +134,7 @@ var
 begin
   ElapsedSec := 0;
   Result := False;
+  gMacroPending.Code := '';
   if (Bitmap = nil) or (Bitmap.Width = 0) then Exit;
 
   Dlg := TEmergoDlg.Create(Application);
@@ -168,6 +172,8 @@ begin
     begin
       SW := TStopwatch.StartNew;
       Dlg.ApplyFull;
+      gMacroPending.Code := 'EMERGO';
+      gMacroPending.Params := IntToStr(Dlg.tbIntensity.Position);
       ElapsedSec := SW.Elapsed.TotalSeconds;
       Result := True;
     end;

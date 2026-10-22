@@ -7,9 +7,10 @@ uses
   Vcl.Graphics, Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.ExtCtrls, uTitleBar;
 
 type
-  TEqualizeEvent = procedure(const Mode: string) of object;
+  // Podglad wyrownania na obrazie w edytorze (bez Cofnij i makra); Mode '' =
+  // oryginal. Zatwierdzenie/odrzucenie robi wolajacy po ShowModal.
+  TEqualizePreviewEvent = procedure(const Mode: string) of object;
 
-type
   THistogramDlg = class(TFotoForm)
     pboxHistogram: TPaintBox;
     btnAll: TButton;
@@ -17,10 +18,14 @@ type
     btnG: TButton;
     btnB: TButton;
     btnLum: TButton;
-    btnClose: TButton;
+    btnOK: TButton;
+    btnCancel: TButton;
+    lblInfo: TLabel;
+    lblDist: TLabel;
     lblEqualize: TLabel;
-    btnEqLum: TButton;
-    btnEqRGB: TButton;
+    rbEqNone: TRadioButton;
+    rbEqRGB: TRadioButton;
+    rbEqLum: TRadioButton;
     procedure pboxHistogramPaint(Sender: TObject);
     procedure btnAllClick(Sender: TObject);
     procedure btnRClick(Sender: TObject);
@@ -28,8 +33,7 @@ type
     procedure btnBClick(Sender: TObject);
     procedure btnLumClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
-    procedure btnEqLumClick(Sender: TObject);
-    procedure btnEqRGBClick(Sender: TObject);
+    procedure rbEqClick(Sender: TObject);
   public
     procedure RefitButtons; override;
   private
@@ -38,20 +42,26 @@ type
     FDataB: array[0..255] of Integer;
     FDataLum: array[0..255] of Integer;
     FMode: string;
-    FOnEqualize: TEqualizeEvent;
+    FEqMode: string;   // '' = bez wyrownania, 'lum', 'rgb'
+    FOnPreview: TEqualizePreviewEvent;
   public
     procedure CalcHistogram;
     procedure SetChannel(const Mode: string);
-    property OnEqualize: TEqualizeEvent read FOnEqualize write FOnEqualize;
+    // Wybrany tryb wyrownania. Wybor pokazuje podglad na obrazie (OnPreview);
+    // OK zatwierdza, Anuluj przywraca - obie decyzje w fMain.mnuHistogramClick.
+    property EqMode: string read FEqMode;
+    property OnPreview: TEqualizePreviewEvent read FOnPreview write FOnPreview;
   end;
 
 var
   HistogramSourceBmp: TBitmap = nil;
 
-function ShowHistogramDlg: Boolean;
 procedure EqualizeHistogram(Bitmap: TBitmap; const Mode: string);
 
 implementation
+
+uses
+  uI18n;
 
 {$R *.dfm}
 
@@ -65,43 +75,96 @@ type
   PRGBTripleArray = ^TRGBTripleArray;
   TRGBTripleArray = array[0..MaxInt div SizeOf(TRGBTriple) - 1] of TRGBTriple;
 
-function ShowHistogramDlg: Boolean;
-var
-  Dlg: THistogramDlg;
-begin
-  Result := False;
-  if HistogramSourceBmp = nil then Exit;
-  Dlg := THistogramDlg.Create(Application);
-  try
-    Dlg.CalcHistogram;
-    Dlg.SetChannel('all');
-    Dlg.ShowModal;
-    Result := True;
-  finally
-    Dlg.Free;
-  end;
-end;
-
 { THistogramDlg }
 
 procedure THistogramDlg.FormCreate(Sender: TObject);
 begin
   FMode := 'all';
+  FEqMode := '';
+  rbEqNone.Checked := True;
 end;
 
+// Uklad (2026-10-21):
+//   Informacja
+//     Rozklad barw   [Wszystkie] [R] [G] [B]     [Jasnosc]
+//   Wyrownanie
+//     (o) Bez wyrownania  ( ) Wyrownaj kanaly RGB  ( ) Wyrownaj jasnosc
+//                                                  [OK] [Anuluj]
+// Jasnosc ostatnia w obu rzedach. Pozycje z szerokosci tekstow (czcionka
+// 8-12 pt, tlumaczenia), rozmiar okna z FitToContent.
 procedure THistogramDlg.RefitButtons;
 const
   Gap = 6;
+var
+  X0, Indent, Y, X, Check, W: Integer;
+  S: string;
+
+  procedure PlaceRadio(R: TRadioButton);
+  begin
+    R.Width := Canvas.TextWidth(R.Caption) + Check;
+    R.Height := Canvas.TextHeight('Wg') + 4;
+    R.Left := X;
+    R.Top := Y;
+    X := R.Left + R.Width + Gap * 3;
+  end;
+
 begin
   inherited;
   FitButton(btnAll, 75);
   FitButton(btnLum, 85);
-  FitButton(btnClose, 75);
 
+  // stały margines lewy (wykres jest pozniej centrowany, wiec nie z jego Left -
+  // inaczej kolejne wywolania przesuwalyby uklad)
+  X0 := CtrlGap * 3;
+  pboxHistogram.Left := X0;
+  Indent := X0 + Canvas.TextWidth('WW');
+  Check := GetSystemMetrics(SM_CXMENUCHECK) + Gap * 2;
+
+  // Informacja
+  Y := pboxHistogram.Top + pboxHistogram.Height + SectionGap;
+  lblInfo.Left := X0;
+  lblInfo.Top := Y;
+  Y := lblInfo.Top + lblInfo.Height + RowGap;
+  // szerokosc = najdluzsze tlumaczenie ze wszystkich jezykow (TAllLanguages):
+  // uklad nie zalezy od jezyka ani od tego, czy liczony przed tlumaczeniem
+  lblDist.AutoSize := False;
+  W := Canvas.TextWidth(lblDist.Caption);
+  for S in TAllLanguages('Color distribution') do
+    W := Max(W, Canvas.TextWidth(S));
+  lblDist.Width := W;
+  lblDist.Height := Canvas.TextHeight('Wg');
+  lblDist.Left := Indent;
+  lblDist.Top := Y + (btnAll.Height - lblDist.Height) div 2;
+  btnAll.Left := lblDist.Left + lblDist.Width + Gap * 3;
   btnR.Left := btnAll.Left + btnAll.Width + Gap;
   btnG.Left := btnR.Left + btnR.Width + Gap;
   btnB.Left := btnG.Left + btnG.Width + Gap;
-  btnLum.Left := btnB.Left + btnB.Width + Gap;
+  btnLum.Left := btnB.Left + btnB.Width + Gap * 4;
+  btnAll.Top := Y;
+  btnR.Top := Y;
+  btnG.Top := Y;
+  btnB.Top := Y;
+  btnLum.Top := Y;
+
+  // Wyrownanie
+  Y := btnAll.Top + btnAll.Height + SectionGap;
+  lblEqualize.Left := X0;
+  lblEqualize.Top := Y;
+  Y := lblEqualize.Top + lblEqualize.Height + RowGap;
+  X := Indent;
+  PlaceRadio(rbEqNone);
+  PlaceRadio(rbEqRGB);
+  PlaceRadio(rbEqLum);
+
+  // OK / Anuluj
+  Y := rbEqNone.Top + rbEqNone.Height + SectionGap;
+  btnOK.Top := Y;
+  btnCancel.Top := Y;
+
+  FitToContent(SectionGap, X0);
+  // wykres na srodku, gdy rzad wyrownania jest szerszy niz wykres
+  pboxHistogram.Left := Max(X0, (ClientWidth - pboxHistogram.Width) div 2);
+  AlignButtonsRight([btnOK, btnCancel], X0);
 end;
 
 procedure THistogramDlg.CalcHistogram;
@@ -191,24 +254,19 @@ begin
   SetChannel('lum');
 end;
 
-procedure THistogramDlg.btnEqLumClick(Sender: TObject);
+procedure THistogramDlg.rbEqClick(Sender: TObject);
 begin
-  if Assigned(FOnEqualize) then
-  begin
-    FOnEqualize('lum');
-    CalcHistogram;
-    pboxHistogram.Invalidate;
-  end;
-end;
-
-procedure THistogramDlg.btnEqRGBClick(Sender: TObject);
-begin
-  if Assigned(FOnEqualize) then
-  begin
-    FOnEqualize('rgb');
-    CalcHistogram;
-    pboxHistogram.Invalidate;
-  end;
+  if rbEqLum.Checked then
+    FEqMode := 'lum'
+  else if rbEqRGB.Checked then
+    FEqMode := 'rgb'
+  else
+    FEqMode := '';
+  // podglad na obrazie; histogram liczony z obrazu po podgladzie
+  if Assigned(FOnPreview) then
+    FOnPreview(FEqMode);
+  CalcHistogram;
+  pboxHistogram.Invalidate;
 end;
 
 procedure THistogramDlg.pboxHistogramPaint(Sender: TObject);
@@ -228,6 +286,9 @@ var
   maxv: Integer;
   i, x, barh: Integer;
   logmax: Double;
+  Hs: array[0..3] of Integer;
+  prev, t, k: Integer;
+  cr, cg, cb: Byte;
 begin
   Canvas := pboxHistogram.Canvas;
 
@@ -256,6 +317,47 @@ begin
     x := i * 64 * BW;
     Canvas.MoveTo(x, 0);
     Canvas.LineTo(x, H);
+  end;
+
+  // Wszystkie: kanaly nakladane jak swiatlo (addytywnie) - R+G zolty, R+B
+  // magenta, G+B cyjan; czesc wspolna wszystkich trzech jasnoszara (nie biala -
+  // nie przytlacza kolorowych wierzcholkow), sama jasnosc ciemnoszara.
+  // Wczesniej pelne slupki rysowane po kolei i czerwony zaslanial reszte.
+  if FMode = 'all' then
+  begin
+    for i := 0 to 255 do
+    begin
+      x := i * BW;
+      Hs[0] := Round(Ln(1.0 + FDataR[i]) / logmax * (H - PAD));
+      Hs[1] := Round(Ln(1.0 + FDataG[i]) / logmax * (H - PAD));
+      Hs[2] := Round(Ln(1.0 + FDataB[i]) / logmax * (H - PAD));
+      Hs[3] := Round(Ln(1.0 + FDataLum[i]) / logmax * (H - PAD));
+      prev := 0;
+      // kolejne progi wysokosci od dolu; odcinek [prev, t) pokrywaja kanaly
+      // o wysokosci >= t
+      repeat
+        t := MaxInt;
+        for k := 0 to 3 do
+          if (Hs[k] > prev) and (Hs[k] < t) then
+            t := Hs[k];
+        if t = MaxInt then Break;
+        cr := IfThen(Hs[0] >= t, 230, 40);
+        cg := IfThen(Hs[1] >= t, 230, 40);
+        cb := IfThen(Hs[2] >= t, 230, 40);
+        if (Hs[0] >= t) and (Hs[1] >= t) and (Hs[2] >= t) then
+        begin
+          cr := 150; cg := 150; cb := 150;   // wspolna czesc R+G+B
+        end
+        else if (Hs[0] < t) and (Hs[1] < t) and (Hs[2] < t) then
+        begin
+          cr := 90; cg := 90; cb := 90;      // tylko jasnosc
+        end;
+        Canvas.Brush.Color := RGB(cr, cg, cb);
+        Canvas.FillRect(Rect(x, H - t, x + BW, H - prev));
+        prev := t;
+      until False;
+    end;
+    Exit;
   end;
 
   for i := 0 to 255 do

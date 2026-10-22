@@ -588,10 +588,10 @@
 644	Tritone
 645	Quad-tone...
 646	Quad-tone
-647	Color 1 (shadows):
-648	Color 2 (midtones):
-649	Color 3 (highlights):
-650	Color 4 (extreme highlights):
+647	Color 1 (shadows)
+648	Color 2 (midtones)
+649	Color 3 (highlights)
+650	Color 4 (extreme highlights)
 651	Chromatic aberration...
 652	Chromatic aberration
 653	Shift:
@@ -673,7 +673,7 @@
 734	Performance test
 735	Preparing image...
 736	Image: %s (%d×%d)
-737	%s: %.2f ms (avg of %d)
+737	%s: %.2n ms (avg of %d)
 738	Time: %d min %d s
 739	(aborted)
 740	Hardest: %s (%.2f ms).
@@ -872,7 +872,7 @@
 947	Resolution Y
 948	EXIF (%d properties)
 949	Could not open the file to read metadata.
-950	Color 2 (highlights):
+950	Color 2 (highlights)
 951	WB 1.x palette
 952	WB 2.x/3.x palette
 953	OCS 32 palette
@@ -1082,3 +1082,21 @@
 1153	Dot size (0.1-10.0% of short side):
 1154	Tone curve (10-500, 100 = linear):
 1155	Dotted raster - scattered dots using Poisson distribution
+1156	Comic...
+1157	Comic
+1158	Comic - posterised colours with bold outlines
+1159	Style
+1160	Cartoon
+1161	Old print
+1162	Newspaper
+1163	PRL - soft
+1164	PRL - halftone
+1165	Pop art - black
+1166	Pop art - two inks
+1167	Pop art - color
+1168	Brown (faded)
+1169	Color distribution
+1170	Equalization
+1171	No equalization
+1172	Equalize RGB channels
+1173	Equalize brightness

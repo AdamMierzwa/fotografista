@@ -36,8 +36,12 @@ type
   end;
 
 function ShowHSBDlg(Bitmap: TBitmap; out ElapsedSec: Double): Boolean;
+procedure DoHSB(Bitmap: TBitmap; HueVal, SatVal, BriVal: Integer);
 
 implementation
+
+uses
+  uMacros;
 
 {$R *.dfm}
 
@@ -181,6 +185,7 @@ var
 begin
   ElapsedSec := 0;
   Result := False;
+  gMacroPending.Code := '';
   if (Bitmap = nil) or (Bitmap.Width = 0) then Exit;
   Dlg := THSBDlg.Create(Application);
   try
@@ -217,6 +222,9 @@ begin
     begin
       SW := TStopwatch.StartNew;
       Dlg.ApplyFull;
+      gMacroPending.Code := 'HSB';
+      gMacroPending.Params := IntToStr(Dlg.tbHue.Position) + '|' +
+        IntToStr(Dlg.tbSat.Position) + '|' + IntToStr(Dlg.tbBri.Position);
       ElapsedSec := SW.Elapsed.TotalSeconds;
       Result := True;
     end;

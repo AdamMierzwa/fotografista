@@ -50,8 +50,14 @@ type
   end;
 
 function ShowGlitchDlg(Bitmap: TBitmap; out ElapsedSec: Double): Boolean;
+// Odtwarzanie kroku makra GLITCH (parametry jak suwaki okna).
+procedure DoGlitchValues(Bitmap: TBitmap; RGBShift, Jitter, Noise, Scanlines,
+  BlockLoss, Tracking: Integer);
 
 implementation
+
+uses
+  uMacros;
 
 {$R *.dfm}
 
@@ -279,6 +285,20 @@ begin
   end;
 end;
 
+procedure DoGlitchValues(Bitmap: TBitmap; RGBShift, Jitter, Noise, Scanlines,
+  BlockLoss, Tracking: Integer);
+var
+  P: TGlitchParams;
+begin
+  P.RGBShift := RGBShift;
+  P.Jitter := Jitter;
+  P.Noise := Noise;
+  P.Scanlines := Scanlines;
+  P.BlockLoss := BlockLoss;
+  P.Tracking := Tracking;
+  DoGlitch(Bitmap, P, 1.0);
+end;
+
 function ShowGlitchDlg(Bitmap: TBitmap; out ElapsedSec: Double): Boolean;
 var
   Dlg: TGlitchDlg;
@@ -289,6 +309,7 @@ var
 begin
   ElapsedSec := 0;
   Result := False;
+  gMacroPending.Code := '';
   if (Bitmap = nil) or (Bitmap.Width = 0) then Exit;
   Dlg := nil;
   try
@@ -327,6 +348,11 @@ begin
     begin
       SW := TStopwatch.StartNew;
       Dlg.ApplyFull;
+      gMacroPending.Code := 'GLITCH';
+      gMacroPending.Params := IntToStr(Dlg.tbShift.Position) + '|' +
+        IntToStr(Dlg.tbJitter.Position) + '|' + IntToStr(Dlg.tbNoise.Position) + '|' +
+        IntToStr(Dlg.tbScanlines.Position) + '|' + IntToStr(Dlg.tbBlock.Position) + '|' +
+        IntToStr(Dlg.tbTracking.Position);
       ElapsedSec := SW.Elapsed.TotalSeconds;
       Result := True;
     end;

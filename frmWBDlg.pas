@@ -5,7 +5,7 @@ interface
 uses
   Winapi.Windows, System.SysUtils, System.Classes, System.Math, System.Diagnostics,
   Vcl.Graphics, Vcl.Controls, Vcl.Forms, Vcl.Dialogs,
-  Vcl.StdCtrls, Vcl.ComCtrls, Vcl.ExtCtrls, uPreviewFit, uTitleBar;
+  Vcl.StdCtrls, Vcl.ComCtrls, Vcl.ExtCtrls, uPreviewFit, uTitleBar, uI18n;
 
 type
   TWBDlg = class(TFotoForm)
@@ -21,6 +21,8 @@ type
     lblValB: TLabel;
     btnOK: TButton;
     btnCancel: TButton;
+    btnAuto: TButton;
+    procedure btnAutoClick(Sender: TObject);
     procedure pboxPreviewPaint(Sender: TObject);
     procedure pboxPreviewMouseDown(Sender: TObject; Button: TMouseButton;
       Shift: TShiftState; X, Y: Integer);
@@ -39,13 +41,19 @@ type
     FPreviewScale: Double;
     FZoomX: Integer;
     FZoomY: Integer;
+    FUpdating: Boolean;
+    function SliderVal(Chan, Target: Integer): Integer;
     procedure ApplyPreview;
     procedure ApplyFull;
   end;
 
 function ShowWBDlg(Bitmap: TBitmap; out ElapsedSec: Double): Boolean;
+procedure DoWhiteBalance(Bitmap: TBitmap; R, G, B: Integer);
 
 implementation
+
+uses
+  uMacros;
 
 {$R *.dfm}
 
@@ -105,10 +113,12 @@ var
 begin
   ElapsedSec := 0;
   Result := False;
+  gMacroPending.Code := '';
   if (Bitmap = nil) or (Bitmap.Width = 0) then Exit;
   Dlg := TWBDlg.Create(Application);
   try
     Dlg.FSourceBmp := Bitmap;
+    TranslateForm(Dlg);
 
     Scale := Min(400.0 / Bitmap.Width, 400.0 / Bitmap.Height);
     if Scale > 1.0 then Scale := 1.0;
@@ -137,12 +147,17 @@ begin
 
     FitPreviewToDialog(Dlg, Dlg.pboxPreview, pw, ph);
 
+    Dlg.FitButton(Dlg.btnAuto);
+
     Dlg.ApplyPreview;
 
     if Dlg.ShowModal = mrOk then
     begin
       SW := TStopwatch.StartNew;
       Dlg.ApplyFull;
+      gMacroPending.Code := 'WHITEBAL';
+      gMacroPending.Params := IntToStr(Dlg.tbR.Position) + '|' +
+        IntToStr(Dlg.tbG.Position) + '|' + IntToStr(Dlg.tbB.Position);
       ElapsedSec := SW.Elapsed.TotalSeconds;
       Result := True;
     end;
@@ -195,18 +210,121 @@ end;
 procedure TWBDlg.tbRChange(Sender: TObject);
 begin
   lblValR.Caption := IntToStr(tbR.Position);
-  ApplyPreview;
+  if not FUpdating then ApplyPreview;
 end;
 
 procedure TWBDlg.tbGChange(Sender: TObject);
 begin
   lblValG.Caption := IntToStr(tbG.Position);
-  ApplyPreview;
+  if not FUpdating then ApplyPreview;
 end;
 
 procedure TWBDlg.tbBChange(Sender: TObject);
 begin
   lblValB.Caption := IntToStr(tbB.Position);
+  if not FUpdating then ApplyPreview;
+end;
+
+function TWBDlg.SliderVal(Chan, Target: Integer): Integer;
+var
+  D: Double;
+begin
+  if (Chan = Target) or (Chan < 2) or (Chan > 253) or (Target < 2) then
+    Exit(100);
+  D := 100.0 * Ln(Chan / 255.0) / Ln(Target / 255.0);
+  Result := Round(D);
+  if Result < 1 then Result := 1;
+  if Result > 300 then Result := 300;
+end;
+
+procedure TWBDlg.btnAutoClick(Sender: TObject);
+const
+  cAutoDamping = 0.8;
+  cPoolFrac = 0.20;
+var
+  W, H, X, Y, L: Integer;
+  Row: PRGBTripleArray;
+  Hist: array[0..255] of Int64;
+  Luma, Cum, WSum: Int64;
+  AccR, AccG, AccB: Int64;
+  R, G, B, T: Integer;
+  MaxC, MinC, Chroma, Cw, Weight: Integer;
+  Thresh, Total: Int64;
+begin
+  if not Assigned(FSourceBmp) then Exit;
+  W := FSourceBmp.Width;
+  H := FSourceBmp.Height;
+  if (W = 0) or (H = 0) then Exit;
+
+  FillChar(Hist, SizeOf(Hist), 0);
+  for Y := 0 to H - 1 do
+  begin
+    Row := FSourceBmp.ScanLine[Y];
+    for X := 0 to W - 1 do
+    begin
+      Luma := (Row[X].R * 299 + Row[X].G * 587 + Row[X].B * 114) div 1000;
+      Inc(Hist[Luma]);
+    end;
+  end;
+
+  Total := Int64(W) * Int64(H);
+  Thresh := Round(Total * cPoolFrac);
+  if Thresh < 1 then Thresh := 1;
+
+  Cum := 0;
+  L := 255;
+  while (L > 0) and (Cum < Thresh) do
+  begin
+    Cum := Cum + Hist[L];
+    if Cum < Thresh then Dec(L);
+  end;
+
+  AccR := 0;
+  AccG := 0;
+  AccB := 0;
+  WSum := 0;
+  for Y := 0 to H - 1 do
+  begin
+    Row := FSourceBmp.ScanLine[Y];
+    for X := 0 to W - 1 do
+    begin
+      Luma := (Row[X].R * 299 + Row[X].G * 587 + Row[X].B * 114) div 1000;
+      if Luma < L then Continue;
+
+      MaxC := Row[X].R;
+      if Row[X].G > MaxC then MaxC := Row[X].G;
+      if Row[X].B > MaxC then MaxC := Row[X].B;
+      MinC := Row[X].R;
+      if Row[X].G < MinC then MinC := Row[X].G;
+      if Row[X].B < MinC then MinC := Row[X].B;
+      Chroma := MaxC - MinC;
+
+      Cw := 255 - Chroma;
+      Weight := (Cw * Cw) div 255;
+      if Weight = 0 then Continue;
+
+      Inc(AccR, Int64(Row[X].R) * Weight);
+      Inc(AccG, Int64(Row[X].G) * Weight);
+      Inc(AccB, Int64(Row[X].B) * Weight);
+      Inc(WSum, Weight);
+    end;
+  end;
+
+  if WSum = 0 then Exit;
+  R := Integer(AccR div WSum);
+  G := Integer(AccG div WSum);
+  B := Integer(AccB div WSum);
+  T := Min(Max(R, Max(G, B)), 253);
+  if T < 2 then Exit;
+
+  FUpdating := True;
+  try
+    tbR.Position := SliderVal(R, Round(R + (T - R) * cAutoDamping));
+    tbG.Position := SliderVal(G, Round(G + (T - G) * cAutoDamping));
+    tbB.Position := SliderVal(B, Round(B + (T - B) * cAutoDamping));
+  finally
+    FUpdating := False;
+  end;
   ApplyPreview;
 end;
 
@@ -233,19 +351,6 @@ var
   Row: PRGBTripleArray;
   R, G, B, T, DX, DY, CX, CY, Count: Integer;
   SR, SG, SB: Integer;
-
-  function SliderVal(Chan, Target: Integer): Integer;
-  var
-    D: Double;
-  begin
-    if (Chan = Target) or (Chan < 2) or (Chan > 253) or (Target < 2) then
-      Exit(100);
-    D := 100.0 * Ln(Chan / 255.0) / Ln(Target / 255.0);
-    Result := Round(D);
-    if Result < 1 then Result := 1;
-    if Result > 300 then Result := 300;
-  end;
-
 begin
   if Button <> mbLeft then Exit;
   if not Assigned(FSourceBmp) then Exit;

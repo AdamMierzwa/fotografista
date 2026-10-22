@@ -588,10 +588,10 @@
 644	Tritom
 645	Quadritom...
 646	Quadritom
-647	Cor 1 (sombras):
-648	Cor 2 (tons médios):
-649	Cor 3 (altas luzes):
-650	Cor 4 (luzes extremas):
+647	Cor 1 (sombras)
+648	Cor 2 (tons médios)
+649	Cor 3 (altas luzes)
+650	Cor 4 (luzes extremas)
 651	Aberração cromática...
 652	Aberração cromática
 653	Desvio:
@@ -673,7 +673,7 @@
 734	Teste de desempenho
 735	Preparar imagem...
 736	Imagem: %s (%d×%d)
-737	%s: %.2f ms (média de %d)
+737	%s: %.2n ms (média de %d)
 738	Tempo: %d min %d s
 739	(abortado)
 740	Mais difícil: %s (%.2f ms).
@@ -872,7 +872,7 @@
 947	Resolução Y
 948	EXIF (%d propriedades)
 949	Não foi possível abrir o arquivo para ler os metadados.
-950	Cor 2 (altas luzes):
+950	Cor 2 (altas luzes)
 951	Paleta WB 1.x
 952	Paleta WB 2.x/3.x
 953	Paleta OCS 32
@@ -1000,7 +1000,7 @@
 1069	Violeta (Ocidente)
 1070	Azul-marinho (offset)
 1071	Vermelho (carimbos)
-1072	Samizdat da RPP — duplicador de proteína, tinta fuliginosa, stencil borrado
+1072	Samizdat da PRL — duplicador de proteína, tinta fuliginosa, stencil borrado
 1073	Duplicador a álcool ocidental — violeta cristal, cheiro a álcool
 1074	Matriz de duplicador offset — cópia de escritório
 1075	Carimbos, cabeçalhos e formulários oficiais
@@ -1082,3 +1082,21 @@
 1153	Tamanho do ponto (0,1–10,0% do lado menor):
 1154	Curva tonal (10–500, 100 = linear):
 1155	Raster pontilhado - pontos dispersos com distribuição de Poisson
+1156	Banda desenhada...
+1157	Banda desenhada
+1158	Banda desenhada - cores posterizadas com contornos marcados
+1159	Estilo
+1160	Desenho animado
+1161	Impressão antiga
+1162	Jornal
+1163	PRL – suave
+1164	PRL – retícula
+1165	Pop art – preto
+1166	Pop art – duas tintas
+1167	Pop art – cor
+1168	Castanho (desbotado)
+1169	Distribuição de cores
+1170	Equalização
+1171	Sem equalização
+1172	Equalizar canais RGB
+1173	Equalizar a luminosidade

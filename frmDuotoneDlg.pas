@@ -49,6 +49,7 @@ type
     procedure PresetDeleteClick(Sender: TObject);
   public
     property Mode: TDuotoneMode read FMode write FMode;
+    procedure RefitButtons; override;
   end;
 
 function ShowDuotoneDlg(Bitmap: TBitmap; out ElapsedSec: Double): Boolean;
@@ -60,7 +61,7 @@ implementation
 {$R *.dfm}
 
 uses
-  uDuotone;
+  uDuotone, uMacros;
 
 function DoShowDuotoneDlg(Bitmap: TBitmap; AMode: TDuotoneMode; out ElapsedSec: Double): Boolean;
 var
@@ -74,6 +75,7 @@ var
 begin
   ElapsedSec := 0;
   Result := False;
+  gMacroPending.Code := '';
   if (Bitmap = nil) or (Bitmap.Width = 0) then Exit;
   Dlg := nil;
   try
@@ -126,6 +128,28 @@ begin
     begin
       SW := TStopwatch.StartNew;
       Dlg.ApplyFull;
+      // kolory jako TColor (liczby), od cieni do swiatel
+      case AMode of
+        dmDuotone:
+        begin
+          gMacroPending.Code := 'DUOTONE';
+          gMacroPending.Params := IntToStr(Integer(Dlg.FColors[0])) + '|' +
+            IntToStr(Integer(Dlg.FColors[1]));
+        end;
+        dmTritone:
+        begin
+          gMacroPending.Code := 'TRITONE';
+          gMacroPending.Params := IntToStr(Integer(Dlg.FColors[0])) + '|' +
+            IntToStr(Integer(Dlg.FColors[1])) + '|' + IntToStr(Integer(Dlg.FColors[2]));
+        end;
+        dmQuadTone:
+        begin
+          gMacroPending.Code := 'QUADTONE';
+          gMacroPending.Params := IntToStr(Integer(Dlg.FColors[0])) + '|' +
+            IntToStr(Integer(Dlg.FColors[1])) + '|' + IntToStr(Integer(Dlg.FColors[2])) + '|' +
+            IntToStr(Integer(Dlg.FColors[3]));
+        end;
+      end;
       ElapsedSec := SW.Elapsed.TotalSeconds;
       Result := True;
     end;
@@ -181,8 +205,8 @@ end;
 
 procedure TDuotoneDlg.UpdateColorButtons;
 begin
-  btnColor1.Caption := T('Color 1 (shadows):');
-  btnColor2.Caption := T('Color 2 (highlights):');
+  btnColor1.Caption := T('Color 1 (shadows)');
+  btnColor2.Caption := T('Color 2 (highlights)');
   btnSavePreset.Caption := T('Save Duotone preset');
   btnLoadPreset.Caption := T('Load Duotone preset');
 
@@ -201,8 +225,8 @@ begin
         btnColor2.Visible := True;  sw2.Visible := True;
         btnColor3.Visible := True;  sw3.Visible := True;
         btnColor4.Visible := False; sw4.Visible := False;
-        btnColor2.Caption := T('Color 2 (midtones):');
-        btnColor3.Caption := T('Color 3 (highlights):');
+        btnColor2.Caption := T('Color 2 (midtones)');
+        btnColor3.Caption := T('Color 3 (highlights)');
         Caption := T('Tritone');
       end;
     dmQuadTone:
@@ -211,9 +235,9 @@ begin
         btnColor2.Visible := True;  sw2.Visible := True;
         btnColor3.Visible := True;  sw3.Visible := True;
         btnColor4.Visible := True;  sw4.Visible := True;
-        btnColor2.Caption := T('Color 2 (midtones):');
-        btnColor3.Caption := T('Color 3 (highlights):');
-        btnColor4.Caption := T('Color 4 (extreme highlights):');
+        btnColor2.Caption := T('Color 2 (midtones)');
+        btnColor3.Caption := T('Color 3 (highlights)');
+        btnColor4.Caption := T('Color 4 (extreme highlights)');
         Caption := T('Quad-tone');
       end;
   end;
@@ -221,52 +245,116 @@ begin
 end;
 
 procedure TDuotoneDlg.FitColorButtons;
-// Dopasowuje szerokosc przyciskow kolorow, a takze Save/Load preset,
-// do ich wlasnego captionu (Canvas.TextWidth + 24). Przyciski w prawej
-// kolumnie (btnColor2, btnColor4) dosuwane sa w prawo, by nie nachodzic
-// na lewego sasiada. Klucz-cache z captionow unika przeliczania bez zmiany.
+// Dwie kolumny par plakietka + przycisk koloru (2026-10-22; wczesniej
+// przyciski obcinane do stalej szerokosci okna, a plakietki sw2/sw4 staly
+// na Left z .dfm i zaslanial je przycisk lewej kolumny). Szerokosc przycisku
+// z napisu (FitButton, min. 130 jak Constraints w .dfm), w kolumnie wspolna;
+// plakietka zawsze tuz przed swoim przyciskiem. Gdy kolumny sie nie mieszcza,
+// okno jest szersze (nie wyzsze - wysokosc ogranicza ekran); podglad
+// wysrodkowuje potem FitPreviewToDialog. Klucz-cache z captionow unika
+// przeliczania bez zmiany.
 var
-  Bmp: TBitmap;
   Key: string;
-  Left2, Left4: Integer;
+  Margin, Gap, ColGap, Col1W, Col2W, X: Integer;
+
+  procedure PlacePair(Sw: TShape; B: TButton; ALeft, AWidth: Integer);
+  begin
+    Sw.Left := ALeft;
+    B.Left := ALeft + Sw.Width + Gap;
+    B.Width := AWidth;
+  end;
+
 begin
   Key := btnColor1.Caption + #1 + btnColor2.Caption + #1 + btnColor3.Caption + #1 + btnColor4.Caption
        + #1 + btnSavePreset.Caption + #1 + btnLoadPreset.Caption;
   if Key = FLastColorFitKey then Exit;
   FLastColorFitKey := Key;
 
-  Bmp := TBitmap.Create;
-  try
-    Bmp.Canvas.Font := btnColor1.Font;
+  Margin := sw1.Left;          // lewy margines z .dfm (jak podglad)
+  Gap := CtrlGap;
+  ColGap := CtrlGap * 4;
 
-    btnColor1.Width := Bmp.Canvas.TextWidth(btnColor1.Caption) + 24;
-    btnColor2.Width := Bmp.Canvas.TextWidth(btnColor2.Caption) + 24;
-    btnColor3.Width := Bmp.Canvas.TextWidth(btnColor3.Caption) + 24;
-    btnColor4.Width := Bmp.Canvas.TextWidth(btnColor4.Caption) + 24;
+  FitButton(btnColor1, 130);
+  FitButton(btnColor2, 130);
+  FitButton(btnColor3, 130);
+  FitButton(btnColor4, 130);
+  Col1W := btnColor1.Width;
+  if btnColor3.Visible then Col1W := Max(Col1W, btnColor3.Width);
+  Col2W := btnColor2.Width;
+  if btnColor4.Visible then Col2W := Max(Col2W, btnColor4.Width);
 
-    // nie przekraczaj szerokosci okna, zostawiajac margines 10px
-    btnColor1.Width := Min(btnColor1.Width, ClientWidth - btnColor1.Left - 10);
-    btnColor2.Width := Min(btnColor2.Width, ClientWidth - btnColor2.Left - 10);
-    btnColor3.Width := Min(btnColor3.Width, ClientWidth - btnColor3.Left - 10);
-    btnColor4.Width := Min(btnColor4.Width, ClientWidth - btnColor4.Left - 10);
+  PlacePair(sw1, btnColor1, Margin, Col1W);
+  PlacePair(sw3, btnColor3, Margin, Col1W);
+  X := btnColor1.Left + Col1W + ColGap;
+  PlacePair(sw2, btnColor2, X, Col2W);
+  PlacePair(sw4, btnColor4, X, Col2W);
 
-    // dosun przycisk prawej kolumny, by nie nachodzil na lewego sasiada (przerwa min 4px)
-    Left2 := btnColor1.Left + btnColor1.Width + 4;
-    if Left2 > btnColor2.Left then btnColor2.Left := Left2;
-    Left4 := btnColor3.Left + btnColor3.Width + 4;
-    if Left4 > btnColor4.Left then btnColor4.Left := Left4;
+  if btnColor2.Left + Col2W + Margin > ClientWidth then
+    ClientWidth := btnColor2.Left + Col2W + Margin;
 
-    // Save/Load preset — wspolna szerokosc = najszerszy caption z obu,
-    // clamp do szerokosci okna, wysrodkowane w poziomie
-    btnSavePreset.Width := Max(Bmp.Canvas.TextWidth(btnSavePreset.Caption),
-                               Bmp.Canvas.TextWidth(btnLoadPreset.Caption)) + 24;
-    btnSavePreset.Width := Min(btnSavePreset.Width, ClientWidth - 20);
-    btnSavePreset.Left := (ClientWidth - btnSavePreset.Width) div 2;
-    btnLoadPreset.Width := btnSavePreset.Width;
-    btnLoadPreset.Left := btnSavePreset.Left;
-  finally
-    Bmp.Free;
+  // Save/Load preset — wspolna szerokosc z napisow, wysrodkowane w poziomie
+  FitButtonGroup([btnSavePreset, btnLoadPreset]);
+  btnSavePreset.Left := (ClientWidth - btnSavePreset.Width) div 2;
+  btnLoadPreset.Left := btnSavePreset.Left;
+end;
+
+// Po tlumaczeniu okna i zmianie czcionki (szerokosci OK/Anuluj sa wtedy juz
+// ostateczne, inherited je poszerza): kolumny kolorow od nowa, podglad na
+// srodku okna, OK/Anuluj do prawej z tym samym marginesem co wiersze kolorow.
+// Wczesniej wyrownanie bylo w FitColorButtons, przed tlumaczeniem - DE
+// „Abbrechen” poszerzal potem Anuluj w prawo (ok. 5 px od krawedzi), a
+// podglad byl liczony z nieprzeliczonej szerokosci panelu tresci.
+procedure TDuotoneDlg.RefitButtons;
+var
+  Y: Integer;
+
+  // napis przycisku koloru do lewej, przy plakietce - styl VCL rysuje tekst
+  // wg BS_LEFT/BS_RIGHT/BS_CENTER (TButtonStyleHook.DrawButton,
+  // Vcl.StdCtrls.pas:11541-11546); TButton nie ma wlasciwosci wyrownania
+  procedure LeftText(B: TButton);
+  begin
+    if not B.HandleAllocated then Exit;
+    SetWindowLong(B.Handle, GWL_STYLE,
+      (GetWindowLong(B.Handle, GWL_STYLE) and not BS_CENTER) or BS_LEFT);
+    B.Invalidate;
   end;
+
+  // wiersz par plakietka + przycisk od Y; plakietka wysrodkowana pionowo
+  procedure PlaceRow(SwL, SwR: TShape; BL, BR: TButton);
+  begin
+    BL.Top := Y;
+    BR.Top := Y;
+    SwL.Top := Y + (BL.Height - SwL.Height) div 2;
+    SwR.Top := SwL.Top;
+    Y := Y + BL.Height;
+  end;
+
+begin
+  inherited;
+  FLastColorFitKey := '';
+  FitColorButtons;
+  pboxPreview.Left := (ClientWidth - pboxPreview.Width) div 2;
+  LeftText(btnColor1);
+  LeftText(btnColor2);
+  LeftText(btnColor3);
+  LeftText(btnColor4);
+
+  // pionowo (wczesniej pozycje z .dfm, odstep nad OK/Anuluj taki sam jak
+  // wewnatrz grup): grupy oddzielone SectionGap, wiersze w grupie RowGap
+  Y := pboxPreview.Top + pboxPreview.Height + SectionGap;
+  PlaceRow(sw1, sw2, btnColor1, btnColor2);
+  if btnColor3.Visible then
+  begin
+    Inc(Y, RowGap);
+    PlaceRow(sw3, sw4, btnColor3, btnColor4);
+  end;
+  Inc(Y, SectionGap);
+  btnSavePreset.Top := Y;
+  btnLoadPreset.Top := btnSavePreset.Top + btnSavePreset.Height + RowGap;
+  btnOK.Top := btnLoadPreset.Top + btnLoadPreset.Height + SectionGap;
+  btnCancel.Top := btnOK.Top;
+  AlignButtonsRight([btnOK, btnCancel], sw1.Left);
+  FitHeight(sw1.Left);
 end;
 
 procedure TDuotoneDlg.btnColor1Click(Sender: TObject);
@@ -371,24 +459,30 @@ procedure TDuotoneDlg.btnLoadPresetClick(Sender: TObject);
 var
   F: TForm;
   BtnLoad, BtnDelete, BtnClose: TButton;
-  I, Idx: Integer;
+  I, Idx, TH, Margin, Gap, BtnW, BtnH: Integer;
 begin
   if Length(Prefs.DuotonePresets) = 0 then
     Exit;
   F := TForm.Create(nil);
   try
+    // Uklad z zawartosci (2026-10-21; wczesniej sztywne 320x220, lista 304x160,
+    // przyciski po 90 px, czcionka systemowa): czcionka programu (ParentFont),
+    // lista ok. 10 wierszy i szerokosc z najdluzszej nazwy (min. 30 znakow),
+    // [Wczytaj] [Usun] z lewej, [Zamknij] z prawej; odstepy z wysokosci tekstu.
+    // czcionka programu: samo ParentFont := True nic nie daje formie bez
+    // rodzica (Vcl.Controls.pas:6979-6980), stad Font.Assign
+    F.Font.Assign(Application.DefaultFont);
+    F.ParentFont := True;
     F.BorderStyle := bsDialog;
     F.Position := poOwnerFormCenter;
     F.Caption := T('Load Duotone preset');
-    F.ClientWidth := 320;
-    F.ClientHeight := 220;
+    F.Canvas.Font.Assign(F.Font);
+    TH := F.Canvas.TextHeight('Wg');
+    Margin := TH * 2 div 3;
+    Gap := TH div 3;
 
     FPresetList := TListBox.Create(F);
     FPresetList.Parent := F;
-    FPresetList.Left := 8;
-    FPresetList.Top := 8;
-    FPresetList.Width := 304;
-    FPresetList.Height := 160;
     for I := 0 to Length(Prefs.DuotonePresets) - 1 do
       FPresetList.Items.Add(Prefs.DuotonePresets[I].Name);
     if FPresetList.Items.Count > 0 then
@@ -396,32 +490,43 @@ begin
 
     BtnLoad := TButton.Create(F);
     BtnLoad.Parent := F;
-    BtnLoad.Left := 8;
-    BtnLoad.Top := 178;
-    BtnLoad.Width := 90;
-    BtnLoad.Height := 25;
     BtnLoad.Caption := T('Load');
     BtnLoad.Default := True;
     BtnLoad.ModalResult := mrOk;
 
     BtnDelete := TButton.Create(F);
     BtnDelete.Parent := F;
-    BtnDelete.Left := 104;
-    BtnDelete.Top := 178;
-    BtnDelete.Width := 90;
-    BtnDelete.Height := 25;
     BtnDelete.Caption := T('Delete');
     BtnDelete.OnClick := PresetDeleteClick;
 
     BtnClose := TButton.Create(F);
     BtnClose.Parent := F;
-    BtnClose.Left := 222;
-    BtnClose.Top := 178;
-    BtnClose.Width := 90;
-    BtnClose.Height := 25;
     BtnClose.Caption := T('Close');
     BtnClose.Cancel := True;
     BtnClose.ModalResult := mrCancel;
+
+    // przyciski: wspolna szerokosc jak FitButtonGroup (tekst + 2 x 'W', min. 85),
+    // wysokosc domyslna przycisku - jak we wszystkich oknach
+    BtnW := 85;
+    BtnW := Max(BtnW, F.Canvas.TextWidth(BtnLoad.Caption) + 2 * F.Canvas.TextWidth('W'));
+    BtnW := Max(BtnW, F.Canvas.TextWidth(BtnDelete.Caption) + 2 * F.Canvas.TextWidth('W'));
+    BtnW := Max(BtnW, F.Canvas.TextWidth(BtnClose.Caption) + 2 * F.Canvas.TextWidth('W'));
+    BtnH := BtnLoad.Height;
+
+    // lista: szerokosc z najdluzszej nazwy (min. 30 znakow, co najmniej na
+    // trzy przyciski), ok. 10 wierszy
+    I := F.Canvas.TextWidth('0') * 30;
+    for Idx := 0 to FPresetList.Items.Count - 1 do
+      I := Max(I, F.Canvas.TextWidth(FPresetList.Items[Idx]) + GetSystemMetrics(SM_CXVSCROLL) + Gap * 2);
+    I := Max(I, BtnW * 3 + Margin * 2);
+    FPresetList.SetBounds(Margin, Margin, I, TH);
+    FPresetList.ClientHeight := TH * 10;
+
+    BtnLoad.SetBounds(Margin, FPresetList.Top + FPresetList.Height + Margin, BtnW, BtnH);
+    BtnDelete.SetBounds(BtnLoad.Left + BtnW + Gap * 2, BtnLoad.Top, BtnW, BtnH);
+    BtnClose.SetBounds(FPresetList.Left + FPresetList.Width - BtnW, BtnLoad.Top, BtnW, BtnH);
+    F.ClientWidth := FPresetList.Left + FPresetList.Width + Margin;
+    F.ClientHeight := BtnLoad.Top + BtnH + Margin;
 
     if F.ShowModal = mrOk then
     begin

@@ -25,19 +25,25 @@ type
     btnCancel: TButton;
   public
     constructor Create(AOwner: TComponent); override;
+    procedure RefitButtons; override;
   end;
 
   TBmProgressForm = class(TFotoForm)
     lb: TListBox;
   public
     constructor Create(AOwner: TComponent); override;
+    procedure RefitButtons; override;
   end;
 
   TBmReportForm = class(TFotoForm)
     memo: TMemo;
     btnOK: TButton;
+  private
+    FLines: TArray<string>;   // wiersze raportu do pomiaru bez uchwytu pola
   public
-    constructor Create(AOwner: TComponent); override;
+    constructor Create(AOwner: TComponent; const AReport: string); reintroduce;
+    procedure AfterConstruction; override;
+    procedure RefitButtons; override;
   end;
 
 // Przeprowadza benchmark na podanym obrazie (oryginał nie jest modyfikowany).
@@ -89,13 +95,13 @@ begin
   end;
 end;
 
+// Liczby raportu z ustawien regionalnych Windows (globalne FormatSettings,
+// czytane przy starcie programu): po polsku 1 253,54. Wczesniej na sztywno
+// kropka dziesietna, a wyniki usredniane szly przez Format z ustawien systemu
+// - raport mieszal przecinek i kropke (2026-10-21).
 function FormatMs(Ms: Double): string;
-var
-  FmtS: TFormatSettings;
 begin
-  FmtS.DecimalSeparator := '.';
-  FmtS.ThousandSeparator := ',';
-  Result := FormatFloat('0.00', Ms, FmtS);
+  Result := FormatFloat('#,##0.00', Ms, FormatSettings);
 end;
 
 function FormatTotal(TotalMs: Double): string;
@@ -136,7 +142,7 @@ begin
     begin
       if GroupStart(I) then Lines.Add('');
       if Results[I].Avg then
-        S := '  ' + Format(T('%s: %.2f ms (avg of %d)'), [Results[I].Name, Results[I].Ms, 3])
+        S := '  ' + Format(T('%s: %.2n ms (avg of %d)'), [Results[I].Name, Results[I].Ms, 3], FormatSettings)
       else
         S := '  ' + Results[I].Name + ': ' + FormatMs(Results[I].Ms) + ' ms';
       Lines.Add(S);
@@ -222,10 +228,8 @@ begin
     if AOwner <> nil then AOwner.Enabled := True;
   end;
 
-  Report := TBmReportForm.Create(nil);
+  Report := TBmReportForm.Create(nil, BuildReport(Src, Results, TotalMs));
   try
-    Report.memo.Lines.Text := BuildReport(Src, Results, TotalMs);
-    Report.memo.SelStart := 0;
     Report.ShowModal;
   finally
     Report.Free;
@@ -236,26 +240,24 @@ end;
 
 { TBmIntroForm }
 
+// Okna testu wydajnosci: uklad z tresci (2026-10-21; wczesniej sztywne
+// 430x165 / 240x230 / 540x450, przyciski po 85 px, raport na stale 9 pt).
+// Czcionke programu forma dostaje w TFotoForm.AfterConstruction, czyli PO
+// konstruktorze - dlatego konstruktory tylko tworza kontrolki, a wymiary
+// liczy RefitButtons (pokazanie okna, zmiana czcionki).
+
 constructor TBmIntroForm.Create(AOwner: TComponent);
-const
-  MARGIN = 20;
 begin
   inherited CreateNew(AOwner);
   Caption := T('Performance test');
   BorderStyle := bsDialog;
   BorderIcons := [biSystemMenu];
   Position := poScreenCenter;
-  ClientWidth := 430;
-  ClientHeight := 165;
 
   lblInfo := TLabel.Create(Self);
   lblInfo.Parent := Self;
   lblInfo.AutoSize := False;
   lblInfo.WordWrap := True;
-  lblInfo.Left := MARGIN;
-  lblInfo.Top := MARGIN;
-  lblInfo.Width := ClientWidth - 2 * MARGIN;
-  lblInfo.Height := ClientHeight - 2 * MARGIN - 25 - 12;
   lblInfo.Caption := T('The benchmark will test the speed of 12 graphics operations.')
     + sLineBreak + sLineBreak
     + T('Duration: from about a dozen seconds to several minutes, depending on image resolution and processor speed.');
@@ -265,21 +267,32 @@ begin
   btnOK.Caption := T('Continue');
   btnOK.ModalResult := mrOk;
   btnOK.Default := True;
-  btnOK.Width := 85;
-  btnOK.Height := 25;
 
   btnCancel := TButton.Create(Self);
   btnCancel.Parent := Self;
   btnCancel.Caption := T('Cancel');
   btnCancel.ModalResult := mrCancel;
   btnCancel.Cancel := True;
-  btnCancel.Width := 85;
-  btnCancel.Height := 25;
+end;
 
-  btnOK.Left := ClientWidth - MARGIN - 85 * 2 - 10;
-  btnCancel.Left := ClientWidth - MARGIN - 85;
-  btnOK.Top := ClientHeight - 25 - 12;
+// Opis zawijany w szerokosci ok. 50 znakow (wysokosc z tekstu), przyciski do
+// prawej.
+procedure TBmIntroForm.RefitButtons;
+var
+  Margin: Integer;
+begin
+  inherited;
+  Margin := SectionGap;
+  // AutoSize wylaczany i wlaczany ponownie, zeby wysokosc zawinietego opisu
+  // przeliczyla sie dla nowej szerokosci
+  lblInfo.AutoSize := False;
+  lblInfo.SetBounds(Margin, Margin, Canvas.TextWidth('0') * 50, Canvas.TextHeight('Wg'));
+  lblInfo.AutoSize := True;
+  FitButtonGroup([btnOK, btnCancel]);
+  btnOK.Top := lblInfo.Top + lblInfo.Height + SectionGap;
   btnCancel.Top := btnOK.Top;
+  FitToContent(Margin, Margin);
+  AlignButtonsRight([btnOK, btnCancel], Margin);
 end;
 
 { TBmProgressForm }
@@ -291,45 +304,118 @@ begin
   BorderStyle := bsDialog;
   BorderIcons := [];
   Position := poScreenCenter;
-  ClientWidth := 240;
-  ClientHeight := 230;
 
   lb := TListBox.Create(Self);
   lb.Parent := Self;
-  lb.SetBounds(8, 8, ClientWidth - 16, ClientHeight - 16);
-  lb.ItemHeight := 18;
+end;
+
+// Lista na wszystkie operacje bez przewijania: szerokosc z najdluzszej nazwy
+// (wszystkie znane przed startem - okno nie zmienia rozmiaru w trakcie),
+// wysokosc BMCount wierszy.
+procedure TBmProgressForm.RefitButtons;
+var
+  Margin, W, IH, I: Integer;
+begin
+  inherited;
+  Margin := RowGap * 2;
+  W := 0;
+  for I := 0 to BMCount - 1 do
+    W := Max(W, Canvas.TextWidth(T(BMNames[I])));
+  // rzeczywista wysokosc pozycji listy: dla lbStandard z uchwytem ItemHeight
+  // zwraca wysokosc z GetItemRect (Vcl.StdCtrls.pas:7595-7604)
+  if lb.HandleAllocated and (lb.Items.Count > 0) then
+    IH := lb.ItemHeight
+  else
+    IH := Canvas.TextHeight('Wg');
+  lb.Left := Margin;
+  lb.Top := Margin;
+  lb.ClientWidth := W + CtrlGap * 4;
+  lb.ClientHeight := BMCount * IH;
+  FitToContent(Margin, Margin);
 end;
 
 { TBmReportForm }
 
-constructor TBmReportForm.Create(AOwner: TComponent);
+// Raport podawany w konstruktorze: pole dostaje tekst przed utworzeniem okna
+// (WM_SETTEXT bez uchwytu zapamietuje tekst, CreateWindowHandle wpisuje go przy
+// tworzeniu - Vcl.Controls.pas:10367, Vcl.StdCtrls.pas:3846-3853), a wymiary
+// liczone sa z FLines, bez siegania do memo.Lines (ono tworzy uchwyt). Wczesniej
+// memo.Lines.Text tworzylo okno pola w domyslnym rozmiarze 185x89
+// (Vcl.StdCtrls.pas:3794-3795) i styl VCL ustawial tam poziomy pasek
+// przewijania (Vcl.Forms.pas:15758-15774); po powiekszeniu pola zostawal jego
+// nieprzemalowany slad - bialy pasek do pierwszego klikniecia.
+constructor TBmReportForm.Create(AOwner: TComponent; const AReport: string);
+var
+  L: TStringList;
 begin
   inherited CreateNew(AOwner);
   Caption := T('Performance results');
   BorderStyle := bsDialog;
   BorderIcons := [biSystemMenu];
   Position := poScreenCenter;
-  ClientWidth := 540;
-  ClientHeight := 450;
 
   memo := TMemo.Create(Self);
   memo.Parent := Self;
   memo.ReadOnly := True;
   memo.ScrollBars := ssBoth;
   memo.WordWrap := False;
-  memo.Font.Name := 'Courier New';
-  memo.Font.Size := 9;
-  memo.SetBounds(8, 8, ClientWidth - 16, ClientHeight - 8 - 25 - 12 - 8);
+  memo.Font.Name := 'Courier New';   // raport w kolumnach - stala szerokosc znakow
+  memo.Text := AReport;
+  L := TStringList.Create;
+  try
+    L.Text := AReport;
+    FLines := L.ToStringArray;
+  finally
+    L.Free;
+  end;
 
   btnOK := TButton.Create(Self);
   btnOK.Parent := Self;
   btnOK.Caption := T('Close');
   btnOK.ModalResult := mrOk;
   btnOK.Default := True;
-  btnOK.Width := 85;
-  btnOK.Height := 25;
-  btnOK.Left := ClientWidth - 8 - 85;
-  btnOK.Top := ClientHeight - 25 - 12;
+end;
+
+// Raport: Courier New w rozmiarze czcionki programu; pole w rozmiarze tresci
+// (najdluzszy wiersz x liczba wierszy), limit 80% ekranu - dalej paski
+// przewijania; Zamknij do prawej.
+// Uklad liczony od razu po konstrukcji (czcionke programu forma ma juz z
+// TFotoForm.AfterConstruction): okna kontrolek powstaja w UpdateShowing PRZED
+// CM_SHOWINGCHANGED, czyli przed DoShow (Vcl.Controls.pas, UpdateShowing) -
+// samo RefitButtons z DoShow ustawialo rozmiar pola dopiero po utworzeniu
+// jego okna w rozmiarze domyslnym.
+procedure TBmReportForm.AfterConstruction;
+begin
+  inherited;
+  RefitButtons;
+end;
+
+procedure TBmReportForm.RefitButtons;
+var
+  Margin, I, LineW, LineH, MaxW, MaxH: Integer;
+begin
+  inherited;
+  Margin := SectionGap;
+  memo.Font.Size := Font.Size;
+  Canvas.Font.Assign(memo.Font);
+  LineW := 0;
+  for I := 0 to High(FLines) do
+    LineW := Max(LineW, Canvas.TextWidth(FLines[I]));
+  LineH := Canvas.TextHeight('Wg');
+  Canvas.Font.Assign(Font);
+  FitButton(btnOK);
+
+  MaxW := Screen.WorkAreaWidth * 8 div 10 - Margin * 2;
+  MaxH := Screen.WorkAreaHeight * 8 div 10 - Margin * 3 - btnOK.Height;
+  memo.Left := Margin;
+  memo.Top := Margin;
+  // zapas na wewnetrzne marginesy pola i paski przewijania
+  memo.Width := Min(MaxW, LineW + GetSystemMetrics(SM_CXVSCROLL) + CtrlGap * 4);
+  memo.Height := Min(MaxH, Max(1, Length(FLines)) * LineH + GetSystemMetrics(SM_CYHSCROLL) + CtrlGap * 4);
+
+  btnOK.Top := memo.Top + memo.Height + SectionGap;
+  FitToContent(Margin, Margin);
+  btnOK.Left := ClientWidth - Margin - btnOK.Width;
 end;
 
 end.

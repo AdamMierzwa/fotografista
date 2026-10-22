@@ -9,11 +9,6 @@ uses
 type
   TShirtColors = TArray<TColor>;
 
-// 1. Posteryzacja — QuantizeBrush(64) + paleta greedy (count * min_d2)
-//    + mapowanie pikseli na kolory palety. Bitmap zostaje zmapowany,
-//    zwraca paletę (długość = min(N, unikalne kolory)).
-procedure TshirtPosterize(Bitmap: TBitmap; N: Integer; var Palette: TShirtColors);
-
 // Ekstrakcja reprezentatywnej palety z obrazu (kwantyzacja 64 + greedy
 //    count * min_d2). Nie modyfikuje Bitmap, nie mapuje pikseli — źródło
 //    domyślnych farb przy otwarciu dialogu (odpowiednik palety z
@@ -37,8 +32,10 @@ procedure TshirtWhiteToFabric(Bitmap: TBitmap);
 //    kwantowanego; piksel malowany, gdy Coverage >= progu kropki (TshirtThresh)
 //    — ciemne obszary wypełnione w całości (lite plamy), jasne przejścia mają
 //    strukturę punktu. CellMult = korektor (bias) Coverage, ±0.6: 0,25 -> więcej
-//    tkaniny, 1,0 -> naturalne krycie, 4,0 -> pełne krycie. Kolor farby = posteryzacja.
-procedure TshirtRender(Bitmap: TBitmap; const Inks: TShirtColors; CellMult: Double);
+//    tkaniny, 1,0 -> naturalne krycie, 4,0 -> pełne krycie. Podział: najbliższy
+//    kolor PALETY (Palette[J]), kolor kropki: Inks[J] — wymiana farby nie zmienia
+//    podziału (2026-10-20; wcześniej podział liczony był od farb).
+procedure TshirtRender(Bitmap: TBitmap; const Palette, Inks: TShirtColors; CellMult: Double);
 
 // Full-res apply (nielimitowana wersja posteryzacji) — QuantizeBrush(64),
 //    każdy piksel -> najbliższa WYBRANA farba. Farby dyktują podział,
@@ -241,161 +238,6 @@ begin
       SetLength(Result, PalMax);
       for K := 0 to PalMax - 1 do
         Result[K] := Rgb24ToTColor(PalRgb[K]);
-    finally
-      Freq.Free;
-    end;
-  finally
-    Qb.Free;
-  end;
-end;
-
-procedure TshirtPosterize(Bitmap: TBitmap; N: Integer; var Palette: TShirtColors);
-var
-  W, H, I, J, Total, PalMax, BestJ, P, K: Integer;
-  MinD2, BestVal, Val: Double;
-  Dr, Dg, Db, D2: Integer;
-  Qb: TBitmap;
-  Freq: TDictionary<Cardinal, Integer>;
-  Keys: TArray<Cardinal>;
-  ColList: array of TColorFreq;
-  Used: array of Boolean;
-  Tmp: TColorFreq;
-  Map: TDictionary<Cardinal, Cardinal>;
-  Lines: array of PRGBTripleArray;
-  DLines: array of PRGBTripleArray;
-  C, PC, Mapped: Cardinal;
-  PalRgb: array of Cardinal;
-begin
-  W := Bitmap.Width;
-  H := Bitmap.Height;
-  if (W = 0) or (H = 0) then Exit;
-  Bitmap.PixelFormat := pf24bit;
-
-  Qb := TBitmap.Create;
-  try
-    Qb.Assign(Bitmap);
-    Qb.PixelFormat := pf24bit;
-    DoQuantize(Qb, 64, False);
-
-    Freq := TDictionary<Cardinal, Integer>.Create;
-    try
-      SetLength(Lines, H);
-      for J := 0 to H - 1 do
-        Lines[J] := Qb.ScanLine[J];
-      for J := 0 to H - 1 do
-        for I := 0 to W - 1 do
-        begin
-          C := GetPixel(Lines[J], I);
-          if Freq.ContainsKey(C) then
-            Freq[C] := Freq[C] + 1
-          else
-            Freq.Add(C, 1);
-        end;
-
-      Keys := Freq.Keys.ToArray;
-      Total := Length(Keys);
-      SetLength(ColList, Total);
-      for I := 0 to Total - 1 do
-      begin
-        ColList[I].Color := Keys[I];
-        ColList[I].Count := Freq[Keys[I]];
-      end;
-
-      // sortowanie wg count malejąco (selection sort, <=64 elementy)
-      for I := 0 to Total - 2 do
-        for J := I + 1 to Total - 1 do
-          if ColList[J].Count > ColList[I].Count then
-          begin
-            Tmp := ColList[I];
-            ColList[I] := ColList[J];
-            ColList[J] := Tmp;
-          end;
-
-      PalMax := Min(N, Total);
-      if PalMax = 0 then Exit;
-
-      SetLength(PalRgb, PalMax);
-      SetLength(Used, Total);
-      PalRgb[0] := ColList[0].Color;
-      Used[0] := True;
-
-      for P := 1 to PalMax - 1 do
-      begin
-        BestJ := -1;
-        BestVal := -1.0;
-        for J := 0 to Total - 1 do
-        begin
-          if Used[J] then Continue;
-          C := ColList[J].Color;
-          MinD2 := 195075.0;
-          for K := 0 to P - 1 do
-          begin
-            PC := PalRgb[K];
-            Dr := Rgb24R(C) - Rgb24R(PC);
-            Dg := Rgb24G(C) - Rgb24G(PC);
-            Db := Rgb24B(C) - Rgb24B(PC);
-            D2 := Dr * Dr + Dg * Dg + Db * Db;
-            if D2 < MinD2 then MinD2 := D2;
-          end;
-          Val := ColList[J].Count * (MinD2 / 195075.0);
-          if Val > BestVal then
-          begin
-            BestVal := Val;
-            BestJ := J;
-          end;
-        end;
-        if BestJ >= 0 then
-        begin
-          PalRgb[P] := ColList[BestJ].Color;
-          Used[BestJ] := True;
-        end;
-      end;
-
-      // mapowanie: każdy kolor -> najbliższy kolor palety
-      Map := TDictionary<Cardinal, Cardinal>.Create;
-      try
-        for J := 0 to Total - 1 do
-        begin
-          C := ColList[J].Color;
-          MinD2 := 195075.0;
-          Mapped := PalRgb[0];
-          for K := 0 to PalMax - 1 do
-          begin
-            PC := PalRgb[K];
-            Dr := Rgb24R(C) - Rgb24R(PC);
-            Dg := Rgb24G(C) - Rgb24G(PC);
-            Db := Rgb24B(C) - Rgb24B(PC);
-            D2 := Dr * Dr + Dg * Dg + Db * Db;
-            if D2 < MinD2 then
-            begin
-              MinD2 := D2;
-              Mapped := PC;
-            end;
-          end;
-          Map.Add(C, Mapped);
-        end;
-
-        // zapis zmapowanych pikseli do Bitmap (czytaj z Qb, pisz do Bitmap)
-        SetLength(DLines, H);
-        for J := 0 to H - 1 do
-          DLines[J] := Bitmap.ScanLine[J];
-        for J := 0 to H - 1 do
-        begin
-          Lines[J] := Qb.ScanLine[J];
-          for I := 0 to W - 1 do
-          begin
-            C := GetPixel(Lines[J], I);
-            if Map.TryGetValue(C, Mapped) then
-              SetPixel(DLines[J], I, Mapped);
-          end;
-        end;
-
-        SetLength(Palette, PalMax);
-        for K := 0 to PalMax - 1 do
-          Palette[K] := Rgb24ToTColor(PalRgb[K]);
-      finally
-        Map.Free;
-      end;
     finally
       Freq.Free;
     end;
@@ -741,20 +583,20 @@ begin
   Result := (Sqr(Fu - Tile.Center) + Sqr(Fv - Tile.Center)) / Tile.Dmax2;
 end;
 
-procedure TshirtRender(Bitmap: TBitmap; const Inks: TShirtColors; CellMult: Double);
+procedure TshirtRender(Bitmap: TBitmap; const Palette, Inks: TShirtColors; CellMult: Double);
 var
   W, H, X, Y, N, I, BestI, T: Integer;
   Dr, Dg, Db, D, BestD, Lum, Coverage, Bias: Double;
   Qb, SrcBmp: TBitmap;
   QLines, DstLines: array of PRGBTripleArray;
-  InkRgb: array of Cardinal;
+  InkRgb, PalRgb: array of Cardinal;
   Tile: TTshirtTile;
   Painted: Boolean;
   Qpx: Cardinal;
 begin
   W := Bitmap.Width;
   H := Bitmap.Height;
-  N := Length(Inks);
+  N := Min(Length(Palette), Length(Inks));
   if (W = 0) or (H = 0) or (N < 2) then Exit;
   Bitmap.PixelFormat := pf24bit;
 
@@ -770,8 +612,12 @@ begin
   Bias := (CellMult - 1.0) * 0.6;                // korektor krycia, ±0.6
 
   SetLength(InkRgb, N);
+  SetLength(PalRgb, N);
   for I := 0 to N - 1 do
+  begin
     InkRgb[I] := TColorToRgb24(Inks[I]);
+    PalRgb[I] := TColorToRgb24(Palette[I]);
+  end;
 
   Qb := TBitmap.Create;
   SrcBmp := TBitmap.Create;
@@ -797,8 +643,9 @@ begin
       for X := 0 to W - 1 do
         SetPixel(DstLines[Y], X, PackRgb24(248, 246, 240));
 
-    // Raster sitodruku radialnego (TTshirtTile, kąt 45°): najbliższa farba
-    // (BestI) liczona dla piksela SKWANTOWANEGO (QLines). Pokrycie
+    // Raster sitodruku radialnego (TTshirtTile, kąt 45°): najbliższy kolor
+    // palety (BestI) liczony dla piksela SKWANTOWANEGO (QLines), kropka
+    // w farbie InkRgb[BestI]. Pokrycie
     // Coverage = 1 - Lum/255 z jasności piksela kwantowanego skorygowane
     // suwakiem (Bias, przesunięcie — nie mnożenie, więc cienie nie znikają);
     // piksel malowany, gdy Coverage >= progu kropki (TshirtThresh). Kolor
@@ -812,9 +659,9 @@ begin
         Qpx := GetPixel(QLines[Y], X);
         for I := 0 to N - 1 do
         begin
-          Dr := Rgb24R(Qpx) - Rgb24R(InkRgb[I]);
-          Dg := Rgb24G(Qpx) - Rgb24G(InkRgb[I]);
-          Db := Rgb24B(Qpx) - Rgb24B(InkRgb[I]);
+          Dr := Rgb24R(Qpx) - Rgb24R(PalRgb[I]);
+          Dg := Rgb24G(Qpx) - Rgb24G(PalRgb[I]);
+          Db := Rgb24B(Qpx) - Rgb24B(PalRgb[I]);
           D := Dr * Dr + Dg * Dg + Db * Db;
           if D < BestD then
           begin

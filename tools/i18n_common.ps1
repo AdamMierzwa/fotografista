@@ -7,7 +7,7 @@
 #   tools\i18n_common_test.ps1         (Test-TsvIntegrity)
 #
 # Po co to istnieje: katalogi TSV maja byc UTF-8 z DOKLADNIE jednym BOM,
-# wylacznie CRLF, 1084 rekordow w formacie "ID<TAB>tekst" i koncowy CRLF.
+# wylacznie CRLF, 1102 rekordow w formacie "ID<TAB>tekst" i koncowy CRLF.
 # Wczesniejsze bramki sprawdzaly tylko to, czy tekst sie daje przegwiazc -
 # uszkodzone kodowanie (np. podwojny BOM) przechodzilo po cichu.
 # Kontrola "dokladnie jeden ciag EF BB BF w calym pliku" zamyka te klase bledu.
@@ -15,7 +15,7 @@
 # Konwencja formatowania plikow .tsv: UTF-8 BOM + CRLF (patrz AGENTS.md regula 10).
 # Ten modul jest UTF-8 z BOM, koniec linii LF (jak pozostale .ps1 w tools\).
 
-$script:I18nExpectedRecords = 1084
+$script:I18nExpectedRecords = 1102
 
 # Zwraca liste problemow. Pusta lista = plik w pelni poprawny.
 # Funkcja NIGDY nie konczy skryptu - decyzje podejmuje wolajacy.
@@ -23,7 +23,7 @@ function Test-TsvIntegrity {
   [CmdletBinding()]
   param(
     [Parameter(Mandatory=$true)][string]$Path,
-    [int]$Expected = 1084
+    [int]$Expected = 1102
   )
 
   $problems = New-Object System.Collections.Generic.List[string]
@@ -104,7 +104,7 @@ function Assert-TsvIntegrity {
   [CmdletBinding()]
   param(
     [Parameter(Mandatory=$true)][string]$Path,
-    [int]$Expected = 1084
+    [int]$Expected = 1102
   )
 
   $p = Test-TsvIntegrity -Path $Path -Expected $Expected
@@ -120,7 +120,7 @@ function Read-TsvChecked {
   [CmdletBinding()]
   param(
     [Parameter(Mandatory=$true)][string]$Path,
-    [int]$Expected = 1084
+    [int]$Expected = 1102
   )
 
   Assert-TsvIntegrity -Path $Path -Expected $Expected

@@ -588,10 +588,10 @@
 644	Tritón
 645	Kvadrón...
 646	Kvadrón
-647	Barva 1 (stíny):
-648	Barva 2 (střední tóny):
-649	Barva 3 (světla):
-650	Barva 4 (extrémní světla):
+647	Barva 1 (stíny)
+648	Barva 2 (střední tóny)
+649	Barva 3 (světla)
+650	Barva 4 (extrémní světla)
 651	Chromatická aberace...
 652	Chromatická aberace
 653	Posun:
@@ -673,7 +673,7 @@
 734	Test výkonu
 735	Příprava obrazu...
 736	Obrázek: %s (%d×%d)
-737	%s: %,2f ms (průměr %d)
+737	%s: %.2n ms (průměr %d)
 738	Čas: %d min %d s
 739	(přerušeno)
 740	Nejtěžší: %s (%.2f ms).
@@ -872,7 +872,7 @@
 947	Rozlišení Y
 948	EXIF (%d vlastností)
 949	Nelze otevřít soubor pro čtení metadat.
-950	Barva 2 (světla):
+950	Barva 2 (světla)
 951	Paleta WB 1.x
 952	Paleta WB 2.x/3.x
 953	Paleta OCS 32
@@ -1000,7 +1000,7 @@
 1069	Fialová (Západ)
 1070	Tmavě modrá (offset)
 1071	Červená (razítka)
-1072	Samizdat v PLR — bílkovinný cyklostyl, sazovitý inkoust, rozmazaná matrice
+1072	Samizdat v PRL — bílkovinný cyklostyl, sazovitý inkoust, rozmazaná matrice
 1073	Západní lihový cyklostyl — krystalická violeť, zápach alkoholu
 1074	Matrice offsetového cyklostylu — kancelářská kopie
 1075	Razítka, nadpisy a úřední formuláře
@@ -1082,3 +1082,21 @@
 1153	Velikost tečky (0,1–10,0 % kratší strany):
 1154	Tónová křivka (10–500, 100 = lineární):
 1155	Tečkovaný raster - rozptýlené tečky v Poissonově rozdělení
+1156	Komiks...
+1157	Komiks
+1158	Komiks - posterizované barvy s výraznými obrysy
+1159	Styl
+1160	Kreslený film
+1161	Starý tisk
+1162	Noviny
+1163	PRL – jemný
+1164	PRL – rastr
+1165	Pop-art – černá
+1166	Pop-art – dvě barvy
+1167	Pop-art – barevný
+1168	Hnědá (vybledlá)
+1169	Rozložení barev
+1170	Vyrovnání
+1171	Bez vyrovnání
+1172	Vyrovnat kanály RGB
+1173	Vyrovnat jas

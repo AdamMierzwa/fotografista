@@ -284,6 +284,10 @@ begin
     rbRestore.Left := rbErase.Left + MaxR + CtrlGap * 2;
     rbRestore.Top := RowTop;
     rbRestore.Width := MaxR;
+    // wysokosc z czcionki jak w Timelapse / Wydajnosci (TH + 4) - 17 px z .dfm
+    // obcinalo przy 12 pt dol liter (g, y)
+    rbErase.Height := Self.Canvas.TextHeight('Wg') + 4;
+    rbRestore.Height := rbErase.Height;
     RowTop := StackBelow(rbErase, SectionGap);
   end;
 

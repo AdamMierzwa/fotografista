@@ -23,8 +23,16 @@
     Height = 300
     OnPaint = pboxPreviewPaint
   end
-  object btnPickColor: TButton
+  object swColor: TShape
     Left = 15
+    Top = 327
+    Width = 24
+    Height = 24
+    Brush.Color = clRed
+    Pen.Style = psClear
+  end
+  object btnPickColor: TButton
+    Left = 43
     Top = 327
     Width = 130
     Height = 25

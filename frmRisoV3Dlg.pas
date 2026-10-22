@@ -48,6 +48,8 @@ type
     procedure UpdateVisibility;
     procedure ApplyPreview;
     procedure ApplyFull;
+  public
+    procedure RefitButtons; override;
   end;
 
 function ShowRisoV3Dlg(Bitmap: TBitmap; out ElapsedSec: Double): Boolean;
@@ -128,6 +130,16 @@ begin
 
   UpdateSwatches;
   UpdateVisibility;
+end;
+
+// Tylko uklad okna (efekt bez zmian): pole liczby warstw zaraz za etykieta.
+// W .dfm pole stalo na stalym Left = 100 - przy 12 pt i dluzszych
+// tlumaczeniach (DE „Anzahl der Ebenen:”) etykieta wchodzila na pole.
+// RefitButtons: po TranslateForm i po zmianie czcionki.
+procedure TRisoV3Dlg.RefitButtons;
+begin
+  inherited;
+  cmbLayers.Left := lblLayers.Left + lblLayers.Width + CtrlGap * 2;
 end;
 
 procedure TRisoV3Dlg.FormDestroy(Sender: TObject);

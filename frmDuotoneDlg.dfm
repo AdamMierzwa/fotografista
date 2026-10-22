@@ -55,7 +55,7 @@ object DuotoneDlg: TDuotoneDlg
     Top = 330
     Width = 130
     Height = 25
-    Caption = 'Color 1 (shadows):'
+    Caption = 'Color 1 (shadows)'
     TabOrder = 0
     OnClick = btnColor1Click
     Constraints.MinWidth = 130
@@ -65,7 +65,7 @@ object DuotoneDlg: TDuotoneDlg
     Top = 330
     Width = 130
     Height = 25
-    Caption = 'Color 2 (midtones):'
+    Caption = 'Color 2 (midtones)'
     TabOrder = 1
     OnClick = btnColor2Click
     Constraints.MinWidth = 130
@@ -75,7 +75,7 @@ object DuotoneDlg: TDuotoneDlg
     Top = 362
     Width = 130
     Height = 25
-    Caption = 'Color 3 (highlights):'
+    Caption = 'Color 3 (highlights)'
     TabOrder = 2
     Visible = False
     OnClick = btnColor3Click
@@ -86,7 +86,7 @@ object DuotoneDlg: TDuotoneDlg
     Top = 362
     Width = 130
     Height = 25
-    Caption = 'Color 4 (extreme highlights):'
+    Caption = 'Color 4 (extreme highlights)'
     TabOrder = 3
     Visible = False
     OnClick = btnColor4Click

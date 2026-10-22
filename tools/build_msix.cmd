@@ -10,7 +10,7 @@ rem   4) weryfikuje podpis przez makeappx unpack (tools\tmp)
 rem   UWAGA: uruchamiac TYLKO po przebudowie Release w IDE.
 rem ============================================================
 
-set VER=1.2.0.0
+set VER=1.3.0.0
 
 for %%i in ("%~dp0..") do set "ROOT=%%~fi"
 set RELEASE=%ROOT%\Win64\Release

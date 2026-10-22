@@ -1,5 +1,402 @@
 ﻿# Changelog — Fotografista (wersja Delphi)
 
+## [22-10.2026] — wersja 1.3.0
+
+### Added
+
+**Automatyczny balans bieli** (`frmWBDlg.pas`, `frmWBDlg.dfm`) — w oknie
+balansu bieli dodany przycisk „Automatic". Wyznacza najjaśniejsze 20% pikseli
+(próg z histogramu luminancji), liczy dla nich średnią ważoną kanałów R/G/B —
+waga maleje z nasyceniem koloru, `(255 − (max−min))² / 255`, więc o wyniku
+decydują piksele bliskie szarości, a jaskrawe barwy niemal się nie liczą — i
+ustawia suwaki tą samą metodą co kliknięcie próbki bieli (cel = najwyższy
+kanał, maks. 253, tłumienie 0,8), po czym odświeża podgląd.
+
+**Komiks** (`frmComicDlg.pas`, `frmComicDlg.dfm`, `uComicTools.pas`,
+`uComicCzarnoBialy.pas`, `uComicGazeta.pas`, `uComicKomiks1.pas`,
+`uComicKomiks2.pas`, `fMain.pas`, `fMain.dfm`, `uMacros.pas`, `i18n/*.tsv`,
+`uI18n.pas`, `tools/i18n_common.ps1`) — nowy efekt w menu Artystyczne, po
+Węglu. Każdy styl to osobny efekt we własnym unicie; łączy je tylko okno, a
+lista stylów, aktywne kontrolki i nazwy pochodzą z jednej tabeli
+(`cComicStyles`). Cztery style:
+- „Pop-art – czerń” — raster Ben-Day: płaskie plamy wg jasności, ton plamy
+  z udziału powierzchni (papier 15%, rzadkie kropki 35%, gęste 30%, czerń
+  20%), kropki równej wielkości na siatce 45° (okres `Sqrt(W·H)/120`).
+  Granice 6 poziomów jasności plam liczone z rozkładu jasności obrazu
+  (`ComicLevelKeys` w `uComicTools.pas`, wspólne dla obu stylów Pop-art), nie
+  co 255/6 — przy stałych granicach ciemny lub jasny obraz wpadał prawie cały
+  w jeden poziom i część tonów była pusta (czarne tło portretu: bez czerni i
+  bez gęstych kropek / farby akcentu).
+- „Pop-art – dwie farby” — jak wyżej, ale ton gęstych kropek drukowany
+  farbą akcentu (pokrycie 60%, siatka 15°); farba do wyboru w ramce „Kolor
+  tuszu”: czerwona, zielona, niebieska, żółta.
+- „PRL – łagodny” — płaskie plamy (bilateral, poziom jasności × sektor
+  odcienia) i kreska XDoG z filtrem kształtu.
+- „PRL – raster” — jak wyżej, z kontrastem, czarnymi cieniami i rastrem CMYK
+  z Druk – Raster CMYK (siatka `Sqrt(W·H)/175`, 2–32 px); krótkie kreski
+  tylko na granicy dużych, kontrastowych plam (bez „przecinków” z faktury
+  liści), łączenie przerw i wygładzenie konturu.
+
+Suwaki Kolory (2–16, wyszarzony w stylach Pop-art), Czułość krawędzi i
+Grubość (1–100); parametry skalowane do rozmiaru obrazu, więc podgląd
+zgadza się z wynikiem. Okno ma podgląd 100% obok nawigatora (fragment 1:1
+wyniku na pełnym obrazie, liczony 0,4 s po zmianie); nawigator pokazuje
+pomniejszony wynik pełnego obrazu. Nazwa stylu trafia na pasek stanu i do
+historii Cofnij. Makro `COMIC` (styl | kolory | czułość | grubość | farba;
+krótsze makra uzupełniane: grubość = czułość, farba czerwona). Klucze i18n
+1159–1167 we wszystkich 9 katalogach (1160–1162 z wersji roboczej, obecnie
+nieużywane); limit walidatora integralności 1087 → 1096 rekordów.
+
+**Kontrola układu okien — tylko build Debug** (`uLayoutCheck.pas`, `fMain.pas`,
+`Fotografista.dpr`, `Fotografista.dproj`) — przy każdym otwarciu okna (po
+tłumaczeniu i przeliczeniu układu, w `TfrmMain.FormActiveChanged`) liczbowe
+sprawdzenie widocznych kontrolek: wyjście poza rodzica, napis szerszy lub
+wyższy niż kontrolka (przycisk, pole wyboru, przełącznik, tytuł ramki,
+etykieta, także zawijana), nachodzenie sąsiednich kontrolek, przycisk o
+wysokości innej niż domyślna, okno większe niż ekran, czcionka okna inna niż
+czcionka programu. Wynik dopisywany do
+`kontrola_ukladu.txt` obok EXE, każde okno raz na kombinację język +
+czcionka + rozmiar; wnętrze kontrolek złożonych (strzałki `TSpinEdit`)
+pomijane — poza przełącznikami w ramkach `TRadioGroup`, które są sprawdzane
+jak zwykłe przełączniki. Odczyty wartości przy suwakach (etykieta 18 px bez AutoSize,
+reguła AGENTS.md) zapisywane jako `INFO`, nie liczone jako problem. W buildzie
+Release wywołanie nie jest kompilowane.
+
+### Changed
+
+**Makra — Emergo nagrywany** (`frmEmergoDlg.pas`, `uMacros.pas`, `fMain.pas`)
+— Emergo był przy nagrywaniu makra pomijany bez komunikatu (okno nie
+ustawiało kroku, a nazwa nie była na liście `MacroCodeForOpName`). Teraz krok
+`EMERGO` z parametrem Intensywność (0–100), odtwarzany przez `DoEmergo`; w
+Zarządzaniu makrami nazwa „Emergo” i etykieta suwaka z okna (istniejące
+klucze i18n, bez nowych).
+
+**Makra — korekcja kolorów nagrywana** (`frmWBDlg.pas`, `frmHSBDlg.pas`,
+`frmHDR1Dlg.pas`, `frmWzmocnienieDlg.pas`, `uMacros.pas`, `fMain.pas`) — tak
+samo jak Emergo były pomijane: Balans bieli (krok `WHITEBAL`: R|G|B), Balans
+HSB (`HSB`: odcień|nasycenie|jasność), Soczystość (`VIVID`: siła|nasycenie|
+kontrast|krzywa cieni), Wzmocnienie zdjęcia (`ENHANCE`: siła|Smart Curves).
+Funkcje efektów `DoWhiteBalance`, `DoHSB`, `DoWzmocnienie` udostępnione w
+interfejsie okien (do odtwarzania). W panelu szczegółów etykiety suwaków z
+okien (istniejące klucze i18n, bez nowych).
+
+**Makra — kolejne 16 efektów nagrywanych** (`frmObrysDlg.pas`,
+`frmGlitchDlg.pas`, `frmCmykDlg.pas`, `frmStencilDlg.pas`, `frmC64Dlg.pas`,
+`frmZXSpectrumDlg.pas`, `frmGameBoyDlg.pas`, `frmNESDlg.pas`,
+`frmDuotoneDlg.pas`, `frmDistortDlg.pas`, `frmWaterRippleDlg.pas`,
+`uMacros.pas`, `fMain.pas`) — też były pomijane bez komunikatu:
+- Kontur (`OUTLINE`), Glitch (`GLITCH`, 6 suwaków), Błąd CMYK (`CMYKMISREG`:
+  C|M|Y), Powielacz (`MIMEOGRAPH`: ziarnistość|krawędzie|toner|farba|zużycie);
+- Commodore 64 (`C64`: paleta|roztrząsanie), ZX Spectrum (`ZXSPECTRUM`),
+  Game Boy (`GAMEBOY`: paleta|roztrząsanie), NES (`NES`); roztrząsanie 1/0;
+- Dystorsja, Dystorsja łukowa, Wir, Zniekształcenie biegunowe (`BARREL`,
+  `ARC`, `SWIRL`, `POLAR`: numer wariantu) — wspólne okno dostaje kod kroku
+  od wywołującego (`ShowDistortDlg`, parametr `MacroCode`); Fale wodne
+  (`WATERRIPPLE`: wariant|siła|gęstość);
+- Dwukolor, Trójkolor, Czterokolor (`DUOTONE`, `TRITONE`, `QUADTONE`: kolory
+  od cieni do świateł).
+`DoObrys`, `DoCmykMisreg`, `DoStencil` udostępnione w interfejsie okien,
+Glitch przez `DoGlitchValues`. W panelu szczegółów nazwy wariantów, palet i
+roztrząsania z list okien, kolory jako R/G/B (istniejące klucze i18n, bez
+nowych). Zostają poza makrami: Mieszanie efektów, Risografie v1–v3,
+Tworzenie nadruku, Raster kropkowany (wymagają przemyślenia) oraz
+Kadrowanie, Korekta perspektywy, Usuń tło, Zmiana rozmiaru, Dopasuj z
+przycięciem, Kafelkowanie (zależne od konkretnego zdjęcia).
+
+**Makra — Cofnij po jednym kroku** (`fMain.pas`) — odtworzenie makra
+zapisywało jeden stan Cofnij przed całym makrem, więc Cofnij cofało całe makro
+naraz. Teraz stan przed każdym krokiem (`RunMacro`), Cofnij cofa po jednym
+kroku. Limit stosu (20 stanów, `MAX_UNDO`) bez zmian — makro dłuższe niż 20
+kroków wypycha najstarsze stany. Po odtworzeniu makra pole ostatniej operacji
+na pasku stanu pokazuje nazwę makra (wcześniej nazwę ostatniego kroku).
+
+**Cofnij / Ponów — nazwy operacji jak w wersji Hollywood** (`uUndo.pas`,
+`fMain.pas`, `fMain.dfm`) — przywrócony mechanizm z `image_undo.hws`
+(`g_undo_names`, `p_UpdateUndoMenu`), zgubiony przy przepisywaniu:
+- stos Cofnij/Ponów pamięta nazwę każdej operacji; nowe pole paska stanu
+  (po powiększeniu, jak `sb_undo`) pokazuje „Cofnij: X    Ponów: Y”, szerokość
+  z tekstu; dotąd pasek po Cofnij dalej pokazywał nazwę cofniętej operacji.
+  Nazwę nadaje `FinishEffect` (efekty, kroki makr); narzędzia Retuszu
+  (gumka, pędzle wg trybu, wiaderko, maska ochronna), Wklej, Przywróć
+  oryginał i polecenia maski ochronnej podają ją przy zapisie stanu.
+- Anulowanie okna efektu nie zostawia już pustego kroku Cofnij: stan zapisany
+  przed oknem jest wstępny i zostaje na stosie dopiero w `FinishEffect`
+  (`UndoCommit`); po Anuluj znika przy następnym zapisie, Cofnij lub Ponów, a
+  stos Ponów zostaje nietknięty. Limit 20 stanów liczony przy zatwierdzeniu.
+- Cofnij/Ponów w menu Edycja wyłączane, gdy nie ma czego cofnąć/ponowić —
+  wcześniej tylko „Wyczyść historię” je wyłączało i potem już nie wracały.
+- Pola paska za nowym polem przesunięte o jedno (zaznaczenie 5, podpowiedź 6,
+  ostatnia operacja 7). Klucze i18n istniejące (Undo, Redo, nazwy narzędzi
+  i poleceń), bez nowych.
+
+**Tworzenie nadruku — wymiana farb** (`frmTshirtDlg.pas`, `uTshirt.pas`) —
+naprawione: farby jednocześnie dzieliły obraz na plamy i je kolorowały, więc
+wymiana farby przesuwała granice plam zamiast zmienić ich kolor. Teraz podział
+robi paleta oryginału (`TshirtExtractPalette`), a farba J tylko koloruje plamę
+J (`TshirtReplaceColors`) — w obu trybach: bez sitodruku i z sitodrukiem
+(`TshirtRender` dostał parametr `Palette`). Farby startowe bez sitodruku =
+kolory palety; z sitodrukiem = najbliższa z dotychczasowych farb domyślnych,
+każda najwyżej raz.
+
+**Powielacz — nazwy** (`frmStencilDlg.pas`, `i18n/*.tsv`, `uI18n.pas`,
+`tools/i18n_common.ps1`) — skrót „PRL” w opisie ujednolicony we wszystkich
+językach (CS miał „PLR”, FR/IT/ES/PT „RPP”). Farby w ramce „Kolor tuszu” po
+polsku w formie męskiej (tusz): Czarny (PRL), Fioletowy (Zachód), Granatowy
+(offset), Czerwony (stemple), Zielony; szósta farba zamiast „Sepia” (nazwa
+efektu, nie tuszu) ma nowy klucz 1168 „Brown (faded)” — PL „Brązowy
+(spełznięty)”, tusz utleniony z biegiem lat. Limit walidatora 1096 → 1097.
+Przy okazji „Kolor tuszu” w Komiksie: Czerwony, Zielony, Niebieski, Żółty.
+
+**Czcionka programu w oknach bez .dfm i w komunikatach** (`uTitleBar.pas`,
+`fMain.pas`, `frmDuotoneDlg.pas`, `frmTimelapseDlg.pas`, `Fotografista.dpr`)
+— naprawione: okna tworzone w kodzie i komunikaty miały czcionkę systemową,
+bez reakcji na ustawienie 8–12 pt. Przyczyny: forma bez `.dfm` nie dostaje
+czcionki w `Loaded`, a `ParentFont := True` bez rodzica nic nie robi
+(`Vcl.Controls.pas:6979-6980`); `MessageDlg`/`InputQuery` biorą
+`Screen.MessageFont`, którego program nie ustawiał. Teraz `TFotoForm`
+przypisuje czcionkę programu formom bez `.dfm` (test wydajności, postęp
+Timelapse), zwykłe formy z kodu (postęp przetwarzania wsadowego, Zarządzanie
+makrami, preset Duotone, odtwarzacz Timelapse) robią `Font.Assign`, a
+`Screen.MessageFont` ma rozmiar czcionki programu przy starcie i po zmianie
+w oknie Interfejs. Przyciski komunikatów (`MessageDlg`, pytanie o zapis,
+`InputQuery`) VCL liczy z czcionki komunikatów (14 jednostek dialogu), więc
+przy 12 pt były wyższe niż w reszcie programu — teraz dostają domyślną
+wysokość przycisku (`NormalizeDialogButtons` w `TfrmMain.FormActiveChanged`).
+Okna systemu Windows (kolor, folder, otwórz/zapisz) bez
+zmian. Audyt `tools/audyt_sztywne_okna.ps1` łapie też `inherited CreateNew`.
+
+**Okna — układ z zawartości** (audyt `tools/audyt_sztywne_okna.ps1`) — okna
+ze sztywnymi wymiarami przerabiane na układ liczony z czcionki i tekstów:
+- Ustaw wymiary zaznaczenia (`frmSelSizeDlg.pas`) — pole zawsze pod etykietą
+  (przy 12 pt etykieta wchodziła na pole), kolumny z dłuższej etykiety,
+  OK/Anuluj do prawej.
+- Kafelkowanie (`frmTileDlg.pas`) — układ wierszowy bez zmian; pole zaraz za
+  najdłuższą etykietą, wysokość okna z wierszy (bez pustego pasa nad
+  przyciskami).
+- Wydajność (`frmPerformanceDlg.pas`) — ramka rozdzielczości z liczby pozycji
+  i najdłuższego tekstu, pole „Płynne skalowanie podglądu” z wysokością z
+  czcionki (było 17 px), OK/Anuluj do prawej.
+- Przetwarzanie wsadowe (`frmBatchDlg.pas`) — układ bez zmian, liczony:
+  kolumna etykiet z najdłuższej etykiety, pola z przyciskami „Wybierz…”,
+  pola wyboru z tekstu, Start/Zamknij do prawej z marginesem (Zamknij
+  dotykał prawej krawędzi okna).
+- Interfejs (`frmInterfaceDlg.pas`) — pionowy stos sekcji bez zmian wyglądu,
+  pozycje liczone z wysokości kontrolek (było co 64 px), szerokość kolumny z
+  najdłuższego tekstu, opis koloru tła zawijany; przeliczane także przy
+  zmianie czcionki podglądem z tego okna.
+- Risografia V1/V2 (`frmRisoDlg.pas`, tylko okno — efekt bez zmian) — lista
+  pokazuje wszystkie zestawy farb bez przewijania, szerokość z najdłuższej
+  nazwy (przeliczana przy zmianie czcionki); podgląd z proporcji zdjęcia obok
+  listy, nie ze sztywnej szerokości okna; OK/Anuluj do prawej.
+- O programie (`AboutBoxUnit.pas`) — jeden margines z czcionki z obu stron
+  (długi wiersz dotykał prawej krawędzi), kolumna tekstu zaraz za logo,
+  linia oddzielająca na całą szerokość treści (było 496 px), copyright od
+  lewego marginesu (było 26 px); przeliczane także po zmianie czcionki; pole
+  logo w rozmiarze obrazka (było 150×220, obrazek 114×41 wyśrodkowany).
+- Okno postępu przetwarzania wsadowego (`fMain.pas`, tworzone w kodzie) —
+  czcionka programu (wcześniej domyślna systemowa, bez reakcji na 8–12 pt),
+  szerokość z najdłuższej nazwy pliku w serii (limit połowy ekranu, dalej
+  skracanie wielokropkiem), wysokość okna i szerokość przycisku Anuluj z
+  czcionki.
+- Zarządzanie makrami (`fMain.pas`, tworzone w kodzie) — czcionka programu,
+  listy makr i kroków po 8 wierszy (lista kroków miała ok. 4), kolumna
+  przycisków o szerokości najdłuższego napisu (było 85 px), Zamknij równo z
+  dołem listy kroków; rozmiar okna z zawartości (było 480×340 z ramką).
+- Wczytaj preset Duotone (`frmDuotoneDlg.pas`, tworzone w kodzie) — czcionka
+  programu, lista ok. 10 wierszy z szerokością z najdłuższej nazwy, przyciski
+  o wspólnej szerokości z napisów (było 90 px); rozmiar okna z zawartości
+  (było 320×220).
+- Test wydajności (`frmBenchmarkDlg.pas`, trzy okna tworzone w kodzie) —
+  wprowadzenie: opis zawijany na ok. 50 znaków, wysokość z tekstu; postęp:
+  lista na wszystkie 12 operacji bez przewijania, szerokość z najdłuższej
+  nazwy; wyniki: raport Courier New w rozmiarze czcionki programu (było stałe
+  9 pt), pole w rozmiarze treści do 80% ekranu; przyciski z napisów, do
+  prawej (było 430×165 / 240×230 / 540×450). Liczby w raporcie z ustawień
+  regionalnych Windows (po polsku `1 253,54`) — wcześniej raport mieszał
+  przecinek (wyniki uśredniane) i kropkę (pozostałe); szablon i18n 737
+  `%.2f` → `%.2n` (separator tysięcy) we wszystkich językach. Naprawione:
+  czeski szablon miał niepoprawny format `%,2f`, przez który test wydajności
+  po czesku przerywał się wyjątkiem. Naprawione: w oknie wyników do pierwszego
+  kliknięcia widniał jasny pasek — ślad poziomego paska przewijania stylu,
+  utworzonego przy domyślnym rozmiarze pola (185×89), zanim pole zostało
+  powiększone; raport przekazywany do okna przy tworzeniu, a rozmiar pola
+  liczony z tekstu raportu przed utworzeniem jego okna.
+- Przetwarzanie wsadowe — po wybraniu folderu pole ścieżki pokazuje jej
+  koniec (nazwę folderu).
+- Timelapse (`frmTimelapseDlg.pas`) — naprawione: przełączniki sortowania i
+  trybu (Alfabetycznie / Według daty utworzenia, Zapisz do pliku / Pokaż jako
+  prezentację) miały stałe 17 px z `.dfm`, więc przy 12 pt obcinały dół liter
+  (g, y); wysokość z czcionki jak pole wyboru w oknie Wydajność. To samo w
+  Retuszu (`frmToolsDlg.pas`, para przełączników wszystkich rodzin narzędzi),
+  Zaznaczeniu (`frmSelDlg.pas`, Kontur / Maska) i Stereogramie
+  (`frmStereogramDlg.pas`, Losowy zasiew).
+- Komiks (`frmComicDlg.pas`) — naprawione: przy zdjęciu pionowym (podglądy
+  węższe niż 400 px) ramka „Kolor tuszu” zasłaniała prawą krawędź ramki
+  „Styl” i wystawała poza okno, bo obie miały stałe 400 px z `.dfm`. Teraz
+  każda ma szerokość swojej kolumny: „Styl” do kolumny podglądu 100%,
+  „Kolor tuszu” do prawego marginesu okna. Gdy napisy przełączników nie
+  mieszczą się w kolumnie (DE „Pop-Art – zwei Farben” przy zdjęciu
+  pionowym), okno jest szersze — nie wyższe, bo wysokość ogranicza ekran.
+- Risografia v3 (`frmRisoV3Dlg.pas`, tylko okno — efekt bez zmian) — pole
+  „Liczba warstw” zaraz za etykietą (było na stałym miejscu z `.dfm`; przy
+  12 pt etykieta wchodziła na pole, po niemiecku o 47 px).
+- Dwukolor / Trójkolor / Czterokolor (`frmDuotoneDlg.pas`, `.dfm`) —
+  naprawione: przyciski kolorów były obcinane do stałej szerokości okna, a
+  plakietki stały na miejscach z `.dfm` i zasłaniał je przycisk lewej
+  kolumny (po angielsku i niemiecku). Teraz dwie kolumny par plakietka +
+  przycisk z szerokością z napisów, okno szersze w razie potrzeby, napisy
+  przycisków do lewej (przy plakietce), odstępy między grupami z czcionki,
+  podgląd na środku i OK/Anuluj do prawej liczone po tłumaczeniu okna
+  (`RefitButtons`). Napisy przycisków kolorów bez końcowego dwukropka we
+  wszystkich językach (jak po polsku): ID 647–650 i 950 w 8 plikach
+  `i18n/*.tsv`, nowe klucze EN w kodzie i `.dfm`, `uI18n.pas` przegenerowany.
+- Kolorowanie (`frmKolorowanieDlg.pas`, `.dfm`) — plakietka wybranego koloru
+  przed przyciskiem „Wybierz kolor…”, jak w Dwu-/Trój-/Czterokolorze
+  (wcześniej kolor widać było tylko w podglądzie).
+- Płaskorzeźba (`frmReliefDlg.pas`) — naprawione: nazwy materiałów były
+  wpisane w kod po polsku bez `T()`, więc w każdym języku były po polsku,
+  choć tłumaczenia istniały (ID 601–605); teraz z kluczy EN przez `T()`.
+- Okno główne (`fMain.pas`) — odstęp z czcionki między paskiem menu a polem
+  obrazu (`ApplyCanvasGap`, przy starcie i po zmianie czcionki); wcześniej
+  obraz zaczynał się tuż pod paskiem i litery menu stykały się ze zdjęciem.
+- Zarządzanie makrami, postęp przetwarzania wsadowego, Wczytaj preset Duotone
+  (`fMain.pas`, `frmDuotoneDlg.pas`) — przyciski o standardowej wysokości jak
+  w pozostałych oknach (wcześniej liczonej z czcionki, wyższe od reszty).
+
+**Okno Język** (`frmLanguageDlg.pas`, `frmLanguageDlg.dfm`) — układ liczony z
+zawartości zamiast sztywnych 280×320 px. `TRadioGroup` (dzieli całą wysokość
+między pozycje i zawsze rezerwuje pas na tytuł u góry) zastąpiona ramką
+`TGroupBox` z przełącznikami rozmieszczanymi w kodzie: równy margines u góry
+i u dołu, szerokość z najdłuższej widocznej nazwy języka, wszystko z
+czcionki; OK/Anuluj wyrównane do prawej.
+
+**Układ okien po tłumaczeniu** (`fMain.pas`, `uI18n.pas`) — naprawione:
+`TfrmMain.FormActiveChanged` zastępuje obsługę z `uI18n` i tłumaczył okno bez
+`RefitButtons`, więc układ każdego okna zostawał policzony w `DoShow` dla
+tekstów angielskich, a dłuższe tłumaczenia bywały obcinane. Teraz po
+`TranslateForm` wołane jest `RefitButtons`. Nowa funkcja `TAllLanguages`
+(`uI18n.pas`, poza blokiem generowanym) zwraca tłumaczenia klucza we
+wszystkich 9 językach — do rezerwowania miejsca na najdłuższe.
+
+**Histogram — okno** (`frmHistogramDlg.pas`, `frmHistogramDlg.dfm`,
+`fMain.pas`, `i18n/*.tsv`, `uI18n.pas`, `tools/i18n_common.ps1`) — naprawione:
+wyrównanie działało od razu na obrazie (wpis w Cofnij i krok makra przy
+każdym kliknięciu, kolejne kliknięcia się nakładały), a okno miało tylko
+„Zamknij”. Teraz wybór w sekcji „Wyrównanie” (Bez wyrównania / Wyrównaj
+kanały RGB / Wyrównaj jasność) pokazuje podgląd na obrazie, zawsze liczony
+od oryginału; OK stosuje raz (jeden wpis w Cofnij i krok `EQUALIZE`),
+Anuluj przywraca obraz. Opisany układ: sekcja „Informacja” — „Rozkład barw”
+[Wszystkie] [R] [G] [B] [Jasność] zmienia tylko wykres; jasność ostatnia w
+obu rzędach; pozycje liczone z szerokości tekstów. Wykres „Wszystkie”
+nakłada kanały addytywnie (R+G żółty, część wspólna R+G+B jasnoszara, sama
+jasność ciemnoszara) — wcześniej czerwony zasłaniał pozostałe; wykres
+wyśrodkowany w oknie. Klucze i18n 1169–1173; limit
+walidatora 1097 → 1102.
+
+**Porządki — nieużywane funkcje** (`frmHistogramDlg.pas`, `uDistort.pas`,
+`uImageIO.pas`, `uTshirt.pas`, `tools/audyt_nieuzywane.ps1`) — nowy audyt
+funkcji z sekcji interface, których nic nie wywołuje (wynik w
+`tools/tmp/audyt_nieuzywane.txt`). Usunięty martwy kod: `ShowHistogramDlg`
+(okno otwiera `mnuHistogramClick`), `ApplyWaterRipple` (zastąpiona przez
+`ApplyWaterRippleEx`), `GetFileFormatName`, `TshirtPosterize` (zastąpiona
+przez `TshirtExtractPalette` + `TshirtMapToInks` + `TshirtReplaceColors`).
+`UndoRestoreOriginal` zostaje — pomysł do przemyślenia (przywracanie
+oryginału bez pliku na dysku). Bez zmian w działaniu programu.
+
+**Przeciąganie plików na okno** (`fMain.pas`) — naprawione: upuszczony plik
+nie był otwierany. Rejestracja `DragAcceptFiles` była wykonywana raz, w
+`FormCreate`, a dalsza część `FormCreate` odtwarza okno (`Position :=
+poDesigned` przy zapamiętanej pozycji woła `RecreateWnd`, `Vcl.Forms.pas:7371`;
+zmiana stylu VCL wysyła `CM_RECREATEWND`, `Vcl.Forms.pas:6553`). Nowe okno nie
+miało rejestracji. Rejestracja przeniesiona do `TfrmMain.CreateWnd`, więc
+obejmuje każde odtworzenie okna.
+
+**Maski po Kafelkowaniu i Tłach Amigi** (`fMain.pas`) — naprawione: Kafelkowanie,
+Tło Amigi i Tło Amigi (rozciągnięte, MagicWB) zmieniały rozmiar obrazu bez
+ruszania maski alfa i ochronnej. Maski o starym rozmiarze były po cichu
+pomijane: znikała szachownica wymazanych miejsc, ochrona przestawała działać,
+gumka nie dawała efektu. Teraz te operacje (także kroki makra `AMIGABG`,
+`AMIGABGS`) odtwarzają obie maski jako puste i czyszczą zaznaczenie, a do
+Cofnij trafiają z maskami (`UndoPushMasked`). W makrze tylko dla obrazu w
+edytorze — przetwarzanie wsadowe podaje inną bitmapę.
+
+**Cofnij/Ponów — widoczność wymazanych miejsc** (`fMain.pas`) — po Cofnij/Ponów
+`FAlphaDirtyRect` jest przeliczany z treści maski alfa (nowa procedura
+`RecalcAlphaDirtyRect`, odpowiednik `RecalcProtCoverCount`). Wcześniej
+przywrócona maska bywała niewidoczna, gdy wcześniejsza operacja wyzerowała
+prostokąt przez `EnsureAlphaMask`.
+
+**Makra — zaznaczenie i maska ochronna** (`fMain.pas`) — odtwarzane makro
+działało na całym obrazie, ignorując zaznaczenie i maskę ochronną. Teraz każdy
+krok (`RunMacroStep`) jest ograniczany tak jak efekt ręczny (`NeedEffectBackup`
++ `RestoreOutsideSelection`). Wyjątek: kroki geometrii (`FLIPH`, `FLIPV`,
+`ROTL`, `ROTR`, `ROT180`, `STRAIGHTEN`, `AMIGABG`, `AMIGABGS`), które same
+przekształcają maski.
+
+**Makra — przetwarzanie wsadowe a maski** (`fMain.pas`) — kroki `FLIPH`,
+`FLIPV`, `ROTL`, `ROTR`, `ROT180` i `STRAIGHTEN` przekształcały maski obrazu
+otwartego w edytorze także wtedy, gdy przetwarzanie wsadowe podawało inną
+bitmapę. Maski są teraz ruszane tylko dla obrazu w edytorze.
+
+**Zarządzanie makrami — panel szczegółów kroku** (`fMain.pas`, `uMacros.pas`,
+`frmComicDlg.pas`) — po lewej stronie okna panel z parametrami kroku
+wybranego na liście kroków; lista kroków pokazuje same nazwy. Komiks: nazwa
+ze stylem („Komiks: Pop-art – dwie farby”), w panelu parametry z etykietami
+(czułość krawędzi, grubość, kolor tuszu — tylko te, których styl używa);
+20 efektów z jednym suwakiem: etykieta suwaka z okna efektu bez zakresu
+(np. Sepia „Intensywność: 50”, Gamma „Gamma: 100”); palety Amigi
+(OCS 32, EHB 64, AGA 256, Workbench 256, MagicWB) „Roztrząsanie: Tak/Nie”;
+Stereogram: tryb wyjścia, odstęp, głębia, losowy zasiew; 28 kroków z kilkoma
+parametrami (m.in. Bokeh, Poziomy, rastry, Kontrast, Cross-processing,
+Płaskorzeźba, Sitodruk, Tło Amigi, Prostowanie, Wyrównanie histogramu) —
+etykiety suwaków, nazwy pozycji list, Tak/Nie, kolory jako R/G/B; kroki bez
+parametrów (odbicia, obroty) — pusty panel; kroki spoza spisu: parametry
+ponumerowane w kolejności zapisu. Wszystkie etykiety z istniejących kluczy
+i18n (bez nowych tekstów). Nazwy materiałów Płaskorzeźby w jednej stałej
+(`frmReliefDlg.pas`, okno bez zmian). Krok bez kodu (stare makra) widoczny jako „?”. Odtwarzany krok Komiksu ma na pasku stanu i
+w historii Cofnij nazwę ze stylem, jak efekt uruchomiony ręcznie.
+
+**Makra — Stereogram z losowym zasiewem** (`frmStereogramDlg.pas`) —
+naprawione: przy zaznaczonym „Losowy zasiew” efekt losował wzór, ale krok
+makra zapisywał wartość z pola zasiewu, więc odtworzone makro dawało zawsze
+ten sam wzór. Teraz zapisywany jest zasiew -1 (losowy), jak w samym efekcie.
+Makra nagrane wcześniej zachowują stały wzór.
+
+**Makra — zarządzanie w trakcie nagrywania** (`fMain.pas`) — „Zarządzaj
+makrami” jest niedostępne podczas nagrywania. Odtworzenie innego makra
+nagrywało tylko część jego kroków.
+
+**Makra — Obraz olejny** (`frmOleoDlg.pas`, `fMain.pas`) — krok `OILPAINT`
+zapisuje wartość suwaka, a promień liczy z szerokości obrazu przy wykonaniu
+(jak `BLUR`/`SHARPEN`/`PIXELATE`). Wcześniej zapisywany był promień w pikselach
+dla obrazu z chwili nagrania. Stare makra z `OILPAINT` dadzą inną siłę efektu.
+
+**Makra — etykieta Wytłaczania** (`uMacros.pas`) — krok `EMBOSS` był opisany
+jako „Płaskorzeźba” (klucz `Bas-relief`, taki sam jak `RELIEF`). Teraz
+„Wytłaczanie” (klucz `Emboss`), zgodnie z nazwą efektu.
+
+**Makra — uszkodzony macros.json** (`uMacros.pas`) — błąd odczytu pliku makr
+(zły JSON, inny typ korzenia, brak pola) przerywał start programu. Teraz lista
+makr startuje pusta, a plik jest kopiowany do `macros.json.bad`, zanim pierwszy
+zapis go nadpisze.
+
+**Odbicie, obrót, prostowanie — zaznaczenie** (`fMain.pas`) — operacje te
+czyszczą zaznaczenie (jak Zmiana rozmiaru i Kadrowanie), także jako kroki
+makra. Wcześniej prostokąt zostawał w starych współrzędnych.
+
+**Timelapse — nieczytelne pierwsze zdjęcie** (`frmTimelapseDlg.pas`) — przy
+eksporcie w oryginalnej rozdzielczości wymiary brane są z pierwszego zdjęcia,
+które da się wczytać. Gdy nie wczyta się żadne, program pokazuje podsumowanie
+zamiast tworzyć wideo 0×0.
+
+**Ustaw wymiary zaznaczenia** (`frmSelSizeDlg.pas`) — naprawione: wpisane
+wartości były ignorowane po kliknięciu OK i po Enterze, a zaznaczenie
+zostawało w rozmiarze startowym. Okno zwraca teraz wartości odczytane
+z pól.
+
+**Końce linii** (`.gitattributes`) — dodana reguła `*.iss text eol=lf`
+(`tools/setup_win32.iss`).
+
 ## [09-10.2026] — wersja 1.2.0
 
 Różnica względem wersji 1.1.1 ze sklepu.

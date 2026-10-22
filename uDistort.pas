@@ -8,7 +8,6 @@ uses
 procedure ApplyBarrel(Bmp: TBitmap; Preset: Integer);
 procedure ApplyArc(Bmp: TBitmap; Preset: Integer);
 procedure ApplySwirl(Bmp: TBitmap; Preset: Integer);
-procedure ApplyWaterRipple(Bmp: TBitmap; Preset: Integer);
 procedure ApplyWaterRippleEx(Bmp: TBitmap; Preset: Integer; Strength, Density: Double);
 procedure ApplyPolar(Bmp: TBitmap; Preset: Integer);
 
@@ -217,11 +216,6 @@ begin
   finally
     Tmp.Free;
   end;
-end;
-
-procedure ApplyWaterRipple(Bmp: TBitmap; Preset: Integer);
-begin
-  ApplyWaterRippleEx(Bmp, Preset, 1.0, 1.0);
 end;
 
 procedure ApplyWaterRippleEx(Bmp: TBitmap; Preset: Integer; Strength, Density: Double);

@@ -36,8 +36,12 @@ type
   end;
 
 function ShowCmykDlg(Bitmap: TBitmap; out ElapsedSec: Double): Boolean;
+procedure DoCmykMisreg(Bitmap: TBitmap; CVal, MVal, YVal, FullW, FullH: Integer);
 
 implementation
+
+uses
+  uMacros;
 
 {$R *.dfm}
 
@@ -136,6 +140,7 @@ var
 begin
   ElapsedSec := 0;
   Result := False;
+  gMacroPending.Code := '';
   if (Bitmap = nil) or (Bitmap.Width = 0) then Exit;
   Dlg := TCmykDlg.Create(Application);
   try
@@ -172,6 +177,9 @@ begin
     begin
       SW := TStopwatch.StartNew;
       Dlg.ApplyFull;
+      gMacroPending.Code := 'CMYKMISREG';
+      gMacroPending.Params := IntToStr(Dlg.tbC.Position) + '|' +
+        IntToStr(Dlg.tbM.Position) + '|' + IntToStr(Dlg.tbY.Position);
       ElapsedSec := SW.Elapsed.TotalSeconds;
       Result := True;
     end;

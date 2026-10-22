@@ -72,8 +72,12 @@ type
   end;
 
 function ShowStencilDlg(Bitmap: TBitmap; out ElapsedSec: Double): Boolean;
+procedure DoStencil(Bitmap: TBitmap; Smooth, Edge, Thresh: Integer; Ink: TColor; Wear: Integer);
 
 implementation
+
+uses
+  uMacros;
 
 {$R *.dfm}
 
@@ -112,7 +116,7 @@ begin
     2: Result := T('Navy (offset)');
     3: Result := T('Red (stamps)');
     4: Result := T('Green');
-    5: Result := T('Sepia');
+    5: Result := T('Brown (faded)');   // tusz spelzniety (utleniony z biegiem lat)
   else
     Result := '';
   end;
@@ -448,6 +452,7 @@ var
 begin
   ElapsedSec := 0;
   Result := False;
+  gMacroPending.Code := '';
   if (Bitmap = nil) or (Bitmap.Width = 0) then Exit;
   Dlg := TStencilDlg.Create(Application);
   try
@@ -575,6 +580,10 @@ begin
     begin
       SW := TStopwatch.StartNew;
       Dlg.ApplyFull;
+      gMacroPending.Code := 'MIMEOGRAPH';
+      gMacroPending.Params := IntToStr(Dlg.tbSmooth.Position) + '|' +
+        IntToStr(Dlg.tbEdge.Position) + '|' + IntToStr(Dlg.tbThresh.Position) + '|' +
+        IntToStr(Integer(Dlg.FInk)) + '|' + IntToStr(Dlg.tbWear.Position);
       ElapsedSec := SW.Elapsed.TotalSeconds;
       Result := True;
     end;

@@ -24,10 +24,13 @@ type
     FWorkingPreview: TBitmap;
     FSourceBmp: TBitmap;
     FVersion: TRisoVersion;
+    FPrevW, FPrevH: Integer;   // rozmiar podgladu z proporcji zdjecia (limit 400)
     function CurrentPalette: TRisoPalette;
     procedure FitPreview(pw, ph: Integer);
     procedure ApplyPreview;
     procedure ApplyFull;
+  public
+    procedure RefitButtons; override;
   end;
 
 function ShowRisoDlg(Bitmap: TBitmap; Version: TRisoVersion; out ElapsedSec: Double): Boolean;
@@ -99,24 +102,14 @@ end;
 
 procedure TRisoDlg.FormCreate(Sender: TObject);
 var
-  I, MaxW, W: Integer;
-  S: string;
-const
-  ListPadding = 30; // margines wewnętrzny + zapas na pasek przewijania
+  I: Integer;
 begin
   DoubleBuffered := True;
   lstPalettes.Clear;
-  lstPalettes.Canvas.Font.Assign(lstPalettes.Font);
-  MaxW := 0;
   for I := 0 to GetRisoPaletteCount - 1 do
-  begin
-    S := GetRisoPaletteName(I);
-    lstPalettes.Items.Add(S);
-    W := lstPalettes.Canvas.TextWidth(S);
-    if W > MaxW then MaxW := W;
-  end;
+    lstPalettes.Items.Add(GetRisoPaletteName(I));
   lstPalettes.ItemIndex := 0;
-  lstPalettes.Width := MaxW + ListPadding;
+  // rozmiar listy, podgladu i okna: RefitButtons
 end;
 
 procedure TRisoDlg.FormDestroy(Sender: TObject);
@@ -131,24 +124,54 @@ begin
 end;
 
 procedure TRisoDlg.FitPreview(pw, ph: Integer);
-// Podgląd po prawej stronie listy: obszar ograniczony wysokością listy,
-// dopasowanie do proporcji zdjęcia, wyśrodkowanie w obszarze.
-var
-  AvailW, AvailH, PrevW, PrevH: Integer;
-  Scale: Double;
+// Podgląd: rozmiar z proporcji zdjęcia (pw x ph, już ograniczone do 400 px
+// w ShowRisoDlg). Położenie i rozmiar okna liczy RefitButtons (wcześniej
+// obszar podglądu brany ze sztywnego ClientWidth z DFM).
 begin
   if (pw <= 0) or (ph <= 0) then Exit;
-  AvailW := ClientWidth - lstPalettes.Left - lstPalettes.Width - 30;
-  AvailH := lstPalettes.Height;
-  Scale := Min(AvailW / pw, AvailH / ph);
-  if Scale > 1.0 then Scale := 1.0;
-  PrevW := Max(1, Round(pw * Scale));
-  PrevH := Max(1, Round(ph * Scale));
-  pboxPreview.Width := PrevW;
-  pboxPreview.Height := PrevH;
-  pboxPreview.Left := lstPalettes.Left + lstPalettes.Width + 15
-    + ((AvailW - PrevW) div 2);
-  pboxPreview.Top := lstPalettes.Top + ((AvailH - PrevH) div 2);
+  FPrevW := pw;
+  FPrevH := ph;
+  pboxPreview.Width := pw;
+  pboxPreview.Height := ph;
+end;
+
+// Uklad z zawartosci (2026-10-21; wczesniej sztywne 640x465, lista 395 px
+// wysokosci, szerokosc listy z zapasem 30 px liczona raz w FormCreate).
+// Lista po lewej pokazuje wszystkie zestawy (bez przewijania), szerokosc z
+// najdluzszej nazwy; podglad po prawej, oba wysrodkowane w pionie wzgledem
+// siebie; OK/Anuluj do prawej. Odstepy z czcionki.
+procedure TRisoDlg.RefitButtons;
+var
+  Margin, I, W, IH, AreaH, X2: Integer;
+begin
+  inherited;
+  Margin := CtrlGap * 3;
+
+  W := 0;
+  for I := 0 to lstPalettes.Items.Count - 1 do
+    W := Max(W, Canvas.TextWidth(lstPalettes.Items[I]));
+  // rzeczywista wysokosc pozycji listy: dla lbStandard z uchwytem ItemHeight
+  // zwraca wysokosc z GetItemRect (Vcl.StdCtrls.pas:7595-7604)
+  if lstPalettes.HandleAllocated then
+    IH := lstPalettes.ItemHeight
+  else
+    IH := Canvas.TextHeight('Wg');
+  lstPalettes.Left := Margin;
+  lstPalettes.ClientWidth := W + CtrlGap * 4;
+  lstPalettes.ClientHeight := Max(1, lstPalettes.Items.Count) * IH;
+
+  AreaH := Max(lstPalettes.Height, FPrevH);
+  lstPalettes.Top := Margin + (AreaH - lstPalettes.Height) div 2;
+  X2 := lstPalettes.Left + lstPalettes.Width + SectionGap;
+  if FPrevW > 0 then
+    pboxPreview.SetBounds(X2, Margin + (AreaH - FPrevH) div 2, FPrevW, FPrevH);
+
+  btnOK.Top := Margin + AreaH + SectionGap;
+  btnCancel.Top := btnOK.Top;
+  FitToContent(SectionGap, Margin);
+  if ClientWidth < btnOK.Width + btnCancel.Width + CtrlGap * 2 + Margin * 2 then
+    ClientWidth := btnOK.Width + btnCancel.Width + CtrlGap * 2 + Margin * 2;
+  AlignButtonsRight([btnOK, btnCancel], Margin);
 end;
 
 procedure TRisoDlg.lstPalettesClick(Sender: TObject);

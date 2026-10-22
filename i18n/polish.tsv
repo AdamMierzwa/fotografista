@@ -169,7 +169,7 @@
 171	Raster — rosnące kropki zależnie od jasności
 172	Kropkowanie — gęstość kropek zależnie od jasności
 173	Kostkowanie — oczka kostki do gry
-174	Rizograf — druk warstwowy z offsetem kolorów
+174	Risografia — druk warstwowy z offsetem kolorów
 175	Sitodruk jednokolorowy — szary + tło  półtonowe
 176	Zniekształcenie beczkowate / poduszkowe
 177	Zniekształcenie łukowe — zginanie obrazu
@@ -366,8 +366,8 @@
 394	Wytłaczanie
 396	Dwukolor
 397	Kontrast (przed konwersją)
-398	Czerwona
-399	Zielona
+398	Czerwony
+399	Zielony
 403	Odcień
 404	Saturacja
 405	Gamma
@@ -636,7 +636,7 @@
 693	SVGA (800×600)
 694	Cyan
 695	Magenta
-696	Żółta
+696	Żółty
 699	Pomarańczowa
 701	Różowa
 702	Granatowa
@@ -673,7 +673,7 @@
 734	Test wydajności
 735	Przygotowanie obrazu...
 736	Obraz: %s (%d×%d)
-737	%s: %.2f ms (śr. z %d)
+737	%s: %.2n ms (śr. z %d)
 738	Czas testu: %d min %d s
 739	(przerwane)
 740	Najcięższym wyzwaniem okazał się: %s (%.2f ms).
@@ -996,10 +996,10 @@
 1065	Róg, od którego usunąć tło:
 1066	Tolerancja
 1067	Gumka
-1068	Czerń (PRL)
-1069	Fiolet (Zachód)
-1070	Granat (offset)
-1071	Czerwień (stemple)
+1068	Czarny (PRL)
+1069	Fioletowy (Zachód)
+1070	Granatowy (offset)
+1071	Czerwony (stemple)
 1072	Drugi obieg PRL — powielacz białkowy, okopcony tusz, rozmazana matryca
 1073	Zachodni powielacz spirytusowy — fiolet krystaliczny, zapach alkoholu
 1074	Matryca powielacza offsetowego — kopia biurowa
@@ -1082,3 +1082,21 @@
 1153	Wielkość kropki (0,1–10,0% krótszego boku):
 1154	Krzywa tonalna (10–500, 100 = liniowa):
 1155	Raster kropkowany - rozproszone kropki w rozkładzie Poissona
+1156	Komiks...
+1157	Komiks
+1158	Komiks - posteryzowane kolory z wyraźnymi obrysami
+1159	Styl
+1160	Kreskówka
+1161	Stary druk
+1162	Gazeta
+1163	PRL – łagodny
+1164	PRL – raster
+1165	Pop-art – czerń
+1166	Pop-art – dwie farby
+1167	Pop-art – kolor
+1168	Brązowy (spełznięty)
+1169	Rozkład barw
+1170	Wyrównanie
+1171	Bez wyrównania
+1172	Wyrównaj kanały RGB
+1173	Wyrównaj jasność

@@ -34,11 +34,12 @@ uses
    uSelection, frmSelSizeDlg, uAmiga, frmResizeDlg, frmResizeCropDlg,
     frmTileDlg, AboutBoxUnit, uDuotone, frmDuotoneDlg, frmSepiaDlg,
     frmSolarizeDlg, frmBWDlg, frmFilmGrainDlg, frmOleoDlg, frmCharcoalDlg, frmObrysDlg, frmBlurDlg,
-     frmEmbossDlg, frmPixelateDlg, frmStereogramDlg, uStereogram, frmVignetteDlg, frmBokehDlg, frmMakietaDlg, frmEdgeDlg, frmReliefDlg, frmQuantizeDlg, frmGlowDlg, frmCrossProcessDlg, frmGlitchDlg, uConvolution, frmBlendDlg, frmPaletteDlg, GR32, uMipMap, uMacros,
+     frmEmbossDlg, frmPixelateDlg, frmStereogramDlg, uStereogram, frmVignetteDlg, frmBokehDlg, frmMakietaDlg, frmEdgeDlg, frmReliefDlg, frmQuantizeDlg, frmComicDlg, frmGlowDlg, frmCrossProcessDlg, frmGlitchDlg, uConvolution, frmBlendDlg, frmPaletteDlg, GR32, uMipMap, uMacros,
      frmAmigaGradientDlg, frmAgonyDlg, frmAmigaBGDlg, frmAmigaBGSDlg,
       frmC64Dlg, frmZXSpectrumDlg, frmGameBoyDlg, frmNESDlg, uDistort, frmDistortDlg,
       frmWaterRippleDlg, frmLauncherDlg, frmShortcutsDlg, frmBenchmarkDlg, uTitleBar,
-      uCanvasTools, frmToolsDlg, frmUsunTloDlg, frmSelDlg;
+      uCanvasTools, frmToolsDlg, frmUsunTloDlg, frmSelDlg
+      {$IFDEF DEBUG}, uLayoutCheck{$ENDIF};
 
 type
   { Narzędzia kanwy dostępne w panelu Narzędzi. Rozszerzany przy dodawaniu
@@ -149,6 +150,7 @@ type
     mnuBW: TMenuItem;
     mnuOleo: TMenuItem;
     mnuCharcoal: TMenuItem;
+    mnuComic: TMenuItem;
     mnuObrys: TMenuItem;
     mnuEdge: TMenuItem;
     mnuBlur: TMenuItem;
@@ -368,6 +370,7 @@ type
     procedure mnuFilmGrainClick(Sender: TObject);
     procedure mnuOleoClick(Sender: TObject);
     procedure mnuCharcoalClick(Sender: TObject);
+    procedure mnuComicClick(Sender: TObject);
     procedure mnuObrysClick(Sender: TObject);
     procedure mnuBlurClick(Sender: TObject);
     procedure mnuEmbossClick(Sender: TObject);
@@ -455,6 +458,7 @@ type
 
     { Do paska statusu }
     procedure SetOperationInfo(const OpName: string; Seconds: Double);
+    procedure UpdateUndoStatus;
     procedure EnsureMipPyramid;
     procedure BuildSmoothPreview;
     procedure BuildPlainPreview;
@@ -462,6 +466,7 @@ type
 
   private
     FBitmap: TBitmap;
+    FHistOrig: TBitmap;            // obraz sprzed okna Histogramu (podglad wyrownania / Anuluj)
     FMipPyramid: TMipPyramid;      // pre-filter rastra: piramida mip-map, klucz: SourceHandle
     FMipLevelBmp: TBitmap;         // konwersja wybranego poziomu (TBitmap32) do TBitmap24 do StretchDraw
     FMipLevelKey: THandle;         // klucz konwersji: handle źródła
@@ -487,6 +492,7 @@ type
     FMacroMgrForm: TForm;
     FMacroMgrList: TListBox;
     FMacroMgrSteps: TListBox;
+    FMacroMgrDetails: TListBox;   // panel szczegolow wybranego kroku
     FLauncherDlg: TLauncherDlg;
     FToolsDlg: TToolsDlg;
     FRetouchBrushSize: Integer;
@@ -534,6 +540,7 @@ type
     procedure BatchProcess(const Opts: TBatchOptions);
     procedure BatchAbortClick(Sender: TObject);
     procedure DoEqualize(const Mode: string);
+    procedure HistogramPreview(const Mode: string);
     procedure DoFalseIR(Bitmap: TBitmap);
     procedure DoNightVision(Bitmap: TBitmap);
     procedure DoThermal(Bitmap: TBitmap);
@@ -555,6 +562,7 @@ type
     procedure EnsureAlphaMask;
     procedure EnsureProtMask;
     procedure RecalcProtCoverCount;
+    procedure RecalcAlphaDirtyRect;
     procedure ProtFlipH;
     procedure ProtFlipV;
     procedure AlphaFlipH;
@@ -594,11 +602,13 @@ type
     procedure MacroMgrDeleteClick(Sender: TObject);
     procedure MacroMgrSelectClick(Sender: TObject);
     procedure MacroMgrDeleteStepClick(Sender: TObject);
+    procedure MacroMgrStepClick(Sender: TObject);
     procedure UpdateMacroMenu;
     procedure MenuItemMeasure(Sender: TObject; ACanvas: TCanvas;
       var Width, Height: Integer);
     procedure AssignMenuMeasure(AItem: TMenuItem);
     procedure InitMenuMeasure;
+    procedure ApplyCanvasGap;
   public
     FSelection: TSelection;
     FSelectionView: TSelectionView;
@@ -630,6 +640,7 @@ type
     procedure SetReplaceRetainShading(AValue: Boolean);
   protected
     function UseCustomTitleBar: Boolean; override;
+    procedure CreateWnd; override;
   end;
 
 var
@@ -1258,7 +1269,8 @@ begin
   else
     FMode := rmRestore;
   // Jeden stroke = jedno undo (bitmapa + maska alfa + maska ochronna, UndoPushMasked).
-  UndoPushMasked(FOwner.FBitmap, FOwner.FAlphaMask, FOwner.FProtMask);
+  UndoPushMasked(FOwner.FBitmap, FOwner.FAlphaMask, FOwner.FProtMask, T('Eraser'));
+  FOwner.UpdateUndoStatus;
   // Robocza kopia maski: stemplujemy do niej, a renderer pokazuje ją dopiero
   // po MouseUp. Dzięki temu podczas ruchu nie ma odświeżania wymazywania -
   // tylko kółko pędzla podąża za kursorem (wzorzec Hollywood).
@@ -1436,7 +1448,8 @@ begin
   if FOwner.FProtMask = nil then Exit;
   FStrokeActive := True;
   FBrushSize := FOwner.FRetouchBrushSize;
-  UndoPushMasked(FOwner.FBitmap, FOwner.FAlphaMask, FOwner.FProtMask);
+  UndoPushMasked(FOwner.FBitmap, FOwner.FAlphaMask, FOwner.FProtMask, T('Protection mask'));
+  FOwner.UpdateUndoStatus;
   FStrokeMaskWork := TBitmap.Create;
   FStrokeMaskWork.Assign(FOwner.FProtMask);
   FStrokeMaskWork.PixelFormat := pf8bit;
@@ -1573,6 +1586,20 @@ begin
       StampDisk(Round(X1 + (X2 - X1) * I / N), Round(Y1 + (Y2 - Y1) * I / N));
 end;
 
+// Nazwa pedzla do historii Cofnij - te same klucze co lista narzedzi
+// w Retuszu (frmToolsDlg.FillTools, FamilyFromState).
+function BrushModeName(M: TBrushMode): string;
+begin
+  case M of
+    bmClone:           Result := T('Clone brush');
+    bmDodge, bmBurn:   Result := T('Brightness brush');
+    bmSharpen, bmBlur: Result := T('Focus brush');
+    bmColorReplace:    Result := T('Color replacement brush');
+  else
+    Result := T('Paint brush');
+  end;
+end;
+
 procedure TBrushTool.MouseDown(Shift: TShiftState; X, Y: Integer);
 begin
   if FStrokeActive then Exit;
@@ -1580,7 +1607,8 @@ begin
   FStrokeActive := True;
   FBrushSize := FOwner.FRetouchBrushSize;
   // Jeden stroke = jedno undo (tylko bitmapa RGB; maska alfa bez zmian).
-  UndoPush(FOwner.FBitmap);
+  UndoPush(FOwner.FBitmap, BrushModeName(FOwner.FBrushMode));
+  FOwner.UpdateUndoStatus;
   FStrokeBmpWork := TBitmap.Create;
   FStrokeBmpWork.Assign(FOwner.FBitmap);
   FStrokeBmpWork.PixelFormat := pf24bit;
@@ -1901,7 +1929,8 @@ begin
   // zawartości - bez śmieciowego wpisu w historii undo.
   if (SR = TR) and (SG = TG) and (SB = TB) then Exit;
 
-  UndoPush(FOwner.FBitmap);
+  UndoPush(FOwner.FBitmap, T('Bucket'));
+  FOwner.UpdateUndoStatus;
   // Ulewa wymaga TRGBTriple (3 bajty/piksel) - konwersja (np. 32->24)
   // bezstratna dla obrazu bez alfy; tylko gdy realnie coś zmieniamy.
   if FOwner.FBitmap.PixelFormat <> pf24bit then
@@ -2337,12 +2366,49 @@ begin
   end;
 end;
 
+// Komunikaty VCL (MessageDlg, ConfirmSaveDlg - TMessageForm; InputQuery -
+// TInputQueryForm) licza wysokosc przyciskow z czcionki komunikatow: 14
+// jednostek dialogu (Vcl.Dialogs.pas:6334, 7113), wiec przy Screen.MessageFont
+// 12 pt przyciski byly wyzsze niz w reszcie programu. Przycisk dostaje
+// domyslna wysokosc TButton (25 px przy 96 DPI, Vcl.StdCtrls.pas:5946), okno
+// jest nizsze o roznice; szerokosc i polozenie przyciskow bez zmian.
+procedure NormalizeDialogButtons(F: TForm);
+var
+  I, StdH, D: Integer;
+begin
+  if (F.ClassName <> 'TMessageForm') and (F.ClassName <> 'TInputQueryForm') then Exit;
+  StdH := MulDiv(25, F.CurrentPPI, 96);
+  D := 0;
+  for I := 0 to F.ControlCount - 1 do
+    if (F.Controls[I] is TButton) and (F.Controls[I].Height > StdH) then
+    begin
+      D := Max(D, F.Controls[I].Height - StdH);
+      F.Controls[I].Height := StdH;
+    end;
+  if D > 0 then
+  begin
+    F.ClientHeight := F.ClientHeight - D;
+    F.Top := F.Top + D div 2;   // okno zostaje wysrodkowane
+  end;
+end;
+
 procedure TfrmMain.FormActiveChanged(Sender: TObject);
 begin
   if Screen.ActiveForm <> nil then
   begin
+    NormalizeDialogButtons(Screen.ActiveForm);
     ApplyThemeLabelColors(Screen.ActiveForm);
     TranslateForm(Screen.ActiveForm);
+    // uklad z przetlumaczonych tekstow (jak uI18n.TI18nEvents.ActiveFormChanged,
+    // ktore ten handler zastepuje) - bez tego okna zostawaly z ukladem
+    // policzonym w DoShow dla tekstow EN, a dluzsze tlumaczenia byly obcinane
+    if Screen.ActiveForm is TFotoForm then
+      TFotoForm(Screen.ActiveForm).RefitButtons;
+    {$IFDEF DEBUG}
+    // kontrola ukladu okna po tlumaczeniu i przeliczeniu (uLayoutCheck.pas,
+    // wynik w kontrola_ukladu.txt obok EXE)
+    CheckFormLayout(Screen.ActiveForm);
+    {$ENDIF}
   end;
 end;
 
@@ -2384,7 +2450,6 @@ begin
   FActiveTool := TSelectionTool.Create(Self);
   OnCloseQuery := FormCloseQuery;
   DoubleBuffered := True;
-  DragAcceptFiles(Handle, True);
 
   UndoInit;
   LoadPrefs;
@@ -2401,6 +2466,7 @@ begin
   RestoreWindowPos(Self);
   RebuildRecentMenu(mnuFile, mnuFileSepRecent, HandleRecentFileClick);
   InitMenuMeasure;
+  ApplyCanvasGap;
   UpdateStatusBar;
   UpdateMenuState;
   Application.OnHint := StatusBarHint;
@@ -2431,6 +2497,15 @@ end;
 procedure TfrmMain.InitMenuMeasure;
 begin
   AssignMenuMeasure(MainMenu.Items);
+end;
+
+// Odstep miedzy paskiem menu a polem obrazu (wczesniej obraz zaczynal sie
+// tuz pod paskiem i litery menu stykaly sie ze zdjeciem). Pas ma kolor tla
+// okna = tla pola obrazu (Prefs.CanvasBG); wysokosc z czcionki.
+procedure TfrmMain.ApplyCanvasGap;
+begin
+  ScrollBox.AlignWithMargins := True;
+  ScrollBox.Margins.SetBounds(0, RowGap, 0, 0);
 end;
 
 procedure TfrmMain.FormCloseQuery(Sender: TObject; var CanClose: Boolean);
@@ -2960,6 +3035,12 @@ begin
   end;
 end;
 
+procedure TfrmMain.CreateWnd;
+begin
+  inherited CreateWnd;
+  DragAcceptFiles(Handle, True);
+end;
+
 procedure TfrmMain.WMDropFiles(var Msg: TWMDropFiles);
 var
   Cnt, Len: Integer;
@@ -3251,10 +3332,12 @@ begin
        ((FProtMask.Width <> FBitmap.Width) or (FProtMask.Height <> FBitmap.Height)) then
       EnsureProtMask;
     RecalcProtCoverCount;
+    RecalcAlphaDirtyRect;
     UpdateLayout;
     FRasterPreview := False;
     InvalidatePreviewCache;
   end;
+  UpdateUndoStatus;
 end;
 
 procedure TfrmMain.mnuEditRedoClick(Sender: TObject);
@@ -3269,10 +3352,12 @@ begin
        ((FProtMask.Width <> FBitmap.Width) or (FProtMask.Height <> FBitmap.Height)) then
       EnsureProtMask;
     RecalcProtCoverCount;
+    RecalcAlphaDirtyRect;
     UpdateLayout;
     FRasterPreview := False;
     InvalidatePreviewCache;
   end;
+  UpdateUndoStatus;
 end;
 
 procedure TfrmMain.mnuEditCopyClick(Sender: TObject);
@@ -3310,7 +3395,7 @@ begin
     Bmp.Free;
     raise;
   end;
-  UndoPush(FBitmap);
+  UndoPush(FBitmap, T('Paste'));
   FBitmap.Free;
   FBitmap := Bmp;
   EnsureAlphaMask;
@@ -3339,7 +3424,7 @@ begin
 
   SW := TStopwatch.StartNew;
 
-  UndoPush(FBitmap);
+  UndoPush(FBitmap, T('Restore original'));
 
   Loaded := LoadImageFile(FFilePath);
   try
@@ -3371,7 +3456,8 @@ begin
   mnuEditUndo.Enabled := UndoCanUndo;
   mnuEditRedo.Enabled := UndoCanRedo;
 
-  // Informacja na pasek statusu (panel 6)
+  // Informacja na pasek statusu (panel 7; SetOperationInfo odswieza tez
+  // pole Cofnij/Ponow)
   SetOperationInfo(T('Clear history'), 0);
 end;
 
@@ -3575,6 +3661,7 @@ begin
   DoFlipH(FBitmap);
   ProtFlipH;
   AlphaFlipH;
+  FSelection.Clear;
   FinishEffect(T('Mirror horizontally'), 0);
 end;
 
@@ -3587,6 +3674,7 @@ begin
   DoFlipV(FBitmap);
   ProtFlipV;
   AlphaFlipV;
+  FSelection.Clear;
   FinishEffect(T('Mirror vertically'), 0);
 end;
 
@@ -3603,6 +3691,7 @@ begin
   DoRotateLeft(FBitmap);
   ProtRotateLeft;
   AlphaRotateLeft;
+  FSelection.Clear;
 
   NotifyBitmapResized;
   SW.Stop;
@@ -3622,6 +3711,7 @@ begin
   DoRotateRight(FBitmap);
   ProtRotateRight;
   AlphaRotateRight;
+  FSelection.Clear;
 
   NotifyBitmapResized;
   SW.Stop;
@@ -3637,6 +3727,7 @@ begin
   DoRotate180(FBitmap);
   ProtRotate180;
   AlphaRotate180;
+  FSelection.Clear;
   FinishEffect(T('Rotate 180'), 0);
 end;
 
@@ -3659,6 +3750,7 @@ begin
     RotateAndCrop(FBitmap, Angle);
     ProtRotateAngle(Angle);
     AlphaRotateAngle(Angle);
+    FSelection.Clear;
     NotifyBitmapResized;
     UpdateStatusBar; // Odświeża wymiary (1440x1920)
   finally
@@ -3735,12 +3827,44 @@ var
 begin
   if FBitmap.Width = 0 then Exit;
   HistogramSourceBmp := FBitmap;
-  Dlg := THistogramDlg.Create(Application);
-  Dlg.OnEqualize := DoEqualize;
-  Dlg.CalcHistogram;
-  Dlg.SetChannel('all');
-  Dlg.ShowModal;
-  Dlg.Free;
+  // Wybor trybu w oknie = podglad na obrazie (HistogramPreview, bez Cofnij i
+  // makra). Po zamknieciu obraz wraca do stanu sprzed okna; OK z trybem
+  // stosuje wyrownanie raz przez DoEqualize (jeden wpis w Cofnij i krok makra),
+  // Anuluj zostawia oryginal.
+  FHistOrig := TBitmap.Create;
+  Dlg := nil;
+  try
+    FHistOrig.Assign(FBitmap);
+    Dlg := THistogramDlg.Create(Application);
+    Dlg.OnPreview := HistogramPreview;
+    Dlg.CalcHistogram;
+    Dlg.SetChannel('all');
+    if Dlg.ShowModal = mrOk then
+    begin
+      HistogramPreview('');
+      if Dlg.EqMode <> '' then
+        DoEqualize(Dlg.EqMode);
+    end
+    else
+      HistogramPreview('');
+  finally
+    Dlg.Free;
+    FreeAndNil(FHistOrig);
+  end;
+end;
+
+procedure TfrmMain.HistogramPreview(const Mode: string);
+begin
+  if FHistOrig = nil then Exit;
+  FBitmap.Assign(FHistOrig);
+  if Mode <> '' then
+  begin
+    EqualizeHistogram(FBitmap, Mode);
+    if NeedEffectBackup then
+      RestoreOutsideSelection(FHistOrig);
+  end;
+  InvalidatePreviewCache;
+  PaintBox.Invalidate;
 end;
 
 procedure TfrmMain.DoEqualize(const Mode: string);
@@ -4175,8 +4299,10 @@ begin
   TileSourceBmp := FBitmap;
   if ShowTileDlg(NewW, NewH) then
   begin
-    UndoPush(FBitmap);
+    UndoPushMasked(FBitmap, FAlphaMask, FProtMask);
     ImageTile(FBitmap, NewW, NewH);
+    EnsureAlphaMask;
+    EnsureProtMask;
     FSelection.Clear;
     UpdateZoomFit; FinishEffect(T('Tiling'), 0);
   end;
@@ -4849,6 +4975,25 @@ begin
   else if Backup <> nil then Backup.Free;
 end;
 
+procedure TfrmMain.mnuComicClick(Sender: TObject);
+var
+  Elapsed: Double;
+  Backup: TBitmap;
+begin
+  Backup := nil;
+  if FBitmap.Width = 0 then Exit;
+  if NeedEffectBackup then
+  begin Backup := TBitmap.Create; Backup.Assign(FBitmap); end;
+  UndoPush(FBitmap);
+  if ShowComicDlg(FBitmap, Elapsed) then
+  begin
+    if Backup <> nil then begin RestoreOutsideSelection(Backup); Backup.Free; end;
+    // nazwa stylu z tabeli stylow okna Komiksu (frmComicDlg.cComicStyles)
+    FinishEffect(T('Comic') + ': ' + ComicLastStyleName, Elapsed);
+  end
+  else if Backup <> nil then Backup.Free;
+end;
+
 procedure TfrmMain.mnuQuantizeClick(Sender: TObject);
 var
   Elapsed: Double;
@@ -5324,6 +5469,9 @@ begin
   mnuMacroStart.Enabled := not MacroRecorder.IsActive;
   mnuMacroStop.Enabled := MacroRecorder.IsActive;
   mnuMacroCancel.Enabled := MacroRecorder.IsActive;
+  { Odtworzenie innego makra w trakcie nagrywania zapisaloby tylko kroki
+    z cOpMap - reszta by przepadla, wiec menedzer jest wtedy niedostepny. }
+  mnuMacroManage.Enabled := not MacroRecorder.IsActive;
 end;
 
 procedure TfrmMain.mnuMacroStartClick(Sender: TObject);
@@ -5409,6 +5557,8 @@ var
   Prog: TForm;
   Lbl: TLabel;
   BtnAbort: TButton;
+  LblW, TH, Margin, BtnW, BtnH: Integer;
+  Counter: string;
 begin
   FBatchAbort := False;
   OkCount := 0;
@@ -5441,27 +5591,44 @@ begin
 
   Prog := TForm.CreateNew(Self);
   try
+    // Uklad z zawartosci (2026-10-21; wczesniej sztywne 340x90 i domyslna
+    // czcionka systemowa): czcionka programu (ParentFont), szerokosc z
+    // najdluzszej nazwy pliku tej serii (limit polowy ekranu, dalej skracanie
+    // wielokropkiem w srodku), okno nie zmienia rozmiaru w trakcie.
+    // czcionka programu: samo ParentFont := True nic nie daje formie bez
+    // rodzica (Vcl.Controls.pas:6979-6980), stad Font.Assign
+    Prog.Font.Assign(Application.DefaultFont);
+    Prog.ParentFont := True;
     Prog.Caption := T('Batch processing');
     Prog.Position := poScreenCenter;
     Prog.BorderStyle := bsDialog;
-    Prog.ClientWidth := 340;
-    Prog.ClientHeight := 90;
+    Prog.Canvas.Font.Assign(Prog.Font);
+    TH := Prog.Canvas.TextHeight('Wg');
+    Margin := TH * 2 div 3;
+
+    Counter := ' (' + IntToStr(Length(Files)) + '/' + IntToStr(Length(Files)) + ')';
+    LblW := Prog.Canvas.TextWidth(T('Processing...') + ' 0/' + IntToStr(Length(Files)));
+    for i := 0 to High(Files) do
+      LblW := Max(LblW, Prog.Canvas.TextWidth(Files[i] + Counter));
+    LblW := Min(LblW, Screen.WorkAreaWidth div 2);
 
     Lbl := TLabel.Create(Prog);
     Lbl.Parent := Prog;
-    Lbl.Left := 12;
-    Lbl.Top := 12;
-    Lbl.Width := 316;
-    Lbl.Height := 15;
+    Lbl.AutoSize := False;
+    Lbl.EllipsisPosition := epPathEllipsis;
+    Lbl.SetBounds(Margin, Margin, LblW, TH);
     Lbl.Caption := T('Processing...') + ' 0/' + IntToStr(Length(Files));
 
     BtnAbort := TButton.Create(Prog);
     BtnAbort.Parent := Prog;
     BtnAbort.Caption := T('Cancel');
-    BtnAbort.Left := 243;
-    BtnAbort.Top := 50;
-    BtnAbort.Width := 85;
-    BtnAbort.Height := 25;
+    // szerokosc jak FitButton (tekst + 2 x 'W', min. 85), wysokosc domyslna
+    // przycisku - jak we wszystkich oknach (FitButton zmienia tylko szerokosc)
+    BtnW := Max(85, Prog.Canvas.TextWidth(BtnAbort.Caption) + 2 * Prog.Canvas.TextWidth('W'));
+    BtnH := BtnAbort.Height;
+    Prog.ClientWidth := Max(LblW, BtnW) + Margin * 2;
+    BtnAbort.SetBounds(Prog.ClientWidth - Margin - BtnW, Lbl.Top + TH + TH, BtnW, BtnH);
+    Prog.ClientHeight := BtnAbort.Top + BtnH + Margin;
     BtnAbort.OnClick := BatchAbortClick;
 
     Prog.Show;
@@ -5535,77 +5702,107 @@ end;
 procedure TfrmMain.mnuMacroManageClick(Sender: TObject);
 var
   btnPlay, btnRename, btnDelete, btnDeleteStep, btnClose: TButton;
-  i: Integer;
+  i, k, TH, Margin, Gap, ListW, DetW, BtnW, BtnH, X, Y: Integer;
+  M: TMacro;
+  Line: string;
+
+  function NewButton(const ACaption: string; AClick: TNotifyEvent): TButton;
+  begin
+    Result := TButton.Create(FMacroMgrForm);
+    Result.Parent := FMacroMgrForm;
+    Result.Caption := ACaption;
+    Result.OnClick := AClick;
+  end;
+
 begin
   FMacroMgrForm := TForm.CreateNew(Self);
   try
+    // Uklad z zawartosci (2026-10-21; wczesniej sztywne 480x340 z ramka, listy
+    // 336x170 / 336x72, przyciski po 85 px, czcionka systemowa): czcionka
+    // programu (ParentFont), listy po 8 wierszy, kolumna przyciskow o
+    // szerokosci najdluzszego napisu, odstepy z wysokosci tekstu.
+    // czcionka programu (jak okno postepu: Font.Assign, bo ParentFont bez
+    // rodzica nie dziala)
+    FMacroMgrForm.Font.Assign(Application.DefaultFont);
+    FMacroMgrForm.ParentFont := True;
     FMacroMgrForm.Caption := T('Manage macros');
     FMacroMgrForm.Position := poScreenCenter;
-    FMacroMgrForm.Width := 480;
-    FMacroMgrForm.Height := 340;
     FMacroMgrForm.BorderStyle := bsDialog;
+    FMacroMgrForm.Canvas.Font.Assign(FMacroMgrForm.Font);
+    TH := FMacroMgrForm.Canvas.TextHeight('Wg');
+    Margin := TH * 2 div 3;
+    Gap := TH div 3;
 
     FMacroMgrList := TListBox.Create(FMacroMgrForm);
     FMacroMgrList.Parent := FMacroMgrForm;
-    FMacroMgrList.Left := 12;
-    FMacroMgrList.Top := 12;
-    FMacroMgrList.Width := 336;
-    FMacroMgrList.Height := 170;
     FMacroMgrList.OnClick := MacroMgrSelectClick;
     for i := 0 to MacrosCount - 1 do
       FMacroMgrList.Items.Add(MacrosGet(i).Name);
 
     FMacroMgrSteps := TListBox.Create(FMacroMgrForm);
     FMacroMgrSteps.Parent := FMacroMgrForm;
-    FMacroMgrSteps.Left := 12;
-    FMacroMgrSteps.Top := 190;
-    FMacroMgrSteps.Width := 336;
-    FMacroMgrSteps.Height := 72;
+    FMacroMgrSteps.OnClick := MacroMgrStepClick;
 
-    btnPlay := TButton.Create(FMacroMgrForm);
-    btnPlay.Parent := FMacroMgrForm;
-    btnPlay.Caption := T('Play');
-    btnPlay.Left := 360;
-    btnPlay.Top := 12;
-    btnPlay.Width := 85;
-    btnPlay.Height := 25;
-    btnPlay.OnClick := MacroMgrPlayClick;
+    FMacroMgrDetails := TListBox.Create(FMacroMgrForm);
+    FMacroMgrDetails.Parent := FMacroMgrForm;
+    FMacroMgrDetails.TabStop := False;
 
-    btnRename := TButton.Create(FMacroMgrForm);
-    btnRename.Parent := FMacroMgrForm;
-    btnRename.Caption := T('Rename');
-    btnRename.Left := 360;
-    btnRename.Top := 45;
-    btnRename.Width := 85;
-    btnRename.Height := 25;
-    btnRename.OnClick := MacroMgrRenameClick;
-
-    btnDelete := TButton.Create(FMacroMgrForm);
-    btnDelete.Parent := FMacroMgrForm;
-    btnDelete.Caption := T('Delete');
-    btnDelete.Left := 360;
-    btnDelete.Top := 78;
-    btnDelete.Width := 85;
-    btnDelete.Height := 25;
-    btnDelete.OnClick := MacroMgrDeleteClick;
-
-    btnDeleteStep := TButton.Create(FMacroMgrForm);
-    btnDeleteStep.Parent := FMacroMgrForm;
-    btnDeleteStep.Caption := T('Remove step');
-    btnDeleteStep.Left := 360;
-    btnDeleteStep.Top := 111;
-    btnDeleteStep.Width := 85;
-    btnDeleteStep.Height := 25;
-    btnDeleteStep.OnClick := MacroMgrDeleteStepClick;
-
-    btnClose := TButton.Create(FMacroMgrForm);
-    btnClose.Parent := FMacroMgrForm;
-    btnClose.Caption := T('Close');
-    btnClose.Left := 360;
-    btnClose.Top := 270;
-    btnClose.Width := 85;
-    btnClose.Height := 25;
+    btnPlay := NewButton(T('Play'), MacroMgrPlayClick);
+    btnRename := NewButton(T('Rename'), MacroMgrRenameClick);
+    btnDelete := NewButton(T('Delete'), MacroMgrDeleteClick);
+    btnDeleteStep := NewButton(T('Remove step'), MacroMgrDeleteStepClick);
+    btnClose := NewButton(T('Close'), nil);
     btnClose.ModalResult := mrOk;
+
+    // panel szczegolow po lewej (2026-10-22): parametry wybranego kroku, lista
+    // krokow pokazuje same nazwy. Szerokosc z najdluzszego wiersza szczegolow
+    // wszystkich makr, min. 24 znaki, max. 1/3 ekranu; wysokosc = obie listy.
+    DetW := FMacroMgrForm.Canvas.TextWidth('0') * 24;
+    for i := 0 to MacrosCount - 1 do
+    begin
+      M := MacrosGet(i);
+      for k := 0 to High(M.Steps) do
+        for Line in MacroStepDetails(M.Steps[k]) do
+          DetW := Max(DetW, FMacroMgrForm.Canvas.TextWidth(Line) + Gap * 4);
+    end;
+    DetW := Min(DetW, Screen.WorkAreaWidth div 3);
+
+    // listy: ok. 40 znakow szerokosci, po 8 wierszy (wiersz = wysokosc tekstu)
+    ListW := FMacroMgrForm.Canvas.TextWidth('0') * 40;
+    X := Margin + DetW + Margin;
+    FMacroMgrList.SetBounds(X, Margin, ListW, TH);
+    FMacroMgrList.ClientHeight := TH * 8;
+    FMacroMgrSteps.SetBounds(X, FMacroMgrList.Top + FMacroMgrList.Height + Gap * 2,
+      ListW, TH);
+    FMacroMgrSteps.ClientHeight := TH * 8;
+    FMacroMgrDetails.SetBounds(Margin, Margin, DetW,
+      FMacroMgrSteps.Top + FMacroMgrSteps.Height - Margin);
+
+    // kolumna przyciskow: wspolna szerokosc jak FitButtonGroup (tekst + 2 x 'W',
+    // min. 85), wysokosc domyslna przycisku - jak we wszystkich oknach
+    // (FitButton zmienia tylko szerokosc)
+    BtnW := 85;
+    BtnW := Max(BtnW, FMacroMgrForm.Canvas.TextWidth(btnPlay.Caption));
+    BtnW := Max(BtnW, FMacroMgrForm.Canvas.TextWidth(btnRename.Caption));
+    BtnW := Max(BtnW, FMacroMgrForm.Canvas.TextWidth(btnDelete.Caption));
+    BtnW := Max(BtnW, FMacroMgrForm.Canvas.TextWidth(btnDeleteStep.Caption));
+    BtnW := Max(BtnW, FMacroMgrForm.Canvas.TextWidth(btnClose.Caption));
+    BtnW := Max(85, BtnW + 2 * FMacroMgrForm.Canvas.TextWidth('W'));
+    BtnH := btnPlay.Height;
+    X := FMacroMgrList.Left + ListW + Margin;
+    Y := Margin;
+    btnPlay.SetBounds(X, Y, BtnW, BtnH);
+    Inc(Y, BtnH + Gap * 2);
+    btnRename.SetBounds(X, Y, BtnW, BtnH);
+    Inc(Y, BtnH + Gap * 2);
+    btnDelete.SetBounds(X, Y, BtnW, BtnH);
+    Inc(Y, BtnH + Gap * 2);
+    btnDeleteStep.SetBounds(X, Y, BtnW, BtnH);
+    // Zamknij na dole kolumny, rowno z dolem listy krokow
+    btnClose.SetBounds(X, FMacroMgrSteps.Top + FMacroMgrSteps.Height - BtnH, BtnW, BtnH);
+
+    FMacroMgrForm.ClientWidth := X + BtnW + Margin;
+    FMacroMgrForm.ClientHeight := FMacroMgrSteps.Top + FMacroMgrSteps.Height + Margin;
 
     FMacroMgrForm.ShowModal;
   finally
@@ -5613,6 +5810,7 @@ begin
     FMacroMgrForm := nil;
     FMacroMgrList := nil;
     FMacroMgrSteps := nil;
+    FMacroMgrDetails := nil;
   end;
 end;
 
@@ -5658,10 +5856,30 @@ var
   i: Integer;
 begin
   FMacroMgrSteps.Items.Clear;
-  if FMacroMgrList.ItemIndex < 0 then Exit;
-  M := MacrosGet(FMacroMgrList.ItemIndex);
-  for i := 0 to High(M.Steps) do
-    FMacroMgrSteps.Items.Add(MacroStepDescription(M.Steps[i]));
+  if FMacroMgrList.ItemIndex >= 0 then
+  begin
+    M := MacrosGet(FMacroMgrList.ItemIndex);
+    for i := 0 to High(M.Steps) do
+      FMacroMgrSteps.Items.Add(MacroStepDescription(M.Steps[i]));
+    if FMacroMgrSteps.Items.Count > 0 then
+      FMacroMgrSteps.ItemIndex := 0;
+  end;
+  MacroMgrStepClick(nil);
+end;
+
+// Panel szczegolow: parametry kroku wybranego na liscie krokow.
+procedure TfrmMain.MacroMgrStepClick(Sender: TObject);
+var
+  Mi, Si: Integer;
+  M: TMacro;
+begin
+  FMacroMgrDetails.Items.Clear;
+  Mi := FMacroMgrList.ItemIndex;
+  Si := FMacroMgrSteps.ItemIndex;
+  if (Mi < 0) or (Si < 0) then Exit;
+  M := MacrosGet(Mi);
+  if Si > High(M.Steps) then Exit;
+  FMacroMgrDetails.Items.AddStrings(MacroStepDetails(M.Steps[Si]));
 end;
 
 procedure TfrmMain.MacroMgrDeleteStepClick(Sender: TObject);
@@ -5677,6 +5895,7 @@ begin
     MacroDeleteStep(Mi, Si);
     MacrosSaveToFile;
     FMacroMgrSteps.Items.Delete(Si);
+    MacroMgrStepClick(nil);
   end;
 end;
 
@@ -5698,20 +5917,44 @@ begin
     na stos, a cofniecie przywraca tylko bitmape i zostawia maske w nowym
     rozmiarze - stan gorszy niz brak maski. UUndoPushMasked przyjmuje nil dla
     obu masek (uUndo.pas:79-91), wiec kroki ktore ich nie dotykaja nie placi
-    za to zadnym kosztem. }
-  UndoPushMasked(FBitmap, FAlphaMask, FProtMask);
+    za to zadnym kosztem.
+    Stan przed KAZDYM krokiem (2026-10-22): Cofnij cofa po jednym kroku
+    makra, nie cale makro naraz. }
   for i := 0 to High(M.Steps) do
+  begin
+    UndoPushMasked(FBitmap, FAlphaMask, FProtMask);
     RunMacroStep(M.Steps[i]);
+  end;
   if (FBitmap.Width <> W0) or (FBitmap.Height <> H0) then
     NotifyBitmapResized;
+  // Pole ostatniej operacji: nazwa makra, nie ostatniego kroku (kroki sa
+  // w polu Cofnij/Ponow).
+  SetOperationInfo(M.Name, 0);
 end;
 
 procedure TfrmMain.RunMacroStep(const Step: TMacroStep);
 var
   Lbl: string;
+  Backup: TBitmap;
+  Geom: Boolean;
 begin
   if FBitmap.Width = 0 then Exit;
-  Lbl := ApplyMacroStep(Step, FBitmap);
+  { Jak efekty reczne: zaznaczenie i maska ochronna ograniczaja krok.
+    Kroki geometrii same przeksztalcaja maski i czyszcza zaznaczenie -
+    przywrocenie z backupu sprzed odbicia/obrotu odwrociloby je. }
+  Geom := SameText(Step.Code, 'FLIPH') or SameText(Step.Code, 'FLIPV') or
+    SameText(Step.Code, 'ROTL') or SameText(Step.Code, 'ROTR') or
+    SameText(Step.Code, 'ROT180') or SameText(Step.Code, 'STRAIGHTEN') or
+    SameText(Step.Code, 'AMIGABG') or SameText(Step.Code, 'AMIGABGS');
+  Backup := nil;
+  if NeedEffectBackup and not Geom then
+  begin Backup := TBitmap.Create; Backup.Assign(FBitmap); end;
+  try
+    Lbl := ApplyMacroStep(Step, FBitmap);
+    if Backup <> nil then RestoreOutsideSelection(Backup);
+  finally
+    Backup.Free;
+  end;
   if Lbl = '' then
   begin
     FinishEffect(T('Unsupported step: ') + Step.Code, 0);
@@ -5733,6 +5976,9 @@ begin
     SetLength(P, 4);   // brakujacy czwarty parametr (Follow) = domyslne 40
     P[3] := '40';
   end;
+  // COMIC: styl|kolory|czulosc[|grubosc|farba] - starsze makra bez grubosci
+  // (grubosc = czulosc, DoComic) i bez farby (czerwona)
+  if SameText(Step.Code, 'COMIC') and (Length(P) < 5) then SetLength(P, 5);
   if SameText(Step.Code, 'BLUR') then DoBlur(Bitmap, StrToIntDef(P[0], 0))
   else if SameText(Step.Code, 'BRIGHTNESS') then DoBrightness(Bitmap, StrToIntDef(P[0], 0))
   else if SameText(Step.Code, 'GAMMA') then DoGamma(Bitmap, StrToIntDef(P[0], 0))
@@ -5748,7 +5994,7 @@ begin
   else if SameText(Step.Code, 'FILMGRAIN') then DoFilmGrain(Bitmap, StrToIntDef(P[0], 0))
   else if SameText(Step.Code, 'RELIEF') then DoRelief(Bitmap, StrToIntDef(P[0], 0), StrToIntDef(P[1], 0))
   else if SameText(Step.Code, 'GLOW') then DoGlow(Bitmap, StrToIntDef(P[0], 0))
-  else if SameText(Step.Code, 'OILPAINT') then DoOilPaint(Bitmap, StrToIntDef(P[0], 0))
+  else if SameText(Step.Code, 'OILPAINT') then DoOilPaintScaled(Bitmap, StrToIntDef(P[0], 0))
   else if SameText(Step.Code, 'CROSSPROCESS') then DoCrossProcess(Bitmap, StrToIntDef(P[0], 0))
   else if SameText(Step.Code, 'BW') then DoBlackWhite(Bitmap, StrToIntDef(P[0], 0), StrToIntDef(P[1], 0), StrToBoolDef(P[2], False))
   else if SameText(Step.Code, 'GRAY') then DoGray(Bitmap)
@@ -5777,45 +6023,73 @@ begin
   else if SameText(Step.Code, 'FLIPH') then
   begin
     DoFlipH(Bitmap);
-    ProtFlipH;
-    AlphaFlipH;
+    { Maski naleza do obrazu w edytorze - BatchProcess podaje inna bitmape. }
+    if Bitmap = FBitmap then
+    begin
+      ProtFlipH;
+      AlphaFlipH;
+      FSelection.Clear;
+    end;
   end
   else if SameText(Step.Code, 'FLIPV') then
   begin
     DoFlipV(Bitmap);
-    ProtFlipV;
-    AlphaFlipV;
+    if Bitmap = FBitmap then
+    begin
+      ProtFlipV;
+      AlphaFlipV;
+      FSelection.Clear;
+    end;
   end
   else if SameText(Step.Code, 'ROTL') then
   begin
     DoRotateLeft(Bitmap);
-    ProtRotateLeft;
-    AlphaRotateLeft;
+    if Bitmap = FBitmap then
+    begin
+      ProtRotateLeft;
+      AlphaRotateLeft;
+      FSelection.Clear;
+    end;
   end
   else if SameText(Step.Code, 'ROTR') then
   begin
     DoRotateRight(Bitmap);
-    ProtRotateRight;
-    AlphaRotateRight;
+    if Bitmap = FBitmap then
+    begin
+      ProtRotateRight;
+      AlphaRotateRight;
+      FSelection.Clear;
+    end;
   end
   else if SameText(Step.Code, 'ROT180') then
   begin
     DoRotate180(Bitmap);
-    ProtRotate180;
-    AlphaRotate180;
+    if Bitmap = FBitmap then
+    begin
+      ProtRotate180;
+      AlphaRotate180;
+      FSelection.Clear;
+    end;
   end
   else if SameText(Step.Code, 'STRAIGHTEN') then
   begin
     { Geometria idzie w trzech warstwach: obraz, maska ochronna, maska alfa.
       Wszystkie trzy musza dostac identyczne przeksztalcenie, bo render
-      porownuje ich rozmiary i przy niezgodnosci cicho konczy rysowanie. }
+      porownuje ich rozmiary i przy niezgodnosci cicho konczy rysowanie.
+      Maski tylko dla FBitmap - BatchProcess podaje inna bitmape. }
     RotateAndCrop(Bitmap, StrToIntDef(P[0], 0));
-    ProtRotateAngle(StrToIntDef(P[0], 0));
-    AlphaRotateAngle(StrToIntDef(P[0], 0));
+    if Bitmap = FBitmap then
+    begin
+      ProtRotateAngle(StrToIntDef(P[0], 0));
+      AlphaRotateAngle(StrToIntDef(P[0], 0));
+      FSelection.Clear;
+    end;
   end
   else if SameText(Step.Code, 'STEREOGRAM') then DoStereogram(Bitmap, StrToIntDef(P[0], 0), StrToIntDef(P[1], 0), StrToIntDef(P[2], 0), StrToIntDef(P[3], 0))
   else if SameText(Step.Code, 'CHARCOAL') then DoCharcoal(Bitmap, StrToIntDef(P[0], 0))
   else if SameText(Step.Code, 'QUANTIZE') then DoQuantize(Bitmap, StrToIntDef(P[0], 0), StrToBoolDef(P[1], False))
+  else if SameText(Step.Code, 'COMIC') then DoComic(Bitmap, StrToIntDef(P[0], 0), StrToIntDef(P[1], 0), StrToIntDef(P[2], 0),
+    StrToIntDef(P[3], -1), StrToIntDef(P[4], 0))
   else if SameText(Step.Code, 'BOKEH') then DoBokeh(Bitmap, StrToIntDef(P[0], 0), StrToIntDef(P[1], 0), StrToIntDef(P[2], 0), StrToIntDef(P[3], 0), StrToIntDef(P[4], 0))
    else if SameText(Step.Code, 'ENGRAVING') then DoEngraving(Bitmap, StrToIntDef(P[0], 0), StrToIntDef(P[1], 0), StrToIntDef(P[2], 0))
   else if SameText(Step.Code, 'LINERASTER') then DoLineRaster(Bitmap, StrToIntDef(P[0], 0), StrToIntDef(P[1], 0), StrToIntDef(P[2], 0), StrToIntDef(P[3], 0))
@@ -5828,16 +6102,61 @@ begin
   else if SameText(Step.Code, 'DICEIMG') then DoDiceImage(Bitmap, StrToIntDef(P[0], 0))
   else if SameText(Step.Code, 'RASTRCMYK') then DoRastrCmyk(Bitmap, StrToIntDef(P[0], 0), StrToIntDef(P[1], 0))
   else if SameText(Step.Code, 'COLORIZE') then DoTint(Bitmap, TColor(StrToIntDef(P[0], 0)), StrToIntDef(P[1], 0))
+  else if SameText(Step.Code, 'EMERGO') then DoEmergo(Bitmap, StrToIntDef(P[0], 0))
+  else if SameText(Step.Code, 'WHITEBAL') then DoWhiteBalance(Bitmap, StrToIntDef(P[0], 100), StrToIntDef(P[1], 100), StrToIntDef(P[2], 100))
+  else if SameText(Step.Code, 'HSB') then DoHSB(Bitmap, StrToIntDef(P[0], 100), StrToIntDef(P[1], 100), StrToIntDef(P[2], 100))
+  else if SameText(Step.Code, 'VIVID') then DoHDR1(Bitmap, StrToIntDef(P[0], 60), StrToIntDef(P[1], 50), StrToIntDef(P[2], 40), StrToIntDef(P[3], 2))
+  else if SameText(Step.Code, 'ENHANCE') then DoWzmocnienie(Bitmap, StrToIntDef(P[0], 60), StrToIntDef(P[1], 50))
+  else if SameText(Step.Code, 'OUTLINE') then DoObrys(Bitmap, StrToIntDef(P[0], 30))
+  else if SameText(Step.Code, 'GLITCH') then DoGlitchValues(Bitmap, StrToIntDef(P[0], 0), StrToIntDef(P[1], 0), StrToIntDef(P[2], 0), StrToIntDef(P[3], 0), StrToIntDef(P[4], 0), StrToIntDef(P[5], 0))
+  else if SameText(Step.Code, 'CMYKMISREG') then DoCmykMisreg(Bitmap, StrToIntDef(P[0], 50), StrToIntDef(P[1], 50), StrToIntDef(P[2], 50), Bitmap.Width, Bitmap.Height)
+  else if SameText(Step.Code, 'MIMEOGRAPH') then DoStencil(Bitmap, StrToIntDef(P[0], 3), StrToIntDef(P[1], 3), StrToIntDef(P[2], 128), TColor(StrToIntDef(P[3], 0)), StrToIntDef(P[4], 0))
+  else if SameText(Step.Code, 'C64') then ApplyC64(Bitmap, StrToIntDef(P[0], 0), StrToIntDef(P[1], 0))
+  else if SameText(Step.Code, 'ZXSPECTRUM') then ApplyZXSpectrum(Bitmap, P[0] <> '0')
+  else if SameText(Step.Code, 'GAMEBOY') then ApplyGameBoy(Bitmap, StrToIntDef(P[0], 0), P[1] <> '0')
+  else if SameText(Step.Code, 'NES') then ApplyNES(Bitmap, P[0] <> '0')
+  else if SameText(Step.Code, 'BARREL') then ApplyBarrel(Bitmap, StrToIntDef(P[0], 0))
+  else if SameText(Step.Code, 'ARC') then ApplyArc(Bitmap, StrToIntDef(P[0], 0))
+  else if SameText(Step.Code, 'SWIRL') then ApplySwirl(Bitmap, StrToIntDef(P[0], 0))
+  else if SameText(Step.Code, 'POLAR') then ApplyPolar(Bitmap, StrToIntDef(P[0], 0))
+  else if SameText(Step.Code, 'WATERRIPPLE') then ApplyWaterRippleEx(Bitmap, StrToIntDef(P[0], 0), StrToIntDef(P[1], 100) / 100.0, StrToIntDef(P[2], 100) / 100.0)
+  else if SameText(Step.Code, 'DUOTONE') then DoDuotone(Bitmap, TColor(StrToIntDef(P[0], 0)), TColor(StrToIntDef(P[1], 0)))
+  else if SameText(Step.Code, 'TRITONE') then DoTritone(Bitmap, TColor(StrToIntDef(P[0], 0)), TColor(StrToIntDef(P[1], 0)), TColor(StrToIntDef(P[2], 0)))
+  else if SameText(Step.Code, 'QUADTONE') then DoQuadTone(Bitmap, TColor(StrToIntDef(P[0], 0)), TColor(StrToIntDef(P[1], 0)), TColor(StrToIntDef(P[2], 0)), TColor(StrToIntDef(P[3], 0)))
   else if SameText(Step.Code, 'SCREENPRINT') then DoScreenPrint(Bitmap, TColor(StrToIntDef(P[0], 0)), TColor(StrToIntDef(P[1], 0)), StrToIntDef(P[2], 0))
   else if SameText(Step.Code, 'MAKIETA') then DoMakieta(Bitmap, StrToIntDef(P[0], 0), StrToIntDef(P[1], 0), StrToIntDef(P[2], 0), StrToIntDef(P[3], 0))
   else if SameText(Step.Code, 'LINOCUT') then DoLinocut(Bitmap, StrToIntDef(P[0], 0))
   else if SameText(Step.Code, 'AGONY') then ApplyAmigaGradientAgony(Bitmap, StrToIntDef(P[0], 0), StrToIntDef(P[1], 0), StrToIntDef(P[2], 0))
   else if SameText(Step.Code, 'AMIGAGRADIENT') then ApplyAmigaGradient(Bitmap, StrToIntDef(P[0], 0))
-  else if SameText(Step.Code, 'AMIGABG') then ApplyAmigaBackground(Bitmap, StrToIntDef(P[0], 0), StrToIntDef(P[1], 0), TColor(StrToIntDef(P[2], 0)))
-  else if SameText(Step.Code, 'AMIGABGS') then ApplyAmigaBackgroundStretch(Bitmap, StrToIntDef(P[0], 0), StrToIntDef(P[1], 0))
+  else if SameText(Step.Code, 'AMIGABG') then
+  begin
+    ApplyAmigaBackground(Bitmap, StrToIntDef(P[0], 0), StrToIntDef(P[1], 0), TColor(StrToIntDef(P[2], 0)));
+    { Zmiana rozmiaru bez geometrii dla masek: obie odtwarzane jako puste,
+      jak w mnuAmigaBGClick. Tylko dla FBitmap - BatchProcess podaje
+      inna bitmape, a maski naleza do obrazu otwartego w edytorze. }
+    if Bitmap = FBitmap then
+    begin
+      EnsureAlphaMask;
+      EnsureProtMask;
+      FSelection.Clear;
+    end;
+  end
+  else if SameText(Step.Code, 'AMIGABGS') then
+  begin
+    ApplyAmigaBackgroundStretch(Bitmap, StrToIntDef(P[0], 0), StrToIntDef(P[1], 0));
+    if Bitmap = FBitmap then
+    begin
+      EnsureAlphaMask;
+      EnsureProtMask;
+      FSelection.Clear;
+    end;
+  end
   else
     Exit('');
   Result := MacroStepLabel(Step.Code);
+  // Komiks z nazwa stylu jak przy efekcie recznym (pasek stanu, Cofnij)
+  if SameText(Step.Code, 'COMIC') then
+    Result := Result + ': ' + ComicStyleName(StrToIntDef(P[0], 0));
 end;
 
 { ========================================================================= }
@@ -5854,7 +6173,7 @@ begin
   if NeedEffectBackup then
   begin Backup := TBitmap.Create; Backup.Assign(FBitmap); end;
   UndoPush(FBitmap);
-  if ShowDistortDlg(T('Barrel distortion'), [T('Weak barrel'), T('Medium barrel'), T('Strong barrel'), T('Weak pincushion'), T('Medium pincushion'), T('Strong pincushion')], ApplyBarrel, FBitmap, Elapsed) then
+  if ShowDistortDlg(T('Barrel distortion'), [T('Weak barrel'), T('Medium barrel'), T('Strong barrel'), T('Weak pincushion'), T('Medium pincushion'), T('Strong pincushion')], ApplyBarrel, FBitmap, Elapsed, 'BARREL') then
   begin
     if Backup <> nil then begin RestoreOutsideSelection(Backup); Backup.Free; end;
     FinishEffect(T('Barrel distortion'), Elapsed);
@@ -5872,7 +6191,7 @@ begin
   if NeedEffectBackup then
   begin Backup := TBitmap.Create; Backup.Assign(FBitmap); end;
   UndoPush(FBitmap);
-  if ShowDistortDlg(T('Arc distortion'), [T('45°'), T('90°'), T('180°'), T('360°'), T('90° + rotate'), T('180° + rotate')], ApplyArc, FBitmap, Elapsed) then
+  if ShowDistortDlg(T('Arc distortion'), [T('45°'), T('90°'), T('180°'), T('360°'), T('90° + rotate'), T('180° + rotate')], ApplyArc, FBitmap, Elapsed, 'ARC') then
   begin
     if Backup <> nil then begin RestoreOutsideSelection(Backup); Backup.Free; end;
     FinishEffect(T('Arc distortion'), Elapsed);
@@ -5890,7 +6209,7 @@ begin
   if NeedEffectBackup then
   begin Backup := TBitmap.Create; Backup.Assign(FBitmap); end;
   UndoPush(FBitmap);
-  if ShowDistortDlg(T('Swirl'), [T('Weak (45°)'), T('Medium (90°)'), T('Strong (180°)'), T('Very strong (270°)'), T('Full (360°)'), T('Reverse')], ApplySwirl, FBitmap, Elapsed) then
+  if ShowDistortDlg(T('Swirl'), [T('Weak (45°)'), T('Medium (90°)'), T('Strong (180°)'), T('Very strong (270°)'), T('Full (360°)'), T('Reverse')], ApplySwirl, FBitmap, Elapsed, 'SWIRL') then
   begin
     if Backup <> nil then begin RestoreOutsideSelection(Backup); Backup.Free; end;
     FinishEffect(T('Swirl'), Elapsed);
@@ -5926,7 +6245,7 @@ begin
   if NeedEffectBackup then
   begin Backup := TBitmap.Create; Backup.Assign(FBitmap); end;
   UndoPush(FBitmap);
-  if ShowDistortDlg(T('Polar distortion'), [T('Full'), T('Half angle'), T('Quarter angle'), T('Ring'), T('Small radius'), T('Smooth'), T('Tunnel'), T('Swirl'), T('Fisheye'), T('Outer stretch'), T('Inverted tunnel'), T('30° slice')], ApplyPolar, FBitmap, Elapsed) then
+  if ShowDistortDlg(T('Polar distortion'), [T('Full'), T('Half angle'), T('Quarter angle'), T('Ring'), T('Small radius'), T('Smooth'), T('Tunnel'), T('Swirl'), T('Fisheye'), T('Outer stretch'), T('Inverted tunnel'), T('30° slice')], ApplyPolar, FBitmap, Elapsed, 'POLAR') then
   begin
     if Backup <> nil then begin RestoreOutsideSelection(Backup); Backup.Free; end;
     FinishEffect(T('Polar distortion'), Elapsed);
@@ -6143,9 +6462,11 @@ var
   Elapsed: Double;
 begin
   if FBitmap.Width = 0 then Exit;
-  UndoPush(FBitmap);
+  UndoPushMasked(FBitmap, FAlphaMask, FProtMask);
   if ShowAmigaBGDlg(FBitmap, Elapsed) then
   begin
+    EnsureAlphaMask;
+    EnsureProtMask;
     FSelection.Clear;
     UpdateZoomFit; FinishEffect(T('Amiga background'), Elapsed);
   end;
@@ -6156,9 +6477,11 @@ var
   Elapsed: Double;
 begin
   if FBitmap.Width = 0 then Exit;
-  UndoPush(FBitmap);
+  UndoPushMasked(FBitmap, FAlphaMask, FProtMask);
   if ShowAmigaBGSDlg(FBitmap, Elapsed) then
   begin
+    EnsureAlphaMask;
+    EnsureProtMask;
     FSelection.Clear;
     UpdateZoomFit; FinishEffect(T('Amiga background (stretched, MagicWB)'), Elapsed);
   end;
@@ -6310,8 +6633,11 @@ begin
     ScrollBox.Color := Prefs.CanvasBG;
     Application.DefaultFont.Size := Application.DefaultFont.Size - OldFontSize + NewFontSize;
     Screen.MenuFont.Size := Screen.MenuFont.Size - OldFontSize + NewFontSize;
+    // komunikaty i pytania VCL (MessageDlg, InputQuery) - jak w Fotografista.dpr
+    Screen.MessageFont.Size := Application.DefaultFont.Size;
     Self.Menu := nil;
     Self.Menu := MainMenu;
+    ApplyCanvasGap;
     StatusBar.UseSystemFont := False;
     StatusBar.Font.Size := Application.DefaultFont.Size;
     RebuildRecentMenu(mnuFile, mnuFileSepRecent, HandleRecentFileClick);
@@ -6407,12 +6733,13 @@ begin
   if FBitmap.Width = 0 then Exit;
   if (FProtMask <> nil) and (FProtCoverCount > 0) then
   begin
-    UndoPushMasked(FBitmap, FAlphaMask, FProtMask);
+    UndoPushMasked(FBitmap, FAlphaMask, FProtMask, T('Clear protection mask'));
     FProtMask.Canvas.Brush.Color := clBlack;
     FProtMask.Canvas.FillRect(Rect(0, 0, FProtMask.Width, FProtMask.Height));
     RecalcProtCoverCount;
     FDirty := True;
     UpdateCaption;
+    UpdateUndoStatus;
     PaintBox.Invalidate;
   end;
 end;
@@ -6434,7 +6761,7 @@ begin
   if FProtMask = nil then Exit;
   R := FSelection.ClampedRect(FBitmap.Width, FBitmap.Height);
   if (R.Right < R.Left) or (R.Bottom < R.Top) then Exit;
-  UndoPushMasked(FBitmap, FAlphaMask, FProtMask);
+  UndoPushMasked(FBitmap, FAlphaMask, FProtMask, T('Protect selection'));
   for Y := R.Top to R.Bottom do
   begin
     MP := FProtMask.ScanLine[Y];
@@ -6448,6 +6775,7 @@ begin
   mnuProtShow.Checked := True;
   FDirty := True;
   UpdateCaption;
+  UpdateUndoStatus;
   PaintBox.Invalidate;
 end;
 
@@ -6463,7 +6791,7 @@ begin
   if not FSelection.IsValid then Exit;
   R := FSelection.ClampedRect(FBitmap.Width, FBitmap.Height);
   if (R.Right < R.Left) or (R.Bottom < R.Top) then Exit;
-  UndoPushMasked(FBitmap, FAlphaMask, FProtMask);
+  UndoPushMasked(FBitmap, FAlphaMask, FProtMask, T('Unprotect selection'));
   for Y := R.Top to R.Bottom do
   begin
     MP := FProtMask.ScanLine[Y];
@@ -6475,6 +6803,7 @@ begin
   RecalcProtCoverCount;
   FDirty := True;
   UpdateCaption;
+  UpdateUndoStatus;
   PaintBox.Invalidate;
 end;
 
@@ -6925,6 +7254,38 @@ begin
     FProtDirtyRect := Rect(0, 0, 0, 0)
   else
     FProtDirtyRect := Rect(MinX, MinY, MaxX + 1, MaxY + 1);
+end;
+
+{ Prostokat do rysowania szachownicy (DrawCheckerRect) z rzeczywistej
+  zawartosci maski alfa: obejmuje piksele 0 (wytarte). Potrzebne po Cofnij/
+  Ponow - Undo/Redo podmieniaja tresc FAlphaMask, ale nie FAlphaDirtyRect,
+  a EnsureAlphaMask zeruje prostokat. Bez przeliczenia przywrocona maska
+  jest niewidoczna. Odpowiednik RecalcProtCoverCount dla maski alfa. }
+procedure TfrmMain.RecalcAlphaDirtyRect;
+var
+  Y, X: Integer;
+  P: PByte;
+  MinX, MinY, MaxX, MaxY: Integer;
+begin
+  MinX := MaxInt; MinY := MaxInt;
+  MaxX := -MaxInt; MaxY := -MaxInt;
+  if FAlphaMask <> nil then
+    for Y := 0 to FAlphaMask.Height - 1 do
+    begin
+      P := FAlphaMask.ScanLine[Y];
+      for X := 0 to FAlphaMask.Width - 1 do
+        if P[X] = 0 then
+        begin
+          if X < MinX then MinX := X;
+          if X > MaxX then MaxX := X;
+          if Y < MinY then MinY := Y;
+          if Y > MaxY then MaxY := Y;
+        end;
+    end;
+  if MaxX < 0 then
+    FAlphaDirtyRect := Rect(0, 0, 0, 0)
+  else
+    FAlphaDirtyRect := Rect(MinX, MinY, MaxX + 1, MaxY + 1);
 end;
 
 { Transformacje maski ochronnej (FProtMask, 1 bajt/piksel, 255 = chronione).
@@ -8018,8 +8379,8 @@ end;
 
 procedure TfrmMain.StatusBarHint(Sender: TObject);
 begin
-  if StatusBar.Panels.Count > 5 then
-    StatusBar.Panels[5].Text := Application.Hint;
+  if StatusBar.Panels.Count > 6 then
+    StatusBar.Panels[6].Text := Application.Hint;
 end;
 
 procedure TfrmMain.UpdateStatusBar(const OpName: string = ''; ExecutionTimeSec: Double = 0);
@@ -8040,9 +8401,9 @@ begin
     StatusBar.Panels[3].Text := Format('%d%%', [ZoomPct]);
 
     if FSelection.Active and (FSelection.W > 0) and (FSelection.H > 0) then
-      StatusBar.Panels[4].Text := Format(T('Selection: %d x %d'), [Round(FSelection.W), Round(FSelection.H)])
+      StatusBar.Panels[5].Text := Format(T('Selection: %d x %d'), [Round(FSelection.W), Round(FSelection.H)])
     else
-      StatusBar.Panels[4].Text := '';
+      StatusBar.Panels[5].Text := '';
   end
   else
   begin
@@ -8050,11 +8411,12 @@ begin
     StatusBar.Panels[1].Text := '';
     StatusBar.Panels[2].Text := '';
     StatusBar.Panels[3].Text := '';
-    StatusBar.Panels[4].Text := '';
+    StatusBar.Panels[5].Text := '';
   end;
+  UpdateUndoStatus;
 
-  // Jeśli przekazano parametr, aktualizujemy panel 6.
-  // Jeśli nie - NIE ruszamy panelu 6, żeby nie wymazywać informacji o ostatniej operacji!
+  // Jeśli przekazano parametr, aktualizujemy panel 7.
+  // Jeśli nie - NIE ruszamy panelu 7, żeby nie wymazywać informacji o ostatniej operacji!
   if OpName <> '' then
     SetOperationInfo(OpName, ExecutionTimeSec);
 end;
@@ -8126,6 +8488,9 @@ end;
 
 procedure TfrmMain.FinishEffect(const OpName: string; Seconds: Double);
 begin
+  // Stan Cofnij zapisany przed oknem efektu zostaje dopiero teraz, z nazwa
+  // operacji (Anuluj = brak FinishEffect = stan znika, uUndo.pas).
+  UndoCommit(OpName);
   if MacroRecorder.IsActive then
   begin
     if gMacroPending.Code = '' then
@@ -8157,13 +8522,43 @@ end;
 
 procedure TfrmMain.SetOperationInfo(const OpName: string; Seconds: Double);
 begin
-  if StatusBar.Panels.Count > 6 then
+  if StatusBar.Panels.Count > 7 then
   begin
     if (OpName <> '') and (Seconds > 0) then
-      StatusBar.Panels[6].Text := Format('%s: %.3f s', [OpName, Seconds])
+      StatusBar.Panels[7].Text := Format('%s: %.3f s', [OpName, Seconds])
     else
-      StatusBar.Panels[6].Text := OpName;
+      StatusBar.Panels[7].Text := OpName;
   end;
+  UpdateUndoStatus;
+end;
+
+// Pole paska stanu: co cofnie Cofnij i co przywroci Ponow - jak sb_undo
+// w Hollywood (image_undo.hws, p_UpdateUndoMenu). Szerokosc z tekstu.
+procedure TfrmMain.UpdateUndoStatus;
+var
+  S, R: string;
+begin
+  // Jak p_UpdateUndoMenu: dostepnosc Cofnij/Ponow w menu wg stosow
+  // (wczesniej ustawiana tylko w Wyczysc historie - potem juz nie wracala).
+  mnuEditUndo.Enabled := UndoCanUndo;
+  mnuEditRedo.Enabled := UndoCanRedo;
+  if StatusBar.Panels.Count <= 4 then Exit;
+  S := UndoTopName;
+  if S <> '' then
+    S := T('Undo') + ': ' + S;
+  R := RedoTopName;
+  if R <> '' then
+  begin
+    if S <> '' then S := S + '    ';
+    S := S + T('Redo') + ': ' + R;
+  end;
+  StatusBar.Panels[4].Text := S;
+  StatusBar.Canvas.Font.Assign(StatusBar.Font);
+  if S = '' then
+    StatusBar.Panels[4].Width := 0
+  else
+    StatusBar.Panels[4].Width := StatusBar.Canvas.TextWidth(S) +
+      2 * StatusBar.Canvas.TextWidth('W');
 end;
 
 end.

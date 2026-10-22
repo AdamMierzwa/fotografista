@@ -51,7 +51,7 @@ function ShowStereogramDlg(Bitmap: TBitmap; out ElapsedSec: Double): Boolean;
 var
   Dlg: TStereogramDlg;
   Scale: Double;
-  pw, ph: Integer;
+  pw, ph, Seed: Integer;
   Scaled: TBitmap;
   SW: TStopwatch;
 begin
@@ -95,9 +95,15 @@ begin
       SW := TStopwatch.StartNew;
       Dlg.ApplyFull;
       gMacroPending.Code := 'STEREOGRAM';
+      // zasiew jak w ApplyFull: przy zaznaczonym Losowy zasiew -1 (losowy),
+      // wczesniej zapisywana byla wartosc z pola i makro dawalo staly wzor
+      if Dlg.chkRandomSeed.Checked then
+        Seed := -1
+      else
+        Seed := StrToIntDef(Dlg.edSeed.Text, 0);
       gMacroPending.Params := Format('%d|%d|%d|%d', [
         Dlg.rgMode.ItemIndex, Dlg.tbPeriod.Position,
-        Dlg.tbDepth.Position, StrToIntDef(Dlg.edSeed.Text, 0)]);
+        Dlg.tbDepth.Position, Seed]);
       ElapsedSec := SW.Elapsed.TotalSeconds;
       Result := True;
     end;
@@ -198,6 +204,10 @@ begin
 
   chkRandomSeed.Left := ColLeft;
   chkRandomSeed.Top := RowTop;
+  // wysokosc z czcionki jak w Timelapse / Wydajnosci (TH + 4) - 17 px z .dfm
+  // obcinalo przy 12 pt dol liter (y)
+  Self.Canvas.Font.Assign(chkRandomSeed.Font);
+  chkRandomSeed.Height := Self.Canvas.TextHeight('Wg') + 4;
   edSeed.Left := ColLeft + ColW - edSeed.Width;
   edSeed.Top := chkRandomSeed.Top + (chkRandomSeed.Height - edSeed.Height) div 2;
   RowTop := StackBelow(chkRandomSeed, SectionGap);

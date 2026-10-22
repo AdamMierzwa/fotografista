@@ -70,6 +70,14 @@ type
     FWorkingPreview: TBitmap;
     FSourceBmp: TBitmap;
     FInks: TShirtColors;
+    // Paleta oryginalu (TshirtExtractPalette): DZIELI obraz na plamy. FInks tylko
+    // koloruje plame J farba J - wymiana farby nie zmienia podzialu (oba tryby).
+    // FPaletteN = liczba kolorow, dla ktorej paleta jest policzona.
+    FPalette: TShirtColors;
+    FPaletteN: Integer;
+    procedure EnsurePalette(Bitmap: TBitmap; N: Integer);
+    function NearestDefaultInks(const Pal: TShirtColors; N: Integer): TShirtColors;
+    function DefaultInk(I, N: Integer): TColor;
     procedure EnsureInks(N: Integer);
     procedure RunPreview(Bitmap: TBitmap);
     procedure UpdateMapping;
@@ -312,7 +320,7 @@ begin
   ClientHeight := ButtonTop + 25 + 15;
 end;
 
-procedure TTshirtDlg.EnsureInks(N: Integer);
+function TTshirtDlg.DefaultInk(I, N: Integer): TColor;
 const
   Def: array[0..4] of TColor = (
     $00C83746,
@@ -320,6 +328,14 @@ const
     $00F0C814,
     $0000A5C3,
     $0046AA50);
+begin
+  if I <= 4 then
+    Result := Def[I]
+  else
+    Result := TshirtHSVToRGB(I * 360.0 / N, 255.0, 255.0);
+end;
+
+procedure TTshirtDlg.EnsureInks(N: Integer);
 var
   I, Len: Integer;
 begin
@@ -328,12 +344,72 @@ begin
   begin
     SetLength(FInks, N);
     for I := Len to N - 1 do
+      FInks[I] := DefaultInk(I, N);
+  end;
+end;
+
+procedure TTshirtDlg.EnsurePalette(Bitmap: TBitmap; N: Integer);
+begin
+  if FPaletteN <> N then
+  begin
+    FPalette := TshirtExtractPalette(Bitmap, N);
+    FPaletteN := N;
+  end;
+  // farby startowe (brakujace pozycje; wybrane zostaja)
+  if Length(FInks) < Length(FPalette) then
+  begin
+    if chkRaster.Checked then
+      FInks := NearestDefaultInks(FPalette, N)
+    else
+      FInks := Copy(FPalette);
+  end;
+end;
+
+// Sitodruk: farba startowa koloru palety = najblizsza farba domyslna
+// (EnsureInks) - wyglad startowy jak przed rozdzieleniem palety i farb, gdy
+// piksel szedl do najblizszej farby domyslnej. Kazda farba domyslna najwyzej
+// raz (para kolor palety - farba o najmniejszej odleglosci przydzielana
+// pierwsza), zeby dwie plamy nie zaczynaly z ta sama farba. Kolorow palety
+// jest najwyzej N, farb domyslnych N - kazdy kolor dostaje farbe.
+function TTshirtDlg.NearestDefaultInks(const Pal: TShirtColors; N: Integer): TShirtColors;
+var
+  I, J, K, BestI, BestJ: Integer;
+  D, BestD: Integer;
+  Def: TShirtColors;
+  PalDone, DefUsed: array of Boolean;
+begin
+  SetLength(Def, N);
+  for J := 0 to N - 1 do
+    Def[J] := DefaultInk(J, N);
+  SetLength(Result, Length(Pal));
+  SetLength(PalDone, Length(Pal));
+  SetLength(DefUsed, N);
+  for K := 0 to Min(Length(Pal), N) - 1 do
+  begin
+    BestI := -1;
+    BestJ := -1;
+    BestD := MaxInt;
+    for I := 0 to Length(Pal) - 1 do
     begin
-      if I <= 4 then
-        FInks[I] := Def[I]
-      else
-        FInks[I] := TshirtHSVToRGB(I * 360.0 / N, 255.0, 255.0);
+      if PalDone[I] then Continue;
+      for J := 0 to N - 1 do
+      begin
+        if DefUsed[J] then Continue;
+        D := Sqr(GetRValue(Pal[I]) - GetRValue(Def[J])) +
+          Sqr(GetGValue(Pal[I]) - GetGValue(Def[J])) +
+          Sqr(GetBValue(Pal[I]) - GetBValue(Def[J]));
+        if D < BestD then
+        begin
+          BestD := D;
+          BestI := I;
+          BestJ := J;
+        end;
+      end;
     end;
+    if BestI < 0 then Break;
+    Result[BestI] := Def[BestJ];
+    PalDone[BestI] := True;
+    DefUsed[BestJ] := True;
   end;
 end;
 
@@ -379,18 +455,20 @@ begin
 
   if chkRaster.Checked then
   begin
-    EnsureInks(N);
-    TshirtRender(Bitmap, FInks, GetCellMultValue);
+    EnsurePalette(Bitmap, N);
+    TshirtRender(Bitmap, FPalette, FInks, GetCellMultValue);
     CleanCount := TshirtClean(Bitmap, MinArea);
     lblCleanCount.Caption := T('Islands removed:') + ' ' + IntToStr(CleanCount);
   end
   else
   begin
-    if Length(FInks) < N then
-      FInks := TshirtExtractPalette(Bitmap, N);
-    TshirtMapToInks(Bitmap, FInks);
+    // podzial wg palety oryginalu, czyszczenie wysp na kolorach palety,
+    // dopiero potem kolor plamy J -> farba J
+    EnsurePalette(Bitmap, N);
+    TshirtMapToInks(Bitmap, FPalette);
     lblCleanCount.Caption := T('Islands removed:') + ' '
       + IntToStr(TshirtClean(Bitmap, MinArea));
+    TshirtReplaceColors(Bitmap, FPalette, FInks);
     TshirtWhiteToFabric(Bitmap);
   end;
 
@@ -409,16 +487,16 @@ procedure TTshirtDlg.ApplyFull;
 begin
   if chkRaster.Checked then
   begin
-    EnsureInks(cmbColors.ItemIndex + 2);
-    TshirtRender(FSourceBmp, FInks, GetCellMultValue);
+    EnsurePalette(FSourceBmp, cmbColors.ItemIndex + 2);
+    TshirtRender(FSourceBmp, FPalette, FInks, GetCellMultValue);
     TshirtClean(FSourceBmp, tbMinArea.Position);
   end
   else
   begin
-    if Length(FInks) < cmbColors.ItemIndex + 2 then
-      FInks := TshirtExtractPalette(FSourceBmp, cmbColors.ItemIndex + 2);
-    TshirtMapToInks(FSourceBmp, FInks);
+    EnsurePalette(FSourceBmp, cmbColors.ItemIndex + 2);
+    TshirtMapToInks(FSourceBmp, FPalette);
     TshirtClean(FSourceBmp, tbMinArea.Position);
+    TshirtReplaceColors(FSourceBmp, FPalette, FInks);
     TshirtWhiteToFabric(FSourceBmp);
   end;
 end;
@@ -426,6 +504,7 @@ end;
 procedure TTshirtDlg.cmbColorsChange(Sender: TObject);
 begin
   SetLength(FInks, 0);
+  FPaletteN := 0;   // nowa liczba kolorow -> paleta i farby od nowa
   ApplyPreview;
 end;
 

@@ -9,13 +9,21 @@ const
   MAX_UNDO = 20;
 
 procedure UndoInit;
-procedure UndoPush(ABmp: TBitmap);
-procedure UndoPushMasked(ABmp, AMask: TBitmap; AProt: TBitmap = nil);
+// AName = '' : stan WSTEPNY (efekt z oknem) - zostaje na stosie dopiero po
+// UndoCommit (FinishEffect); niezatwierdzony (Anuluj) znika przy nastepnym
+// zapisie, Cofnij lub Ponow. AName <> '' : stan od razu zatwierdzony.
+procedure UndoPush(ABmp: TBitmap; const AName: string = '');
+procedure UndoPushMasked(ABmp, AMask: TBitmap; AProt: TBitmap = nil;
+  const AName: string = '');
+procedure UndoCommit(const AName: string);
 function Undo(ABmp: TBitmap; AMask: TBitmap = nil; AProt: TBitmap = nil): Boolean;
 function Redo(ABmp: TBitmap; AMask: TBitmap = nil; AProt: TBitmap = nil): Boolean;
 function UndoRestoreOriginal(ABmp: TBitmap): Boolean;
 function UndoCanUndo: Boolean;
 function UndoCanRedo: Boolean;
+// Nazwa operacji, ktora cofnie Cofnij / przywroci Ponow ('' gdy brak).
+function UndoTopName: string;
+function RedoTopName: string;
 procedure UndoClear;
 
 implementation
@@ -27,6 +35,13 @@ var
   RedoMaskStack: array of TBitmap;
   UndoProtStack: array of TBitmap;
   RedoProtStack: array of TBitmap;
+  // Nazwy operacji rownolegle do stosow (jak g_undo_names / g_redo_names
+  // w Hollywood, image_undo.hws).
+  UndoNames: TArray<string>;
+  RedoNames: TArray<string>;
+  // Wierzch UndoStack to stan wstepny (UndoPush bez nazwy, przed oknem
+  // efektu), jeszcze nie zatwierdzony przez UndoCommit.
+  UndoPending: Boolean;
 
 procedure UndoClearRedo; forward;
 
@@ -35,11 +50,26 @@ begin
   UndoClear;
 end;
 
-procedure UndoPush(ABmp: TBitmap);
-var
-  Bmp: TBitmap;
+// Usuwa niezatwierdzony stan wstepny (okno efektu anulowane).
+procedure UndoDiscardPending;
 begin
-  if Length(UndoStack) >= MAX_UNDO then
+  if not UndoPending then Exit;
+  UndoPending := False;
+  if Length(UndoStack) = 0 then Exit;
+  UndoStack[High(UndoStack)].Free;
+  UndoMaskStack[High(UndoMaskStack)].Free;
+  UndoProtStack[High(UndoProtStack)].Free;
+  SetLength(UndoStack, Length(UndoStack) - 1);
+  SetLength(UndoMaskStack, Length(UndoMaskStack) - 1);
+  SetLength(UndoProtStack, Length(UndoProtStack) - 1);
+  SetLength(UndoNames, Length(UndoNames) - 1);
+end;
+
+// Limit MAX_UNDO pilnowany przy zatwierdzeniu - anulowany stan wstepny
+// nie wypycha najstarszego.
+procedure UndoTrim;
+begin
+  while Length(UndoStack) > MAX_UNDO do
   begin
     UndoStack[0].Free;
     UndoMaskStack[0].Free;
@@ -47,7 +77,34 @@ begin
     Delete(UndoStack, 0, 1);
     Delete(UndoMaskStack, 0, 1);
     Delete(UndoProtStack, 0, 1);
+    Delete(UndoNames, 0, 1);
   end;
+end;
+
+procedure UndoCommit(const AName: string);
+begin
+  if not UndoPending then Exit;
+  UndoPending := False;
+  UndoNames[High(UndoNames)] := AName;
+  // Clear redo on new action
+  UndoClearRedo;
+  UndoTrim;
+end;
+
+procedure UndoPushFinish(const AName: string);
+begin
+  SetLength(UndoNames, Length(UndoNames) + 1);
+  UndoNames[High(UndoNames)] := '';
+  UndoPending := True;
+  if AName <> '' then
+    UndoCommit(AName);
+end;
+
+procedure UndoPush(ABmp: TBitmap; const AName: string);
+var
+  Bmp: TBitmap;
+begin
+  UndoDiscardPending;
   Bmp := TBitmap.Create;
   Bmp.Assign(ABmp);
   SetLength(UndoStack, Length(UndoStack) + 1);
@@ -56,23 +113,15 @@ begin
   UndoMaskStack[High(UndoMaskStack)] := nil;
   SetLength(UndoProtStack, Length(UndoProtStack) + 1);
   UndoProtStack[High(UndoProtStack)] := nil;
-  // Clear redo on new action
-  UndoClearRedo;
+  UndoPushFinish(AName);
 end;
 
-procedure UndoPushMasked(ABmp, AMask: TBitmap; AProt: TBitmap);
+procedure UndoPushMasked(ABmp, AMask: TBitmap; AProt: TBitmap;
+  const AName: string);
 var
   Bmp, Msk, Prot: TBitmap;
 begin
-  if Length(UndoStack) >= MAX_UNDO then
-  begin
-    UndoStack[0].Free;
-    UndoMaskStack[0].Free;
-    UndoProtStack[0].Free;
-    Delete(UndoStack, 0, 1);
-    Delete(UndoMaskStack, 0, 1);
-    Delete(UndoProtStack, 0, 1);
-  end;
+  UndoDiscardPending;
   Bmp := TBitmap.Create;
   Bmp.Assign(ABmp);
   Msk := nil;
@@ -95,14 +144,14 @@ begin
   UndoMaskStack[High(UndoMaskStack)] := Msk;
   SetLength(UndoProtStack, Length(UndoProtStack) + 1);
   UndoProtStack[High(UndoProtStack)] := Prot;
-  // Clear redo on new action
-  UndoClearRedo;
+  UndoPushFinish(AName);
 end;
 
 function Undo(ABmp: TBitmap; AMask: TBitmap; AProt: TBitmap): Boolean;
 var
   Bmp, Msk, Prot: TBitmap;
 begin
+  UndoDiscardPending;
   if Length(UndoStack) = 0 then Exit(False);
   Bmp := UndoStack[High(UndoStack)];
   Msk := UndoMaskStack[High(UndoMaskStack)];
@@ -110,6 +159,10 @@ begin
   SetLength(UndoStack, Length(UndoStack) - 1);
   SetLength(UndoMaskStack, Length(UndoMaskStack) - 1);
   SetLength(UndoProtStack, Length(UndoProtStack) - 1);
+  // Nazwa cofnietej operacji przechodzi na stos Ponow
+  SetLength(RedoNames, Length(RedoNames) + 1);
+  RedoNames[High(RedoNames)] := UndoNames[High(UndoNames)];
+  SetLength(UndoNames, Length(UndoNames) - 1);
   // Push current to redo
   SetLength(RedoStack, Length(RedoStack) + 1);
   RedoStack[High(RedoStack)] := TBitmap.Create;
@@ -154,6 +207,7 @@ function Redo(ABmp: TBitmap; AMask: TBitmap; AProt: TBitmap): Boolean;
 var
   Bmp, Msk, Prot: TBitmap;
 begin
+  UndoDiscardPending;
   if Length(RedoStack) = 0 then Exit(False);
   Bmp := RedoStack[High(RedoStack)];
   Msk := RedoMaskStack[High(RedoMaskStack)];
@@ -161,6 +215,10 @@ begin
   SetLength(RedoStack, Length(RedoStack) - 1);
   SetLength(RedoMaskStack, Length(RedoMaskStack) - 1);
   SetLength(RedoProtStack, Length(RedoProtStack) - 1);
+  // Nazwa ponowionej operacji wraca na stos Cofnij
+  SetLength(UndoNames, Length(UndoNames) + 1);
+  UndoNames[High(UndoNames)] := RedoNames[High(RedoNames)];
+  SetLength(RedoNames, Length(RedoNames) - 1);
   // Push current to undo
   SetLength(UndoStack, Length(UndoStack) + 1);
   UndoStack[High(UndoStack)] := TBitmap.Create;
@@ -205,8 +263,16 @@ function UndoRestoreOriginal(ABmp: TBitmap): Boolean;
 var
   OrigBmp: TBitmap;
   I: Integer;
+  Names: TArray<string>;
 begin
+  UndoDiscardPending;
   if Length(UndoStack) = 0 then Exit(False);
+
+  // Nazwy na stos Ponow: stan biezacy powstal z UndoNames[High], stan
+  // UndoStack[I] z UndoNames[I - 1] (kolejnosc jak RedoStack nizej).
+  Names := [UndoNames[High(UndoNames)]];
+  for I := High(UndoStack) downto 1 do
+    Names := Names + [UndoNames[I - 1]];
 
   // Maski alfa i protekcja sa pomijane przez "wroc do oryginalu" - zwalniane.
   for I := 0 to High(UndoMaskStack) do
@@ -252,6 +318,8 @@ begin
   for I := 0 to High(RedoProtStack) do
     RedoProtStack[I] := nil;
   SetLength(UndoProtStack, 0);
+  RedoNames := Names;
+  SetLength(UndoNames, 0);
 
   Result := True;
 end;
@@ -269,16 +337,33 @@ begin
   for I := 0 to High(RedoProtStack) do
     RedoProtStack[I].Free;
   SetLength(RedoProtStack, 0);
+  SetLength(RedoNames, 0);
 end;
 
 function UndoCanUndo: Boolean;
 begin
-  Result := Length(UndoStack) > 0;
+  Result := Length(UndoStack) - Ord(UndoPending) > 0;
 end;
 
 function UndoCanRedo: Boolean;
 begin
   Result := Length(RedoStack) > 0;
+end;
+
+function UndoTopName: string;
+var
+  I: Integer;
+begin
+  I := High(UndoNames) - Ord(UndoPending);
+  if I >= 0 then Result := UndoNames[I] else Result := '';
+end;
+
+function RedoTopName: string;
+begin
+  if Length(RedoNames) > 0 then
+    Result := RedoNames[High(RedoNames)]
+  else
+    Result := '';
 end;
 
 procedure UndoClear;
@@ -294,6 +379,8 @@ begin
   for I := 0 to High(UndoProtStack) do
     UndoProtStack[I].Free;
   SetLength(UndoProtStack, 0);
+  SetLength(UndoNames, 0);
+  UndoPending := False;
   UndoClearRedo;
 end;
 

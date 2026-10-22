@@ -108,6 +108,10 @@ begin
   rbSelMask.Left := rbSelOutline.Left + MaxR + CtrlGap * 2;
   rbSelMask.Top := RowTop;
   rbSelMask.Width := MaxR;
+  // wysokosc z czcionki jak w Timelapse / Wydajnosci (TH + 4) - 17 px z .dfm
+  // obcinalo przy 12 pt dol liter
+  rbSelOutline.Height := Self.Canvas.TextHeight('Wg') + 4;
+  rbSelMask.Height := rbSelOutline.Height;
   RowTop := StackBelow(rbSelOutline, SectionGap);
 
   // Szerokość kolumny: najszerszy wiersz (combo albo para radio), żeby suwak

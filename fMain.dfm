@@ -36,6 +36,9 @@
         Width = 55
       end
       item
+        Width = 0
+      end
+      item
         Width = -1
       end
       item
@@ -443,6 +446,11 @@
           Caption = 'Charcoal...'
           Hint = 'Charcoal - charcoal drawing simulation'
           OnClick = mnuCharcoalClick
+        end
+        object mnuComic: TMenuItem
+          Caption = 'Comic...'
+          Hint = 'Comic - posterised colours with bold outlines'
+          OnClick = mnuComicClick
         end
         object mnuObrys: TMenuItem
           Caption = 'Outline...'

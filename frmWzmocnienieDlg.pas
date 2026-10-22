@@ -32,8 +32,12 @@ type
   end;
 
 function ShowWzmocnienieDlg(Bitmap: TBitmap; out ElapsedSec: Double): Boolean;
+procedure DoWzmocnienie(Bitmap: TBitmap; Strength, ScAmount: Integer);
 
 implementation
+
+uses
+  uMacros;
 
 {$R *.dfm}
 
@@ -242,6 +246,7 @@ var
 begin
   ElapsedSec := 0;
   Result := False;
+  gMacroPending.Code := '';
   if (Bitmap = nil) or (Bitmap.Width = 0) then Exit;
 
   Dlg := TWzmocnienieDlg.Create(Application);
@@ -279,6 +284,9 @@ begin
     begin
       SW := TStopwatch.StartNew;
       Dlg.ApplyFull;
+      gMacroPending.Code := 'ENHANCE';
+      gMacroPending.Params := IntToStr(Dlg.tbStrength.Position) + '|' +
+        IntToStr(Dlg.tbSC.Position);
       ElapsedSec := SW.Elapsed.TotalSeconds;
       Result := True;
     end;

@@ -30,6 +30,10 @@ const
   cLanguageKeys: array[TLanguage] of string = ('Polski (Polish)', 'English', 'Deutsch (German)', 'Français (French)', 'Español (Spanish)', 'Italiano (Italian)', 'Čeština (Czech)', 'Português (Portuguese)', 'Afrikaans');
 
 function T(const AEnglishText: string): string;
+// Wszystkie tlumaczenia klucza (9 jezykow; puste = tekst EN). Do rezerwowania
+// miejsca w ukladzie okna na najdluzsze tlumaczenie, niezaleznie od jezyka.
+// Klucz nieznany: tablica z samym AEnglishText.
+function TAllLanguages(const AEnglishText: string): TArray<string>;
 procedure SetLanguage(ALang: TLanguage);
 function DetectLanguage: TLanguage;
 function CurrentLanguage: TLanguage;
@@ -53,7 +57,7 @@ uses
 
 const
   // BEGIN GENERATED TEXTABLE - nie edytować ręcznie, generuje tools\gen_i18n.ps1
-  TextTable: array[0..1083] of TTextRec = (
+  TextTable: array[0..1101] of TTextRec = (
     (EN: 'File'; PL: 'Plik'; CS: 'Soubor';
      FR: 'Fichier'; DE: 'Datei'; IT: 'File';
      ES: 'Archivo'; PT: 'Ficheiro'; AF: 'Lêer'),
@@ -567,7 +571,7 @@ const
     (EN: 'Dice - dice eyes pattern'; PL: 'Kostkowanie — oczka kostki do gry'; CS: 'Kostky - vzor ok kostek';
      FR: 'Dés - motif en points de dés'; DE: 'Würfel - Würfelaugen-Muster'; IT: 'Dadi - motivo con punti da dado';
      ES: 'Dados - patrón de puntos de dados'; PT: 'Dados - padrão de pontos de dado'; AF: 'Dobbelstene - dobbelsteenpatroon'),
-    (EN: 'Risograph - layered print with color offset'; PL: 'Rizograf — druk warstwowy z offsetem kolorów'; CS: 'Risograf - vrstvený tisk s posunem barev';
+    (EN: 'Risograph - layered print with color offset'; PL: 'Risografia — druk warstwowy z offsetem kolorów'; CS: 'Risograf - vrstvený tisk s posunem barev';
      FR: 'Risographie - impression en couches avec décalage des couleurs'; DE: 'Risografie - Schichtdruck mit Farbversatz'; IT: 'Risografia - stampa a livelli con sfalsamento dei colori';
      ES: 'Risografía - impresión por capas con desplazamiento de color'; PT: 'Risografia - impressão em camadas com desvio de cores'; AF: 'Risografie - gelaagde drukwerk met kleurverskuiwing'),
     (EN: 'Single-color screen print - grayscale + halftone on background'; PL: 'Sitodruk jednokolorowy — szary + tło  półtonowe'; CS: 'Jednobarevný sítotisk - šedá + půltón na pozadí';
@@ -1158,10 +1162,10 @@ const
     (EN: 'Contrast (before conversion)'; PL: 'Kontrast (przed konwersją)'; CS: 'Kontrast (před převodem)';
      FR: 'Contraste (avant conversion)'; DE: 'Kontrast (vor der Umwandlung)'; IT: 'Contrasto (prima della conversione)';
      ES: 'Contraste (antes de la conversión)'; PT: 'Contraste (antes da conversão)'; AF: 'Kontras (voor omskakeling)'),
-    (EN: 'Red'; PL: 'Czerwona'; CS: 'Červená';
+    (EN: 'Red'; PL: 'Czerwony'; CS: 'Červená';
      FR: 'Rouge'; DE: 'Rot'; IT: 'Rosso';
      ES: 'Rojo'; PT: 'Vermelho'; AF: 'Rooi'),
-    (EN: 'Green'; PL: 'Zielona'; CS: 'Zelená';
+    (EN: 'Green'; PL: 'Zielony'; CS: 'Zelená';
      FR: 'Vert'; DE: 'Grün'; IT: 'Verde';
      ES: 'Verde'; PT: 'Verde'; AF: 'Groen'),
     (EN: 'Hue'; PL: 'Odcień'; CS: 'Odstín';
@@ -1824,18 +1828,18 @@ const
     (EN: 'Quad-tone'; PL: 'Czterokolor'; CS: 'Kvadrón';
      FR: 'Quadrichromie tonale'; DE: 'Quad-Ton'; IT: 'Quadritono';
      ES: 'Cuadritono'; PT: 'Quadritom'; AF: 'Vierkleur'),
-    (EN: 'Color 1 (shadows):'; PL: 'Kolor 1 (cienie)'; CS: 'Barva 1 (stíny):';
-     FR: 'Couleur 1 (ombres) :'; DE: 'Farbe 1 (Schatten):'; IT: 'Colore 1 (ombre):';
-     ES: 'Color 1 (sombras):'; PT: 'Cor 1 (sombras):'; AF: 'Kleur 1 (skaduwees):'),
-    (EN: 'Color 2 (midtones):'; PL: 'Kolor 2 (półtony)'; CS: 'Barva 2 (střední tóny):';
-     FR: 'Couleur 2 (tons moyens) :'; DE: 'Farbe 2 (Mitteltöne):'; IT: 'Colore 2 (toni medi):';
-     ES: 'Color 2 (tonos medios):'; PT: 'Cor 2 (tons médios):'; AF: 'Kleur 2 (middeltone):'),
-    (EN: 'Color 3 (highlights):'; PL: 'Kolor 3 (światła)'; CS: 'Barva 3 (světla):';
-     FR: 'Couleur 3 (hautes lumières) :'; DE: 'Farbe 3 (Lichter):'; IT: 'Colore 3 (alte luci):';
-     ES: 'Color 3 (altas luces):'; PT: 'Cor 3 (altas luzes):'; AF: 'Kleur 3 (hoogtepunte):'),
-    (EN: 'Color 4 (extreme highlights):'; PL: 'Kolor 4 (ekstremalne światła)'; CS: 'Barva 4 (extrémní světla):';
-     FR: 'Couleur 4 (hautes lumières extrêmes) :'; DE: 'Farbe 4 (Spitzlichter):'; IT: 'Colore 4 (luci estreme):';
-     ES: 'Color 4 (luces extremas):'; PT: 'Cor 4 (luzes extremas):'; AF: 'Kleur 4 (uiterste hoogtepunte):'),
+    (EN: 'Color 1 (shadows)'; PL: 'Kolor 1 (cienie)'; CS: 'Barva 1 (stíny)';
+     FR: 'Couleur 1 (ombres)'; DE: 'Farbe 1 (Schatten)'; IT: 'Colore 1 (ombre)';
+     ES: 'Color 1 (sombras)'; PT: 'Cor 1 (sombras)'; AF: 'Kleur 1 (skaduwees)'),
+    (EN: 'Color 2 (midtones)'; PL: 'Kolor 2 (półtony)'; CS: 'Barva 2 (střední tóny)';
+     FR: 'Couleur 2 (tons moyens)'; DE: 'Farbe 2 (Mitteltöne)'; IT: 'Colore 2 (toni medi)';
+     ES: 'Color 2 (tonos medios)'; PT: 'Cor 2 (tons médios)'; AF: 'Kleur 2 (middeltone)'),
+    (EN: 'Color 3 (highlights)'; PL: 'Kolor 3 (światła)'; CS: 'Barva 3 (světla)';
+     FR: 'Couleur 3 (hautes lumières)'; DE: 'Farbe 3 (Lichter)'; IT: 'Colore 3 (alte luci)';
+     ES: 'Color 3 (altas luces)'; PT: 'Cor 3 (altas luzes)'; AF: 'Kleur 3 (hoogtepunte)'),
+    (EN: 'Color 4 (extreme highlights)'; PL: 'Kolor 4 (ekstremalne światła)'; CS: 'Barva 4 (extrémní světla)';
+     FR: 'Couleur 4 (hautes lumières extrêmes)'; DE: 'Farbe 4 (Spitzlichter)'; IT: 'Colore 4 (luci estreme)';
+     ES: 'Color 4 (luces extremas)'; PT: 'Cor 4 (luzes extremas)'; AF: 'Kleur 4 (uiterste hoogtepunte)'),
     (EN: 'Chromatic aberration...'; PL: 'Aberracja chromatyczna...'; CS: 'Chromatická aberace...';
      FR: 'Aberration chromatique…'; DE: 'Chromatische Aberration...'; IT: 'Aberrazione cromatica...';
      ES: 'Aberración cromática...'; PT: 'Aberração cromática...'; AF: 'Chromatiese aberrasie...'),
@@ -1968,7 +1972,7 @@ const
     (EN: 'Magenta'; PL: 'Magenta'; CS: 'Purpurová';
      FR: 'Magenta'; DE: 'Magenta'; IT: 'Magenta';
      ES: 'Magenta'; PT: 'Magenta'; AF: 'Magenta'),
-    (EN: 'Yellow'; PL: 'Żółta'; CS: 'Žlutá';
+    (EN: 'Yellow'; PL: 'Żółty'; CS: 'Žlutá';
      FR: 'Jaune'; DE: 'Gelb'; IT: 'Giallo';
      ES: 'Amarillo'; PT: 'Amarelo'; AF: 'Geel'),
     (EN: 'Orange'; PL: 'Pomarańczowa'; CS: 'Oranžová';
@@ -2079,9 +2083,9 @@ const
     (EN: 'Image: %s (%d×%d)'; PL: 'Obraz: %s (%d×%d)'; CS: 'Obrázek: %s (%d×%d)';
      FR: 'Image : %s (%d×%d)'; DE: 'Bild: %s (%d×%d)'; IT: 'Immagine: %s (%d×%d)';
      ES: 'Imagen: %s (%d×%d)'; PT: 'Imagem: %s (%d×%d)'; AF: 'Beeld: %s (%d×%d)'),
-    (EN: '%s: %.2f ms (avg of %d)'; PL: '%s: %.2f ms (śr. z %d)'; CS: '%s: %,2f ms (průměr %d)';
-     FR: '%s : %.2f ms (moyenne sur %d)'; DE: '%s: %.2f ms (Durchschnitt von %d)'; IT: '%s: %.2f ms (media di %d)';
-     ES: '%s: %.2f ms (promedio de %d)'; PT: '%s: %.2f ms (média de %d)'; AF: '%s: %.2f ms (gemiddeld van %d)'),
+    (EN: '%s: %.2n ms (avg of %d)'; PL: '%s: %.2n ms (śr. z %d)'; CS: '%s: %.2n ms (průměr %d)';
+     FR: '%s : %.2n ms (moyenne sur %d)'; DE: '%s: %.2n ms (Durchschnitt von %d)'; IT: '%s: %.2n ms (media di %d)';
+     ES: '%s: %.2n ms (promedio de %d)'; PT: '%s: %.2n ms (média de %d)'; AF: '%s: %.2n ms (gemiddeld van %d)'),
     (EN: 'Time: %d min %d s'; PL: 'Czas testu: %d min %d s'; CS: 'Čas: %d min %d s';
      FR: 'Temps : %d min %d s'; DE: 'Zeit: %d min %d s'; IT: 'Tempo: %d min %d s';
      ES: 'Tiempo: %d min %d s'; PT: 'Tempo: %d min %d s'; AF: 'Tyd: %d min %d s'),
@@ -2703,9 +2707,9 @@ const
     (EN: 'Could not open the file to read metadata.'; PL: 'Nie można otworzyć pliku do odczytu metadanych.'; CS: 'Nelze otevřít soubor pro čtení metadat.';
      FR: 'Impossible d’ouvrir le fichier pour lire les métadonnées.'; DE: 'Die Datei kann nicht zum Lesen der Metadaten geöffnet werden.'; IT: 'Impossibile aprire il file per leggere i metadati.';
      ES: 'No se pudo abrir el archivo para leer los metadatos.'; PT: 'Não foi possível abrir o arquivo para ler os metadados.'; AF: 'Kon nie die lêer oopmaak om metadata te lees nie.'),
-    (EN: 'Color 2 (highlights):'; PL: 'Kolor 2 (światła)'; CS: 'Barva 2 (světla):';
-     FR: 'Couleur 2 (hautes lumières) :'; DE: 'Farbe 2 (Lichter):'; IT: 'Colore 2 (alte luci):';
-     ES: 'Color 2 (altas luces):'; PT: 'Cor 2 (altas luzes):'; AF: 'Kleur 2 (hoogtepunte):'),
+    (EN: 'Color 2 (highlights)'; PL: 'Kolor 2 (światła)'; CS: 'Barva 2 (světla)';
+     FR: 'Couleur 2 (hautes lumières)'; DE: 'Farbe 2 (Lichter)'; IT: 'Colore 2 (alte luci)';
+     ES: 'Color 2 (altas luces)'; PT: 'Cor 2 (altas luzes)'; AF: 'Kleur 2 (hoogtepunte)'),
     (EN: 'WB 1.x palette'; PL: 'Paleta WB 1.x'; CS: 'Paleta WB 1.x';
      FR: 'Palette WB 1.x'; DE: 'WB-1.x-Palette'; IT: 'Palette WB 1.x';
      ES: 'Paleta WB 1.x'; PT: 'Paleta WB 1.x'; AF: 'WB 1.x-palet'),
@@ -3048,21 +3052,21 @@ const
     (EN: 'Eraser'; PL: 'Gumka'; CS: 'Guma';
      FR: 'Gomme'; DE: 'Radiergummi'; IT: 'Gomma';
      ES: 'Goma'; PT: 'Borracha'; AF: 'Uitveër'),
-    (EN: 'Black (PRL)'; PL: 'Czerń (PRL)'; CS: 'Černá (PRL)';
+    (EN: 'Black (PRL)'; PL: 'Czarny (PRL)'; CS: 'Černá (PRL)';
      FR: 'Noir (PRL)'; DE: 'Schwarz (PRL)'; IT: 'Nero (PRL)';
      ES: 'Negro (PRL)'; PT: 'Preto (PRL)'; AF: 'Swart (PRL)'),
-    (EN: 'Violet (West)'; PL: 'Fiolet (Zachód)'; CS: 'Fialová (Západ)';
+    (EN: 'Violet (West)'; PL: 'Fioletowy (Zachód)'; CS: 'Fialová (Západ)';
      FR: 'Violet (Ouest)'; DE: 'Violett (West)'; IT: 'Viola (Ovest)';
      ES: 'Violeta (Occidente)'; PT: 'Violeta (Ocidente)'; AF: 'Violet (Weste)'),
-    (EN: 'Navy (offset)'; PL: 'Granat (offset)'; CS: 'Tmavě modrá (offset)';
+    (EN: 'Navy (offset)'; PL: 'Granatowy (offset)'; CS: 'Tmavě modrá (offset)';
      FR: 'Bleu marine (offset)'; DE: 'Marineblau (Offset)'; IT: 'Blu navy (offset)';
      ES: 'Azul marino (offset)'; PT: 'Azul-marinho (offset)'; AF: 'Marineblou (offset)'),
-    (EN: 'Red (stamps)'; PL: 'Czerwień (stemple)'; CS: 'Červená (razítka)';
+    (EN: 'Red (stamps)'; PL: 'Czerwony (stemple)'; CS: 'Červená (razítka)';
      FR: 'Rouge (tampons)'; DE: 'Rot (Stempel)'; IT: 'Rosso (timbri)';
      ES: 'Rojo (sellos)'; PT: 'Vermelho (carimbos)'; AF: 'Rooi (stempels)'),
-    (EN: 'PRL samizdat - white-protein duplicator, sooty ink, smeared stencil'; PL: 'Drugi obieg PRL — powielacz białkowy, okopcony tusz, rozmazana matryca'; CS: 'Samizdat v PLR — bílkovinný cyklostyl, sazovitý inkoust, rozmazaná matrice';
-     FR: 'Samizdat de la RPP — duplicateur à albumine, encre fuligineuse, stencil baveux'; DE: 'PRL-Samisdat – Eiweiß-Vervielfältiger, rußige Tinte, verschmierte Schablone'; IT: 'Samizdat della RPP — duplicatore a proteine, inchiostro fuligginoso, matrice sbavata';
-     ES: 'Samizdat de la RPP — multicopista de proteína, tinta hollinienta, matriz embadurnada'; PT: 'Samizdat da RPP — duplicador de proteína, tinta fuliginosa, stencil borrado'; AF: 'PRL-samizdat — proteïen-verveelvuldiger, roetige ink, uitgesmeerde stensil'),
+    (EN: 'PRL samizdat - white-protein duplicator, sooty ink, smeared stencil'; PL: 'Drugi obieg PRL — powielacz białkowy, okopcony tusz, rozmazana matryca'; CS: 'Samizdat v PRL — bílkovinný cyklostyl, sazovitý inkoust, rozmazaná matrice';
+     FR: 'Samizdat de la PRL — duplicateur à albumine, encre fuligineuse, stencil baveux'; DE: 'PRL-Samisdat – Eiweiß-Vervielfältiger, rußige Tinte, verschmierte Schablone'; IT: 'Samizdat della PRL — duplicatore a proteine, inchiostro fuligginoso, matrice sbavata';
+     ES: 'Samizdat de la PRL — multicopista de proteína, tinta hollinienta, matriz embadurnada'; PT: 'Samizdat da PRL — duplicador de proteína, tinta fuliginosa, stencil borrado'; AF: 'PRL-samizdat — proteïen-verveelvuldiger, roetige ink, uitgesmeerde stensil'),
     (EN: 'Western spirit duplicator - crystal violet dye, alcohol smell'; PL: 'Zachodni powielacz spirytusowy — fiolet krystaliczny, zapach alkoholu'; CS: 'Západní lihový cyklostyl — krystalická violeť, zápach alkoholu';
      FR: 'Duplicateur à alcool occidental — violet de méthyle, odeur d’alcool'; DE: 'Westlicher Spiritus-Umdrucker – Kristallviolett, Alkoholgeruch'; IT: 'Duplicatore ad alcol occidentale — violetto di metile, odore di alcol';
      ES: 'Multicopista de alcohol occidental — violeta cristal, olor a alcohol'; PT: 'Duplicador a álcool ocidental — violeta cristal, cheiro a álcool'; AF: 'Westerse alkohol-verveelvuldiger — kristalviolet, alkoholreuk'),
@@ -3305,7 +3309,61 @@ const
      ES: 'Curva tonal (10–500, 100 = lineal):'; PT: 'Curva tonal (10–500, 100 = linear):'; AF: 'Toonkurwe (10–500, 100 = lineêr):'),
     (EN: 'Dotted raster - scattered dots using Poisson distribution'; PL: 'Raster kropkowany - rozproszone kropki w rozkładzie Poissona'; CS: 'Tečkovaný raster - rozptýlené tečky v Poissonově rozdělení';
      FR: 'Trame pointillée - points dispersés selon une loi de Poisson'; DE: 'Punktierter Raster - verstreute Punkte nach Poisson-Verteilung'; IT: 'Retino a punti - punti sparsi con distribuzione di Poisson';
-     ES: 'Trama de puntos - puntos dispersos con distribución de Poisson'; PT: 'Raster pontilhado - pontos dispersos com distribuição de Poisson'; AF: 'Stippelraster - verstrooide kolletjies met Poisson-verspreiding')
+     ES: 'Trama de puntos - puntos dispersos con distribución de Poisson'; PT: 'Raster pontilhado - pontos dispersos com distribuição de Poisson'; AF: 'Stippelraster - verstrooide kolletjies met Poisson-verspreiding'),
+    (EN: 'Comic...'; PL: 'Komiks...'; CS: 'Komiks...';
+     FR: 'Bande dessinée...'; DE: 'Comic...'; IT: 'Fumetto...';
+     ES: 'Cómic...'; PT: 'Banda desenhada...'; AF: 'Strokiesprent...'),
+    (EN: 'Comic'; PL: 'Komiks'; CS: 'Komiks';
+     FR: 'Bande dessinée'; DE: 'Comic'; IT: 'Fumetto';
+     ES: 'Cómic'; PT: 'Banda desenhada'; AF: 'Strokiesprent'),
+    (EN: 'Comic - posterised colours with bold outlines'; PL: 'Komiks - posteryzowane kolory z wyraźnymi obrysami'; CS: 'Komiks - posterizované barvy s výraznými obrysy';
+     FR: 'Bande dessinée - couleurs postérisées avec contours marqués'; DE: 'Comic - posterisierte Farben mit kräftigen Konturen'; IT: 'Fumetto - colori posterizzati con contorni marcati';
+     ES: 'Cómic - colores posterizados con contornos marcados'; PT: 'Banda desenhada - cores posterizadas com contornos marcados'; AF: 'Strokiesprent - geposteriseerde kleure met vet lyne'),
+    (EN: 'Style'; PL: 'Styl'; CS: 'Styl';
+     FR: 'Style'; DE: 'Stil'; IT: 'Stile';
+     ES: 'Estilo'; PT: 'Estilo'; AF: 'Styl'),
+    (EN: 'Cartoon'; PL: 'Kreskówka'; CS: 'Kreslený film';
+     FR: 'Dessin animé'; DE: 'Cartoon'; IT: 'Cartone animato';
+     ES: 'Dibujo animado'; PT: 'Desenho animado'; AF: 'Spotprent'),
+    (EN: 'Old print'; PL: 'Stary druk'; CS: 'Starý tisk';
+     FR: 'Vieille impression'; DE: 'Alter Druck'; IT: 'Stampa antica';
+     ES: 'Impresión antigua'; PT: 'Impressão antiga'; AF: 'Ou druk'),
+    (EN: 'Newspaper'; PL: 'Gazeta'; CS: 'Noviny';
+     FR: 'Journal'; DE: 'Zeitung'; IT: 'Giornale';
+     ES: 'Periódico'; PT: 'Jornal'; AF: 'Koerant'),
+    (EN: 'PRL - soft'; PL: 'PRL – łagodny'; CS: 'PRL – jemný';
+     FR: 'PRL – doux'; DE: 'PRL – weich'; IT: 'PRL – morbido';
+     ES: 'PRL – suave'; PT: 'PRL – suave'; AF: 'PRL – sag'),
+    (EN: 'PRL - halftone'; PL: 'PRL – raster'; CS: 'PRL – rastr';
+     FR: 'PRL – trame'; DE: 'PRL – Raster'; IT: 'PRL – retino';
+     ES: 'PRL – trama'; PT: 'PRL – retícula'; AF: 'PRL – raster'),
+    (EN: 'Pop art - black'; PL: 'Pop-art – czerń'; CS: 'Pop-art – černá';
+     FR: 'Pop art – noir'; DE: 'Pop-Art – Schwarz'; IT: 'Pop art – nero';
+     ES: 'Pop art – negro'; PT: 'Pop art – preto'; AF: 'Pop-art – swart'),
+    (EN: 'Pop art - two inks'; PL: 'Pop-art – dwie farby'; CS: 'Pop-art – dvě barvy';
+     FR: 'Pop art – deux encres'; DE: 'Pop-Art – zwei Farben'; IT: 'Pop art – due inchiostri';
+     ES: 'Pop art – dos tintas'; PT: 'Pop art – duas tintas'; AF: 'Pop-art – twee ink'),
+    (EN: 'Pop art - color'; PL: 'Pop-art – kolor'; CS: 'Pop-art – barevný';
+     FR: 'Pop art – couleur'; DE: 'Pop-Art – Farbe'; IT: 'Pop art – colore';
+     ES: 'Pop art – color'; PT: 'Pop art – cor'; AF: 'Pop-art – kleur'),
+    (EN: 'Brown (faded)'; PL: 'Brązowy (spełznięty)'; CS: 'Hnědá (vybledlá)';
+     FR: 'Brun (délavé)'; DE: 'Braun (verblasst)'; IT: 'Marrone (sbiadito)';
+     ES: 'Marrón (desvaído)'; PT: 'Castanho (desbotado)'; AF: 'Bruin (verbleik)'),
+    (EN: 'Color distribution'; PL: 'Rozkład barw'; CS: 'Rozložení barev';
+     FR: 'Répartition des couleurs'; DE: 'Farbverteilung'; IT: 'Distribuzione dei colori';
+     ES: 'Distribución de colores'; PT: 'Distribuição de cores'; AF: 'Kleurverspreiding'),
+    (EN: 'Equalization'; PL: 'Wyrównanie'; CS: 'Vyrovnání';
+     FR: 'Égalisation'; DE: 'Entzerrung'; IT: 'Equalizzazione';
+     ES: 'Ecualización'; PT: 'Equalização'; AF: 'Egalisering'),
+    (EN: 'No equalization'; PL: 'Bez wyrównania'; CS: 'Bez vyrovnání';
+     FR: 'Sans égalisation'; DE: 'Keine Entzerrung'; IT: 'Nessuna equalizzazione';
+     ES: 'Sin ecualización'; PT: 'Sem equalização'; AF: 'Geen egalisering'),
+    (EN: 'Equalize RGB channels'; PL: 'Wyrównaj kanały RGB'; CS: 'Vyrovnat kanály RGB';
+     FR: 'Égaliser les canaux RVB'; DE: 'RGB-Kanäle entzerren'; IT: 'Equalizza i canali RGB';
+     ES: 'Ecualizar canales RGB'; PT: 'Equalizar canais RGB'; AF: 'Egaliseer RGB-kanale'),
+    (EN: 'Equalize brightness'; PL: 'Wyrównaj jasność'; CS: 'Vyrovnat jas';
+     FR: 'Égaliser la luminosité'; DE: 'Helligkeit entzerren'; IT: 'Equalizza la luminosità';
+     ES: 'Ecualizar el brillo'; PT: 'Equalizar a luminosidade'; AF: 'Egaliseer helderheid')
   );
   // END GENERATED TEXTABLE
 type
@@ -3373,6 +3431,36 @@ begin
     lgAfrikaans:
       if TextTable[Idx].AF <> '' then Exit(TextTable[Idx].AF);
   end;
+end;
+
+function TAllLanguages(const AEnglishText: string): TArray<string>;
+var
+  Idx, I: Integer;
+  Key: string;
+  Found: Boolean;
+begin
+  Result := [AEnglishText];
+  if gIndex = nil then Exit;
+  // to samo dopasowanie klucza co T() (tolerancja dwukropka na koncu)
+  Key := AEnglishText;
+  Found := gIndex.TryGetValue(Key, Idx);
+  if not Found and (Length(Key) > 1) and (Key[Length(Key)] = ':') then
+  begin
+    Key := Copy(Key, 1, Length(Key) - 1);
+    Found := gIndex.TryGetValue(Key, Idx);
+  end;
+  if not Found then
+  begin
+    Key := AEnglishText + ':';
+    Found := gIndex.TryGetValue(Key, Idx);
+  end;
+  if not Found then Exit;
+  Result := [TextTable[Idx].EN, TextTable[Idx].PL, TextTable[Idx].CS,
+    TextTable[Idx].FR, TextTable[Idx].DE, TextTable[Idx].IT, TextTable[Idx].ES,
+    TextTable[Idx].PT, TextTable[Idx].AF];
+  for I := 0 to High(Result) do
+    if Result[I] = '' then
+      Result[I] := TextTable[Idx].EN;
 end;
 
 function CurrentLanguage: TLanguage;

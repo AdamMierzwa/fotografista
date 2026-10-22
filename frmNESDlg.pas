@@ -29,6 +29,9 @@ function ShowNESDlg(Bitmap: TBitmap; out ElapsedSec: Double): Boolean;
 
 implementation
 
+uses
+  uMacros;
+
 {$R *.dfm}
 
 function ShowNESDlg(Bitmap: TBitmap; out ElapsedSec: Double): Boolean;
@@ -41,6 +44,7 @@ var
 begin
   ElapsedSec := 0;
   Result := False;
+  gMacroPending.Code := '';
   if (Bitmap = nil) or (Bitmap.Width = 0) then Exit;
 
   Dlg := TNESDlg.Create(Application);
@@ -78,6 +82,8 @@ begin
     begin
       SW := TStopwatch.StartNew;
       Dlg.ApplyFull;
+      gMacroPending.Code := 'NES';
+      gMacroPending.Params := IntToStr(Ord(Dlg.rgDither.ItemIndex = 0));   // 1 = roztrzasanie
       ElapsedSec := SW.Elapsed.TotalSeconds;
       Result := True;
     end;

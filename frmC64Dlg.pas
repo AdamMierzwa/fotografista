@@ -31,6 +31,9 @@ function ShowC64Dlg(Bitmap: TBitmap; out ElapsedSec: Double): Boolean;
 
 implementation
 
+uses
+  uMacros;
+
 {$R *.dfm}
 
 function ShowC64Dlg(Bitmap: TBitmap; out ElapsedSec: Double): Boolean;
@@ -43,6 +46,7 @@ var
 begin
   ElapsedSec := 0;
   Result := False;
+  gMacroPending.Code := '';
   if (Bitmap = nil) or (Bitmap.Width = 0) then Exit;
 
   Dlg := TC64Dlg.Create(Application);
@@ -80,6 +84,9 @@ begin
     begin
       SW := TStopwatch.StartNew;
       Dlg.ApplyFull;
+      gMacroPending.Code := 'C64';
+      gMacroPending.Params := IntToStr(Dlg.rgPal.ItemIndex) + '|' +
+        IntToStr(Dlg.rgDither.ItemIndex);
       ElapsedSec := SW.Elapsed.TotalSeconds;
       Result := True;
     end;

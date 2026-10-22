@@ -28,11 +28,18 @@ type
     procedure ApplyFull;
   end;
 
-function ShowDistortDlg(const Title: string; const Items: array of string; EffectProc: TDistortProc; Bitmap: TBitmap; out ElapsedSec: Double): Boolean;
+// MacroCode: kod kroku makra (BARREL, ARC, SWIRL, POLAR) - okno jest wspolne,
+// wiec kod podaje wywolujacy; parametr kroku = numer wariantu z listy.
+function ShowDistortDlg(const Title: string; const Items: array of string; EffectProc: TDistortProc; Bitmap: TBitmap; out ElapsedSec: Double;
+  const MacroCode: string = ''): Boolean;
 
 implementation
 
-function ShowDistortDlg(const Title: string; const Items: array of string; EffectProc: TDistortProc; Bitmap: TBitmap; out ElapsedSec: Double): Boolean;
+uses
+  uMacros;
+
+function ShowDistortDlg(const Title: string; const Items: array of string; EffectProc: TDistortProc; Bitmap: TBitmap; out ElapsedSec: Double;
+  const MacroCode: string): Boolean;
 var
   Dlg: TDistortDlg;
   Scale: Double;
@@ -43,6 +50,7 @@ var
 begin
   ElapsedSec := 0;
   Result := False;
+  gMacroPending.Code := '';
   if (Bitmap = nil) or (Bitmap.Width = 0) then Exit;
 
   Dlg := TDistortDlg.CreateNew(Application);
@@ -98,6 +106,11 @@ begin
     begin
       SW := TStopwatch.StartNew;
       Dlg.ApplyFull;
+      if MacroCode <> '' then
+      begin
+        gMacroPending.Code := MacroCode;
+        gMacroPending.Params := IntToStr(Max(0, Dlg.lbPresets.ItemIndex));
+      end;
       ElapsedSec := SW.Elapsed.TotalSeconds;
       Result := True;
     end;

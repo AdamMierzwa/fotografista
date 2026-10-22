@@ -588,10 +588,10 @@
 644	Triton
 645	Quad-Ton...
 646	Quad-Ton
-647	Farbe 1 (Schatten):
-648	Farbe 2 (Mitteltöne):
-649	Farbe 3 (Lichter):
-650	Farbe 4 (Spitzlichter):
+647	Farbe 1 (Schatten)
+648	Farbe 2 (Mitteltöne)
+649	Farbe 3 (Lichter)
+650	Farbe 4 (Spitzlichter)
 651	Chromatische Aberration...
 652	Chromatische Aberration
 653	Versatz:
@@ -673,7 +673,7 @@
 734	Leistungstest
 735	Bild wird vorbereitet...
 736	Bild: %s (%d×%d)
-737	%s: %.2f ms (Durchschnitt von %d)
+737	%s: %.2n ms (Durchschnitt von %d)
 738	Zeit: %d min %d s
 739	(abgebrochen)
 740	Maximale Belastung: %s (%.2f ms).
@@ -872,7 +872,7 @@
 947	Auflösung Y
 948	EXIF (%d Eigenschaften)
 949	Die Datei kann nicht zum Lesen der Metadaten geöffnet werden.
-950	Farbe 2 (Lichter):
+950	Farbe 2 (Lichter)
 951	WB-1.x-Palette
 952	WB-2.x/3.x-Palette
 953	OCS-32-Palette
@@ -1082,3 +1082,21 @@
 1153	Punktgröße (0,1–10,0 % der kurzen Seite):
 1154	Tonkurve (10–500, 100 = linear):
 1155	Punktierter Raster - verstreute Punkte nach Poisson-Verteilung
+1156	Comic...
+1157	Comic
+1158	Comic - posterisierte Farben mit kräftigen Konturen
+1159	Stil
+1160	Cartoon
+1161	Alter Druck
+1162	Zeitung
+1163	PRL – weich
+1164	PRL – Raster
+1165	Pop-Art – Schwarz
+1166	Pop-Art – zwei Farben
+1167	Pop-Art – Farbe
+1168	Braun (verblasst)
+1169	Farbverteilung
+1170	Entzerrung
+1171	Keine Entzerrung
+1172	RGB-Kanäle entzerren
+1173	Helligkeit entzerren

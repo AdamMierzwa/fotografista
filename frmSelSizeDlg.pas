@@ -20,6 +20,7 @@ type
     procedure FormShow(Sender: TObject);
   public
     SelW, SelH: Integer;
+    procedure RefitButtons; override;
   end;
 
 function ShowSelSizeDlg(var W, H: Integer): Boolean;
@@ -37,14 +38,47 @@ begin
     Dlg.SelW := W;
     Dlg.SelH := H;
     Result := Dlg.ShowModal = mrOk;
+    { Wartosci z pol, nie SelW/SelH: te ustawia tylko Enter w KeyPress,
+      a btnOK (ModalResult = mrOk) zamyka okno bez ich aktualizacji. }
     if Result then
     begin
-      W := Dlg.SelW;
-      H := Dlg.SelH;
+      W := StrToIntDef(Dlg.edtWidth.Text, 0);
+      H := StrToIntDef(Dlg.edtHeight.Text, 0);
     end;
   finally
     Dlg.Free;
   end;
+end;
+
+// Uklad z zawartosci (2026-10-21; wczesniej sztywne 300x160 i pola na stalym
+// Top = 38 - przy 12 pt etykieta wchodzila na pole). Dwie kolumny: etykieta,
+// pod nia pole; szerokosc kolumny z dluzszej etykiety (min. na 6 cyfr);
+// OK/Anuluj do prawej. Odstepy z czcionki, bez stalych w pikselach.
+procedure TSelSizeDlg.RefitButtons;
+var
+  Margin, ColW: Integer;
+begin
+  inherited;
+  Margin := CtrlGap * 3;
+  ColW := Max(Canvas.TextWidth(lblWidth.Caption), Canvas.TextWidth(lblHeight.Caption));
+  ColW := Max(ColW, Canvas.TextWidth('000000') + CtrlGap * 4);
+
+  lblWidth.Left := Margin;
+  lblWidth.Top := Margin;
+  edtWidth.SetBounds(Margin, lblWidth.Top + Canvas.TextHeight('Wg') + CtrlGap,
+    ColW, edtWidth.Height);
+
+  lblHeight.Left := Margin + ColW + SectionGap;
+  lblHeight.Top := lblWidth.Top;
+  edtHeight.SetBounds(lblHeight.Left, edtWidth.Top, ColW, edtHeight.Height);
+
+  btnOK.Top := edtWidth.Top + edtWidth.Height + SectionGap;
+  btnCancel.Top := btnOK.Top;
+  FitToContent(SectionGap, Margin);
+  // okno co najmniej na pare przyciskow
+  if ClientWidth < btnOK.Width + btnCancel.Width + CtrlGap * 2 + Margin * 2 then
+    ClientWidth := btnOK.Width + btnCancel.Width + CtrlGap * 2 + Margin * 2;
+  AlignButtonsRight([btnOK, btnCancel], Margin);
 end;
 
 procedure TSelSizeDlg.FormShow(Sender: TObject);

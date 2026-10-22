@@ -181,6 +181,17 @@ var
   I: Integer;
 begin
   inherited AfterConstruction;
+  // Forma bez .dfm (CreateNew) nie dostaje czcionki programu: robi to tylko
+  // Loaded przy ParentFont = True z .dfm, a SetParentFont bez rodzica niczego
+  // nie wysyla (Vcl.Controls.pas:6979-6980). Formy z .dfm maja ParentFont =
+  // True (regula AGENTS.md), wiec ten warunek ich nie dotyczy. Font.Assign
+  // zeruje ParentFont, stad ParentFont := True po nim - dalsze zmiany
+  // Application.DefaultFont dojda przez CMParentFontChanged.
+  if (not ParentFont) and (Parent = nil) and not (csDesigning in ComponentState) then
+  begin
+    Font.Assign(Application.DefaultFont);
+    ParentFont := True;
+  end;
   CanApply := (not (csDesigning in ComponentState)) and (not FTitleBarApplied)
     and UseCustomTitleBar and CustomTitleBar.Supported
     and (FormStyle <> fsMDIChild) and (Parent = nil);

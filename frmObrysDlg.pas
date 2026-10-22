@@ -46,11 +46,12 @@ type
   end;
 
 function ShowObrysDlg(Bitmap: TBitmap; out ElapsedSec: Double): Boolean;
+procedure DoObrys(Bitmap: TBitmap; Pct: Integer);
 
 implementation
 
 uses
-  uConvolution;
+  uConvolution, uMacros;
 
 {$R *.dfm}
 
@@ -223,6 +224,7 @@ var
 begin
   ElapsedSec := 0;
   Result := False;
+  gMacroPending.Code := '';
   if (Bitmap = nil) or (Bitmap.Width = 0) then Exit;
   Dlg := nil;
   try
@@ -308,6 +310,8 @@ begin
     begin
       SW := TStopwatch.StartNew;
       Dlg.ApplyFull;
+      gMacroPending.Code := 'OUTLINE';
+      gMacroPending.Params := IntToStr(Dlg.tbAmount.Position);
       ElapsedSec := SW.Elapsed.TotalSeconds;
       Result := True;
     end;

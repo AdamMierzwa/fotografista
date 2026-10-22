@@ -3,7 +3,7 @@
 interface
 
 uses
-  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, System.Math, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.ExtCtrls,
   uI18n, uTitleBar;
 
@@ -23,9 +23,11 @@ type
     btnOK: TButton;
     lblCopyright: TLabel;
     procedure btnOKClick(Sender: TObject);
-    procedure RecalcClientWidth;
+    procedure LayoutAbout;
   protected
     procedure DoShow; override;
+  public
+    procedure RefitButtons; override;
   end;
 
 var
@@ -41,14 +43,12 @@ const
   // Podbijać TYLKO przy realnej, funkcjonalnej zmianie (nowa funkcja / poprawka).
   // Niezależna od numeru paczki MSIX (licznik Store) - ten podbija się przy każdej
   // submisji, nawet przy odbiciu, i nie ma wpływu na tę stałą.
-  RealAppVersion = '1.2.0';
+  RealAppVersion = '1.3.0';
 
 procedure TfrmAbout.FormCreate(Sender: TObject);
 begin
-  // Konfiguracja okna - szerokość 520, żeby zachować marginesy
+  // Konfiguracja okna (rozmiar liczy LayoutAbout z zawartosci)
   Caption := T('About Fotografista');
-  ClientWidth := 520;
-  ClientHeight := 340;
   Position := poMainFormCenter;
   BorderIcons := [biSystemMenu];
   BorderStyle := bsSingle;  // było: bsDialog — TEST
@@ -128,7 +128,6 @@ begin
   Bevel1.Parent := Self;
   Bevel1.Left := 14;
   Bevel1.Top := lblDesc.Top + lblDesc.Height + SectionGap;
-  Bevel1.Width := 496;
   Bevel1.Height := 2;
 
   // Przycisk OK
@@ -158,29 +157,76 @@ begin
   lblCopyright.AutoSize := True;
   lblCopyright.WordWrap := False;
 
-  // Przycisk OK poniżej ostatniej linii tekstu (dopasowanie do wysokości czcionki)
-  btnOK.Top := lblCopyright.Top + lblCopyright.Height + 16;
-  ClientHeight := btnOK.Top + btnOK.Height + 32;
-
-  // Przycisk OK podąża za prawą krawędzią po przeliczeniu szerokości okna
-  btnOK.Anchors := [akRight, akBottom];
-
-  RecalcClientWidth;
+  // Pozycje powyzej sa tylko startowe - uklad liczy LayoutAbout (takze po
+  // zmianie czcionki, przez RefitButtons).
+  LayoutAbout;
 end;
 
-procedure TfrmAbout.RecalcClientWidth;
+// Uklad z zawartosci (2026-10-21; wczesniej kolumna tekstu na stalym Left = 180,
+// linia 496 px, prawy margines stale 12 px - dlugi wiersz dotykal krawedzi,
+// copyright na Left = 26). Jeden margines z czcionki z obu stron; kolumna
+// tekstu zaraz za logo; linia i copyright od lewego marginesu na cala
+// szerokosc tresci; OK do prawej.
+procedure TfrmAbout.LayoutAbout;
 var
-  I: Integer;
-  MaxRight: Integer;
+  Margin, X, Y, MaxRight: Integer;
+
+  procedure Row(L: TLabel; Gap: Integer);
+  begin
+    L.Left := X;
+    L.Top := Y + Gap;
+    Y := L.Top + L.Height;
+    MaxRight := Max(MaxRight, L.Left + L.Width);
+  end;
+
 begin
-  // Szerokość okna podąża za najszerszą kontrolką (dla AutoSize=True etykiety
-  // mają już przeliczony Width; WordWrap=False -> jedna linia w poziomie).
-  // Bevel/imgRetro są stałego rozmiaru, więc stanowią dolny limit szerokości.
+  if (imgRetro = nil) or (btnOK = nil) then Exit;
+  Margin := SectionGap;
+  // pole logo = rozmiar obrazka z zasobow (bez pustego pola wokol, ktore
+  // przy wysrodkowaniu dawalo szerszy lewy margines niz prawy)
+  if (imgRetro.Picture.Graphic <> nil) and not imgRetro.Picture.Graphic.Empty then
+  begin
+    imgRetro.Width := imgRetro.Picture.Width;
+    imgRetro.Height := imgRetro.Picture.Height;
+  end;
+  imgRetro.Left := Margin;
+
+  X := imgRetro.Left + imgRetro.Width + SectionGap;
   MaxRight := 0;
-  for I := 0 to ControlCount - 1 do
-    if Controls[I].Left + Controls[I].Width > MaxRight then
-      MaxRight := Controls[I].Left + Controls[I].Width;
-  ClientWidth := MaxRight + 12; // margines prawy = lewy (12 px)
+  lblTitle.Left := X;
+  lblTitle.Top := Margin;
+  lblVersion.Left := lblTitle.Left + lblTitle.Width + CtrlGap * 2;
+  lblVersion.Top := lblTitle.Top;
+  MaxRight := Max(MaxRight, lblVersion.Left + lblVersion.Width);
+  Y := lblTitle.Top + lblTitle.Height;
+  Row(lblSubtitle, CtrlGap);
+  Row(lblTech1, RowGap);
+  Row(lblTech2, RowGap);
+  Row(lblTech3, RowGap);
+  Row(lblDesc, SectionGap);
+  // logo wysrodkowane w pionie wzgledem bloku tekstu
+  imgRetro.Top := Margin + Max(0, (Y - Margin - imgRetro.Height) div 2);
+  Y := Max(Y, imgRetro.Top + imgRetro.Height);
+
+  // linia i copyright od lewego marginesu
+  Bevel1.Left := Margin;
+  Bevel1.Top := Y + SectionGap;
+  lblCopyright.Left := Margin;
+  lblCopyright.Top := Bevel1.Top + Bevel1.Height + SectionGap;
+  MaxRight := Max(MaxRight, lblCopyright.Left + lblCopyright.Width);
+
+  FitButton(btnOK);
+  btnOK.Top := lblCopyright.Top + lblCopyright.Height + SectionGap;
+  ClientWidth := Max(MaxRight, Margin + btnOK.Width) + Margin;
+  ClientHeight := btnOK.Top + btnOK.Height + Margin + TitleBarGap;
+  Bevel1.Width := ClientWidth - Margin * 2;
+  btnOK.Left := ClientWidth - Margin - btnOK.Width;
+end;
+
+procedure TfrmAbout.RefitButtons;
+begin
+  inherited;
+  LayoutAbout;
 end;
 
 procedure TfrmAbout.btnOKClick(Sender: TObject);

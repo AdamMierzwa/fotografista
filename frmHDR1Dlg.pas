@@ -44,6 +44,9 @@ procedure DoHDR1(Bitmap: TBitmap; Strength, SatBoost, ContrastBoost, CurveVal: I
 
 implementation
 
+uses
+  uMacros;
+
 {$R *.dfm}
 
 type
@@ -258,6 +261,7 @@ var
 begin
   ElapsedSec := 0;
   Result := False;
+  gMacroPending.Code := '';
   if (Bitmap = nil) or (Bitmap.Width = 0) then Exit;
   Dlg := THDR1Dlg.Create(Application);
   try
@@ -294,6 +298,10 @@ begin
     begin
       SW := TStopwatch.StartNew;
       Dlg.ApplyFull;
+      gMacroPending.Code := 'VIVID';
+      gMacroPending.Params := IntToStr(Dlg.tbStrength.Position) + '|' +
+        IntToStr(Dlg.tbSat.Position) + '|' + IntToStr(Dlg.tbContrast.Position) + '|' +
+        IntToStr(Dlg.tbCurve.Position);
       ElapsedSec := SW.Elapsed.TotalSeconds;
       Result := True;
     end;
