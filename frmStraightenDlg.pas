@@ -32,7 +32,8 @@ type
 var
   StraightenSourceBmp: TBitmap = nil;
 
-function ShowStraightenDlg(out Angle: Integer): Boolean;
+// Angle w stopniach, krok 0,1 (pozycja suwaka = dziesiate czesci stopnia).
+function ShowStraightenDlg(out Angle: Double): Boolean;
 
 implementation
 
@@ -41,7 +42,7 @@ implementation
 uses
   System.Math;
 
-function ShowStraightenDlg(out Angle: Integer): Boolean;
+function ShowStraightenDlg(out Angle: Double): Boolean;
 var
   Dlg: TStraightenDlg;
 begin
@@ -51,7 +52,7 @@ begin
   try
     Result := Dlg.ShowModal = mrOk;
     if Result then
-      Angle := Dlg.tbAngle.Position;
+      Angle := Dlg.tbAngle.Position / 10;
   finally
     Dlg.Free;
   end;
@@ -72,6 +73,7 @@ begin
     SI.SuppressExternalCodecs := False;
     GdiplusStartup(GdiPlusToken, @SI, nil);
   end;
+  lblAngleValue.Caption := Format('%.1f°', [tbAngle.Position / 10]);
   SizePreview;
   InitGdiPlus;
   UpdatePreview;
@@ -162,8 +164,8 @@ var
 begin
   if (FSourcePreview = nil) or (FSrcGP = nil) then Exit;
 
-  Angle := tbAngle.Position;
-  if Angle = 0 then
+  Angle := tbAngle.Position / 10;
+  if tbAngle.Position = 0 then
   begin
     imgPreview.Picture.Bitmap.Assign(FSourcePreview);
     Exit;
@@ -192,7 +194,7 @@ end;
 
 procedure TStraightenDlg.tbAngleChange(Sender: TObject);
 begin
-  lblAngleValue.Caption := IntToStr(tbAngle.Position) + '°';
+  lblAngleValue.Caption := Format('%.1f°', [tbAngle.Position / 10]);
   UpdatePreview;
 end;
 

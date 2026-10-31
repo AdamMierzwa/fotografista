@@ -54,7 +54,7 @@ end;
 procedure TResizeCropDlg.LayoutDialog;
 var
   Margin, ColLeft, PadT, LblColW, EditLeft, ColW, PanelW: Integer;
-  ItemW, RowH, ColPitch, Cols, Rows, I: Integer;
+  ItemW, ColPitch, Cols, I: Integer;
 begin
   Margin := CtrlGap * 3;
   ColLeft := Margin;
@@ -63,10 +63,16 @@ begin
   FitButton(btnFullHD);
   FitButtonGroup([btnCancel, btnOK]);
 
+  { Wysokosc TEdit z czcionki ustawia dopiero CreateWnd (UpdateHeight ->
+    AdjustHeight, Vcl.StdCtrls.pas:3439/3455) - bez uchwytu pola mialy
+    23 px z .dfm, a po pokazaniu okna rosly i rozjezdzaly wiersze. }
+  edWidth.HandleNeeded;
+  edHeight.HandleNeeded;
+
   { TLabel ma AutoSize = True, wiec po TranslateForm jego Width jest juz
     zmierzone przez VCL - tutaj tylko czytamy. }
   LblColW := Max(lblWidth.Width, lblHeight.Width);
-  EditLeft := ColLeft + LblColW + CtrlGap * 2;
+  EditLeft := ColLeft + LblColW + CtrlGap * 3;
   ColW := EditLeft + edWidth.Width - ColLeft;
 
   { TRadioGroup sam nie skaluje sie pod captiony - liczymy kolumny z fontu. }
@@ -78,11 +84,9 @@ begin
   Inc(ItemW, ButtonPad);
   Cols := rgCorner.Columns;
   if Cols < 1 then Cols := 1;
-  RowH := Self.Canvas.TextHeight('Wg') + CtrlGap * 2;
   ColPitch := ItemW + CtrlGap * 3;
-  Rows := (rgCorner.Items.Count + Cols - 1) div Cols;
   rgCorner.Width := Cols * ColPitch;
-  rgCorner.Height := Rows * RowH + CtrlGap * 2;
+  FitRadioGroupHeight(rgCorner);
   if rgCorner.Width > ColW then ColW := rgCorner.Width;
 
   PanelW := ColLeft + ColW + CtrlGap * 2 + btnFullHD.Width;

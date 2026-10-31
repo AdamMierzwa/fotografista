@@ -1,6 +1,6 @@
 ﻿unit uComicGazeta;
 
-// Komiks - styl Pop-art - dwie farby (Ben-Day z farba akcentu, przebudowa
+// Komiks - styl Ben-Day - kolor (dawniej Pop-art - dwie farby; Ben-Day z farba akcentu, przebudowa
 // dawnej Gazety 2026-10-20; zastepuje tez Stary druk). Osobny efekt: laczy go z innymi stylami
 // tylko okno frmComicDlg. Prototyp: tools\tmp\comic_proto\benday_gazeta.py
 // (wariant 'ton'), baza jak Ben-Day mono (BENDAY_MONO.md):
@@ -180,7 +180,7 @@ begin
     ComicBilateral(PY, PCb, PCr, Ww, Hw, Max(0.75, 3.0 * WS), cSigmaR, cBilatIter);
 
     // 2a. klucz plamy: sam poziom jasnosci, granice z rozkladu jasnosci obrazu
-    //     (ComicLevelKeys, wspolne z Pop-art - czern)
+    //     (ComicLevelKeys, wspolne z Ben-Day - czern)
     ComicLevelKeys(PY, cLevels, Key);
     SetLength(Stack, N);
     NLab := LabelEqual(Key, Lab);

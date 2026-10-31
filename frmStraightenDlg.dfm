@@ -35,9 +35,9 @@
     Top = 340
     Width = 400
     Height = 33
-    Max = 10
-    Min = -10
-    Frequency = 2
+    Max = 100
+    Min = -100
+    Frequency = 20
     Position = 0
     TabOrder = 0
     OnChange = tbAngleChange

@@ -102,6 +102,7 @@
     Height = 23
     TabOrder = 7
     Text = '1920'
+    NumbersOnly = True
   end
   object btnStart: TButton
     Left = 300

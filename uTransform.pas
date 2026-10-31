@@ -10,9 +10,10 @@ type
   TQuad = array[0..3] of TPointF;
 
 procedure RotateAndCrop(Bmp: TBitmap; AngleDeg: Double);
-procedure ImageResize(Bmp: TBitmap; NewW, NewH: Integer);
+procedure ImageResize(Bmp: TBitmap; NewW, NewH: Integer; Smooth: Boolean = False);
 procedure ImageResizeCrop(Bmp: TBitmap; TargetW, TargetH, Corner: Integer);
-procedure ImageTile(Bmp: TBitmap; TargetW, TargetH: Integer);
+procedure ImageTile(Bmp: TBitmap; TargetW, TargetH: Integer;
+  TileW: Integer = 0; TileH: Integer = 0);
 procedure PerspectiveOutputSize(const Quad: TQuad; out OutW, OutH: Integer);
 function QuadIsConvex(const Q: TQuad): Boolean;
 function PerspectiveWarp(Src: TBitmap; const Quad: TQuad; OutW, OutH: Integer): TBitmap;
@@ -118,7 +119,12 @@ begin
   end;
 end;
 
-procedure ImageResize(Bmp: TBitmap; NewW, NewH: Integer);
+// Smooth = True: usrednianie pikseli (HALFTONE przez StretchBlt) - Zmiana
+// rozmiaru, skalowanie wsadowe. Smooth = False (domyslnie): dotychczasowa
+// sciezka StretchDraw, ktora VCL przestawia na STRETCH_DELETESCANS
+// (Vcl.Graphics.pas:8459-8461) - zostaje dla stylow Komiksu, dopracowanych
+// wizualnie na tym skalowaniu (decyzja wlasciciela 2026-10-24).
+procedure ImageResize(Bmp: TBitmap; NewW, NewH: Integer; Smooth: Boolean = False);
 var
   Tmp: TBitmap;
 begin
@@ -130,8 +136,27 @@ begin
   try
     Tmp.PixelFormat := pf24bit;
     Tmp.SetSize(NewW, NewH);
-    SetStretchBltMode(Tmp.Canvas.Handle, HALFTONE);
-    Tmp.Canvas.StretchDraw(Rect(0, 0, NewW, NewH), Bmp);
+    // Lock obu plocien (2026-10-23): ImageResize wola tez watek roboczy
+    // Komiksu (TComicWorker). Bez blokady FreeMemoryContexts w watku glownym
+    // (Vcl.Graphics.pas, pomija tylko plotna z TryLock = False) zwalnia DC
+    // w trakcie rysowania - zawieszenie przy ruchu myszy. W watku glownym
+    // blokada nic nie zmienia.
+    Tmp.Canvas.Lock;
+    Bmp.Canvas.Lock;
+    try
+      SetStretchBltMode(Tmp.Canvas.Handle, HALFTONE);
+      if Smooth then
+      begin
+        SetBrushOrgEx(Tmp.Canvas.Handle, 0, 0, nil);
+        StretchBlt(Tmp.Canvas.Handle, 0, 0, NewW, NewH,
+          Bmp.Canvas.Handle, 0, 0, Bmp.Width, Bmp.Height, SRCCOPY);
+      end
+      else
+        Tmp.Canvas.StretchDraw(Rect(0, 0, NewW, NewH), Bmp);
+    finally
+      Bmp.Canvas.Unlock;
+      Tmp.Canvas.Unlock;
+    end;
     Bmp.Assign(Tmp);
   finally
     Tmp.Free;
@@ -171,8 +196,11 @@ begin
   try
     Scaled.PixelFormat := pf24bit;
     Scaled.SetSize(ScaledW, ScaledH);
+    // StretchBlt, nie StretchDraw - patrz ImageResize (usrednianie pikseli)
     SetStretchBltMode(Scaled.Canvas.Handle, HALFTONE);
-    Scaled.Canvas.StretchDraw(Rect(0, 0, ScaledW, ScaledH), Bmp);
+    SetBrushOrgEx(Scaled.Canvas.Handle, 0, 0, nil);
+    StretchBlt(Scaled.Canvas.Handle, 0, 0, ScaledW, ScaledH,
+      Bmp.Canvas.Handle, 0, 0, Bmp.Width, Bmp.Height, SRCCOPY);
 
     Bmp.SetSize(TargetW, TargetH);
     Bmp.PixelFormat := pf24bit;
@@ -183,19 +211,44 @@ begin
   end;
 end;
 
-procedure ImageTile(Bmp: TBitmap; TargetW, TargetH: Integer);
+// TileW/TileH < 1 = kafelek w rozmiarze oryginalu; inaczej obraz najpierw
+// skalowany do TileW x TileH z usrednianiem pikseli (HALFTONE przez
+// StretchBlt - nie StretchDraw, ktory VCL przestawia na STRETCH_DELETESCANS,
+// Vcl.Graphics.pas:8459-8461). Nadmiar na prawej i dolnej krawedzi obciety.
+procedure ImageTile(Bmp: TBitmap; TargetW, TargetH: Integer;
+  TileW: Integer = 0; TileH: Integer = 0);
 var
   X, Y, SrcW, SrcH: Integer;
-  Tmp: TBitmap;
+  Tmp, Tile: TBitmap;
+  SrcDC: HDC;
 begin
   if (Bmp = nil) or (Bmp.Width = 0) or (Bmp.Height = 0) then Exit;
   if (TargetW < 1) or (TargetH < 1) then Exit;
 
-  SrcW := Bmp.Width;
-  SrcH := Bmp.Height;
-
+  Tile := nil;
   Tmp := TBitmap.Create;
   try
+    if (TileW >= 1) and (TileH >= 1) and
+       ((TileW <> Bmp.Width) or (TileH <> Bmp.Height)) then
+    begin
+      Tile := TBitmap.Create;
+      Tile.PixelFormat := pf24bit;
+      Tile.SetSize(TileW, TileH);
+      SetStretchBltMode(Tile.Canvas.Handle, HALFTONE);
+      SetBrushOrgEx(Tile.Canvas.Handle, 0, 0, nil);
+      StretchBlt(Tile.Canvas.Handle, 0, 0, TileW, TileH,
+        Bmp.Canvas.Handle, 0, 0, Bmp.Width, Bmp.Height, SRCCOPY);
+      SrcW := TileW;
+      SrcH := TileH;
+      SrcDC := Tile.Canvas.Handle;
+    end
+    else
+    begin
+      SrcW := Bmp.Width;
+      SrcH := Bmp.Height;
+      SrcDC := Bmp.Canvas.Handle;
+    end;
+
     Tmp.PixelFormat := pf24bit;
     Tmp.SetSize(TargetW, TargetH);
 
@@ -205,8 +258,7 @@ begin
       X := 0;
       while X < TargetW do
       begin
-        BitBlt(Tmp.Canvas.Handle, X, Y, SrcW, SrcH,
-          Bmp.Canvas.Handle, 0, 0, SRCCOPY);
+        BitBlt(Tmp.Canvas.Handle, X, Y, SrcW, SrcH, SrcDC, 0, 0, SRCCOPY);
         Inc(X, SrcW);
       end;
       Inc(Y, SrcH);
@@ -214,6 +266,7 @@ begin
 
     Bmp.Assign(Tmp);
   finally
+    Tile.Free;
     Tmp.Free;
   end;
 end;

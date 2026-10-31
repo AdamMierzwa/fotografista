@@ -133,6 +133,7 @@ begin
   lblHint.Top := Margin + PH + 2 * FPad + RowGap;
   lblHint.Height := Canvas.TextHeight('Wg') * 2 + 2;
 
+  ButtonsToLeft([btnOK, btnCancel], CtrlGap * 3);
   FitToContent(CtrlGap * 3, CtrlGap * 3);
   btnOK.Top := lblHint.Top + lblHint.Height + CtrlGap * 3;
   btnCancel.Top := btnOK.Top;

@@ -175,7 +175,7 @@
 177	Obloukové zkreslení - prohnout obrázek
 178	Víření - zkroutit obrázek
 179	Vodní vlnění
-180	Polární zkreslení - tunel, rybí oko
+180	Polární zkreslení - malá planeta, tunel, kaleidoskop
 181	4barevná paleta - Workbench 1.x (OCS)
 182	4barevná paleta - Workbench 2.x/3.x
 183	32barevná paleta (4x4x2) - OCS
@@ -306,39 +306,6 @@
 321	Vyberte úhel oblouku:
 322	Vyberte intenzitu:
 323	Vyberte variantu:
-324	Slabý soudek
-325	Střední soudek
-326	Silný soudek
-327	Slabá poduška
-328	Střední poduška
-329	Silná poduška
-330	45°
-331	90°
-332	180°
-333	360°
-334	90° + otočit
-335	180° + otočit
-336	Slabé (45°)
-337	Střední (90°)
-338	Silné (180°)
-339	Velmi silné (270°)
-340	Plné (360°)
-341	Obrátit
-342	Světlé
-343	Střední
-344	Silné
-345	Soustředné
-346	Z rohu
-347	Husté
-348	Plné
-349	Poloviční úhel
-350	Čtvrtinový úhel
-351	Prstenec
-352	Malý poloměr
-353	Hladké
-354	Tunel
-356	Rybí oko
-357	Vnější roztažení
 358	Chyba
 359	Nepodporovaný formát souboru.
 360	Snímek
@@ -484,7 +451,7 @@
 532	Rozhraní...
 533	Nastavení rozhraní
 534	Rozhraní
-535	Barva pozadí plátna (pouze se standardním motivem Windows):
+535	Barva pozadí plátna (pouze s motivem „Windows“):
 537	Otevřít obrázek
 538	Všechny soubory
 539	Schránka
@@ -626,10 +593,8 @@
 682	Floyd–Steinberg (hladký)
 683	Vybraný režim je velmi pomalý pro velké obrázky.\nU obrázků nad 2 MP může náhled a aplikace efektu trvat několik minut.\nJiné režimy jsou mnohem rychlejší.
 684	Výkon...
-685	Maximální pracovní rozlišení:
+685	Při otevírání zmenšovat fotografie na:
 687	Obrázek
-688	Obrácený tunel
-689	30° výseč
 690	Full HD (1920×1080)
 691	4K (3840×2160)
 692	Výkon a maximální pracovní rozlišení
@@ -696,7 +661,7 @@
 763	Ztráta bloků:
 764	Horizontální posun řezu:
 765	Ztmaví každý druhý řádek při poměru PAL — vyšší hodnota = tmavší mezery
-766	Online dokumentace
+766	Webové stránky programu
 767	Otevřete webové stránky Fotografista ve webovém prohlížeči
 768	Rastříkovače...
 769	Rastříkovače — inkoustové okraje na bílém pozadí
@@ -1026,7 +991,7 @@
 1095	Zobrazit ochrannou masku
 1096	Vymazat ochrannou masku
 1097	Chránit výběr
-1098	Zrušit ochranu výběru
+1098	Zrušit ochranu
 1099	Laso
 1100	Kouzelná hůlka
 1101	Výběr...
@@ -1081,7 +1046,7 @@
 1152	Poissonovy body (experimentální)
 1153	Velikost tečky (0,1–10,0 % kratší strany):
 1154	Tónová křivka (10–500, 100 = lineární):
-1155	Tečkovaný raster - rozptýlené tečky v Poissonově rozdělení
+1155	Kropkovaný raster - rozptýlené tečky v Poissonově rozdělení
 1156	Komiks...
 1157	Komiks
 1158	Komiks - posterizované barvy s výraznými obrysy
@@ -1091,8 +1056,8 @@
 1162	Noviny
 1163	PRL – jemný
 1164	PRL – rastr
-1165	Pop-art – černá
-1166	Pop-art – dvě barvy
+1165	Ben-Day – černá
+1166	Ben-Day – barva
 1167	Pop-art – barevný
 1168	Hnědá (vybledlá)
 1169	Rozložení barev
@@ -1100,3 +1065,66 @@
 1171	Bez vyrovnání
 1172	Vyrovnat kanály RGB
 1173	Vyrovnat jas
+1174	Prohodit A a B
+1175	Rozdíl
+1176	Všechny podporované
+1177	Nejde o soubor IFF.
+1178	Nejde o soubor IFF ILBM.
+1179	Neplatná hlavička ILBM (BMHD).
+1180	Neplatné rozměry ILBM.
+1181	Obrázek ILBM nemá blok BODY.
+1182	Nepodporovaná komprese ILBM.
+1183	Soubor nenalezen: %s
+1184	Nelze načíst: %s
+1185	Kroky Zpět:
+1186	Bez omezení
+1187	Vybrat chráněnou oblast
+1188	Převést chráněnou oblast zpět na výběr
+1189	Zrušit výběr
+1190	Velikost dlaždice
+1191	Dlaždic vodorovně:
+1192	Práh...
+1193	Práh - ostrý ČB kontrast
+1194	Zjednodušení:
+1195	Linoryt - velké plochy s hladkými okraji řezu
+1196	Používat grafickou kartu, kde je to možné
+1197	Rastr CMYK
+1198	MagicWB paleta (8 barev)
+1199	Grafická karta:
+1200	Žádný hardwarový video kodér (video kóduje procesor)
+1201	procesor
+1202	grafická karta
+1203	používaná
+1204	Originál (bez zmenšení)
+1205	Vodoznak...
+1206	Vodoznak
+1207	Text
+1208	Logo (obrázek PNG)
+1209	Barva textu...
+1210	Umístění:
+1211	Opakovat přes celou fotografii
+1212	Okraj:
+1213	Stín pod textem
+1214	Soubor loga se nepodařilo načíst.
+1215	Nahoře uprostřed
+1216	Uprostřed vlevo
+1217	Uprostřed
+1218	Uprostřed vpravo
+1219	Dole uprostřed
+1220	Další fotografie
+1221	Předchozí fotografie
+1222	Otevřít další fotografii z této složky
+1223	Otevřít předchozí fotografii z této složky
+1224	Vzorek v odstupu od rohu
+1225	Vzdálenost:
+1226	Soudek
+1227	Poduška
+1228	Otvor
+1229	Otočení
+1230	Naruby
+1231	Rybí oko...
+1232	Rybí oko
+1233	Rybí oko - vyboulí střed fotografie
+1234	Kruh
+1235	Odstranit červené oči
+1236	Nejprve vyberte zornici.

@@ -37,6 +37,7 @@
       Width = 70
       Height = 23
       TabOrder = 0
+      NumbersOnly = True
     end
     object lblHeight: TLabel
       Left = 14
@@ -52,6 +53,67 @@
       Width = 70
       Height = 23
       TabOrder = 1
+      NumbersOnly = True
+    end
+    object btnFullHD: TButton
+      Left = 216
+      Top = 5
+      Width = 130
+      Height = 51
+      Caption = 'Full HD 1920×1080'
+      TabOrder = 2
+      OnClick = btnFullHDClick
+    end
+    object grpTile: TGroupBox
+      Left = 14
+      Top = 64
+      Width = 220
+      Height = 100
+      Caption = 'Tile size'
+      TabOrder = 3
+      object rbTileOrig: TRadioButton
+        Left = 8
+        Top = 20
+        Width = 150
+        Height = 19
+        Caption = 'Original'
+        TabOrder = 0
+        OnClick = rbTileClick
+      end
+      object rbTileScale: TRadioButton
+        Left = 8
+        Top = 44
+        Width = 150
+        Height = 19
+        Caption = 'Scale (%):'
+        TabOrder = 1
+        OnClick = rbTileClick
+      end
+      object edTileScale: TEdit
+        Left = 160
+        Top = 42
+        Width = 50
+        Height = 23
+        TabOrder = 2
+        NumbersOnly = True
+      end
+      object rbTileCount: TRadioButton
+        Left = 8
+        Top = 70
+        Width = 150
+        Height = 19
+        Caption = 'Tiles horizontally:'
+        TabOrder = 3
+        OnClick = rbTileClick
+      end
+      object edTileCount: TEdit
+        Left = 160
+        Top = 68
+        Width = 50
+        Height = 23
+        TabOrder = 4
+        NumbersOnly = True
+      end
     end
   end
   object pnlBottom: TPanel

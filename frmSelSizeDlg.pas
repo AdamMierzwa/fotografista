@@ -74,6 +74,7 @@ begin
 
   btnOK.Top := edtWidth.Top + edtWidth.Height + SectionGap;
   btnCancel.Top := btnOK.Top;
+  ButtonsToLeft([btnOK, btnCancel], Margin);
   FitToContent(SectionGap, Margin);
   // okno co najmniej na pare przyciskow
   if ClientWidth < btnOK.Width + btnCancel.Width + CtrlGap * 2 + Margin * 2 then

@@ -76,6 +76,13 @@ begin
     end;
 
     FitPreviewToDialog(Dlg, Dlg.pboxPreview, pw, ph);
+    // ramka pod odczytem suwaka (w .dfm zaczynala sie na nim), wysokosc
+    // z czcionki, przyciski pod nia
+    Dlg.FitRadioGroupHeight(Dlg.rgDither);
+    Dlg.rgDither.Top := Dlg.StackBelow(Dlg.lblCValue, Dlg.RowGap * 2);
+    Dlg.btnOK.Top := Dlg.StackBelow(Dlg.rgDither, Dlg.SectionGap);
+    Dlg.btnCancel.Top := Dlg.btnOK.Top;
+    Dlg.FitHeight(Dlg.SectionGap);
 
     Dlg.ApplyPreview;
 

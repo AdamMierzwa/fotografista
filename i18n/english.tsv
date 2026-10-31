@@ -175,7 +175,7 @@
 177	Arc distortion - bend image
 178	Swirl - twist image
 179	Water ripple effect
-180	Polar distortion - tunnel, fisheye
+180	Polar distortion - little planet, tunnel, kaleidoscope
 181	4-color palette - Workbench 1.x (OCS)
 182	4-color palette - Workbench 2.x/3.x
 183	32-color palette (4x4x2) - OCS
@@ -306,39 +306,6 @@
 321	Select arc angle:
 322	Select intensity:
 323	Select variant:
-324	Weak barrel
-325	Medium barrel
-326	Strong barrel
-327	Weak pincushion
-328	Medium pincushion
-329	Strong pincushion
-330	45°
-331	90°
-332	180°
-333	360°
-334	90° + rotate
-335	180° + rotate
-336	Weak (45°)
-337	Medium (90°)
-338	Strong (180°)
-339	Very strong (270°)
-340	Full (360°)
-341	Reverse
-342	Light
-343	Medium
-344	Strong
-345	Concentric
-346	From corner
-347	Dense
-348	Full
-349	Half angle
-350	Quarter angle
-351	Ring
-352	Small radius
-353	Smooth
-354	Tunnel
-356	Fisheye
-357	Outer stretch
 358	Error
 359	Unsupported file format.
 360	Snapshot
@@ -484,7 +451,7 @@
 532	Interface...
 533	Interface settings
 534	Interface
-535	Canvas background color (only with standard Windows theme):
+535	Canvas background color (only with the "Windows" theme):
 537	Open image
 538	All files
 539	Clipboard
@@ -626,10 +593,8 @@
 682	Floyd–Steinberg (smooth)
 683	The selected mode is very slow for large images.\nFor images above 2 MP preview and applying the effect may take several minutes.\nOther modes are much faster.
 684	Performance...
-685	Maximum working resolution:
+685	Downscale photos on opening to:
 687	Image
-688	Inverted tunnel
-689	30° slice
 690	Full HD (1920×1080)
 691	4K (3840×2160)
 692	Performance and maximum working resolution
@@ -696,7 +661,7 @@
 763	Block loss:
 764	Horizontal slice shift:
 765	Darkens every other line at PAL ratio — higher value = darker gaps
-766	Online documentation
+766	Program website
 767	Open the Fotografista website in your web browser
 768	Mimeograph...
 769	Mimeograph — ink edges on white background
@@ -1026,7 +991,7 @@
 1095	Show protection mask
 1096	Clear protection mask
 1097	Protect selection
-1098	Unprotect selection
+1098	Unprotect
 1099	Lasso
 1100	Magic wand
 1101	Selection...
@@ -1091,8 +1056,8 @@
 1162	Newspaper
 1163	PRL - soft
 1164	PRL - halftone
-1165	Pop art - black
-1166	Pop art - two inks
+1165	Ben-Day - black
+1166	Ben-Day - color
 1167	Pop art - color
 1168	Brown (faded)
 1169	Color distribution
@@ -1100,3 +1065,66 @@
 1171	No equalization
 1172	Equalize RGB channels
 1173	Equalize brightness
+1174	Swap A and B
+1175	Difference
+1176	All supported
+1177	Not an IFF file.
+1178	Not an IFF ILBM file.
+1179	Invalid ILBM header (BMHD).
+1180	Invalid ILBM dimensions.
+1181	ILBM image has no BODY chunk.
+1182	Unsupported ILBM compression.
+1183	File not found: %s
+1184	Cannot load: %s
+1185	Undo steps:
+1186	Unlimited
+1187	Select protected area
+1188	Make the protected area a selection again
+1189	Deselect
+1190	Tile size
+1191	Tiles horizontally:
+1192	Threshold...
+1193	Threshold - sharp B&W contrast
+1194	Simplification:
+1195	Linocut - large shapes with smooth cut edges
+1196	Use the graphics card where possible
+1197	Raster CMYK
+1198	MagicWB palette (8 colors)
+1199	Graphics card:
+1200	No hardware video encoder (video encoded by the processor)
+1201	processor
+1202	graphics card
+1203	in use
+1204	Original (no downscaling)
+1205	Watermark...
+1206	Watermark
+1207	Text
+1208	Logo (PNG image)
+1209	Text color...
+1210	Position:
+1211	Repeat across the whole photo
+1212	Margin:
+1213	Shadow under text
+1214	The logo file could not be loaded.
+1215	Top center
+1216	Middle-left
+1217	Center
+1218	Middle-right
+1219	Bottom center
+1220	Next photo
+1221	Previous photo
+1222	Open the next photo in this folder
+1223	Open the previous photo in this folder
+1224	Sample away from the corner
+1225	Distance:
+1226	Barrel
+1227	Pincushion
+1228	Hole
+1229	Rotation
+1230	Inside out
+1231	Fisheye...
+1232	Fisheye
+1233	Fisheye - bulge the middle of the photo
+1234	Circle
+1235	Remove red eye
+1236	Select the pupil first.

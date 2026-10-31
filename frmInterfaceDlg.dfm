@@ -21,7 +21,7 @@
     Width = 300
     Height = 48
     AutoSize = False
-    Caption = 'Canvas background color (only with standard Windows theme):'
+    Caption = 'Canvas background color (only with the "Windows" theme):'
     StyleElements = [seClient, seBorder]
     WordWrap = True
   end

@@ -58,7 +58,7 @@
 59	Solaryzacja...
 60	Dwukolor...
 61	Sepia...
-62	Cyanotypia
+62	Cyjanotypia
 63	Fotografia solna
 64	Rentgen
 65	Podczerwień fałszywobarwna
@@ -84,7 +84,7 @@
 86	Kostkowanie...
 87	Risografia v1...
 88	Sitodruk...
-89	Dystorsja beczkowa...
+89	Dystorsja...
 90	Dystorsja łukowa...
 91	Wir...
 92	Fale wodne...
@@ -175,7 +175,7 @@
 177	Zniekształcenie łukowe — zginanie obrazu
 178	Wiruj — przekręć obraz
 179	Fale wodne
-180	Zniekształcenia biegunowe — tunel, rybie oko
+180	Zniekształcenia biegunowe — mała planeta, tunel, kalejdoskop
 181	Paleta 4 kolorów — Workbench 1.x (OCS)
 182	Paleta 4 kolorów — Workbench 2.x/3.x
 183	Paleta 32 kolorów (4x4x2) — OCS
@@ -229,7 +229,7 @@
 233	Maksymalna grubość linii (1–8):
 234	Rozmiar komórki (4–64 px):
 235	Rozmiar podkomórki kropki (3–8 px):
-236	Prog (1–100):
+236	Próg (1-100):
 237	Ilość tuszu (jaśniejsze = mniej):
 238	Siła efektu (0–100):
 239	Nasycenie (0–100):
@@ -299,46 +299,13 @@
 312	Odcień (0–200, domyślnie 100):
 313	Kontrast przed konwersją (0–10):
 314	Liczba kolorów (2–64):
-315	Krycie
+315	Krycie:
 316	Tryb:
 317	Wybierz kolor...
 320	Wybierz rodzaj:
 321	Wybierz kąt łuku:
 322	Wybierz intensywność:
 323	Wybierz wariant:
-324	Słaba beczka
-325	Średnia beczka
-326	Mocna beczka
-327	Słaba poduszka
-328	Średnia poduszka
-329	Mocna poduszka
-330	45°
-331	90°
-332	180°
-333	360°
-334	90° + obrót
-335	180° + obrót
-336	Słaby (45°)
-337	Średní (90°)
-338	Silny (180°)
-339	Bardzo mocny (270°)
-340	Pełny (360°)
-341	Odwrócony
-342	Delikatne
-343	Średnie
-344	Silne
-345	Koncentryczne
-346	Od rogu
-347	Gęste
-348	Pełny
-349	Połowa kąta
-350	Ćwierć kąta
-351	Pierścień
-352	Mały promień
-353	Wygładzony
-354	Tunel
-356	Rybie oko
-357	Rozciągnięcie zewnętrzne
 358	Błąd
 359	Nieobsługiwany format pliku
 360	Migawka
@@ -484,7 +451,7 @@
 532	Interfejs...
 533	Ustawienia interfejsu
 534	Interfejs
-535	Kolor tła kanwy (tylko ze standardowym motywem Windows):
+535	Kolor tła kanwy (tylko z motywem „Windows”):
 537	Otwórz obraz
 538	Wszystkie pliki
 539	Schowek
@@ -626,10 +593,8 @@
 682	Floyd-Steinberg (wygładzony)
 683	Wybrany tryb jest bardzo wolny dla dużych zdjęć.\nDla zdjęć powyżej 2 MP podgląd i zastosowanie efektu mogą zająć kilka minut.\nInne tryby są znacznie szybsze.
 684	Wydajność...
-685	Maksymalna rozdzielczość robocza:
+685	Zmniejszaj zdjęcia przy otwieraniu do:
 687	Obraz
-688	Odwrócony tunel
-689	Wycinek 30°
 690	Full HD (1920×1080)
 691	4K (3840×2160)
 692	Wydajność i maksymalna rozdzielczość robocza
@@ -696,7 +661,7 @@
 763	Utrata bloków:
 764	Przesunięcia pasm poziomych:
 765	Przyciemnia co drugą linię w proporcji PAL — im wyżej, tym ciemniejsze przerwy
-766	Dokumentacja online
+766	Strona programu
 767	Otwórz dokumentację online w przeglądarce
 768	Powielacz...
 769	Powielacz — tuszowe krawędzie na białym tle
@@ -1026,7 +991,7 @@
 1095	Pokaż maskę ochronną
 1096	Wyczyść maskę ochronną
 1097	Chroń zaznaczenie
-1098	Odwołaj ochronę w zaznaczeniu
+1098	Odwołaj ochronę
 1099	Lasso
 1100	Różdżka
 1101	Zaznaczenie...
@@ -1091,8 +1056,8 @@
 1162	Gazeta
 1163	PRL – łagodny
 1164	PRL – raster
-1165	Pop-art – czerń
-1166	Pop-art – dwie farby
+1165	Ben-Day – czerń
+1166	Ben-Day – kolor
 1167	Pop-art – kolor
 1168	Brązowy (spełznięty)
 1169	Rozkład barw
@@ -1100,3 +1065,66 @@
 1171	Bez wyrównania
 1172	Wyrównaj kanały RGB
 1173	Wyrównaj jasność
+1174	Zamień A i B
+1175	Różnica
+1176	Wszystkie obsługiwane
+1177	To nie jest plik IFF.
+1178	To nie jest plik IFF ILBM.
+1179	Nieprawidłowy nagłówek ILBM (BMHD).
+1180	Nieprawidłowe wymiary obrazu ILBM.
+1181	Obraz ILBM nie ma bloku BODY.
+1182	Nieobsługiwana kompresja ILBM.
+1183	Nie znaleziono pliku: %s
+1184	Nie można wczytać: %s
+1185	Kroki Cofnij:
+1186	Bez limitu
+1187	Zaznacz obszar chroniony
+1188	Zamień obszar chroniony z powrotem w zaznaczenie
+1189	Usuń zaznaczenie
+1190	Rozmiar kafelka
+1191	Kafelków w poziomie:
+1192	Próg...
+1193	Próg — ostry, czarno-biały kontrast
+1194	Uproszczenie:
+1195	Linoryt — duże płaszczyzny o gładkich krawędziach cięcia
+1196	Korzystaj z karty graficznej tam, gdzie to możliwe
+1197	Raster CMYK
+1198	Paleta MagicWB (8 kolorów)
+1199	Karta graficzna:
+1200	Brak sprzętowego kodera wideo (wideo kodowane przez procesor)
+1201	procesor
+1202	karta graficzna
+1203	używana
+1204	Oryginał (bez zmniejszania)
+1205	Znak wodny...
+1206	Znak wodny
+1207	Tekst
+1208	Logo (obraz PNG)
+1209	Kolor tekstu...
+1210	Położenie:
+1211	Powtórz na całym zdjęciu
+1212	Margines:
+1213	Cień pod tekstem
+1214	Nie udało się wczytać pliku logo.
+1215	Góra-środek
+1216	Środek-lewo
+1217	Środek
+1218	Środek-prawo
+1219	Dół-środek
+1220	Następne zdjęcie
+1221	Poprzednie zdjęcie
+1222	Otwórz następne zdjęcie z tego folderu
+1223	Otwórz poprzednie zdjęcie z tego folderu
+1224	Próbka w oddaleniu od narożnika
+1225	Odległość:
+1226	Beczka
+1227	Poduszka
+1228	Otwór
+1229	Obrót
+1230	Na lewą stronę
+1231	Rybie oko...
+1232	Rybie oko
+1233	Rybie oko - uwypukla środek zdjęcia
+1234	Koło
+1235	Usuń czerwone oczy
+1236	Najpierw zaznacz źrenicę.

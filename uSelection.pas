@@ -49,11 +49,20 @@ type
     FMoveBaseX1, FMoveBaseY1, FMoveBaseX2, FMoveBaseY2: Double;
     FMoveImgW, FMoveImgH: Integer;
     FSeedX, FSeedY: Integer;       // punkt zalewania - do ponownego przeliczenia z tolerancji
+    // skalowanie regionu uchwytami: podglad zmienia tylko ramke FX1..FY2,
+    // FRegion / FRegionPts przeliczane przy CommitRegionScale. FScaleS* =
+    // krawedzie ramki wyjsciowej odpowiadajace FX1/FX2/FY1/FY2 (zaleza od
+    // uchwytu, bo ResizeHandle przestawia kotwice).
+    FScaleActive: Boolean;
+    FScaleSX1, FScaleSX2, FScaleSY1, FScaleSY2: Double;
+    FScaleHandle: THitHandle;
     procedure TimerTick(Sender: TObject);
+    function ScaledRegionPts: TArray<TPoint>;
     function RegionAt(Px, Py: Double): Boolean;
     procedure DrawRegionFill(Canvas: TCanvas; Zoom: Double; OffsetX, OffsetY: Integer);
     procedure DrawRegionOutline(Canvas: TCanvas; Zoom: Double; OffsetX, OffsetY: Integer);
     function RegionFromMask(const Mask: TBitmap; Zoom: Double; OffsetX, OffsetY: Integer): HRGN;
+    procedure ShiftRegion(Dx, Dy: Integer);
     function GetW: Double;
     function GetH: Double;
     function GetLeft: Double;
@@ -77,12 +86,18 @@ type
     procedure ClearRegion;
     function HasRegion: Boolean;
     procedure SetRegionFromSeed(Bitmap: TBitmap; X, Y, Tolerance: Integer);
+    // region z maski 1 B/px (<> 0 = zaznaczone), np. z maski ochronnej
+    procedure SetRegionFromMask(const Mask: TBitmap);
     function HasValidSeed: Boolean;
     procedure RecomputeFromSeed(Bitmap: TBitmap; Tolerance: Integer);
     procedure BeginRegionMove;
     procedure PreviewRegionMove(Dx, Dy: Integer);
     procedure CommitRegionMove;
     procedure CancelRegionMove;
+    procedure BeginRegionScale(Handle: THitHandle);
+    procedure PreviewRegionScale(Nx, Ny: Double);
+    procedure CommitRegionScale;
+    procedure CancelRegionScale;
     procedure Draw(Canvas: TCanvas; Zoom: Double; OffsetX, OffsetY: Integer;
       ShowHandles: Boolean; ImgW: Integer = 0; ImgH: Integer = 0);
     property Active: Boolean read FActive write FActive;
@@ -101,6 +116,11 @@ type
 function SelectionCrop(Bitmap: TBitmap; const Sel: TSelection): TBitmap;
 
 implementation
+
+const
+  // Szraf wypelnienia zaznaczenia (widok Maska) - niebieski, zeby odroznial
+  // sie od czerwonego szrafu maski ochronnej (2026-10-24). TColor = $00BBGGRR.
+  cSelHatchColor = TColor($00FF8000);
 
 { helpers }
 
@@ -523,6 +543,7 @@ begin
   ClearRegion;
   FMoveActive := False;
   FMoveDx := 0; FMoveDy := 0;
+  FScaleActive := False;
   FSeedX := -1; FSeedY := -1;
   if FTimer <> nil then FTimer.Enabled := False;
 end;
@@ -570,8 +591,9 @@ begin
   if (Abs(Px - MidX) <= Thr) and (Abs(Py - B) <= Thr) then Exit(hhBM);
   if (Abs(Px - L) <= Thr) and (Abs(Py - MidY) <= Thr) then Exit(hhML);
   if (Abs(Px - R) <= Thr) and (Abs(Py - MidY) <= Thr) then Exit(hhMR);
-  // body — dla elipsy tylko wnętrze (prostokąt bounding box pozostaje dla uchwytów)
-  if FShape = hsEllipse then
+  // body — dla elipsy i regionu tylko wnętrze (prostokąt bounding box
+  // pozostaje dla uchwytów)
+  if (FRegion <> nil) or (FShape = hsEllipse) then
   begin
     if Contains(Px, Py) then Exit(hhMove);
   end
@@ -645,7 +667,9 @@ var
 begin
   Result := False;
   if not FActive then Exit;
-  if FShape in [hsLasso, hsWand] then
+  // rodzaj zaznaczenia z samego zaznaczenia (region istnieje), nie z ksztaltu
+  // narzedzia wybranego na liscie - ten dotyczy dopiero nastepnego zaznaczenia
+  if FRegion <> nil then
   begin
     Result := RegionAt(Px, Py);
     Exit;
@@ -767,6 +791,15 @@ begin
     FMoveDy := 0;
     Exit;
   end;
+  // region bez sciezki (z maski ochronnej): przesuwamy piksele - wczesniej
+  // ponizszy kod robil Clear i zaznaczenie znikalo po przesunieciu
+  if Length(FRegionPts) < 3 then
+  begin
+    ShiftRegion(FMoveDx, FMoveDy);
+    FMoveDx := 0;
+    FMoveDy := 0;
+    Exit;
+  end;
   SetLength(Pts, Length(FRegionPts));
   for I := 0 to High(FRegionPts) do
   begin
@@ -791,6 +824,153 @@ begin
   FMoveActive := False;
   FMoveDx := 0;
   FMoveDy := 0;
+end;
+
+// Skalowanie regionu (lasso, rozdzka, region z maski ochronnej) uchwytami
+// ramki, 2026-10-24. Kotwica = krawedz naprzeciw uchwytu (FX1/FY1 stale),
+// uchwyt przesuwa FX2/FY2; przeciagniecie za kotwice odbija ksztalt.
+procedure TSelection.BeginRegionScale(Handle: THitHandle);
+var
+  L, T, R, B: Double;
+begin
+  if FRegion = nil then Exit;
+  L := GetLeft; T := GetTop;
+  R := GetRight; B := GetBottom;
+  if Handle in [hhTL, hhML, hhBL] then
+  begin
+    FScaleSX1 := R; FScaleSX2 := L;
+  end
+  else
+  begin
+    FScaleSX1 := L; FScaleSX2 := R;
+  end;
+  if Handle in [hhTL, hhTM, hhTR] then
+  begin
+    FScaleSY1 := B; FScaleSY2 := T;
+  end
+  else
+  begin
+    FScaleSY1 := T; FScaleSY2 := B;
+  end;
+  FX1 := FScaleSX1; FX2 := FScaleSX2;
+  FY1 := FScaleSY1; FY2 := FScaleSY2;
+  FScaleHandle := Handle;
+  FScaleActive := True;
+end;
+
+procedure TSelection.PreviewRegionScale(Nx, Ny: Double);
+begin
+  if not FScaleActive then Exit;
+  case FScaleHandle of
+    hhTL, hhTR, hhBL, hhBR:
+      begin
+        FX2 := Nx;
+        FY2 := Ny;
+      end;
+    hhTM, hhBM: FY2 := Ny;
+    hhML, hhMR: FX2 := Nx;
+  end;
+end;
+
+// Sciezka lassa przeniesiona z ramki wyjsciowej (FScaleS*) do biezacej.
+function TSelection.ScaledRegionPts: TArray<TPoint>;
+var
+  I: Integer;
+  KX, KY: Double;
+begin
+  SetLength(Result, Length(FRegionPts));
+  KX := (FX2 - FX1) / (FScaleSX2 - FScaleSX1);
+  KY := (FY2 - FY1) / (FScaleSY2 - FScaleSY1);
+  for I := 0 to High(FRegionPts) do
+  begin
+    Result[I].X := Round(FX1 + (FRegionPts[I].X - FScaleSX1) * KX);
+    Result[I].Y := Round(FY1 + (FRegionPts[I].Y - FScaleSY1) * KY);
+  end;
+end;
+
+procedure TSelection.CommitRegionScale;
+var
+  ImgW, ImgH, NL, NT, NR, NB, X, Y, SX, SY: Integer;
+  X1r, Y1r, X2r, Y2r: Integer;
+  KX, KY: Double;
+  Cols: TArray<Integer>;
+  Scaled: TBitmap;
+  SrcRow, DstRow: PByte;
+begin
+  if not FScaleActive then Exit;
+  if (Abs(FX2 - FX1) < 1) or (Abs(FY2 - FY1) < 1) then
+  begin
+    CancelRegionScale;
+    Exit;
+  end;
+  FScaleActive := False;
+  ImgW := FRegion.Width;
+  ImgH := FRegion.Height;
+  // lasso: skalowana sciezka i ponowna rasteryzacja (krawedz jak przy rysowaniu)
+  if Length(FRegionPts) >= 3 then
+  begin
+    SetRegionFromPolygon(ScaledRegionPts, ImgW, ImgH);
+    Exit;
+  end;
+  // region bez sciezki: najblizszy sasiad, bez wartosci posrednich (0 / 255)
+  KX := (FScaleSX2 - FScaleSX1) / (FX2 - FX1);
+  KY := (FScaleSY2 - FScaleSY1) / (FY2 - FY1);
+  NL := Max(0, Floor(Min(FX1, FX2)));
+  NR := Min(ImgW, Ceil(Max(FX1, FX2)));
+  NT := Max(0, Floor(Min(FY1, FY2)));
+  NB := Min(ImgH, Ceil(Max(FY1, FY2)));
+  SetLength(Cols, Max(0, NR - NL));
+  for X := NL to NR - 1 do
+    Cols[X - NL] := Floor(FScaleSX1 + (X + 0.5 - FX1) * KX);
+  X1r := ImgW; Y1r := ImgH; X2r := -1; Y2r := -1;
+  Scaled := TBitmap.Create;
+  try
+    Scaled.PixelFormat := pf8bit;
+    Scaled.SetSize(ImgW, ImgH);
+    for Y := 0 to ImgH - 1 do
+    begin
+      DstRow := Scaled.ScanLine[Y];
+      FillChar(DstRow^, ImgW, 0);
+      if (Y < NT) or (Y >= NB) then Continue;
+      SY := Floor(FScaleSY1 + (Y + 0.5 - FY1) * KY);
+      if (SY < 0) or (SY >= ImgH) then Continue;
+      SrcRow := FRegion.ScanLine[SY];
+      for X := NL to NR - 1 do
+      begin
+        SX := Cols[X - NL];
+        if (SX >= 0) and (SX < ImgW) and (SrcRow[SX] <> 0) then
+        begin
+          DstRow[X] := 255;
+          if X < X1r then X1r := X;
+          if X > X2r then X2r := X;
+          if Y < Y1r then Y1r := Y;
+          Y2r := Y;
+        end;
+      end;
+    end;
+    FRegion.Assign(Scaled);
+    FRegion.PixelFormat := pf8bit;
+  finally
+    Scaled.Free;
+  end;
+  if X2r < X1r then
+  begin
+    Clear;
+    Exit;
+  end;
+  FX1 := X1r; FY1 := Y1r;
+  FX2 := X2r + 1; FY2 := Y2r + 1;
+  // przeskalowany region rozdzki nie odpowiada juz punktowi zalewania -
+  // zmiana tolerancji nie moze go nadpisac
+  FSeedX := -1; FSeedY := -1;
+end;
+
+procedure TSelection.CancelRegionScale;
+begin
+  if not FScaleActive then Exit;
+  FX1 := Min(FScaleSX1, FScaleSX2); FX2 := Max(FScaleSX1, FScaleSX2);
+  FY1 := Min(FScaleSY1, FScaleSY2); FY2 := Max(FScaleSY1, FScaleSY2);
+  FScaleActive := False;
 end;
 
 procedure TSelection.SetRegionFromPolygon(const Pts: array of TPoint; ImgW, ImgH: Integer);
@@ -913,6 +1093,102 @@ begin
 
   if Assigned(FOnChanged) then FOnChanged(Self);
   if Assigned(FOnRepaintReq) then FOnRepaintReq(Self);
+end;
+
+// Zaznaczenie z maski (2026-10-24, "Zaznacz obszar chroniony"): dowolny
+// ksztalt pikseli, takze kilka oddzielnych plam - jak region rozdzki, ale bez
+// punktu zalewania (tolerancja go nie przelicza). Ramka = zasieg maski.
+procedure TSelection.SetRegionFromMask(const Mask: TBitmap);
+var
+  W, H, X, Y, X1r, Y1r, X2r, Y2r: Integer;
+  SrcRow, DstRow: PByte;
+begin
+  if Mask = nil then Exit;
+  W := Mask.Width;
+  H := Mask.Height;
+  if (W <= 0) or (H <= 0) then Exit;
+  Clear;
+  if (FRegion = nil) or (FRegion.Width <> W) or (FRegion.Height <> H) then
+  begin
+    FRegion.Free;
+    FRegion := TBitmap.Create;
+    FRegion.PixelFormat := pf8bit;
+    FRegion.SetSize(W, H);
+  end;
+  X1r := W; Y1r := H; X2r := -1; Y2r := -1;
+  for Y := 0 to H - 1 do
+  begin
+    SrcRow := Mask.ScanLine[Y];
+    DstRow := FRegion.ScanLine[Y];
+    for X := 0 to W - 1 do
+      if SrcRow[X] <> 0 then
+      begin
+        DstRow[X] := 255;
+        if X < X1r then X1r := X;
+        if X > X2r then X2r := X;
+        if Y < Y1r then Y1r := Y;
+        Y2r := Y;
+      end
+      else
+        DstRow[X] := 0;
+  end;
+  if X2r < X1r then
+  begin
+    Clear;
+    Exit;
+  end;
+  SetLength(FRegionPts, 0);
+  FX1 := X1r;
+  FY1 := Y1r;
+  FX2 := X2r + 1;
+  FY2 := Y2r + 1;
+  FActive := True;
+  FMoveActive := False;
+  FTimer.Enabled := False;
+  if Assigned(FOnChanged) then FOnChanged(Self);
+  if Assigned(FOnRepaintReq) then FOnRepaintReq(Self);
+end;
+
+// Przesuniecie regionu bez sciezki lassa (z maski / rozdzki) o Dx, Dy: piksele
+// FRegion przesuniete, poza obrazem obciete; ramka z FMoveBase* + delta.
+procedure TSelection.ShiftRegion(Dx, Dy: Integer);
+var
+  W, H, X, Y, SX, SY: Integer;
+  Moved: TBitmap;
+  SrcRow, DstRow: PByte;
+begin
+  if FRegion = nil then Exit;
+  W := FRegion.Width;
+  H := FRegion.Height;
+  Moved := TBitmap.Create;
+  try
+    Moved.PixelFormat := pf8bit;
+    Moved.SetSize(W, H);
+    for Y := 0 to H - 1 do
+    begin
+      DstRow := Moved.ScanLine[Y];
+      FillChar(DstRow^, W, 0);
+      SY := Y - Dy;
+      if (SY < 0) or (SY >= H) then Continue;
+      SrcRow := FRegion.ScanLine[SY];
+      for X := 0 to W - 1 do
+      begin
+        SX := X - Dx;
+        if (SX >= 0) and (SX < W) then
+          DstRow[X] := SrcRow[SX];
+      end;
+    end;
+    FRegion.Assign(Moved);
+    FRegion.PixelFormat := pf8bit;
+  finally
+    Moved.Free;
+  end;
+  FX1 := Max(0.0, FMoveBaseX1 + Dx);
+  FY1 := Max(0.0, FMoveBaseY1 + Dy);
+  FX2 := Min(1.0 * W, FMoveBaseX2 + Dx);
+  FY2 := Min(1.0 * H, FMoveBaseY2 + Dy);
+  if (FX2 <= FX1) or (FY2 <= FY1) then
+    Clear;
 end;
 
 function TSelection.HasValidSeed: Boolean;
@@ -1052,7 +1328,7 @@ begin
     SelectClipRgn(Canvas.Handle, Rgn);
     Canvas.Pen.Style := psClear;
     Canvas.Brush.Style := bsBDiagonal;
-    Canvas.Brush.Color := clRed;
+    Canvas.Brush.Color := cSelHatchColor;
     Canvas.Rectangle(L, T, R, B);
     Canvas.Pen.Style := psSolid;
     Canvas.Brush.Style := bsSolid;
@@ -1066,8 +1342,25 @@ procedure TSelection.Draw(Canvas: TCanvas; Zoom: Double;
   OffsetX, OffsetY: Integer; ShowHandles: Boolean;
   ImgW, ImgH: Integer);
 var
-  L, T, R, B, MidX, MidY: Integer;
+  L, T, R, B: Integer;
   vx, vy, vw, vh: Integer;
+
+  procedure DrawHandles;
+  var
+    MidX, MidY: Integer;
+  begin
+    MidX := vx + vw div 2;
+    MidY := vy + vh div 2;
+    DrawHandle(Canvas, vx, vy, 8);       // TL
+    DrawHandle(Canvas, MidX, vy, 8);     // TM
+    DrawHandle(Canvas, vx + vw, vy, 8);  // TR
+    DrawHandle(Canvas, vx, MidY, 8);     // ML
+    DrawHandle(Canvas, vx + vw, MidY, 8);// MR
+    DrawHandle(Canvas, vx, vy + vh, 8);  // BL
+    DrawHandle(Canvas, MidX, vy + vh, 8);// BM
+    DrawHandle(Canvas, vx + vw, vy + vh, 8);// BR
+  end;
+
 begin
   L := Round(GetLeft * Zoom);
   T := Round(GetTop * Zoom);
@@ -1085,9 +1378,20 @@ begin
   //  - podczas przesuwania: sam obrys w nowym położeniu (podgląd),
   //  - różdżka (region z maski): szrafura wg maski (Filled) i/lub solidny
   //    obrys regionu — bez ścieżki, więc bez marching ants.
-  if FShape in [hsLasso, hsWand] then
+  //  - podczas skalowania uchwytami: lasso = przeskalowana ścieżka, region
+  //    bez ścieżki = ramka (piksele przeliczane dopiero przy puszczeniu).
+  // Rodzaj z samego zaznaczenia (region istnieje), nie z listy kształtów.
+  if FRegion <> nil then
   begin
-    if (FShape = hsLasso) and (Length(FRegionPts) >= 3) then
+    if FScaleActive then
+    begin
+      if Length(FRegionPts) >= 3 then
+        MarchingAntsPolyline(Canvas, ScaledRegionPts, Zoom, OffsetX, OffsetY,
+          FDashOffset, 0, 0)
+      else
+        MarchingAntsRect(Canvas, Rect(vx, vy, vx + vw, vy + vh), FDashOffset);
+    end
+    else if Length(FRegionPts) >= 3 then
     begin
       if not FMoveActive then
       begin
@@ -1103,10 +1407,20 @@ begin
     else
     begin
       // Różdżka: szrafura wg maski (Filled) i/lub solidny obrys regionu.
-      if FView = svMask then
-        DrawRegionFill(Canvas, Zoom, OffsetX, OffsetY);
-      DrawRegionOutline(Canvas, Zoom, OffsetX, OffsetY);
+      // Region bez sciezki w trakcie przesuwania (z maski ochronnej): sam
+      // obrys przesuniety o delte - FRegion przesuwa sie dopiero przy puszczeniu.
+      if FMoveActive then
+        DrawRegionOutline(Canvas, Zoom, OffsetX + Round(FMoveDx * Zoom),
+          OffsetY + Round(FMoveDy * Zoom))
+      else
+      begin
+        if FView = svMask then
+          DrawRegionFill(Canvas, Zoom, OffsetX, OffsetY);
+        DrawRegionOutline(Canvas, Zoom, OffsetX, OffsetY);
+      end;
     end;
+    if ShowHandles and not FMoveActive then
+      DrawHandles;
     Exit;
   end;
 
@@ -1115,7 +1429,7 @@ begin
   begin
     Canvas.Pen.Style := psClear;
     Canvas.Brush.Style := bsBDiagonal;
-    Canvas.Brush.Color := clRed;
+    Canvas.Brush.Color := cSelHatchColor;
     if FShape = hsEllipse then
       Canvas.Ellipse(Rect(vx, vy, vx + vw, vy + vh))
     else
@@ -1132,18 +1446,7 @@ begin
 
   // handles
   if ShowHandles then
-  begin
-    MidX := vx + vw div 2;
-    MidY := vy + vh div 2;
-    DrawHandle(Canvas, vx, vy, 8);       // TL
-    DrawHandle(Canvas, MidX, vy, 8);     // TM
-    DrawHandle(Canvas, vx + vw, vy, 8);  // TR
-    DrawHandle(Canvas, vx, MidY, 8);     // ML
-    DrawHandle(Canvas, vx + vw, MidY, 8);// MR
-    DrawHandle(Canvas, vx, vy + vh, 8);  // BL
-    DrawHandle(Canvas, MidX, vy + vh, 8);// BM
-    DrawHandle(Canvas, vx + vw, vy + vh, 8);// BR
-  end;
+    DrawHandles;
 end;
 
 { --- Crop --- }

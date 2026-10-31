@@ -56,6 +56,9 @@ function ShowRisoV3Dlg(Bitmap: TBitmap; out ElapsedSec: Double): Boolean;
 
 implementation
 
+uses
+  uMacros;
+
 {$R *.dfm}
 
 function ShowRisoV3Dlg(Bitmap: TBitmap; out ElapsedSec: Double): Boolean;
@@ -65,6 +68,7 @@ var
   pw, ph: Integer;
   Scaled: TBitmap;
   SW: TStopwatch;
+  I: Integer;
 begin
   ElapsedSec := 0;
   Result := False;
@@ -103,6 +107,11 @@ begin
     if Dlg.ShowModal = mrOk then
     begin
       SW := TStopwatch.StartNew;
+      // krok makra: liczba warstw|kolory uzytych warstw (TColor)
+      gMacroPending.Code := 'RISO3';
+      gMacroPending.Params := IntToStr(Dlg.cmbLayers.ItemIndex + 2);
+      for I := 0 to Dlg.cmbLayers.ItemIndex + 1 do
+        gMacroPending.Params := gMacroPending.Params + '|' + IntToStr(Integer(Dlg.FColors[I]));
       Dlg.ApplyFull;
       ElapsedSec := SW.Elapsed.TotalSeconds;
       Result := True;

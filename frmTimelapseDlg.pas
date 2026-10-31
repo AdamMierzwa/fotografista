@@ -3,11 +3,11 @@
 interface
 
 uses
-  Winapi.Windows, System.SysUtils, System.Classes, System.Math, System.UITypes,
+  Winapi.Windows, System.SysUtils, System.Classes, System.Math, System.UITypes, System.Diagnostics,
   Vcl.Graphics, Vcl.Controls, Vcl.Forms, Vcl.Dialogs,
   Vcl.StdCtrls, Vcl.ComCtrls, Vcl.ExtCtrls, Vcl.FileCtrl,
   Winapi.GDIPAPI, Winapi.GDIPOBJ,
-  uTitleBar, uI18n, uImageIO, uTransform, uVideoWriter;
+  uTitleBar, uI18n, uImageIO, uTransform, uVideoWriter, uPrefs;
 
 type
   TTimelapseSort = (tlsName, tlsDate);
@@ -29,13 +29,13 @@ type
 
   TTimelapseDlg = class(TFotoForm)
     lblSrc: TLabel;
-    lblSrcPath: TLabel;
+    edSrcPath: TEdit;
     btnSrcChoice: TButton;
     pnlSort: TPanel;
     rbSortAlpha: TRadioButton;
     rbSortDate: TRadioButton;
     lblDst: TLabel;
-    lblDstPath: TLabel;
+    edDstPath: TEdit;
     btnDstChoice: TButton;
     lblFileName: TLabel;
     edFileName: TEdit;
@@ -89,7 +89,11 @@ type
   end;
 
 function ShowTimelapseDlg(out Opts: TTimelapseOptions): Boolean;
-procedure RunTimelapse(const Opts: TTimelapseOptions);
+// ElapsedSec: czas eksportu do pliku (bez okna podsumowania); 0 = pokaz,
+// brak zdjec albo anulowanie - wtedy pasek stanu bez czasu.
+// EncoderInfo: koder uzyty do zapisu (TVideoWriter.EncoderInfo), '' = brak.
+procedure RunTimelapse(const Opts: TTimelapseOptions; out ElapsedSec: Double;
+  out EncoderInfo: string);
 
 implementation
 
@@ -109,6 +113,7 @@ type
     Abort: Boolean;
     constructor Create(AOwner: TComponent); override;
     procedure SetFile(const AName: string; Idx, Total: Integer);
+    procedure FitToNames(const Names: array of string; Total: Integer);
     procedure AbortClick(Sender: TObject);
   end;
 
@@ -119,6 +124,12 @@ var
   BtnW, LblW: Integer;
 begin
   inherited CreateNew(AOwner);
+  // Czcionka programu PRZED pomiarami: TFotoForm.AfterConstruction
+  // (uTitleBar.pas:225-229) nadaje ja dopiero po konstruktorze, wiec tekst
+  // mierzony domyslna mala czcionka nie miescil sie potem przy 12 pt
+  // (ucinane nazwy i ogonki liter w przycisku). Jak TTimelapsePlayer nizej.
+  Font.Assign(Application.DefaultFont);
+  ParentFont := True;
   Caption := T('Timelapse');
   BorderStyle := bsDialog;
   BorderIcons := [];
@@ -140,11 +151,11 @@ begin
   BtnAbort.Caption := T('Cancel');
   BtnAbort.OnClick := AbortClick;
 
-  BtnW := Canvas.TextWidth(T('Cancel')) + 24;
+  FitButton(BtnAbort);
+  BtnW := BtnAbort.Width;
   LblW := Canvas.TextWidth(T('Processing...') + ' 0/0') + CtrlGap * 2;
   if LblW < BtnW then LblW := BtnW;
   Lbl.Width := LblW;
-  BtnAbort.Width := BtnW;
   BtnAbort.Top := Lbl.Top + Lbl.Height + RowGap;
 
   FitToContent(CtrlGap * 3, CtrlGap * 3);
@@ -155,6 +166,28 @@ end;
 procedure TProgressForm.SetFile(const AName: string; Idx, Total: Integer);
 begin
   Lbl.Caption := AName + ' (' + IntToStr(Idx) + '/' + IntToStr(Total) + ')';
+end;
+
+// Szerokosc etykiety z najdluzszego napisu SetFile (nazwa + licznik), liczona
+// raz przed pokazaniem - wczesniej z "Przetwarzanie... 0/0", wiec nazwy plikow
+// byly ucinane wielokropkiem. Limit: polowa obszaru roboczego ekranu (dalej
+// wielokropek przy bardzo dlugich nazwach).
+procedure TProgressForm.FitToNames(const Names: array of string; Total: Integer);
+var
+  I, W, MaxW: Integer;
+  Counter: string;
+begin
+  Counter := ' (' + IntToStr(Total) + '/' + IntToStr(Total) + ')';
+  W := Lbl.Width;
+  for I := 0 to High(Names) do
+    W := Max(W, Canvas.TextWidth(Names[I] + Counter) + CtrlGap * 2);
+  MaxW := Screen.WorkAreaWidth div 2;
+  if W > MaxW then W := MaxW;
+  if W = Lbl.Width then Exit;
+  Lbl.Width := W;
+  FitToContent(CtrlGap * 3, CtrlGap * 3);
+  AlignButtonsRight([BtnAbort], CtrlGap * 3);
+  FitHeight(CtrlGap * 3);
 end;
 
 procedure TProgressForm.AbortClick(Sender: TObject);
@@ -445,7 +478,7 @@ var
 begin
   IsPresent := rbPresent.Checked;
   lblDst.Enabled := not IsPresent;
-  lblDstPath.Enabled := not IsPresent;
+  edDstPath.Enabled := not IsPresent;
   btnDstChoice.Enabled := not IsPresent;
   lblFileName.Enabled := not IsPresent;
   edFileName.Enabled := not IsPresent;
@@ -465,16 +498,26 @@ begin
   UpdateModeState;
 end;
 
+// Jak w Przetwarzaniu wsadowym (frmBatchDlg.ShowPathEnd): po wybraniu folderu
+// pole pokazuje koniec sciezki (nazwe folderu), a nie poczatek - kursor na
+// koncu tekstu przewija pole (wymaga fokusu).
+procedure ShowPathEnd(E: TEdit);
+begin
+  if E.CanFocus then
+    E.SetFocus;
+  E.SelStart := Length(E.Text);
+  E.SelLength := 0;
+end;
+
 procedure TTimelapseDlg.btnSrcChoiceClick(Sender: TObject);
 var
   Dir: string;
 begin
-  Dir := lblSrcPath.Caption;
-  if Dir = '...' then Dir := '';
+  Dir := edSrcPath.Text;
   if SelectDirectory(T('Select source folder'), '', Dir, [sdNewUI]) then
   begin
-    lblSrcPath.Caption := Dir;
-    LayoutDialog;
+    edSrcPath.Text := Dir;
+    ShowPathEnd(edSrcPath);
   end;
 end;
 
@@ -482,12 +525,11 @@ procedure TTimelapseDlg.btnDstChoiceClick(Sender: TObject);
 var
   Dir: string;
 begin
-  Dir := lblDstPath.Caption;
-  if Dir = '...' then Dir := '';
+  Dir := edDstPath.Text;
   if SelectDirectory(T('Select output folder'), '', Dir, [sdNewUI]) then
   begin
-    lblDstPath.Caption := Dir;
-    LayoutDialog;
+    edDstPath.Text := Dir;
+    ShowPathEnd(edDstPath);
   end;
 end;
 
@@ -498,16 +540,16 @@ var
   HoldFirst, HoldLast: Double;
   Inv: TFormatSettings;
 begin
-  Txt := Trim(lblSrcPath.Caption);
-  if (Txt = '') or (Txt = '...') then
+  Txt := Trim(edSrcPath.Text);
+  if Txt = '' then
   begin
     MessageDlg(T('Fill in all fields.'), mtWarning, [mbOK], 0);
     Exit;
   end;
   if rbSave.Checked then
   begin
-    Txt := Trim(lblDstPath.Caption);
-    if (Txt = '') or (Txt = '...') then
+    Txt := Trim(edDstPath.Text);
+    if Txt = '' then
     begin
       MessageDlg(T('Fill in all fields.'), mtWarning, [mbOK], 0);
       Exit;
@@ -535,8 +577,8 @@ begin
   HoldLast := StrToFloatDef(Txt, 0, Inv);
   if HoldLast < 0 then HoldLast := 0;
 
-  FOpts.SrcDir := Trim(lblSrcPath.Caption);
-  FOpts.DstDir := Trim(lblDstPath.Caption);
+  FOpts.SrcDir := Trim(edSrcPath.Text);
+  FOpts.DstDir := Trim(edDstPath.Text);
   FOpts.FileName := Trim(edFileName.Text);
   if FOpts.FileName = '' then FOpts.FileName := 'timelapse.mp4';
   FOpts.Sort := tlsName;
@@ -610,18 +652,11 @@ begin
   if edFps.Width > ColW then ColW := edFps.Width;
   if edHoldFirst.Width > ColW then ColW := edHoldFirst.Width;
   if edHoldLast.Width > ColW then ColW := edHoldLast.Width;
-  // Ścieżka + przycisk muszą się zmieścić w kolumnie (szerokość dopasowana do pełnej ścieżki).
+  // Pole ścieżki + przycisk w kolumnie: pole na ok. 40 znaków jak w
+  // Przetwarzaniu wsadowym (frmBatchDlg), okno nie rośnie z długością ścieżki.
   Self.Canvas.Font.Assign(Self.Font);
-  W := Self.Canvas.TextWidth(lblSrcPath.Caption);
-  if Self.Canvas.TextWidth(lblDstPath.Caption) > W then
-    W := Self.Canvas.TextWidth(lblDstPath.Caption);
-  W := Max(BtnW + CtrlGap + W, ColW);
-  ColW := W;
-  // Etykiety ścieżek: AutoSize=False, więc wysokość z fontu (nie obcinać dołu liter).
-  Self.Canvas.Font.Assign(lblSrcPath.Font);
-  W := Self.Canvas.TextHeight('Wg');
-  lblSrcPath.Height := W;
-  lblDstPath.Height := W;
+  W := Self.Canvas.TextWidth('0') * 40;
+  ColW := Max(BtnW + CtrlGap + W, ColW);
   cmbRes.Width := ColW;
 
   RowTop := Margin;
@@ -629,9 +664,9 @@ begin
   // Wiersz 1: katalog źródłowy.
   lblSrc.Left := ColLeft;
   lblSrc.Top := RowTop + (btnSrcChoice.Height - lblSrc.Height) div 2;
-  lblSrcPath.Left := ColCtrl;
-  lblSrcPath.Width := ColW - BtnW - CtrlGap;
-  lblSrcPath.Top := lblSrc.Top;
+  edSrcPath.Left := ColCtrl;
+  edSrcPath.Width := ColW - BtnW - CtrlGap;
+  edSrcPath.Top := RowTop + (btnSrcChoice.Height - edSrcPath.Height) div 2;
   btnSrcChoice.Left := ColCtrl + ColW - BtnW;
   btnSrcChoice.Top := RowTop;
   RowTop := StackBelow(btnSrcChoice, RowGap * 2);
@@ -665,9 +700,9 @@ begin
   // Wiersz 3: katalog wynikowy.
   lblDst.Left := ColLeft;
   lblDst.Top := RowTop + (btnDstChoice.Height - lblDst.Height) div 2;
-  lblDstPath.Left := ColCtrl;
-  lblDstPath.Width := ColW - BtnW - CtrlGap;
-  lblDstPath.Top := lblDst.Top;
+  edDstPath.Left := ColCtrl;
+  edDstPath.Width := ColW - BtnW - CtrlGap;
+  edDstPath.Top := RowTop + (btnDstChoice.Height - edDstPath.Height) div 2;
   btnDstChoice.Left := ColCtrl + ColW - BtnW;
   btnDstChoice.Top := RowTop;
   RowTop := StackBelow(btnDstChoice, RowGap * 2);
@@ -791,8 +826,10 @@ begin
   Result.Canvas.StretchDraw(Rect(X, Y, X + NW, Y + NH), ABmp);
 end;
 
-procedure RunTimelapse(const Opts: TTimelapseOptions);
+procedure RunTimelapse(const Opts: TTimelapseOptions; out ElapsedSec: Double;
+  out EncoderInfo: string);
 var
+  SW: TStopwatch;
   Files: TArray<TTimelapseFile>;
   Paths: TArray<string>;
   i, r, OkCount, ErrCount, TW, TH, Reps: Integer;
@@ -804,6 +841,8 @@ var
   Writer: TVideoWriter;
   FPS: Double;
 begin
+  ElapsedSec := 0;
+  EncoderInfo := '';
   Files := BuildFileList(Opts.SrcDir, Opts.Sort = tlsDate);
   if Length(Files) = 0 then
   begin
@@ -851,9 +890,14 @@ begin
   DstPath := IncludeTrailingPathDelimiter(Opts.DstDir) + Opts.FileName;
   if FileExists(DstPath) then DeleteFile(DstPath);
 
+  SW := TStopwatch.StartNew;
   Prog := TProgressForm.Create(nil);
   try
     Prog.Lbl.Caption := T('Processing...') + ' ' + IntToStr(0) + '/' + IntToStr(Length(Files));
+    SetLength(Paths, Length(Files));
+    for i := 0 to High(Files) do
+      Paths[i] := Files[i].Name;
+    Prog.FitToNames(Paths, Length(Files));
     Prog.Show;
     Application.ProcessMessages;
 
@@ -886,7 +930,7 @@ begin
       Exit;
     end;
 
-    Writer := TVideoWriter.Create(DstPath, TW, TH, FPS);
+    Writer := TVideoWriter.Create(DstPath, TW, TH, FPS, Prefs.UseGPU);
     try
       for i := 0 to High(Files) do
       begin
@@ -925,6 +969,7 @@ begin
         end;
       end;
       Writer.Finalize;
+      EncoderInfo := Writer.EncoderInfo;
     finally
       Writer.Free;
     end;
@@ -936,7 +981,9 @@ begin
   end;
 
   if Aborted then
-    DeleteFile(DstPath);
+    DeleteFile(DstPath)
+  else
+    ElapsedSec := SW.Elapsed.TotalSeconds;   // przed oknem podsumowania
 
   Msg := T('Processed') + ': ' + IntToStr(OkCount) + '/' + IntToStr(Length(Files));
   if ErrCount > 0 then

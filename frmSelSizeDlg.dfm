@@ -30,6 +30,7 @@
     Height = 23
     TabOrder = 0
     OnKeyPress = edtWidthKeyPress
+    NumbersOnly = True
   end
   object lblHeight: TLabel
     Left = 160
@@ -46,6 +47,7 @@
     Height = 23
     TabOrder = 1
     OnKeyPress = edtHeightKeyPress
+    NumbersOnly = True
   end
   object btnOK: TButton
     Left = 60

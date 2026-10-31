@@ -175,7 +175,7 @@
 177	Distorsion en arc - courber l’image
 178	Tourbillon - déformer l’image en spirale
 179	Effet d’ondulation
-180	Distorsion polaire - tunnel, œil-de-poisson
+180	Distorsion polaire - petite planète, tunnel, kaléidoscope
 181	Palette 4 couleurs - Workbench 1.x (OCS)
 182	Palette 4 couleurs - Workbench 2.x/3.x
 183	Palette 32 couleurs (4×4×2) - OCS
@@ -306,39 +306,6 @@
 321	Choisir l’angle de l’arc :
 322	Choisir l’intensité :
 323	Choisir la variante :
-324	Barillet faible
-325	Barillet moyen
-326	Barillet fort
-327	Coussinet faible
-328	Coussinet moyen
-329	Coussinet fort
-330	45°
-331	90°
-332	180°
-333	360°
-334	90° + rotation
-335	180° + rotation
-336	Faible (45°)
-337	Moyen (90°)
-338	Fort (180°)
-339	Très fort (270°)
-340	Complet (360°)
-341	Inverser
-342	Léger
-343	Moyen
-344	Fort
-345	Concentrique
-346	Depuis le coin
-347	Dense
-348	Complet
-349	Demi-angle
-350	Quart d’angle
-351	Anneau
-352	Petit rayon
-353	Lisse
-354	Tunnel
-356	Œil-de-poisson
-357	Étirement extérieur
 358	Erreur
 359	Format de fichier non pris en charge.
 360	Instantané
@@ -484,7 +451,7 @@
 532	Interface…
 533	Paramètres de l’interface
 534	Interface
-535	Couleur de fond de la zone de travail (uniquement avec le thème Windows standard) :
+535	Couleur de fond de la zone de travail (uniquement avec le thème « Windows ») :
 537	Ouvrir une image
 538	Tous les fichiers
 539	Presse-papiers
@@ -626,10 +593,8 @@
 682	Floyd–Steinberg (lissé)
 683	Le mode sélectionné est très lent pour les grandes images.\nPour les images de plus de 2 MP, l’aperçu et l’application de l’effet peuvent prendre plusieurs minutes.\nLes autres modes sont beaucoup plus rapides.
 684	Performances…
-685	Résolution maximale de fonctionnement :
+685	Réduire les photos à l'ouverture à :
 687	Image
-688	Tunnel inversé
-689	Secteur de 30°
 690	Full HD (1920×1080)
 691	4K (3840×2160)
 692	Performances et résolution maximale de fonctionnement
@@ -696,7 +661,7 @@
 763	Perte de blocs :
 764	Décalage horizontal :
 765	Assombrit une ligne sur deux au ratio PAL — valeur plus élevée = espaces plus sombres
-766	Documentation en ligne
+766	Site du programme
 767	Ouvrez le site web Fotografista dans votre navigateur
 768	Miméographe…
 769	Miméographe — bords à l’encre sur fond blanc
@@ -1026,7 +991,7 @@
 1095	Afficher le masque de protection
 1096	Effacer le masque de protection
 1097	Protéger la sélection
-1098	Déprotéger la sélection
+1098	Déprotéger
 1099	Lasso
 1100	Baguette magique
 1101	Sélection…
@@ -1091,8 +1056,8 @@
 1162	Journal
 1163	PRL – doux
 1164	PRL – trame
-1165	Pop art – noir
-1166	Pop art – deux encres
+1165	Ben-Day – noir
+1166	Ben-Day – couleur
 1167	Pop art – couleur
 1168	Brun (délavé)
 1169	Répartition des couleurs
@@ -1100,3 +1065,66 @@
 1171	Sans égalisation
 1172	Égaliser les canaux RVB
 1173	Égaliser la luminosité
+1174	Inverser A et B
+1175	Différence
+1176	Tous les formats pris en charge
+1177	Ce n’est pas un fichier IFF.
+1178	Ce n’est pas un fichier IFF ILBM.
+1179	En-tête ILBM non valide (BMHD).
+1180	Dimensions ILBM non valides.
+1181	L’image ILBM n’a pas de bloc BODY.
+1182	Compression ILBM non prise en charge.
+1183	Fichier introuvable : %s
+1184	Impossible de charger : %s
+1185	Étapes d’annulation :
+1186	Illimité
+1187	Sélectionner la zone protégée
+1188	Retransformer la zone protégée en sélection
+1189	Désélectionner
+1190	Taille des tuiles
+1191	Tuiles horizontales :
+1192	Seuil…
+1193	Seuil - fort contraste noir et blanc
+1194	Simplification :
+1195	Linogravure - grands aplats aux bords de coupe lisses
+1196	Utiliser la carte graphique lorsque c'est possible
+1197	Trame CMJN
+1198	Palette MagicWB (8 couleurs)
+1199	Carte graphique :
+1200	Aucun encodeur vidéo matériel (vidéo encodée par le processeur)
+1201	processeur
+1202	carte graphique
+1203	utilisée
+1204	Original (sans réduction)
+1205	Filigrane…
+1206	Filigrane
+1207	Texte
+1208	Logo (image PNG)
+1209	Couleur du texte…
+1210	Position :
+1211	Répéter sur toute la photo
+1212	Marge :
+1213	Ombre sous le texte
+1214	Impossible de charger le fichier du logo.
+1215	Haut centre
+1216	Milieu gauche
+1217	Centre
+1218	Milieu droite
+1219	Bas centre
+1220	Photo suivante
+1221	Photo précédente
+1222	Ouvrir la photo suivante de ce dossier
+1223	Ouvrir la photo précédente de ce dossier
+1224	Échantillon à distance du coin
+1225	Distance :
+1226	Barillet
+1227	Coussinet
+1228	Trou
+1229	Rotation
+1230	Retourné
+1231	Œil-de-poisson…
+1232	Œil-de-poisson
+1233	Œil-de-poisson - bombe le centre de la photo
+1234	Cercle
+1235	Supprimer les yeux rouges
+1236	Sélectionnez d'abord la pupille.

@@ -20,16 +20,33 @@
     Top = 12
     Width = 356
     Height = 115
-    Caption = 'Maximum working resolution:'
+    Caption = 'Downscale photos on opening to:'
     TabOrder = 0
   end
-  object chkSmoothPreview: TCheckBox
-    Left = 24
+  object rgUndoLimit: TRadioGroup
+    Left = 12
     Top = 138
+    Width = 356
+    Height = 115
+    Caption = 'Undo steps:'
+    TabOrder = 1
+  end
+  object chkUseGPU: TCheckBox
+    Left = 24
+    Top = 262
     Width = 300
     Height = 17
-    Caption = 'Smooth preview scaling'
-    TabOrder = 1
+    Caption = 'Use the graphics card where possible'
+    TabOrder = 2
+    OnClick = chkUseGPUClick
+  end
+  object lblGPUInfo: TLabel
+    Left = 40
+    Top = 282
+    Width = 300
+    Height = 15
+    Caption = ''
+    StyleElements = [seClient, seBorder]
   end
   object btnOK: TButton
     Left = 192
@@ -39,7 +56,7 @@
     Caption = 'OK'
     Default = True
     ModalResult = 1
-    TabOrder = 2
+    TabOrder = 3
   end
   object btnCancel: TButton
     Left = 284
@@ -49,6 +66,6 @@
     Cancel = True
     Caption = 'Cancel'
     ModalResult = 2
-    TabOrder = 3
+    TabOrder = 4
   end
 end

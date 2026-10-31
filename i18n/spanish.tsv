@@ -175,7 +175,7 @@
 177	Distorsión de arco - curvar la imagen
 178	Remolino - retorcer la imagen
 179	Efecto de ondulación del agua
-180	Distorsión polar - túnel, ojo de pez
+180	Distorsión polar - pequeño planeta, túnel, caleidoscopio
 181	Paleta de 4 colores - Workbench 1.x (OCS)
 182	Paleta de 4 colores - Workbench 2.x/3.x
 183	Paleta de 32 colores (4x4x2) - OCS
@@ -306,39 +306,6 @@
 321	Seleccionar ángulo del arco:
 322	Seleccionar intensidad:
 323	Seleccionar variante:
-324	Barril suave
-325	Barril medio
-326	Barril fuerte
-327	Cojín suave
-328	Cojín medio
-329	Cojín fuerte
-330	45°
-331	90°
-332	180°
-333	360°
-334	90° + girar
-335	180° + girar
-336	Suave (45°)
-337	Medio (90°)
-338	Fuerte (180°)
-339	Muy fuerte (270°)
-340	Completo (360°)
-341	Invertido
-342	Suave
-343	Medio
-344	Fuerte
-345	Concéntrico
-346	Desde la esquina
-347	Denso
-348	Completo
-349	Medio ángulo
-350	Cuarto de ángulo
-351	Anillo
-352	Radio pequeño
-353	Suave
-354	Túnel
-356	Ojo de pez
-357	Estiramiento exterior
 358	Error
 359	Formato de archivo no compatible.
 360	Instantánea
@@ -484,7 +451,7 @@
 532	Interfaz...
 533	Configuración de la interfaz
 534	Interfaz
-535	Color de fondo del lienzo (solo con el tema estándar de Windows):
+535	Color de fondo del lienzo (solo con el tema «Windows»):
 537	Abrir imagen
 538	Todos los archivos
 539	Portapapeles
@@ -626,10 +593,8 @@
 682	Floyd–Steinberg (suave)
 683	El modo seleccionado es muy lento para imágenes grandes.\nEn imágenes de más de 2 MP, la vista previa y la aplicación del efecto pueden tardar varios minutos.\nLos demás modos son mucho más rápidos.
 684	Rendimiento...
-685	Resolución máxima de trabajo:
+685	Reducir las fotos al abrirlas a:
 687	Imagen
-688	Túnel invertido
-689	Sector de 30°
 690	Full HD (1920×1080)
 691	4K (3840×2160)
 692	Rendimiento y resolución máxima de trabajo
@@ -696,7 +661,7 @@
 763	Pérdida de bloque:
 764	Desplazamiento de corte horizontal:
 765	Oscurece una línea sí y otra no en relación PAL: valor más alto = espacios más oscuros
-766	Documentación en línea
+766	Sitio web del programa
 767	Abre el sitio web de Fotografista en tu navegador
 768	Mimeógrafo...
 769	Mimeógrafo: bordes de tinta sobre fondo blanco
@@ -788,7 +753,7 @@
 861	Elegir...
 862	Error CMYK
 863	Contraste antes de la conversión (0-10):
-864	Creando la estampación
+864	Creación de estampado
 865	Sombreado cruzado
 866	Carpeta de destino:
 867	Sensibilidad de detección (1-100):
@@ -1026,7 +991,7 @@
 1095	Mostrar máscara de protección
 1096	Borrar máscara de protección
 1097	Proteger selección
-1098	Desproteger selección
+1098	Desproteger
 1099	Lazo
 1100	Varita mágica
 1101	Selección...
@@ -1091,8 +1056,8 @@
 1162	Periódico
 1163	PRL – suave
 1164	PRL – trama
-1165	Pop art – negro
-1166	Pop art – dos tintas
+1165	Ben-Day – negro
+1166	Ben-Day – color
 1167	Pop art – color
 1168	Marrón (desvaído)
 1169	Distribución de colores
@@ -1100,3 +1065,66 @@
 1171	Sin ecualización
 1172	Ecualizar canales RGB
 1173	Ecualizar el brillo
+1174	Intercambiar A y B
+1175	Diferencia
+1176	Todos los formatos compatibles
+1177	No es un archivo IFF.
+1178	No es un archivo IFF ILBM.
+1179	Encabezado ILBM no válido (BMHD).
+1180	Dimensiones ILBM no válidas.
+1181	La imagen ILBM no tiene bloque BODY.
+1182	Compresión ILBM no compatible.
+1183	Archivo no encontrado: %s
+1184	No se puede cargar: %s
+1185	Pasos de deshacer:
+1186	Ilimitado
+1187	Seleccionar área protegida
+1188	Convertir de nuevo el área protegida en selección
+1189	Deseleccionar
+1190	Tamaño del mosaico
+1191	Mosaicos en horizontal:
+1192	Umbral...
+1193	Umbral - fuerte contraste en blanco y negro
+1194	Simplificación:
+1195	Linograbado - grandes superficies con bordes de corte suaves
+1196	Usar la tarjeta gráfica cuando sea posible
+1197	Trama CMYK
+1198	Paleta MagicWB (8 colores)
+1199	Tarjeta gráfica:
+1200	Sin codificador de vídeo por hardware (vídeo codificado por el procesador)
+1201	procesador
+1202	tarjeta gráfica
+1203	en uso
+1204	Original (sin reducción)
+1205	Marca de agua...
+1206	Marca de agua
+1207	Texto
+1208	Logotipo (imagen PNG)
+1209	Color del texto...
+1210	Posición:
+1211	Repetir en toda la foto
+1212	Margen:
+1213	Sombra bajo el texto
+1214	No se pudo cargar el archivo del logotipo.
+1215	Arriba centro
+1216	Centro izquierda
+1217	Centro
+1218	Centro derecha
+1219	Abajo centro
+1220	Foto siguiente
+1221	Foto anterior
+1222	Abrir la foto siguiente de esta carpeta
+1223	Abrir la foto anterior de esta carpeta
+1224	Muestra alejada de la esquina
+1225	Distancia:
+1226	Barril
+1227	Cojín
+1228	Agujero
+1229	Rotación
+1230	Del revés
+1231	Ojo de pez...
+1232	Ojo de pez
+1233	Ojo de pez - abomba el centro de la foto
+1234	Círculo
+1235	Eliminar ojos rojos
+1236	Selecciona primero la pupila.

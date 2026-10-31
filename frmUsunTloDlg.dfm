@@ -40,6 +40,47 @@
     TabOrder = 0
     OnClick = rgCornerClick
   end
+  object chkSample: TCheckBox
+    Left = 15
+    Top = 450
+    Width = 400
+    Height = 17
+    Caption = 'Sample away from the corner'
+    TabOrder = 1
+    OnClick = chkSampleClick
+  end
+  object lblDistance: TLabel
+    Left = 15
+    Top = 470
+    Width = 60
+    Height = 15
+    Caption = 'Distance:'
+    Enabled = False
+    StyleElements = [seClient, seBorder]
+  end
+  object tbDistance: TTrackBar
+    Left = 15
+    Top = 489
+    Width = 400
+    Height = 25
+    Enabled = False
+    Max = 25
+    Min = 1
+    Position = 5
+    TabOrder = 2
+    OnChange = tbDistanceChange
+  end
+  object lblDistValue: TLabel
+    Left = 15
+    Top = 517
+    Width = 400
+    Height = 18
+    AutoSize = False
+    Alignment = taCenter
+    Caption = '5%'
+    Enabled = False
+    StyleElements = [seClient, seBorder]
+  end
   object lblTolerance: TLabel
     Left = 15
     Top = 460
@@ -56,7 +97,7 @@
     Max = 100
     Min = 0
     Position = 32
-    TabOrder = 1
+    TabOrder = 3
     OnChange = tbToleranceChange
   end
   object lblTolValue: TLabel
@@ -77,7 +118,7 @@
     Caption = 'OK'
     Default = True
     ModalResult = 1
-    TabOrder = 2
+    TabOrder = 4
   end
   object btnCancel: TButton
     Left = 331
@@ -87,6 +128,6 @@
     Cancel = True
     Caption = 'Cancel'
     ModalResult = 2
-    TabOrder = 3
+    TabOrder = 5
   end
 end

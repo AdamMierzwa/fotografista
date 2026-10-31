@@ -3,10 +3,10 @@
 interface
 
 uses
-  Winapi.Windows, System.SysUtils, System.Classes, System.Types, System.UITypes,
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Classes, System.Types, System.UITypes,
   System.Math, Vcl.Graphics, Vcl.Controls, Vcl.Forms, Vcl.ComCtrls, Vcl.ToolWin,
   Vcl.ExtCtrls, Vcl.Buttons, Vcl.Imaging.pngimage, Vcl.StdCtrls,
-  System.Skia, uTitleBar;
+  System.Skia, Vcl.ImageCollection, Vcl.VirtualImageList, uTitleBar;
 
 type
   TLauncherDlg = class(TFotoForm)
@@ -42,7 +42,10 @@ type
     procedure TimerTimer(Sender: TObject);
   private
     FLastFitKey: string;
+    FIconColl: TImageCollection;
+    FIconList: TVirtualImageList;
     procedure LoadIcons;
+    procedure CMStyleChanged(var Message: TMessage); message CM_STYLECHANGED;
     procedure FitButtons;
   public
     procedure RefreshZoom;
@@ -51,7 +54,7 @@ type
 implementation
 
 uses
-  fMain, uI18n;
+  Vcl.Themes, fMain, uI18n;
 
 {$R *.dfm}
 
@@ -69,11 +72,15 @@ const
     'ICON_MACRO',
     'ICON_COMPARE');
 
-  // Tlo ikon = E8E8E8, dokladnie jak brush w Hollywood p_LoadSvgIcon
-  // (events.hws:1042-1047: rasteryzacja na tle $00E8E8E8). OPAQUE tlo
-  // gwarantuje, ze ikona zawsze jest widoczna - bez ryzyka znikniecia
-  // przy stracie kanalu alfa (PNG -> TBitmap -> SpeedButton.Glyph).
-  SVG_BG_COLOR = TAlphaColor($FFE8E8E8);
+// TColor (takze kolor systemowy z motywu) -> TAlphaColor dla Skia
+function ToAlphaColor(C: TColor): TAlphaColor;
+var
+  RGBValue: COLORREF;
+begin
+  RGBValue := ColorToRGB(C);
+  Result := $FF000000 or (TAlphaColor(GetRValue(RGBValue)) shl 16) or
+    (TAlphaColor(GetGValue(RGBValue)) shl 8) or GetBValue(RGBValue);
+end;
 
 // Zwraca TResourceStream dla ikony SVG osadzonej w EXE (launcher_icons.res),
 // lub nil gdy zasob nie istnieje. Pamietyc o Free po uzyciu.
@@ -84,45 +91,33 @@ begin
   Result := TResourceStream.Create(HInstance, AResName, RT_RCDATA);
 end;
 
-// Renderuje SVG do bitmapy 24x24 z OPAQUE tlem E8E8E8. Skia:
-// TSkSVGDOM.MakeFromStream + SetContainerSize(24,24) rozwiazuje
-// width="100%" height="100%" (odpowiednik rasteryzacji nanosvg
-// w Hollywood), render na TSkSurface.MakeRaster, zapis do PNG.
-function RenderSvgToBitmap(const AStream: TStream; W, H: Integer): TBitmap;
+// Renderuje SVG do PNG W x H z PRZEZROCZYSTYM tlem, rysunek przemalowany na
+// kolor AFg z zachowanym ksztaltem i wygladzeniem - warstwa z
+// TSkColorFilter.MakeBlend(AFg, SrcIn) (System.Skia.pas:1534, SaveLayer :1358).
+// Przezroczyste tlo + TVirtualImageList (kanal alfa) = pod ikona tlo, ktore
+// rysuje sam motyw paska narzedzi (2026-10-23; wczesniej staly kafelek -
+// najpierw $E8E8E8 jak w Hollywood, potem clBtnFace, ktory w czesci stylow
+// VCL nie jest kolorem paska). TSkSVGDOM.MakeFromStream + SetContainerSize
+// rozwiazuje width="100%" height="100%".
+function RenderSvgToPng(const AStream: TStream; W, H: Integer; AFg: TAlphaColor): TBytes;
 var
   SVG: ISkSVGDOM;
   Surface: ISkSurface;
-  Img: ISkImage;
-  Bytes: TBytes;
-  Stream: TMemoryStream;
-  PNG: TPngImage;
+  Tint: ISkPaint;
 begin
   Result := nil;
   SVG := TSkSVGDOM.MakeFromStream(AStream);
   if SVG = nil then Exit;
   Surface := TSkSurface.MakeRaster(W, H);
-  Surface.Canvas.Clear(SVG_BG_COLOR);
+  Surface.Canvas.Clear(TAlphaColors.Null);
   SVG.SetContainerSize(TSizeF.Create(W, H));
+  Tint := TSkPaint.Create;
+  Tint.ColorFilter := TSkColorFilter.MakeBlend(AFg, TSkBlendMode.SrcIn);
+  Surface.Canvas.SaveLayer(Tint);
   SVG.Render(Surface.Canvas);
+  Surface.Canvas.Restore;
   Surface.Flush;
-  Img := Surface.MakeImageSnapshot;
-  Bytes := Img.Encode(TSkEncodedImageFormat.Png, 100);
-  if Length(Bytes) = 0 then Exit;
-  Stream := TMemoryStream.Create;
-  try
-    Stream.Write(Bytes[0], Length(Bytes));
-    Stream.Position := 0;
-    PNG := TPngImage.Create;
-    try
-      PNG.LoadFromStream(Stream);
-      Result := TBitmap.Create;
-      Result.Assign(PNG);
-    finally
-      PNG.Free;
-    end;
-  finally
-    Stream.Free;
-  end;
+  Result := Surface.MakeImageSnapshot.Encode(TSkEncodedImageFormat.Png, 100);
 end;
 
 { TLauncherDlg }
@@ -135,37 +130,61 @@ begin
   RefreshZoom;
 end;
 
+// Ikony przez TImageCollection + TVirtualImageList (PNG z kanalem alfa,
+// TCustomSpeedButton.Images - Vcl.Buttons.pas:144): przezroczyste tlo, kolor
+// rysunku = kolor tekstu przyciskow paska narzedzi w biezacym stylu
+// (GetStyleFontColor(sfToolItemTextNormal), Vcl.Themes.pas:1335).
 procedure TLauncherDlg.LoadIcons;
 var
-  Bmp: TBitmap;
   Btn: TSpeedButton;
   Stream: TResourceStream;
+  Png: TMemoryStream;
+  Bytes: TBytes;
   I: Integer;
+  Fg: TAlphaColor;
 begin
+  if FIconColl = nil then
+  begin
+    FIconColl := TImageCollection.Create(Self);
+    FIconList := TVirtualImageList.Create(Self);
+    FIconList.ImageCollection := FIconColl;
+    FIconList.Width := 24;
+    FIconList.Height := 24;
+  end;
+  FIconList.Clear;
+  FIconColl.Images.Clear;
+  Fg := ToAlphaColor(StyleServices.GetStyleFontColor(sfToolItemTextNormal));
   for I := 0 to High(LAUNCHER_ICONS) do
   begin
+    case I of
+      0: Btn := sbOpen;
+      1: Btn := sbSave;
+      2: Btn := sbCopy;
+      3: Btn := sbPaste;
+      4: Btn := sbMacro;
+    else
+      Btn := sbCompare;
+    end;
     Stream := LoadLauncherSvgStream(LAUNCHER_ICONS[I]);
     if Stream = nil then Continue;
     try
-      Bmp := RenderSvgToBitmap(Stream, 24, 24);
+      Bytes := RenderSvgToPng(Stream, 24, 24, Fg);
     finally
       Stream.Free;
     end;
-    if Bmp = nil then Continue;
+    if Length(Bytes) = 0 then Continue;
+    Png := TMemoryStream.Create;
     try
-      case I of
-        0: Btn := sbOpen;
-        1: Btn := sbSave;
-        2: Btn := sbCopy;
-        3: Btn := sbPaste;
-        4: Btn := sbMacro;
-      else
-        Btn := sbCompare;
-      end;
-      Btn.Glyph := Bmp;   // TSpeedButton.Glyph kopiuje bitmape (Assign)
+      Png.WriteBuffer(Bytes[0], Length(Bytes));
+      Png.Position := 0;
+      FIconColl.Add(LAUNCHER_ICONS[I], Png);
     finally
-      Bmp.Free;
+      Png.Free;
     end;
+    FIconList.Add(LAUNCHER_ICONS[I], LAUNCHER_ICONS[I]);
+    Btn.Glyph := nil;
+    Btn.Images := FIconList;
+    Btn.ImageIndex := FIconList.Count - 1;
   end;
 end;
 
@@ -199,7 +218,7 @@ procedure TLauncherDlg.FitButtons;
 var
   Bmp: TBitmap;
   Btn: TButton;
-  MaxW, I: Integer;
+  MaxW, I, ToolW: Integer;
   Key: string;
 begin
   Key := btnZoomFit.Caption + #1 + btnUndo.Caption + #1 + btnRevert.Caption;
@@ -224,11 +243,39 @@ begin
     btnRevert.Width := MaxW;
     grpZoom.Width := 12 + btnZoomFit.Width + 8;
     grpEdit.Width := 12 + btnUndo.Width + 8;
+
+    // Ikony z odstepem CtrlGap miedzy rysunkami (2026-10-23): TToolBar uklada
+    // przyciski jeden przy drugim, wiec odstep daje szerokosc przycisku
+    // (ikona 24 px wysrodkowana). Okno co najmniej na caly pasek - inaczej
+    // pasek zawinalby sie do drugiego rzedu.
+    for I := 0 to ToolBar.ControlCount - 1 do
+      if ToolBar.Controls[I] is TSpeedButton then
+        ToolBar.Controls[I].Width := 24 + CtrlGap;
+    ToolW := ToolBar.Indent + ToolBar.BorderWidth * 2 + 4;
+    for I := 0 to ToolBar.ControlCount - 1 do
+      Inc(ToolW, ToolBar.Controls[I].Width);
+    ClientWidth := Max(grpZoom.Left + grpZoom.Width + 6, ToolW);
+
+    // ramki na szerokosc okna (ten sam margines co z lewej), przyciski
+    // i odczyt zoomu na szerokosc ramki
+    grpZoom.Width := ClientWidth - grpZoom.Left - 6;
+    grpEdit.Width := grpZoom.Width;
+    btnZoomFit.Width := grpZoom.Width - 12 - 8;
+    btnUndo.Width := btnZoomFit.Width;
+    btnRevert.Width := btnZoomFit.Width;
     btnZoomIn.Left := grpZoom.ClientWidth - 8 - btnZoomIn.Width;
-    ClientWidth := grpZoom.Left + grpZoom.Width + 6;
+    lblZoom.Left := btnZoomOut.Left + btnZoomOut.Width + CtrlGap;
+    lblZoom.Width := btnZoomIn.Left - CtrlGap - lblZoom.Left;
   finally
     Bmp.Free;
   end;
+end;
+
+// zmiana motywu (Ustawienia): ikony w nowych kolorach
+procedure TLauncherDlg.CMStyleChanged(var Message: TMessage);
+begin
+  inherited;
+  LoadIcons;
 end;
 
 procedure TLauncherDlg.FormClose(Sender: TObject; var Action: TCloseAction);

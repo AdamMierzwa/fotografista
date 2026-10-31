@@ -5,10 +5,10 @@ interface
 uses
   Vcl.Graphics;
 
-const
-  MAX_UNDO = 20;
-
 procedure UndoInit;
+// Limit krokow Cofnij z ustawien (Ustawienia > Wydajnosc, Prefs.UndoLimit):
+// 0 = bez limitu. Zmniejszenie od razu usuwa najstarsze kroki ponad limit.
+procedure UndoSetLimit(ALimit: Integer);
 // AName = '' : stan WSTEPNY (efekt z oknem) - zostaje na stosie dopiero po
 // UndoCommit (FinishEffect); niezatwierdzony (Anuluj) znika przy nastepnym
 // zapisie, Cofnij lub Ponow. AName <> '' : stan od razu zatwierdzony.
@@ -29,6 +29,8 @@ procedure UndoClear;
 implementation
 
 var
+  // 20 do chwili UndoSetLimit z ustawien (fMain po wczytaniu preferencji)
+  UndoLimit: Integer = 20;
   UndoStack: array of TBitmap;
   RedoStack: array of TBitmap;
   UndoMaskStack: array of TBitmap;
@@ -65,11 +67,12 @@ begin
   SetLength(UndoNames, Length(UndoNames) - 1);
 end;
 
-// Limit MAX_UNDO pilnowany przy zatwierdzeniu - anulowany stan wstepny
-// nie wypycha najstarszego.
+// Limit (UndoLimit, 0 = bez limitu) pilnowany przy zatwierdzeniu - anulowany
+// stan wstepny nie wypycha najstarszego.
 procedure UndoTrim;
 begin
-  while Length(UndoStack) > MAX_UNDO do
+  if UndoLimit <= 0 then Exit;
+  while Length(UndoStack) > UndoLimit do
   begin
     UndoStack[0].Free;
     UndoMaskStack[0].Free;
@@ -79,6 +82,13 @@ begin
     Delete(UndoProtStack, 0, 1);
     Delete(UndoNames, 0, 1);
   end;
+end;
+
+procedure UndoSetLimit(ALimit: Integer);
+begin
+  if ALimit < 0 then ALimit := 0;
+  UndoLimit := ALimit;
+  UndoTrim;
 end;
 
 procedure UndoCommit(const AName: string);

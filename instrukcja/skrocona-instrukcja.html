@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<title>Fotografista – skrócona instrukcja użytkownika</title>
+<style>
+  @page { size: A4; margin: 18mm 17mm 18mm 17mm; }
+  body { font-family: "Segoe UI", Arial, sans-serif; font-size: 10.5pt; line-height: 1.45; color: #1d1d1d; margin: 0; }
+  h1 { font-size: 26pt; margin: 0 0 4mm; color: #22303c; }
+  h2 { font-size: 15pt; color: #22303c; border-bottom: 1.5pt solid #c9a227; padding-bottom: 1.5mm; margin: 8mm 0 3mm; page-break-after: avoid; }
+  h3 { font-size: 11.5pt; color: #22303c; margin: 5mm 0 1.5mm; page-break-after: avoid; }
+  p { margin: 0 0 2.5mm; }
+  ul { margin: 0 0 3mm; padding-left: 6mm; }
+  li { margin-bottom: 1mm; }
+  .cover { height: 245mm; display: flex; flex-direction: column; justify-content: center; page-break-after: always; }
+  .cover .sub { font-size: 14pt; color: #555; margin-bottom: 12mm; }
+  .cover .ver { font-size: 11pt; color: #777; }
+  table { border-collapse: collapse; width: 100%; margin: 0 0 4mm; page-break-inside: avoid; }
+  th, td { border: 0.6pt solid #b8b8b8; padding: 1.4mm 2.2mm; text-align: left; vertical-align: top; }
+  th { background: #eef0f2; }
+  td.k { white-space: nowrap; font-weight: 600; width: 32mm; }
+  .note { background: #f6f3e6; border-left: 2.5pt solid #c9a227; padding: 2mm 3mm; margin: 0 0 3.5mm; }
+  .menu { font-weight: 600; }
+  .toc li { margin-bottom: 0.6mm; }
+</style>
+</head>
+<body>
+
+<div class="cover">
+  <h1>Fotografista</h1>
+  <div class="sub">Skrócona instrukcja użytkownika</div>
+  <p>Program do grafiki rastrowej. Tworzenie ilustracji z wykorzystaniem historycznych technik fotograficznych, drukarskich i retrokomputerowych.</p>
+  <p class="ver">Wersja programu 1.5.0 · fotografista.com.pl</p>
+</div>
+
+<h2>Spis treści</h2>
+<ol class="toc">
+  <li>Instalacja i uruchomienie</li>
+  <li>Okno programu</li>
+  <li>Pierwsze kroki</li>
+  <li>Menu w skrócie</li>
+  <li>Zaznaczenie i maska ochronna</li>
+  <li>Retusz</li>
+  <li>Zniekształcenia: typowe ustawienia</li>
+  <li>Znak wodny</li>
+  <li>Usuwanie tła i czerwonych oczu</li>
+  <li>Makra i przetwarzanie wsadowe</li>
+  <li>Wyrzutnia</li>
+  <li>Ustawienia</li>
+  <li>Skróty klawiszowe</li>
+  <li>Pomoc i kontakt</li>
+</ol>
+
+<h2>1. Instalacja i uruchomienie</h2>
+<ul>
+  <li><b>Microsoft Store</b> – wersja próbna przez 7 dni, licencję kupuje się z poziomu Windows.</li>
+  <li><b>Wersja instalacyjna (EXE)</b> – do kupienia w sklepiku autora.</li>
+  <li>Wymagany Windows 10 albo Windows 11, 64 bity. Program kompiluje się także jako 32-bitowy, co pozwala uruchomić go na Windows 7.</li>
+  <li>Program nie wymaga .NET, Javy ani żadnych dodatkowych instalacji.</li>
+</ul>
+
+<h2>2. Okno programu</h2>
+<p>Okno składa się z trzech części:</p>
+<ul>
+  <li><b>Pasek menu</b> – wszystkie polecenia programu. Program nie ma pasków narzędzi; najczęściej używane polecenia są w Wyrzutni (rozdział 11).</li>
+  <li><b>Obszar roboczy</b> – otwarty obraz. Program pracuje na jednym obrazie naraz i bez warstw.</li>
+  <li><b>Pasek stanu</b> – nazwa pliku, wymiary i głębia kolorów, powiększenie, to, co zostanie cofnięte i ponowione, oraz ostatnia operacja z czasem jej wykonania.</li>
+</ul>
+
+<h2>3. Pierwsze kroki</h2>
+<h3>Otwieranie obrazu</h3>
+<p><span class="menu">Plik → Otwórz…</span> (Ctrl+O) albo przeciągnięcie pliku na okno programu. Program otwiera PNG, JPEG, BMP, GIF, TIFF, WebP, a tylko do odczytu także HEIC, HEIF, AVIF (może być potrzebne rozszerzenie obrazów z Microsoft Store) i obrazy IFF ILBM z Amigi. Obraz można też wkleić ze schowka (Ctrl+V).</p>
+<p>Jeśli bieżący obraz ma niezapisane zmiany, program przed otwarciem innego pliku pyta, czy je zapisać.</p>
+
+<h3>Przeglądanie zdjęć z folderu</h3>
+<p><span class="menu">Plik → Następne zdjęcie</span> (PageDown) i <span class="menu">Poprzednie zdjęcie</span> (PageUp) otwierają kolejne zdjęcia z folderu bieżącego pliku, bez okna Otwórz. Kolejność jest taka jak w Eksploratorze Windows, a pasek stanu pokazuje pozycję, np. 12/48. Przeglądane zdjęcia nie trafiają na listę ostatnio otwieranych plików.</p>
+
+<h3>Oglądanie</h3>
+<ul>
+  <li>Kółko myszy albo Ctrl+P / Ctrl+M – powiększenie i pomniejszenie.</li>
+  <li>Ctrl+0 – dopasowanie do okna, Ctrl+1 – skala 100%.</li>
+  <li>Spacja + lewy przycisk myszy – przesuwanie powiększonego obrazu.</li>
+</ul>
+
+<h3>Efekty</h3>
+<p>Po wybraniu efektu z menu otwiera się okno z suwakami i podglądem – zmiany widać od razu. <b>OK</b> nakłada efekt na obraz, <b>Anuluj</b> zamyka okno bez zmian. Efekty wykonane jeden po drugim sumują się.</p>
+<div class="note">Jeśli na obrazie jest zaznaczenie, efekt działa tylko w zaznaczeniu. Obszar chroniony maską ochronną nie podlega efektom (rozdział 5).</div>
+
+<h3>Cofanie</h3>
+<ul>
+  <li><span class="menu">Edycja → Cofnij</span> (Ctrl+Z) i <span class="menu">Ponów</span> (Ctrl+Y). Liczbę kroków ustawia się w <span class="menu">Ustawienia → Wydajność…</span></li>
+  <li><span class="menu">Edycja → Przywróć oryginał</span> – powrót do obrazu sprzed wszystkich zmian.</li>
+</ul>
+
+<h3>Zapisywanie</h3>
+<p><span class="menu">Plik → Zapisz jako…</span> (Ctrl+S) – PNG, JPEG, BMP, GIF, TIFF albo WebP. Jakość JPEG i WebP oraz kompresję TIFF ustawia się w <span class="menu">Ustawienia → Jakość zapisu…</span> Dodatkowo:</p>
+<ul>
+  <li><span class="menu">Plik → Eksportuj PDF…</span> – zdjęcie na stronie A4 z jak najmniejszymi białymi marginesami, gotowe do druku.</li>
+  <li><span class="menu">Plik → Eksportuj porównanie…</span> – oryginał i wynik obok siebie na jednym obrazku (PNG).</li>
+</ul>
+
+<h2>4. Menu w skrócie</h2>
+<table>
+  <tr><th>Menu</th><th>Co zawiera</th></tr>
+  <tr><td class="k">Plik</td><td>Otwieranie, następne i poprzednie zdjęcie z folderu, zapisywanie, eksport PDF i porównania, informacja o obrazie (wymiary, rozdzielczość, dane EXIF), ostatnio otwierane pliki.</td></tr>
+  <tr><td class="k">Edycja</td><td>Cofnij, Ponów, Kopiuj, Wklej, Przywróć oryginał, Wyczyść historię.</td></tr>
+  <tr><td class="k">Widok</td><td>Powiększenie, dopasowanie do okna, skale od 25% do 400%, płynne skalowanie podglądu.</td></tr>
+  <tr><td class="k">Korektor</td><td>Odbicia i obroty, prostowanie skanów, korekta perspektywy, histogram, kontrast, jasność, gamma, poziomy, balans bieli, balans HSB, wyostrzenie, soczystość, wzmocnienie zdjęcia, Emergo, zmiana rozmiaru, dopasowanie do rozmiaru z przycięciem.</td></tr>
+  <tr><td class="k">Efekty</td><td>Procesy fotograficzne (m.in. cyjanotypia, fotografia solna, sepia, dwu-, trój- i czterokolor), efekty artystyczne (m.in. Komiks, obraz olejny, węgiel), zniekształcenia oraz Mieszanie efektów – połączenie dwóch efektów w wybranym trybie.</td></tr>
+  <tr><td class="k">Druk</td><td>Techniki drukarskie: błąd CMYK, linoryt, powielacz, rastry (liniowy, krzyżowy, punktowy, kropkowany, CMYK i wzorkowe, m.in. grawerowanie), sitodruk, risografia v1–v3, tworzenie nadruku.</td></tr>
+  <tr><td class="k">Makro</td><td>Nagrywanie makr, przetwarzanie wsadowe, zarządzanie makrami.</td></tr>
+  <tr><td class="k">Narzędzia</td><td>Panele Zaznaczenie i Retusz, wymiary zaznaczenia, przycinanie, Timelapse, Kafelkowanie, Obraz z kostek do gry, Stereogram, Usuń tło, Usuń czerwone oczy, Znak wodny.</td></tr>
+  <tr><td class="k">Amigowe</td><td>Palety Workbench, OCS, EHB, AGA, MagicWB, tryby HAM6 i HAM8, gradienty i tła w stylu Amigi.</td></tr>
+  <tr><td class="k">Inne retrokomputery</td><td>Palety Commodore 64, ZX Spectrum, Game Boy, NES.</td></tr>
+  <tr><td class="k">Ustawienia</td><td>Język, jakość zapisu, interfejs, wydajność.</td></tr>
+  <tr><td class="k">Pomoc</td><td>Wyrzutnia, O programie, skróty klawiszowe, test wydajności, strona programu.</td></tr>
+</table>
+
+<h2>5. Zaznaczenie i maska ochronna</h2>
+<p>Panel otwiera się poleceniem <span class="menu">Narzędzia → Zaznaczenie…</span></p>
+<ul>
+  <li><b>Kształt</b> – prostokąt, elipsa, lasso albo różdżka (zaznacza obszar o podobnym kolorze; czułość ustawia suwak Tolerancja).</li>
+  <li><b>Kontur / Maska</b> – zaznaczenie pokazane jako obrys albo wypełnione niebieskim szrafem.</li>
+  <li>Zaznaczenie przesuwa się, chwytając je w środku, a jego rozmiar zmienia się uchwytami na ramce.</li>
+  <li><b>Usuń zaznaczenie</b> – także klawisz Del albo prawy przycisk myszy na obrazie.</li>
+</ul>
+<p><b>Maska ochronna</b> chroni wybrany obszar przed efektami, np. twarz podczas zmiany tła.</p>
+<ul>
+  <li><b>Chroń zaznaczenie</b> – zaznaczony obszar staje się chroniony. Można chronić kilka obszarów po kolei.</li>
+  <li><b>Odwołaj ochronę</b> – zdejmuje ochronę w zaznaczeniu; bez zaznaczenia zamienia maskę z powrotem w zaznaczenie.</li>
+  <li><b>Pokaż maskę ochronną</b> – obszar chroniony widać jako czerwony szraf. Widoczną maskę można przesunąć myszą.</li>
+  <li><b>Wyczyść maskę ochronną</b> – usuwa całą ochronę.</li>
+</ul>
+
+<h2>6. Retusz</h2>
+<p>Panel otwiera się poleceniem <span class="menu">Narzędzia → Retusz…</span> albo klawiszem R. Zawiera gumkę z trybami Wymaż i Przywróć (działa na masce, więc niczego nie niszczy) oraz pędzle: malowanie, klonowanie, rozjaśnianie i przyciemnianie, wyostrzanie i rozmywanie, zamiana koloru, zalewanie, próbnik koloru i pędzel maski ochronnej. Rozmiar i siłę pędzla ustawia się suwakami w panelu.</p>
+
+<h2>7. Zniekształcenia: typowe ustawienia</h2>
+<p>Zniekształcenia (<span class="menu">Efekty → Zniekształcenia</span>) ustawia się suwakami. Poniższe wartości to dobry punkt wyjścia; warto je potem zmieniać, bo każde zdjęcie reaguje trochę inaczej.</p>
+<h3>Zniekształcenie biegunowe</h3>
+<table>
+  <tr><th>Efekt</th><th>Kąt</th><th>Promień</th><th>Otwór</th><th>Obrót</th><th>Na lewą stronę</th></tr>
+  <tr><td class="k">Mała planeta</td><td>360°</td><td>100%</td><td>0%</td><td>90°</td><td>nie</td></tr>
+  <tr><td class="k">Symetryczna planeta</td><td>180°</td><td>100%</td><td>0%</td><td>0°</td><td>nie</td></tr>
+  <tr><td class="k">Tunel</td><td>360°</td><td>100%</td><td>0%</td><td>90°</td><td>tak</td></tr>
+  <tr><td class="k">Kalejdoskop</td><td>60°</td><td>135%</td><td>60%</td><td>0°</td><td>nie</td></tr>
+  <tr><td class="k">Rozeta</td><td>30°</td><td>100%</td><td>0%</td><td>0°</td><td>nie</td></tr>
+  <tr><td class="k">Pierścień</td><td>180°</td><td>100%</td><td>50%</td><td>0°</td><td>nie</td></tr>
+</table>
+<p>Przy kącie 360° widać szew tam, gdzie spotykają się lewy i prawy brzeg zdjęcia; Obrót przesuwa go w mniej widoczne miejsce. Przy 180° obraz jest symetryczny i szwu nie ma.</p>
+<h3>Pozostałe</h3>
+<ul>
+  <li><b>Dystorsja</b> – jeden suwak: w lewo Beczka, w prawo Poduszka.</li>
+  <li><b>Dystorsja łukowa</b> – Kąt: plus to łuk w górę, minus w dół. Cały łuk mieści się w kadrze, więc przy dużym kącie obraz maleje, a wokół jest czarne tło.</li>
+  <li><b>Wir</b> – Kąt to siła i kierunek skręcenia. Promień 100% to koło wpisane w krótszy bok zdjęcia, około 180% obejmuje całe zdjęcie, a mała wartość skręca tylko środek.</li>
+  <li><b>Fale wodne</b> – Źródło to środek albo narożnik. Siła 100% przy Gęstości fali około 30 daje mocne, gęste kręgi; dla delikatnych fal zacznij od Siły około 10%.</li>
+  <li><b>Rybie oko</b> – Siła około 60–80% daje wyraźne wybrzuszenie. Pole <b>Koło</b> zamyka zdjęcie w kole na czarnym tle.</li>
+</ul>
+
+<h2>8. Znak wodny</h2>
+<p><span class="menu">Narzędzia → Znak wodny…</span> podpisuje zdjęcie tekstem albo logo.</p>
+<ul>
+  <li><b>Tekst</b> – z wyborem czcionki i koloru, opcjonalnie z cieniem. <b>Logo</b> – plik PNG, także z przezroczystością.</li>
+  <li><b>Położenie</b> – jedno z 9 miejsc na zdjęciu albo <b>Powtórz na całym zdjęciu</b>, czyli znak ułożony ukośnie na całej powierzchni.</li>
+  <li><b>Wielkość</b> i <b>Margines</b> liczone są względem krótszego boku zdjęcia, więc znak wygląda tak samo przy każdej rozdzielczości. <b>Krycie</b> od 10% do 100%.</li>
+</ul>
+<p>Program pamięta ostatnie ustawienia. Znak wodny można nagrać w makrze i przetwarzaniem wsadowym podpisać całą serię zdjęć.</p>
+
+<h2>9. Usuwanie tła i czerwonych oczu</h2>
+<p><span class="menu">Narzędzia → Usuń tło…</span> usuwa obszar podobnego koloru, zaczynając od wybranego narożnika.</p>
+<ul>
+  <li><b>Tolerancja</b> – im większa, tym szerszy zakres kolorów uznany za tło. Niewielka zmiana może bardzo dużo zmienić, więc warto przesuwać ją powoli i obserwować podgląd.</li>
+  <li><b>Próbka w oddaleniu od narożnika</b> – gdy sam narożnik ma inny kolor niż tło, np. przez rysę albo ramkę, próbka jest brana dalej od rogu. <b>Odległość</b> ustawia suwak, a ramka na podglądzie pokazuje to miejsce.</li>
+</ul>
+
+<h3>Usuwanie czerwonych oczu</h3>
+<p>Zaznacz źrenicę możliwie najciaśniej, tak by poza czerwień wyszło jak najmniej zdjęcia, i wybierz <span class="menu">Narzędzia → Usuń czerwone oczy</span>. Każde oko robi się osobno i osobno cofa. Zbyt duże zaznaczenie przyciemnia także tęczówkę. U zwierząt działa na odbłysk w innych kolorach, ale tylko częściowo: może zostać cienka obwódka.</p>
+
+<h2>10. Makra i przetwarzanie wsadowe</h2>
+<ul>
+  <li><span class="menu">Makro → Rozpocznij nagrywanie</span> – kolejne efekty są zapamiętywane razem z ustawieniami.</li>
+  <li><span class="menu">Zatrzymaj i zapisz</span> – makro zapisuje się pod wybraną nazwą. Później można je odtworzyć na dowolnym obrazie.</li>
+  <li><span class="menu">Przetwarzanie wsadowe…</span> – wykonuje makro na wszystkich zdjęciach z wybranego folderu i zapisuje wyniki w innym folderze, opcjonalnie skalując je do podanej długości dłuższego boku.</li>
+  <li><span class="menu">Zarządzaj makrami…</span> – lista makr i ich kroków ze szczegółami, zmiana nazwy, usuwanie.</li>
+</ul>
+<div class="note">Nie wszystkie polecenia trafiają do makr – na przykład kadrowanie czy usuwanie tła zależą od konkretnego zdjęcia.</div>
+
+<h2>11. Wyrzutnia</h2>
+<p>Podręczny panel z najczęściej używanymi poleceniami, m.in. powiększeniem, cofaniem i przywróceniem oryginału. Otwiera się klawiszem W albo z menu <span class="menu">Pomoc → Wyrzutnia</span>.</p>
+
+<h2>12. Ustawienia</h2>
+<ul>
+  <li><b>Język…</b> – polski, angielski, czeski, niemiecki, francuski, włoski, hiszpański, portugalski, afrykanerski.</li>
+  <li><b>Interfejs…</b> – jeden z 37 motywów, wygląd Windows albo tryb automatyczny, wielkość czcionki od 8 do 12 pt (zalecane 10 pt), liczba ostatnio otwieranych plików, zapamiętywanie rozmiaru i położenia okna, wygląd celownika pędzla.</li>
+  <li><b>Jakość zapisu…</b> – jakość JPEG i WebP, kompresja TIFF.</li>
+  <li><b>Wydajność…</b> – liczba kroków Cofnij (20, 50, 100 albo bez limitu) i zmniejszanie zdjęć przy otwieraniu (oryginał, 4K, Full HD, SVGA) – większe zdjęcia są pomniejszane, co przyspiesza pracę na słabszych komputerach.</li>
+</ul>
+
+<h2>13. Skróty klawiszowe</h2>
+<table>
+  <tr><th>Klawisze</th><th>Polecenie</th><th>Klawisze</th><th>Polecenie</th></tr>
+  <tr><td class="k">Ctrl+O</td><td>Otwórz…</td><td class="k">Ctrl+P</td><td>Powiększ</td></tr>
+  <tr><td class="k">Ctrl+S</td><td>Zapisz jako…</td><td class="k">Ctrl+M</td><td>Pomniejsz</td></tr>
+  <tr><td class="k">Ctrl+W</td><td>Zamknij</td><td class="k">Ctrl+0</td><td>Dopasuj do okna</td></tr>
+  <tr><td class="k">Ctrl+Q</td><td>Wyjście</td><td class="k">Ctrl+1</td><td>Skala 100%</td></tr>
+  <tr><td class="k">Ctrl+Z</td><td>Cofnij</td><td class="k">Spacja + LPM</td><td>Przesuwanie obrazu</td></tr>
+  <tr><td class="k">Ctrl+Y</td><td>Ponów</td><td class="k">Ctrl+Shift+R</td><td>Ustaw wymiary zaznaczenia…</td></tr>
+  <tr><td class="k">Ctrl+C</td><td>Kopiuj</td><td class="k">Ctrl+X</td><td>Przytnij do zaznaczenia</td></tr>
+  <tr><td class="k">Ctrl+V</td><td>Wklej</td><td class="k">Del</td><td>Usuń zaznaczenie</td></tr>
+  <tr><td class="k">W</td><td>Wyrzutnia</td><td class="k">R</td><td>Panel Retusz</td></tr>
+  <tr><td class="k">PageDown</td><td>Następne zdjęcie</td><td class="k">PageUp</td><td>Poprzednie zdjęcie</td></tr>
+</table>
+
+<h2>14. Pomoc i kontakt</h2>
+<ul>
+  <li>Strona programu: fotografista.com.pl – aktualności, lista zmian, informacje techniczne.</li>
+  <li>Pomoc techniczna: adam_mierzwa@outlook.com</li>
+  <li><span class="menu">Pomoc → Zmierz wydajność</span> – test szybkości komputera na zestawie efektów; wynik warto dołączyć do zgłoszenia problemu.</li>
+</ul>
+
+</body>
+</html>

@@ -21,7 +21,15 @@
     Top = 15
     Width = 400
     Height = 300
+    OnMouseMove = pboxPreviewMouseMove
     OnPaint = pboxPreviewPaint
+  end
+  object pboxZoom: TPaintBox
+    Left = 15
+    Top = 15
+    Width = 400
+    Height = 300
+    OnPaint = pboxZoomPaint
   end
   object lblMaterial: TLabel
     Left = 15

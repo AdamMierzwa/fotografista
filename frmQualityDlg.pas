@@ -136,10 +136,22 @@ begin
   Radios[0] := rbLZW;
   Radios[1] := rbNone;
   Radios[2] := rbJPEG;
-  Shift := Max(0, lblTIFFCompression.Top + lblTIFFCompression.Height +
-    RowGap - rbLZW.Top);
+  // Przelaczniki: wysokosc z czcionki (TH + 4, jak pola wyboru w
+  // frmPerformanceDlg) i krok z tresci - z .dfm 20 px / krok 22 px, przy 12 pt
+  // tekst 21 px (kontrola ukladu: TEKST-H). Wiersz Jakosc JPEG w TIFF pod nimi.
+  Canvas.Font.Assign(rbLZW.Font);
+  Y := lblTIFFCompression.Top + lblTIFFCompression.Height + RowGap;
   for I := Low(Radios) to High(Radios) do
-    Radios[I].Top := Radios[I].Top + Shift;
+  begin
+    Radios[I].Height := Canvas.TextHeight('Wg') + 4;
+    Radios[I].Top := Y;
+    Inc(Y, Radios[I].Height + RowGap);
+  end;
+  Canvas.Font.Assign(Font);
+  Shift := Max(0, Y - RowGap + SectionGap - lblTIFFJPEG.Top);
+  lblTIFFJPEG.Top := lblTIFFJPEG.Top + Shift;
+  tbTIFFJPEGQuality.Top := tbTIFFJPEGQuality.Top + Shift;
+  lblTIFFJPEGValue.Top := lblTIFFJPEGValue.Top + Shift;
 
   for I := Low(Groups) to High(Groups) do
   begin

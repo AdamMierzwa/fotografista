@@ -291,6 +291,7 @@ begin
   FitButtonGroup([btnOK, btnCancel]);
   btnOK.Top := lblInfo.Top + lblInfo.Height + SectionGap;
   btnCancel.Top := btnOK.Top;
+  ButtonsToLeft([btnOK, btnCancel], Margin);
   FitToContent(Margin, Margin);
   AlignButtonsRight([btnOK, btnCancel], Margin);
 end;

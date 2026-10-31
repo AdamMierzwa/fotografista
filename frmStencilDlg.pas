@@ -558,6 +558,7 @@ begin
     Dlg.FZoomDirty := False;
     Dlg.FZoomTimer.Enabled := False;
 
+    Dlg.ButtonsToLeft([Dlg.btnOK, Dlg.btnCancel], Dlg.CtrlGap * 3);
     Dlg.FitToContent(Dlg.CtrlGap * 2, Dlg.CtrlGap * 3);
 
     // Wyśrodkowanie pary podglądów w szerokości okna. Szerokość okna wyznacza

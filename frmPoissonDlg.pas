@@ -212,6 +212,7 @@ begin
     Dlg.FWorkingPreview.Assign(Dlg.FOriginalPreview);  // widok startowy do czasu wyniku watku
     Dlg.StartWork;
 
+    Dlg.ButtonsToLeft([Dlg.btnOK, Dlg.btnCancel], Dlg.CtrlGap * 3);
     Dlg.FitToContent(Dlg.CtrlGap * 2, Dlg.CtrlGap * 3);
 
     // Wycentrowanie pary podgladow i kontrolek pod nimi.

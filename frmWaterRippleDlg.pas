@@ -8,36 +8,40 @@ uses
   Vcl.StdCtrls, Vcl.ComCtrls, Vcl.ExtCtrls, uDistort, uI18n, uTitleBar, uPreviewFit;
 
 type
-  TDistortProcEx = procedure(Bmp: TBitmap; Preset: Integer; Strength, Density: Double);
-
   TWaterRippleDlg = class(TFotoForm)
     pnlPreview: TPanel;
     pnlSliders: TPanel;
     pboxPreview: TPaintBox;
-    lbPresets: TListBox;
     lblStrength: TLabel;
     trkStrength: TTrackBar;
     lblStrengthVal: TLabel;
     lblDensity: TLabel;
     trkDensity: TTrackBar;
     lblDensityVal: TLabel;
+    grpSource: TGroupBox;
+    rbCenter: TRadioButton;
+    rbTopLeft: TRadioButton;
+    rbTopRight: TRadioButton;
+    rbBottomLeft: TRadioButton;
+    rbBottomRight: TRadioButton;
     btnOK: TButton;
     btnCancel: TButton;
     procedure pboxPreviewPaint(Sender: TObject);
-    procedure lbPresetsClick(Sender: TObject);
     procedure trkSliderChange(Sender: TObject);
+    procedure rbSourceClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
   private
     FOriginalPreview: TBitmap;
     FWorkingPreview: TBitmap;
     FSourceBmp: TBitmap;
-    FEffectProc: TDistortProcEx;
+    function SourceIndex: Integer;
+    procedure LayoutSource;
     procedure ApplyPreview;
     procedure ApplyFull;
   end;
 
-function ShowWaterRippleDlg(const Title: string; const Items: array of string; EffectProc: TDistortProcEx; Bitmap: TBitmap; out ElapsedSec: Double): Boolean;
+function ShowWaterRippleDlg(Bitmap: TBitmap; out ElapsedSec: Double): Boolean;
 
 implementation
 
@@ -46,14 +50,14 @@ uses
 
 {$R *.dfm}
 
-function ShowWaterRippleDlg(const Title: string; const Items: array of string; EffectProc: TDistortProcEx; Bitmap: TBitmap; out ElapsedSec: Double): Boolean;
+// Sila 0 = obraz bez zmian, OK jak Anuluj.
+function ShowWaterRippleDlg(Bitmap: TBitmap; out ElapsedSec: Double): Boolean;
 var
   Dlg: TWaterRippleDlg;
   Scale: Double;
   pw, ph: Integer;
   Scaled: TBitmap;
   SW: TStopwatch;
-  I: Integer;
 begin
   ElapsedSec := 0;
   Result := False;
@@ -62,15 +66,8 @@ begin
 
   Dlg := TWaterRippleDlg.Create(Application);
   try
-    Dlg.Caption := Title;
+    Dlg.Caption := T('Water ripple');
     Dlg.FSourceBmp := Bitmap;
-    Dlg.FEffectProc := EffectProc;
-
-    Dlg.lbPresets.Clear;
-    for I := Low(Items) to High(Items) do
-      Dlg.lbPresets.Items.Add(Items[I]);
-    if Dlg.lbPresets.Items.Count > 0 then
-      Dlg.lbPresets.ItemIndex := 0;
 
     Scale := Min(370.0 / Bitmap.Width, 300.0 / Bitmap.Height);
     if Scale > 1.0 then Scale := 1.0;
@@ -97,12 +94,10 @@ begin
 
     FitPreviewToDialog(Dlg, Dlg.pnlPreview, Dlg.pboxPreview, pw, ph);
 
-    Dlg.lbPresets.ItemHeight := Dlg.lbPresets.Canvas.TextHeight('Wg') + 2;
-    Dlg.lbPresets.Top := Dlg.pboxPreview.Top + Dlg.pboxPreview.Height + Dlg.CtrlGap;
-    Dlg.lbPresets.Height := Dlg.lbPresets.Items.Count * Dlg.lbPresets.ItemHeight + 8;
-    Dlg.pnlPreview.Height := Dlg.lbPresets.Top + Dlg.lbPresets.Height + Dlg.CtrlGap + 2;
+    Dlg.pnlPreview.Height := Dlg.pboxPreview.Top + Dlg.pboxPreview.Height + Dlg.CtrlGap;
     Dlg.ReflowTrackBarRows(Dlg.pnlSliders);
-    Dlg.pnlSliders.Height := Dlg.lblDensityVal.Top + Dlg.lblDensityVal.Height + Dlg.CtrlGap;
+    Dlg.LayoutSource;
+    Dlg.pnlSliders.Height := Dlg.grpSource.Top + Dlg.grpSource.Height + Dlg.CtrlGap;
     Dlg.btnOK.Top := Max(Dlg.pnlPreview.Top + Dlg.pnlPreview.Height,
                          Dlg.pnlSliders.Top + Dlg.pnlSliders.Height) + Dlg.CtrlGap * 3;
     Dlg.btnCancel.Top := Dlg.btnOK.Top;
@@ -111,13 +106,13 @@ begin
 
     Dlg.ApplyPreview;
 
-    if Dlg.ShowModal = mrOk then
+    if (Dlg.ShowModal = mrOk) and (Dlg.trkStrength.Position <> 0) then
     begin
       SW := TStopwatch.StartNew;
       Dlg.ApplyFull;
-      // wariant | sila | gestosc (pozycje suwakow, odtwarzanie dzieli przez 100)
+      // zrodlo | sila | gestosc
       gMacroPending.Code := 'WATERRIPPLE';
-      gMacroPending.Params := IntToStr(Max(0, Dlg.lbPresets.ItemIndex)) + '|' +
+      gMacroPending.Params := IntToStr(Dlg.SourceIndex) + '|' +
         IntToStr(Dlg.trkStrength.Position) + '|' + IntToStr(Dlg.trkDensity.Position);
       ElapsedSec := SW.Elapsed.TotalSeconds;
       Result := True;
@@ -131,9 +126,7 @@ end;
 
 procedure TWaterRippleDlg.FormCreate(Sender: TObject);
 begin
-  trkStrength.Position := 100;
-  trkDensity.Position := 100;
-  lblStrengthVal.Caption := IntToStr(trkStrength.Position);
+  lblStrengthVal.Caption := IntToStr(trkStrength.Position) + '%';
   lblDensityVal.Caption := IntToStr(trkDensity.Position);
 end;
 
@@ -145,7 +138,7 @@ end;
 
 procedure TWaterRippleDlg.trkSliderChange(Sender: TObject);
 begin
-  lblStrengthVal.Caption := IntToStr(trkStrength.Position);
+  lblStrengthVal.Caption := IntToStr(trkStrength.Position) + '%';
   lblDensityVal.Caption := IntToStr(trkDensity.Position);
   ApplyPreview;
 end;
@@ -178,30 +171,60 @@ begin
   end;
 end;
 
-procedure TWaterRippleDlg.lbPresetsClick(Sender: TObject);
+procedure TWaterRippleDlg.rbSourceClick(Sender: TObject);
 begin
   ApplyPreview;
 end;
 
-procedure TWaterRippleDlg.ApplyPreview;
+// Numeracja jak w ApplyWaterRipple
+function TWaterRippleDlg.SourceIndex: Integer;
+begin
+  if rbTopLeft.Checked then Result := 1
+  else if rbBottomLeft.Checked then Result := 2
+  else if rbTopRight.Checked then Result := 3
+  else if rbBottomRight.Checked then Result := 4
+  else Result := 0;
+end;
+
+// Srodek w pierwszym wierszu, narozniki 2 x 2 pod nim; wysokosc z czcionki.
+procedure TWaterRippleDlg.LayoutSource;
 var
-  Preset: Integer;
+  RowH, X1, X2, ColW, Y0: Integer;
+
+  procedure Place(Rb: TRadioButton; AX, ARow: Integer);
+  begin
+    Rb.Left := AX;
+    Rb.Top := Y0 + ARow * RowH;
+    Rb.Width := ColW;
+    Rb.Height := Canvas.TextHeight('Wg') + 2;
+  end;
+
+begin
+  RowH := Canvas.TextHeight('Wg') + CtrlGap;
+  Y0 := CtrlGap * 2;
+  X1 := CtrlGap * 2;
+  ColW := (grpSource.ClientWidth - X1 * 2) div 2;
+  X2 := X1 + ColW;
+  Place(rbCenter, X1, 0);
+  Place(rbTopLeft, X1, 1);
+  Place(rbTopRight, X2, 1);
+  Place(rbBottomLeft, X1, 2);
+  Place(rbBottomRight, X2, 2);
+  grpSource.Top := lblDensityVal.Top + lblDensityVal.Height + SectionGap;
+  grpSource.Height := Y0 + 3 * RowH + CtrlGap;
+end;
+
+procedure TWaterRippleDlg.ApplyPreview;
 begin
   if (FWorkingPreview = nil) or (FOriginalPreview = nil) then Exit;
   FWorkingPreview.Assign(FOriginalPreview);
-  Preset := Max(0, lbPresets.ItemIndex);
-  if Assigned(FEffectProc) then
-    FEffectProc(FWorkingPreview, Preset, trkStrength.Position / 100.0, trkDensity.Position / 100.0);
+  ApplyWaterRipple(FWorkingPreview, SourceIndex, trkStrength.Position, trkDensity.Position);
   pboxPreview.Invalidate;
 end;
 
 procedure TWaterRippleDlg.ApplyFull;
-var
-  Preset: Integer;
 begin
-  Preset := Max(0, lbPresets.ItemIndex);
-  if Assigned(FEffectProc) then
-    FEffectProc(FSourceBmp, Preset, trkStrength.Position / 100.0, trkDensity.Position / 100.0);
+  ApplyWaterRipple(FSourceBmp, SourceIndex, trkStrength.Position, trkDensity.Position);
 end;
 
 end.

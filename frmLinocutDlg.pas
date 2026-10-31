@@ -46,6 +46,8 @@ type
 
 function ShowLinocutDlg(Bitmap: TBitmap; out ElapsedSec: Double): Boolean;
 procedure DoLinocut(Bitmap: TBitmap; Threshold: Integer);
+// wspolne z Linorytem (uLinocut) - ten sam krok wyostrzenia co w Progu
+procedure SharpenFixedRadius(Bitmap: TBitmap; Radius: Integer);
 
 implementation
 
@@ -250,6 +252,7 @@ begin
 
     Dlg.ApplyPreview;
 
+    Dlg.ButtonsToLeft([Dlg.btnOK, Dlg.btnCancel], Dlg.CtrlGap * 3);
     Dlg.FitToContent(Dlg.CtrlGap * 2, Dlg.CtrlGap * 3);
 
     // Wyśrodkowanie pary podglądów w szerokości okna.

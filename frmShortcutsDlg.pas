@@ -37,9 +37,11 @@ implementation
 // (w tym porcie Dopasuj do okna to Ctrl+0, nie Ctrl+O).
 // Dane w bazie EN (klucze i18n); T() w LoadData podmienia na aktywny jezyk.
 const
-  DATA: array[0..38] of string = (
+  DATA: array[0..46] of string = (
     '##File',
     'Ctrl+O', 'Open...',
+    'PgDn', 'Next photo',
+    'PgUp', 'Previous photo',
     'Ctrl+S', 'Save as...',
     'Ctrl+W', 'Close',
     'Ctrl+Q', 'Quit',
@@ -58,8 +60,10 @@ const
     '##Image',
     'Ctrl+Shift+R', 'Selection size...',
     'Ctrl+X', 'Crop to selection',
+    'Del', 'Deselect',
     '##Tools',
-    'W', 'Launcher');
+    'W', 'Launcher',
+    'R', 'Retouch...');
 
 procedure TfrmShortcutsDlg.LoadData;
 var

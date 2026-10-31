@@ -175,7 +175,7 @@
 177	Bogenverzerrung - Bild biegen
 178	Wirbel - Bild verwirbeln
 179	Wasserwellen-Effekt
-180	Polarverzerrung - Tunnel, Fischauge
+180	Polarverzerrung - kleiner Planet, Tunnel, Kaleidoskop
 181	4-Farben-Palette - Workbench 1.x (OCS)
 182	4-Farben-Palette - Workbench 2.x/3.x
 183	32-Farben-Palette (4x4x2) - OCS
@@ -306,39 +306,6 @@
 321	Bogenwinkel auswählen:
 322	Intensität auswählen:
 323	Variante auswählen:
-324	Schwache Tonne
-325	Mittlere Tonne
-326	Starke Tonne
-327	Schwaches Kissen
-328	Mittleres Kissen
-329	Starkes Kissen
-330	45°
-331	90°
-332	180°
-333	360°
-334	90° + drehen
-335	180° + drehen
-336	Schwach (45°)
-337	Mittel (90°)
-338	Stark (180°)
-339	Sehr stark (270°)
-340	Voll (360°)
-341	Umgekehrt
-342	Leicht
-343	Mittel
-344	Stark
-345	Konzentrisch
-346	Von der Ecke
-347	Dicht
-348	Voll
-349	Halber Winkel
-350	Viertelwinkel
-351	Ring
-352	Kleiner Radius
-353	Glatt
-354	Tunnel
-356	Fischauge
-357	Äußere Dehnung
 358	Fehler
 359	Nicht unterstütztes Dateiformat.
 360	Schnappschuss
@@ -484,7 +451,7 @@
 532	Oberfläche...
 533	Oberflächeneinstellungen
 534	Oberfläche
-535	Hintergrundfarbe der Leinwand (nur mit dem standardmäßigen Windows-Design):
+535	Hintergrundfarbe der Leinwand (nur mit dem Design „Windows“):
 537	Bild öffnen
 538	Alle Dateien
 539	Zwischenablage
@@ -626,10 +593,8 @@
 682	Floyd–Steinberg (weich)
 683	Der gewählte Modus ist bei großen Bildern sehr langsam.\nBei Bildern über 2 MP können Vorschau und Anwendung des Effekts mehrere Minuten dauern.\nAndere Modi sind deutlich schneller.
 684	Leistung...
-685	Maximale Arbeitsauflösung:
+685	Fotos beim Öffnen verkleinern auf:
 687	Bild
-688	Umgekehrter Tunnel
-689	30°-Ausschnitt
 690	Full HD (1920×1080)
 691	4K (3840×2160)
 692	Leistung und maximale Arbeitsauflösung
@@ -696,7 +661,7 @@
 763	Blockverlust:
 764	Horizontale Schnittverschiebung:
 765	Verdunkelt jede zweite Zeile im PAL-Verhältnis – höherer Wert = dunklere Zwischenräume
-766	Online-Dokumentation
+766	Programm-Website
 767	Öffnen Sie die Fotografista-Website in Ihrem Webbrowser.
 768	Mimeograph...
 769	Mimeograph – Tintenränder auf weißem Hintergrund
@@ -788,7 +753,7 @@
 861	Wählen...
 862	CMYK-Fehler
 863	Kontrast vor der Umwandlung (0-10):
-864	Druck wird erstellt
+864	Aufdruck erstellen
 865	Kreuzschraffur
 866	Zielordner:
 867	Erkennungsempfindlichkeit (1-100):
@@ -1026,7 +991,7 @@
 1095	Schutzmaske anzeigen
 1096	Schutzmaske löschen
 1097	Auswahl schützen
-1098	Schutz der Auswahl aufheben
+1098	Schutz aufheben
 1099	Lasso
 1100	Zauberstab
 1101	Auswahl...
@@ -1091,8 +1056,8 @@
 1162	Zeitung
 1163	PRL – weich
 1164	PRL – Raster
-1165	Pop-Art – Schwarz
-1166	Pop-Art – zwei Farben
+1165	Ben-Day – Schwarz
+1166	Ben-Day – Farbe
 1167	Pop-Art – Farbe
 1168	Braun (verblasst)
 1169	Farbverteilung
@@ -1100,3 +1065,66 @@
 1171	Keine Entzerrung
 1172	RGB-Kanäle entzerren
 1173	Helligkeit entzerren
+1174	A und B tauschen
+1175	Differenz
+1176	Alle unterstützten Formate
+1177	Keine IFF-Datei.
+1178	Keine IFF-ILBM-Datei.
+1179	Ungültiger ILBM-Header (BMHD).
+1180	Ungültige ILBM-Abmessungen.
+1181	ILBM-Bild hat keinen BODY-Block.
+1182	Nicht unterstützte ILBM-Komprimierung.
+1183	Datei nicht gefunden: %s
+1184	Laden nicht möglich: %s
+1185	Rückgängig-Schritte:
+1186	Unbegrenzt
+1187	Geschützten Bereich auswählen
+1188	Geschützten Bereich wieder in eine Auswahl umwandeln
+1189	Auswahl aufheben
+1190	Kachelgröße
+1191	Kacheln horizontal:
+1192	Schwellwert...
+1193	Schwellwert - scharfer S/W-Kontrast
+1194	Vereinfachung:
+1195	Linolschnitt - große Flächen mit glatten Schnittkanten
+1196	Grafikkarte nutzen, wo möglich
+1197	CMYK-Raster
+1198	MagicWB-Palette (8 Farben)
+1199	Grafikkarte:
+1200	Kein Hardware-Videoencoder (Video wird vom Prozessor codiert)
+1201	Prozessor
+1202	Grafikkarte
+1203	verwendet
+1204	Original (ohne Verkleinerung)
+1205	Wasserzeichen...
+1206	Wasserzeichen
+1207	Text
+1208	Logo (PNG-Bild)
+1209	Textfarbe...
+1210	Position:
+1211	Über das ganze Foto wiederholen
+1212	Rand:
+1213	Schatten unter dem Text
+1214	Die Logodatei konnte nicht geladen werden.
+1215	Oben Mitte
+1216	Mitte links
+1217	Mitte
+1218	Mitte rechts
+1219	Unten Mitte
+1220	Nächstes Foto
+1221	Vorheriges Foto
+1222	Nächstes Foto aus diesem Ordner öffnen
+1223	Vorheriges Foto aus diesem Ordner öffnen
+1224	Probe im Abstand zur Ecke
+1225	Abstand:
+1226	Tonne
+1227	Kissen
+1228	Loch
+1229	Drehung
+1230	Umgekehrt
+1231	Fischauge...
+1232	Fischauge
+1233	Fischauge - wölbt die Bildmitte
+1234	Kreis
+1235	Rote Augen entfernen
+1236	Wählen Sie zuerst die Pupille aus.

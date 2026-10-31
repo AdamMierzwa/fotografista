@@ -161,6 +161,7 @@ begin
   btnOK.Top := Y;
   btnCancel.Top := Y;
 
+  ButtonsToLeft([btnOK, btnCancel], X0);
   FitToContent(SectionGap, X0);
   // wykres na srodku, gdy rzad wyrownania jest szerszy niz wykres
   pboxHistogram.Left := Max(X0, (ClientWidth - pboxHistogram.Width) div 2);

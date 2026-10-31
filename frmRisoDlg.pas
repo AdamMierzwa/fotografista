@@ -37,6 +37,9 @@ function ShowRisoDlg(Bitmap: TBitmap; Version: TRisoVersion; out ElapsedSec: Dou
 
 implementation
 
+uses
+  uMacros;
+
 {$R *.dfm}
 
 function ShowRisoDlg(Bitmap: TBitmap; Version: TRisoVersion; out ElapsedSec: Double): Boolean;
@@ -89,6 +92,12 @@ begin
     if Dlg.ShowModal = mrOk then
     begin
       SW := TStopwatch.StartNew;
+      // krok makra: numer palety (ta sama lista w v1 i v2)
+      if Version = rvV1 then
+        gMacroPending.Code := 'RISO1'
+      else
+        gMacroPending.Code := 'RISO2';
+      gMacroPending.Params := IntToStr(Dlg.lstPalettes.ItemIndex);
       Dlg.ApplyFull;
       ElapsedSec := SW.Elapsed.TotalSeconds;
       Result := True;
@@ -168,6 +177,7 @@ begin
 
   btnOK.Top := Margin + AreaH + SectionGap;
   btnCancel.Top := btnOK.Top;
+  ButtonsToLeft([btnOK, btnCancel], Margin);
   FitToContent(SectionGap, Margin);
   if ClientWidth < btnOK.Width + btnCancel.Width + CtrlGap * 2 + Margin * 2 then
     ClientWidth := btnOK.Width + btnCancel.Width + CtrlGap * 2 + Margin * 2;

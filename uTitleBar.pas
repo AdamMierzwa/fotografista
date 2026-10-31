@@ -32,6 +32,8 @@ type
     procedure CenterHorizontally(C: TControl);
     procedure AlignRightEdge(C: TControl; Margin: Integer = 0);
     procedure AlignButtonsRight(const Buttons: array of TButton; RightMargin: Integer = 0);
+    procedure ButtonsToLeft(const Buttons: array of TButton; LeftMargin: Integer = 0);
+    procedure FitRadioGroupHeight(G: TRadioGroup);
     function StackBelow(TopOf: Integer; Gap: Integer): Integer; overload;
     function StackBelow(C: TControl; Gap: Integer): Integer; overload;
     procedure FitHeight(MarginBottom: Integer = 0);
@@ -42,6 +44,7 @@ type
     procedure DisableTrackBarTicks;
   private
     procedure DisableTrackBarTicksIn(Host: TWinControl);
+    procedure FitOkCancelPair;
   end;
 
 procedure PaintTitleBarCaption(Canvas: TCanvas; const ARect: TRect; AForm: TCustomForm);
@@ -49,7 +52,7 @@ procedure PaintTitleBarCaption(Canvas: TCanvas; const ARect: TRect; AForm: TCust
 implementation
 
 uses
-  System.SysUtils, System.Math, Winapi.Windows, Vcl.Themes, Vcl.ComCtrls;
+  System.SysUtils, System.Math, Winapi.Windows, Vcl.Themes, Vcl.ComCtrls, uI18n;
 
 const
   cTextOffset = 6;
@@ -143,6 +146,38 @@ begin
     Buttons[I].Left := X;
     Dec(X, CtrlGap * 2);
   end;
+end;
+
+// Przed FitToContent w oknach, ktore potem wolaja AlignButtonsRight: przyciski
+// od lewego marginesu, obok siebie (odstep jak w AlignButtonsRight). Inaczej
+// FitToContent mierzy je w pozycjach z .dfm i okno wychodzi szersze niz
+// zawartosc - pusty pas po prawej (2026-10-23, okno Wydajnosc). Para nadal
+// wymusza minimalna szerokosc okna, bo stoi w pomiarze.
+procedure TFotoForm.ButtonsToLeft(const Buttons: array of TButton; LeftMargin: Integer);
+var
+  I, X: Integer;
+begin
+  X := LeftMargin;
+  for I := Low(Buttons) to High(Buttons) do
+  begin
+    Buttons[I].Left := X;
+    Inc(X, Buttons[I].Width + CtrlGap * 2);
+  end;
+end;
+
+// Wysokosc ramki wyboru z czcionki i liczby wierszy (wzor frmPerformanceDlg:
+// TRadioGroup.ArrangeButtons daje pozycji (Height - tmHeight - 5) div wiersze,
+// Vcl.ExtCtrls.pas). Wysokosc z .dfm jest pod 9 pt - przy 12 pt kolka i
+// napisy lezaly na dolnej krawedzi ramki (2026-10-23, Inne retrokomputery).
+procedure TFotoForm.FitRadioGroupHeight(G: TRadioGroup);
+var
+  TH, Rows: Integer;
+begin
+  Canvas.Font.Assign(G.Font);
+  TH := Canvas.TextHeight('Wg');
+  Canvas.Font.Assign(Font);
+  Rows := (Max(1, G.Items.Count) + Max(1, G.Columns) - 1) div Max(1, G.Columns);
+  G.Height := TH + 5 + Rows * (TH + RowGap * 2);
 end;
 
 function TFotoForm.StackBelow(TopOf: Integer; Gap: Integer): Integer;
@@ -240,6 +275,14 @@ begin
 
   if not (csDesigning in ComponentState) then
   begin
+    // Tlumaczenie i szerokosc pary OK/Anuluj zaraz po OnCreate, PRZED ukladem
+    // w funkcjach Show... (2026-10-23): wczesniej okno tlumaczylo sie dopiero
+    // przy aktywacji (uI18n.ActiveFormChanged), wiec uklad mierzyl angielskie
+    // napisy z .dfm, a przetlumaczony przycisk (AF „Kanselleer”) rosl potem
+    // w prawo i zjadal margines. Para przez FitOkCancelPair, nie wirtualne
+    // RefitButtons - nadpisane wersje licza uklad z danych z Show...
+    TranslateForm(Self);
+    FitOkCancelPair;
     ReflowTrackBarRows;
     DisableTrackBarTicks;
   end;
@@ -431,10 +474,16 @@ end;
   swiadomie. Pozycja przesuwana wylacznie przy wyjsciu za prawa
   krawedz rodzica. }
 procedure TFotoForm.RefitButtons;
+begin
+  FitOkCancelPair;
+end;
+
+procedure TFotoForm.FitOkCancelPair;
 var
-  BtnOK, BtnCancel: TButton;
+  BtnOK, BtnCancel, LeftB, RightB: TButton;
   HostCtl: TWinControl;
-  R, Over: Integer;
+  R, Over, WOK, WCancel, Need: Integer;
+  RightPair: Boolean;
 
   procedure FitIfNeeded(B: TButton);
   var
@@ -451,6 +500,8 @@ begin
   BtnOK := TButton(FindComponent('btnOK'));
   BtnCancel := TButton(FindComponent('btnCancel'));
 
+  WOK := BtnOK.Width;
+  WCancel := BtnCancel.Width;
   FitIfNeeded(BtnCancel);
   FitIfNeeded(BtnOK);
 
@@ -459,6 +510,47 @@ begin
   if BtnCancel.Parent <> BtnOK.Parent then Exit;
   if not (BtnCancel.Parent is TWinControl) then Exit;
   HostCtl := TWinControl(BtnCancel.Parent);
+
+  { Para przy prawej krawedzi rosnie W LEWO: prawa krawedz i margines z
+    ukladu zostaja (2026-10-23 - wczesniej przetlumaczony przycisk, AF
+    „Kanselleer”, rosl w prawo i dochodzil do krawedzi okna). Prawy przycisk
+    przesuwa sie o swoj przyrost, lewy o oba. }
+  R := Max(BtnOK.Left + WOK, BtnCancel.Left + WCancel);
+  RightPair := R >= HostCtl.ClientWidth div 2;
+  if RightPair then
+    if BtnOK.Left < BtnCancel.Left then
+    begin
+      BtnCancel.Left := BtnCancel.Left - (BtnCancel.Width - WCancel);
+      BtnOK.Left := BtnOK.Left - (BtnCancel.Width - WCancel) - (BtnOK.Width - WOK);
+    end
+    else
+    begin
+      BtnOK.Left := BtnOK.Left - (BtnOK.Width - WOK);
+      BtnCancel.Left := BtnCancel.Left - (BtnOK.Width - WOK) - (BtnCancel.Width - WCancel);
+    end;
+
+  { Przyciski w jednym rzedzie nie nachodza na siebie: odstep co najmniej
+    CtrlGap * 2 (jak AlignButtonsRight). Para przy prawej krawedzi - lewy
+    przycisk w lewo; wycentrowana / po lewej - prawy przycisk w prawo. }
+  if BtnOK.Top = BtnCancel.Top then
+  begin
+    if BtnOK.Left < BtnCancel.Left then
+    begin
+      LeftB := BtnOK;
+      RightB := BtnCancel;
+    end
+    else
+    begin
+      LeftB := BtnCancel;
+      RightB := BtnOK;
+    end;
+    Need := LeftB.Left + LeftB.Width + CtrlGap * 2 - RightB.Left;
+    if Need > 0 then
+      if RightPair then
+        LeftB.Left := LeftB.Left - Need
+      else
+        RightB.Left := RightB.Left + Need;
+  end;
 
   R := Max(BtnOK.Left + BtnOK.Width, BtnCancel.Left + BtnCancel.Width);
   Over := R - HostCtl.ClientWidth;

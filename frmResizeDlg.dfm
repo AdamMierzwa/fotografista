@@ -74,6 +74,7 @@
       Height = 23
       TabOrder = 0
       OnChange = edWidthChange
+      NumbersOnly = True
     end
     object lblHeight: TLabel
       Left = 14
@@ -90,6 +91,7 @@
       Height = 23
       TabOrder = 1
       OnChange = edHeightChange
+      NumbersOnly = True
     end
   end
   object chkAspect: TCheckBox

@@ -173,6 +173,11 @@ begin
     end;
 
     FitPreviewToDialog(Dlg, Dlg.pboxPreview, pw, ph);
+    // ramka z wysokoscia z czcionki, przyciski pod nia (wysokosc z .dfm pod 9 pt)
+    Dlg.FitRadioGroupHeight(Dlg.rgPreset);
+    Dlg.btnOK.Top := Dlg.StackBelow(Dlg.rgPreset, Dlg.SectionGap);
+    Dlg.btnCancel.Top := Dlg.btnOK.Top;
+    Dlg.FitHeight(Dlg.SectionGap);
 
     Dlg.ApplyPreview;
 

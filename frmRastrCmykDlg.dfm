@@ -2,7 +2,7 @@
   Left = 0
   Top = 0
   BorderStyle = bsDialog
-  Caption = 'Raster CMYK...'
+  Caption = 'Raster CMYK'
   ClientHeight = 520
   ClientWidth = 430
   Color = clBtnFace

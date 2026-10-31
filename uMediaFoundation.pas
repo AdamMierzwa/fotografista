@@ -81,6 +81,53 @@ type
     function GetMaxLength(out pcbMaxLength: DWORD): HRESULT; stdcall;
   end;
 
+  // mfobjects.h:5798-5810 IMFActivate (dziedziczy IMFAttributes)
+  IMFActivate = interface(IMFAttributes)
+    ['{7FEE9E9A-4A89-47A6-899C-B6A53A70FB67}']
+    function ActivateObject(const riid: TGUID; out ppv): HRESULT; stdcall;
+    function ShutdownObject: HRESULT; stdcall;
+    function DetachObject: HRESULT; stdcall;
+  end;
+
+  // mftransform.h:256 IMFTransform - zadeklarowany tylko poczatek tablicy metod
+  // (kolejnosc jak w naglowku, do GetAttributes wlacznie); dalszych metod nie
+  // wolno wolac przez ten typ. Parametry struktur jako Pointer (nieuzywane).
+  IMFTransform = interface(IUnknown)
+    ['{BF94C121-5B05-4E6F-8000-BA598961414D}']
+    function GetStreamLimits(out pdwInputMinimum, pdwInputMaximum,
+      pdwOutputMinimum, pdwOutputMaximum: DWORD): HRESULT; stdcall;
+    function GetStreamCount(out pcInputStreams, pcOutputStreams: DWORD): HRESULT; stdcall;
+    function GetStreamIDs(dwInputIDArraySize: DWORD; pdwInputIDs: Pointer;
+      dwOutputIDArraySize: DWORD; pdwOutputIDs: Pointer): HRESULT; stdcall;
+    function GetInputStreamInfo(dwInputStreamID: DWORD; pStreamInfo: Pointer): HRESULT; stdcall;
+    function GetOutputStreamInfo(dwOutputStreamID: DWORD; pStreamInfo: Pointer): HRESULT; stdcall;
+    function GetAttributes(out pAttributes: IMFAttributes): HRESULT; stdcall;
+  end;
+
+  // mfobjects.h:6555 IMFDXGIDeviceManager (Windows 8+); kolejnosc metod jak w naglowku
+  IMFDXGIDeviceManager = interface(IUnknown)
+    ['{EB533D5D-2DB6-40F8-97A9-494692014F07}']
+    function CloseDeviceHandle(hDevice: THandle): HRESULT; stdcall;
+    function GetVideoService(hDevice: THandle; const riid: TGUID; out ppService): HRESULT; stdcall;
+    function LockDevice(hDevice: THandle; const riid: TGUID; out ppUnkDevice; fBlock: BOOL): HRESULT; stdcall;
+    function OpenDeviceHandle(out phDevice: THandle): HRESULT; stdcall;
+    function ResetDevice(const pUnkDevice: IUnknown; resetToken: UINT): HRESULT; stdcall;
+    function TestDevice(hDevice: THandle): HRESULT; stdcall;
+    function UnlockDevice(hDevice: THandle; fSaveState: BOOL): HRESULT; stdcall;
+  end;
+
+  // mfapi.h:561 MFCreateDXGIDeviceManager - tylko Windows 8+, wiec wolana przez
+  // GetProcAddress (statyczny import zablokowalby start programu na Windows 7)
+  TMFCreateDXGIDeviceManager = function(out resetToken: UINT;
+    out ppDeviceManager: IMFDXGIDeviceManager): HRESULT; stdcall;
+
+  // mfobjects.h:2973-2975 MFT_REGISTER_TYPE_INFO
+  TMFTRegisterTypeInfo = record
+    guidMajorType: TGUID;
+    guidSubtype: TGUID;
+  end;
+  PMFTRegisterTypeInfo = ^TMFTRegisterTypeInfo;
+
   // IID_IMFSample = {C40A00F2-B93A-4D80-AE8C-5A1C634F58E4}
   IMFSample = interface(IMFAttributes)
     ['{C40A00F2-B93A-4D80-AE8C-5A1C634F58E4}']
@@ -141,6 +188,10 @@ const
   CODECAPI_AVEncCommonRateControlMode: TGUID = '{1C0608E9-370C-4710-8A58-CB6181C42423}';
   // codecapi.h:106 CODECAPI_AVEncCommonMeanBitRate
   CODECAPI_AVEncCommonMeanBitRate: TGUID = '{F7222374-2144-4815-B550-A37F8E12EE52}';
+  // mfreadwrite.h:2071 (SDK 10.0.26100) MF_READWRITE_ENABLE_HARDWARE_TRANSFORMS:
+  // UINT32, domyslnie Sink Writer NIE uzywa koderow sprzetowych (MS Learn,
+  // "MF_READWRITE_ENABLE_HARDWARE_TRANSFORMS attribute", Remarks); Windows 7+.
+  MF_READWRITE_ENABLE_HARDWARE_TRANSFORMS: TGUID = '{A634A91C-822B-41B9-A494-4DE4643612B0}';
   // codecapi.h:232 CODECAPI_AVEncMPVGOPSize
   CODECAPI_AVEncMPVGOPSize: TGUID = '{95F31B26-95A4-41AA-9303-246A7FC6EEF1}';
 
@@ -157,6 +208,26 @@ const
   MF_SINK_WRITER_DISABLE_THROTTLING: TGUID =
     '{08B845D8-2B74-4AFE-9D53-BE16D2D5AE4F}';
 
+  // mfapi.h:1877-1879 MFT_CATEGORY_VIDEO_ENCODER
+  MFT_CATEGORY_VIDEO_ENCODER: TGUID = '{F79EAC7D-E545-4387-BDEE-D647D7BDE42A}';
+  // mfapi.h:2020 MFT_ENUM_FLAG_HARDWARE, :2024 MFT_ENUM_FLAG_SORTANDFILTER
+  MFT_ENUM_FLAG_HARDWARE = $00000004;
+  MFT_ENUM_FLAG_SORTANDFILTER = $00000040;
+  // mftransform.h:1648 MFT_FRIENDLY_NAME_Attribute
+  MFT_FRIENDLY_NAME_Attribute: TGUID = '{314FFBAE-5B41-4C95-9C19-4E7D586FACE3}';
+  // mftransform.h:1647 MFT_ENUM_HARDWARE_URL_Attribute - obecny w GetAttributes
+  // kazdego kodera sprzetowego; po nim Windows rozpoznaje sprzet (MS Learn,
+  // "Hardware MFTs", Hardware MFT Attributes)
+  MFT_ENUM_HARDWARE_URL_Attribute: TGUID = '{2FB866AC-B078-4942-AB6C-003D05CDA674}';
+  // mftransform.h:1633 MFT_ENUM_HARDWARE_VENDOR_ID_Attribute (np. "VEN_10DE")
+  MFT_ENUM_HARDWARE_VENDOR_ID_Attribute: TGUID = '{3AECB0CC-035B-4BCC-8185-2B8D551EF3AF}';
+  // mfreadwrite.h:1207 MF_SINK_WRITER_D3D_MANAGER - IMFDXGIDeviceManager jako
+  // IUnknown; daje koderom Sink Writera urzadzenie Direct3D (MS Learn; Windows 8+)
+  MF_SINK_WRITER_D3D_MANAGER: TGUID = '{EC822DA2-E1E9-4B29-A0D8-563C719F5269}';
+  // IID_IMFTransform (mftransform.h:256)
+  IID_IMFTransform: TGUID = '{BF94C121-5B05-4E6F-8000-BA598961414D}';
+  GUID_NULL_MF: TGUID = '{00000000-0000-0000-0000-000000000000}';
+
 function MFStartup(Version: Cardinal; dwFlags: DWORD): HRESULT; stdcall;
   external 'mfplat.dll';
 function MFShutdown: HRESULT; stdcall;
@@ -172,7 +243,78 @@ function MFCreateMemoryBuffer(cbMaxLength: DWORD; out ppBuffer: IMFMediaBuffer):
 function MFCreateSinkWriterFromURL(pwszOutputURL: LPCWSTR; pByteStream: Pointer;
   const pAttributes: IMFAttributes; out ppSinkWriter: IMFSinkWriter): HRESULT;
   stdcall; external 'mfreadwrite.dll';
+// mfapi.h:2038 MFTEnumEx (mfplat.dll, Windows 7+). guidCategory przez wartosc:
+// rekordy w stdcall ida na stos wprost (Program_Control_(Delphi).htm), jak GUID w C.
+// Wynik: tablica IMFActivate przydzielona przez system - kazdy element zwolnic,
+// tablice CoTaskMemFree (MS Learn, MFTEnumEx, pppMFTActivate).
+function MFTEnumEx(guidCategory: TGUID; Flags: UINT32;
+  pInputType, pOutputType: PMFTRegisterTypeInfo; out pppMFTActivate: Pointer;
+  out pnumMFTActivate: UINT32): HRESULT; stdcall; external 'mfplat.dll';
+
+// Nazwy sprzetowych koderow H.264 zarejestrowanych w Windows (te, ktorych moze
+// uzyc zapis Timelapse przy wlaczonej karcie graficznej). Nazwy podaje
+// sterownik (np. "NVIDIA H.264 Encoder MFT"). Pusta tablica = brak kodera albo
+// blad - zapis idzie wtedy programowo (uVideoWriter).
+function HardwareH264EncoderNames: TArray<string>;
 
 implementation
+
+uses
+  System.SysUtils;
+
+type
+  TMFActivateArray = array[0..1023] of IMFActivate;
+  PMFActivateArray = ^TMFActivateArray;
+
+function HardwareH264EncoderNames: TArray<string>;
+var
+  OutInfo: TMFTRegisterTypeInfo;
+  Arr: PMFActivateArray;
+  Count: UINT32;
+  N, I, K: Integer;
+  P: Pointer;
+  Name: PWideChar;
+  Len: DWORD;
+  S: string;
+  Dup: Boolean;
+begin
+  Result := nil;
+  if Failed(MFStartup(MF_VERSION, 0)) then Exit;
+  try
+    OutInfo.guidMajorType := MFMediaType_Video;
+    OutInfo.guidSubtype := MFVideoFormat_H264;
+    P := nil;
+    Count := 0;
+    if Failed(MFTEnumEx(MFT_CATEGORY_VIDEO_ENCODER,
+        MFT_ENUM_FLAG_HARDWARE or MFT_ENUM_FLAG_SORTANDFILTER,
+        nil, @OutInfo, P, Count)) or (P = nil) then Exit;
+    Arr := PMFActivateArray(P);
+    // licznik bez znaku: przy 0 "Count - 1" przekrecilby sie - petla na Integer
+    N := Integer(Count);
+    if N > Length(Arr^) then N := Length(Arr^);
+    try
+      for I := 0 to N - 1 do
+        if (Arr^[I] <> nil) and
+           Succeeded(Arr^[I].GetAllocatedString(MFT_FRIENDLY_NAME_Attribute, Name, Len)) then
+        begin
+          // ten sam koder bywa zarejestrowany kilka razy (np. Intel przy dwoch
+          // kartach w laptopie) - kazda nazwa raz
+          S := string(Name);
+          CoTaskMemFree(Name);
+          Dup := False;
+          for K := 0 to High(Result) do
+            if CompareText(Result[K], S) = 0 then Dup := True;
+          if not Dup then
+            Result := Result + [S];
+        end;
+    finally
+      for I := 0 to N - 1 do
+        Arr^[I] := nil;       // Release kazdego elementu
+      CoTaskMemFree(P);
+    end;
+  finally
+    MFShutdown;
+  end;
+end;
 
 end.

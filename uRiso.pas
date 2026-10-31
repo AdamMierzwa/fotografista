@@ -237,9 +237,16 @@ end;
 
 // Risografia V2 (p_RisoCoreV2 z image_fx_effects.hws:1676):
 // separacja wg barwy (hue) z wagą odległości barw i nasycenia.
+// 2026-10-31: piksel o małej różnicy kanałów (Delta < cRisoV2LowChroma) w całości
+// do najciemniejszej farby. W ciemnym tle S = Delta / V jest duże mimo prawie
+// równych kanałów, a różnica o 1 poziom obraca barwę o kilkanaście stopni:
+// (21,18,25) H=266, (22,17,24) H=283 - inny dobór farb i inna wielkość kropki,
+// na powiększonym JPEG-u widoczne bloki. Próg z porównania na zdjęciach właściciela.
 procedure DoRisoV2(Bitmap: TBitmap; const Pal: TRisoPalette; CellMult: Integer = 1);
+const
+  cRisoV2LowChroma = 20.0 / 255.0;
 var
-  W, H, N, B, X, Y, Sx, Sy: Integer;
+  W, H, N, B, X, Y, Sx, Sy, DarkInk: Integer;
   Cell, T: Integer;
   HueDist, HueWeight, Falloff, Coverage, HsvH, HsvS, HsvV: Double;
   Tile: TScreenTile;
@@ -254,8 +261,14 @@ begin
   Bitmap.PixelFormat := pf24bit;
 
   SetLength(BandHues, N);
+  DarkInk := 0;
   for B := 0 to N - 1 do
+  begin
     RGBToHSV(Pal[B].R, Pal[B].G, Pal[B].B, BandHues[B], HsvS, HsvV);
+    if Max(Max(Pal[B].R, Pal[B].G), Pal[B].B) <
+       Max(Max(Pal[DarkInk].R, Pal[DarkInk].G), Pal[DarkInk].B) then
+      DarkInk := B;
+  end;
 
   Cell := Max(2, Round(Sqrt(W * H) / 700.0) * CellMult);
   T := 4 * Cell;
@@ -289,7 +302,14 @@ begin
               SrcLines[Sy][Sx].B, HsvH, HsvS, HsvV);
             HueDist := Abs(HsvH - BandHues[B]);
             if HueDist > 180 then HueDist := 360.0 - HueDist;
-            if HsvS >= 0.05 then
+            if (HsvS >= 0.05) and (HsvS * HsvV < cRisoV2LowChroma) then
+            begin
+              if B = DarkInk then
+                HueWeight := 1.0
+              else
+                HueWeight := 0.0;
+            end
+            else if HsvS >= 0.05 then
             begin
               Falloff := 360.0 / N;
               HueWeight := (Falloff - HueDist) / Falloff;

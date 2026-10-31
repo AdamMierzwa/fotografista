@@ -175,7 +175,7 @@
 177	Boogvervorming - buig die beeld
 178	Draaikolk - draai die beeld
 179	Waterrimpel-effek
-180	Polêre vervorming - tonnel, visoog
+180	Polêre vervorming - klein planeet, tonnel, kaleidoskoop
 181	4-kleurpalet - Workbench 1.x (OCS)
 182	4-kleurpalet - Workbench 2.x/3.x
 183	32-kleurpalet (4x4x2) - OCS
@@ -306,39 +306,6 @@
 321	Kies booghoek:
 322	Kies intensiteit:
 323	Kies variant:
-324	Ligte vatvervorming
-325	Medium vatvervorming
-326	Sterk vatvervorming
-327	Ligte kussingvervorming
-328	Medium kussingvervorming
-329	Sterk kussingvervorming
-330	45°
-331	90°
-332	180°
-333	360°
-334	90° + draai
-335	180° + draai
-336	Lig (45°)
-337	Medium (90°)
-338	Sterk (180°)
-339	Baie sterk (270°)
-340	Volledig (360°)
-341	Omgekeer
-342	Lig
-343	Medium
-344	Sterk
-345	Konsentries
-346	Vanaf hoek
-347	Dig
-348	Volledig
-349	Halwe hoek
-350	Kwarthoek
-351	Ring
-352	Klein radius
-353	Glad
-354	Tonnel
-356	Visoog
-357	Buite-uitrekking
 358	Fout
 359	Lêerformaat word nie ondersteun nie.
 360	Kiekie
@@ -484,7 +451,7 @@
 532	Koppelvlak...
 533	Koppelvlakinstellings
 534	Koppelvlak
-535	Doek agtergrondkleur (slegs met die standaard Windows-tema):
+535	Doek agtergrondkleur (slegs met die "Windows"-tema):
 537	Maak beeld oop
 538	Alle lêers
 539	Knipbord
@@ -626,10 +593,8 @@
 682	Floyd–Steinberg (glad)
 683	Die geselekteerde modus is baie stadig vir groot beelde.\nVir beelde groter as 2 MP kan voorskou en toepassing van die effek etlike minute duur.\nAnder modusse is baie vinniger.
 684	Werkverrigting...
-685	Maksimum werkresolusie:
+685	Verklein foto's by oopmaak na:
 687	Beeld
-688	Omgekeerde tonnel
-689	30°-segment
 690	Volle HD (1920×1080)
 691	4K (3840×2160)
 692	Werkingsverrigting en maksimum werkresolusie
@@ -696,7 +661,7 @@
 763	Blokverlies:
 764	Horisontale snyverskuiwing:
 765	Verdonker elke ander lyn teen PAL-verhouding — hoër waarde = donkerder gapings
-766	Aanlyn dokumentasie
+766	Programwebwerf
 767	Maak die Fotografista-webwerf in jou webblaaier oop
 768	Mimeograaf...
 769	Mimeograaf — inkrande op wit agtergrond
@@ -1026,7 +991,7 @@
 1095	Wys beskermingsmasker
 1096	Vee beskermingsmasker uit
 1097	Beskerm seleksie
-1098	Verwyder beskerming van seleksie
+1098	Verwyder beskerming
 1099	Lasso
 1100	Towerstaf
 1101	Seleksie...
@@ -1091,8 +1056,8 @@
 1162	Koerant
 1163	PRL – sag
 1164	PRL – raster
-1165	Pop-art – swart
-1166	Pop-art – twee ink
+1165	Ben-Day – swart
+1166	Ben-Day – kleur
 1167	Pop-art – kleur
 1168	Bruin (verbleik)
 1169	Kleurverspreiding
@@ -1100,3 +1065,66 @@
 1171	Geen egalisering
 1172	Egaliseer RGB-kanale
 1173	Egaliseer helderheid
+1174	Ruil A en B om
+1175	Verskil
+1176	Alle ondersteunde formate
+1177	Nie 'n IFF-lêer nie.
+1178	Nie 'n IFF-ILBM-lêer nie.
+1179	Ongeldige ILBM-kopstuk (BMHD).
+1180	Ongeldige ILBM-afmetings.
+1181	ILBM-beeld het geen BODY-blok nie.
+1182	Nie-ondersteunde ILBM-kompressie.
+1183	Lêer nie gevind nie: %s
+1184	Kan nie laai nie: %s
+1185	Ontdoen-stappe:
+1186	Onbeperk
+1187	Kies beskermde gebied
+1188	Maak die beskermde gebied weer 'n seleksie
+1189	Verwyder seleksie
+1190	Teëlgrootte
+1191	Teëls horisontaal:
+1192	Drempel...
+1193	Drempel - sterk swart-en-wit-kontras
+1194	Vereenvoudiging:
+1195	Linosnee - groot vlakke met gladde snyrande
+1196	Gebruik die grafiese kaart waar moontlik
+1197	CMYK-raster
+1198	MagicWB-palet (8 kleure)
+1199	Grafiese kaart:
+1200	Geen hardeware-video-enkodeerder nie (video deur die verwerker geënkodeer)
+1201	verwerker
+1202	grafiese kaart
+1203	in gebruik
+1204	Oorspronklik (sonder verkleining)
+1205	Watermerk...
+1206	Watermerk
+1207	Teks
+1208	Logo (PNG-beeld)
+1209	Tekskleur...
+1210	Posisie:
+1211	Herhaal oor die hele foto
+1212	Kantlyn:
+1213	Skaduwee onder teks
+1214	Die logo-lêer kon nie gelaai word nie.
+1215	Bo middel
+1216	Middel links
+1217	Middel
+1218	Middel regs
+1219	Onder middel
+1220	Volgende foto
+1221	Vorige foto
+1222	Maak die volgende foto in hierdie gids oop
+1223	Maak die vorige foto in hierdie gids oop
+1224	Monster weg van die hoek
+1225	Afstand:
+1226	Vat
+1227	Kussing
+1228	Gat
+1229	Rotasie
+1230	Binne na buite
+1231	Visoog...
+1232	Visoog
+1233	Visoog - bol die middel van die foto uit
+1234	Sirkel
+1235	Verwyder rooi oë
+1236	Kies eers die pupil.

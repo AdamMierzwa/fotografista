@@ -2,7 +2,7 @@
   Left = 0
   Top = 0
   BorderStyle = bsDialog
-  Caption = 'Linocut'
+  Caption = 'Threshold'
   ClientHeight = 440
   ClientWidth = 430
   Color = clBtnFace

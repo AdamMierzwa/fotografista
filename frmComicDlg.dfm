@@ -47,7 +47,7 @@
     Max = 16
     Min = 2
     Position = 8
-    TabOrder = 1
+    TabOrder = 2
     OnChange = tbColorsChange
   end
   object lblCValue: TLabel
@@ -66,7 +66,6 @@
     Width = 400
     Height = 92
     Caption = 'Style'
-    Columns = 2
     TabOrder = 0
     OnClick = rgStyleClick
   end
@@ -76,8 +75,7 @@
     Width = 400
     Height = 92
     Caption = 'Ink color'
-    Columns = 2
-    TabOrder = 6
+    TabOrder = 1
     OnClick = rgAccentClick
   end
   object lblEdge: TLabel
@@ -96,7 +94,7 @@
     Max = 100
     Min = 1
     Position = 50
-    TabOrder = 2
+    TabOrder = 3
     OnChange = tbEdgeChange
   end
   object lblEValue: TLabel
@@ -125,7 +123,7 @@
     Max = 100
     Min = 1
     Position = 50
-    TabOrder = 3
+    TabOrder = 4
     OnChange = tbThickChange
   end
   object lblTValue: TLabel
@@ -146,7 +144,7 @@
     Caption = 'OK'
     Default = True
     ModalResult = 1
-    TabOrder = 4
+    TabOrder = 5
   end
   object btnCancel: TButton
     Left = 331
@@ -156,6 +154,6 @@
     Cancel = True
     Caption = 'Cancel'
     ModalResult = 2
-    TabOrder = 5
+    TabOrder = 6
   end
 end

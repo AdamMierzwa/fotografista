@@ -117,7 +117,7 @@ var
   Ext: string;
 begin
   if not FileExists(APath) then
-    raise Exception.CreateFmt('File not found: %s', [APath]);
+    raise Exception.CreateFmt(T('File not found: %s'), [APath]);
 
   Ext := LowerCase(ExtractFileExt(APath));
 
@@ -142,7 +142,7 @@ begin
   GPBmp := TGPBitmap.Create(WideString(APath));
   try
     if GPBmp.GetWidth = 0 then
-      raise Exception.CreateFmt('Cannot load: %s', [APath]);
+      raise Exception.CreateFmt(T('Cannot load: %s'), [APath]);
 
     W := Integer(GPBmp.GetWidth);
     H := Integer(GPBmp.GetHeight);
@@ -222,9 +222,13 @@ begin
     Tmp.PixelFormat := pf24bit;
     Tmp.Width := NW;
     Tmp.Height := NH;
+    // HALFTONE bezposrednio przez StretchBlt: Canvas.StretchDraw -> TBitmap.Draw
+    // sam przestawia tryb na STRETCH_DELETESCANS (Vcl.Graphics.pas:8448-8460),
+    // czyli wyrzucanie kolumn i wierszy bez usredniania (mora, schodki)
     SetStretchBltMode(Tmp.Canvas.Handle, HALFTONE);
     SetBrushOrgEx(Tmp.Canvas.Handle, 0, 0, nil);
-    Tmp.Canvas.StretchDraw(Rect(0, 0, NW, NH), ABitmap);
+    Winapi.Windows.StretchBlt(Tmp.Canvas.Handle, 0, 0, NW, NH,
+      ABitmap.Canvas.Handle, 0, 0, ABitmap.Width, ABitmap.Height, SRCCOPY);
     ABitmap.Assign(Tmp);
   finally
     Tmp.Free;
@@ -334,7 +338,7 @@ end;
 function GetImageFilter: string;
 begin
   Result :=
-    'All supported|*.bmp;*.jpg;*.jpeg;*.png;*.gif;*.tif;*.tiff;*.webp;*.heic;*.heif;*.avif;*.iff;*.ilbm;*.lbm|' +
+    T('All supported') + '|*.bmp;*.jpg;*.jpeg;*.png;*.gif;*.tif;*.tiff;*.webp;*.heic;*.heif;*.avif;*.iff;*.ilbm;*.lbm|' +
     'PNG|*.png|' +
     'JPEG|*.jpg;*.jpeg|' +
     'BMP|*.bmp|' +

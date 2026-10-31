@@ -69,7 +69,6 @@
     Top = 349
     Width = 400
     Height = 18
-    Alignment = taCenter
     AutoSize = False
     Caption = '0'
     StyleElements = [seClient, seBorder]

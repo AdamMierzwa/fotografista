@@ -10,6 +10,9 @@ function LoadILBM(const APath: string): TBitmap;
 
 implementation
 
+uses
+  uI18n;
+
 type
   TRGBTriple = packed record
     B: Byte;
@@ -94,7 +97,6 @@ var
   R, G, B: Byte;
   BitNo, ByteOff: Integer;
 begin
-  Result := nil;
   FS := TFileStream.Create(APath, fmOpenRead or fmShareDenyWrite);
   try
     SetLength(Data, FS.Size);
@@ -105,13 +107,13 @@ begin
   end;
 
   if Length(Data) < 12 then
-    raise Exception.Create('Not an IFF file.');
+    raise Exception.Create(T('Not an IFF file.'));
   if (Data[0] <> Ord('F')) or (Data[1] <> Ord('O')) or
      (Data[2] <> Ord('R')) or (Data[3] <> Ord('M')) then
-    raise Exception.Create('Not an IFF file.');
+    raise Exception.Create(T('Not an IFF file.'));
   if (Data[8] <> Ord('I')) or (Data[9] <> Ord('L')) or
      (Data[10] <> Ord('B')) or (Data[11] <> Ord('M')) then
-    raise Exception.Create('Not an IFF ILBM file.');
+    raise Exception.Create(T('Not an IFF ILBM file.'));
 
   Off := 12;
   W := 0; H := 0; NPlanes := 0; Masking := 0; Compression := 0;
@@ -132,7 +134,7 @@ begin
     if ChunkID = 'BMHD' then
     begin
       if ChunkSize < 20 then
-        raise Exception.Create('Invalid ILBM header (BMHD).');
+        raise Exception.Create(T('Invalid ILBM header (BMHD).'));
       W := BE16(PByte(@Data[DataOfs]));
       H := BE16(PByte(@Data[DataOfs + 2]));
       NPlanes := Data[DataOfs + 8];
@@ -176,11 +178,11 @@ begin
   end;
 
   if (W <= 0) or (H <= 0) or (NPlanes <= 0) then
-    raise Exception.Create('Invalid ILBM dimensions.');
+    raise Exception.Create(T('Invalid ILBM dimensions.'));
   if BODYLen = 0 then
-    raise Exception.Create('ILBM image has no BODY chunk.');
+    raise Exception.Create(T('ILBM image has no BODY chunk.'));
   if (Compression <> 0) and (Compression <> 1) then
-    raise Exception.Create('Unsupported ILBM compression.');
+    raise Exception.Create(T('Unsupported ILBM compression.'));
 
   // EHB / HAM detection: CAMG mode bits (0x40 = EHB, 0x800 = HAM) win;
   // otherwise guess from plane count + palette size. SHAM always means HAM8.
@@ -256,7 +258,16 @@ begin
         if ((PlaneData[(Y * PlaneCount + P) * RowSize + ByteOff] shr BitNo) and 1) <> 0 then
           Idx := Idx or (1 shl P);
 
-      if IsHAM then
+      // Deep ILBM (24 plany, 32 z alfa pomijana): plany 0-7 R, 8-15 G, 16-23 B,
+      // bez palety. Takie pliki zapisywala wersja Hollywood; wczesniej Idx szedl
+      // jako indeks palety, ktorej nie ma - czarna plansza bez komunikatu.
+      if NPlanes >= 24 then
+      begin
+        Row[X].R := Idx and $FF;
+        Row[X].G := (Idx shr 8) and $FF;
+        Row[X].B := (Idx shr 16) and $FF;
+      end
+      else if IsHAM then
       begin
         if NPlanes > 6 then
         begin

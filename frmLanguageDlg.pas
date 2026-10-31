@@ -84,6 +84,7 @@ begin
   grpLanguage.SetBounds(Margin, Margin, Margin + Check + W + Margin, Y + Pad);
   btnOK.Top := grpLanguage.Top + grpLanguage.Height + SectionGap;
   btnCancel.Top := btnOK.Top;
+  ButtonsToLeft([btnOK, btnCancel], Margin);
   FitToContent(SectionGap, Margin);
   // okno co najmniej na pare przyciskow
   if ClientWidth < btnOK.Width + btnCancel.Width + CtrlGap * 2 + Margin * 2 then

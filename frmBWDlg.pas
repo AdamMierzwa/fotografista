@@ -250,9 +250,16 @@ begin
       Dlg.btnOK.Top := Dlg.btnOK.Top + Delta;
       Dlg.btnCancel.Top := Dlg.btnCancel.Top + Delta;
     end;
+    // ramka pod odczytem Kontrastu (w .dfm zaczynala sie na nim), wysokosc
+    // z czcionki, przyciski pod nia
+    Dlg.FitRadioGroupHeight(Dlg.rgDither);
+    Dlg.rgDither.Top := Dlg.StackBelow(Dlg.lblCValue, Dlg.RowGap * 2);
+    Dlg.btnOK.Top := Dlg.StackBelow(Dlg.rgDither, Dlg.SectionGap);
+    Dlg.btnCancel.Top := Dlg.btnOK.Top;
 
     Dlg.ApplyPreview;
 
+    Dlg.ButtonsToLeft([Dlg.btnOK, Dlg.btnCancel], Dlg.CtrlGap * 3);
     Dlg.FitToContent(Dlg.CtrlGap * 2, Dlg.CtrlGap * 3);
 
     // Wyśrodkowanie pary podglądów w szerokości okna.

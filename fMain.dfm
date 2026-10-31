@@ -83,6 +83,18 @@
         ShortCut = 16463
         OnClick = mnuFileOpenClick
       end
+      object mnuFileNextPhoto: TMenuItem
+        Caption = 'Next photo'
+        Hint = 'Open the next photo in this folder'
+        ShortCut = 34
+        OnClick = mnuFileNextPhotoClick
+      end
+      object mnuFilePrevPhoto: TMenuItem
+        Caption = 'Previous photo'
+        Hint = 'Open the previous photo in this folder'
+        ShortCut = 33
+        OnClick = mnuFilePrevPhotoClick
+      end
       object mnuFileSaveAs: TMenuItem
         Caption = 'Save as...'
         Hint = 'Save image under a new name'
@@ -220,6 +232,14 @@
         Caption = '400%'
         Hint = 'View at 400% scale'
         OnClick = mnuView400Click
+      end
+      object mnuViewSepSmooth: TMenuItem
+        Caption = '-'
+      end
+      object mnuViewSmooth: TMenuItem
+        AutoCheck = True
+        Caption = 'Smooth preview scaling'
+        OnClick = mnuViewSmoothClick
       end
     end
     object mnuCorrector: TMenuItem
@@ -437,6 +457,11 @@
           Hint = 'Convert to B&W with dither option'
           OnClick = mnuBWClick
         end
+        object mnuLinocut: TMenuItem
+          Caption = 'Threshold...'
+          Hint = 'Threshold - sharp B&W contrast'
+          OnClick = mnuLinocutClick
+        end
         object mnuOleo: TMenuItem
           Caption = 'Oil paint...'
           Hint = 'Oil paint - brush simulation'
@@ -539,8 +564,13 @@
         end
         object mnuPolar: TMenuItem
           Caption = 'Polar distortion...'
-          Hint = 'Polar distortion - tunnel, fisheye'
+          Hint = 'Polar distortion - little planet, tunnel, kaleidoscope'
           OnClick = mnuPolarClick
+        end
+        object mnuFisheye: TMenuItem
+          Caption = 'Fisheye...'
+          Hint = 'Fisheye - bulge the middle of the photo'
+          OnClick = mnuFisheyeClick
         end
       end
       object N15: TMenuItem
@@ -562,10 +592,10 @@
       object N16: TMenuItem
         Caption = '-'
       end
-      object mnuLinocut: TMenuItem
+      object mnuLinocut2: TMenuItem
         Caption = 'Linocut...'
-        Hint = 'Linocut - sharp B&W contrast'
-        OnClick = mnuLinocutClick
+        Hint = 'Linocut - large shapes with smooth cut edges'
+        OnClick = mnuLinocut2Click
       end
       object N17: TMenuItem
         Caption = '-'
@@ -698,6 +728,13 @@
         Caption = 'Selection...'
         OnClick = mnuSelPanelClick
       end
+      object mnuToolsPanel: TMenuItem
+        Caption = 'Retouch...'
+        OnClick = mnuToolsPanelClick
+      end
+      object N24: TMenuItem
+        Caption = '-'
+      end
       object mnuSelSize: TMenuItem
         Caption = 'Selection size...'
         Hint = 'Selection size'
@@ -734,38 +771,13 @@
         Caption = 'Remove background...'
         OnClick = mnuRemoveBackgroundClick
       end
-      object mnuToolsPanel: TMenuItem
-        Caption = 'Retouch...'
-        OnClick = mnuToolsPanelClick
+      object mnuRemoveRedEye: TMenuItem
+        Caption = 'Remove red eye'
+        OnClick = mnuRemoveRedEyeClick
       end
-      object N24: TMenuItem
-        Caption = '-'
-      end
-      object mnuProtMask: TMenuItem
-        Caption = 'Protection mask'
-        object mnuProtFromSel: TMenuItem
-          Caption = 'Protect selection'
-          Hint = 'Protect the selected area from effects'
-          OnClick = mnuProtFromSelClick
-        end
-        object mnuProtUnprotSel: TMenuItem
-          Caption = 'Unprotect selection'
-          Hint = 'Remove protection from the selected area'
-          OnClick = mnuProtUnprotSelClick
-        end
-        object N28: TMenuItem
-          Caption = '-'
-        end
-        object mnuProtShow: TMenuItem
-          Caption = 'Show protection mask'
-          Hint = 'Shows protected areas with diagonal red overlay'
-          OnClick = mnuProtShowClick
-        end
-        object mnuProtClear: TMenuItem
-          Caption = 'Clear protection mask'
-          Hint = 'Remove all protected areas'
-          OnClick = mnuProtClearClick
-        end
+      object mnuWatermark: TMenuItem
+        Caption = 'Watermark...'
+        OnClick = mnuWatermarkClick
       end
     end
     object mnuAmiga: TMenuItem
@@ -916,7 +928,7 @@
         Caption = '-'
       end
       object mnuHelpOnlineDocs: TMenuItem
-        Caption = 'Online documentation'
+        Caption = 'Program website'
         Hint = 'Open the Fotografista website in your web browser'
         OnClick = mnuHelpOnlineDocsClick
       end

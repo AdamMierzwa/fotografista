@@ -315,8 +315,9 @@ begin
   ButtonTop := ColTop + ColH + SecGap;
   btnOK.Top := ButtonTop;
   btnCancel.Top := ButtonTop;
-  btnOK.Left := ClientWidth - 15 - 85 - 85 - 10;
-  btnCancel.Left := ClientWidth - 15 - 85;
+  // z rzeczywistej szerokosci przyciskow (wczesniej sztywne 85 px - AF
+  // „Kanselleer” jest szerszy i dochodzil do prawej krawedzi okna)
+  AlignButtonsRight([btnOK, btnCancel], 15);
   ClientHeight := ButtonTop + 25 + 15;
 end;
 

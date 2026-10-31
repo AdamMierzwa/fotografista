@@ -133,6 +133,13 @@ begin
     end;
 
     FitPreviewToDialog(Dlg, Dlg.pboxPreview, pw, ph);
+    // ramka z wysokoscia z czcionki, przyciski pod nia z odstepem - w .dfm
+    // ramka (do 396 px) nachodzila na przyciski (od 391 px), przy 12 pt
+    // kolka lezaly na dolnej krawedzi (jak Inne retrokomputery)
+    Dlg.FitRadioGroupHeight(Dlg.rgDither);
+    Dlg.btnOK.Top := Dlg.StackBelow(Dlg.rgDither, Dlg.SectionGap);
+    Dlg.btnCancel.Top := Dlg.btnOK.Top;
+    Dlg.FitHeight(Dlg.SectionGap);
 
     Dlg.rgDither.ItemIndex := 0;
     Dlg.FApplyProc := ApplyProc;

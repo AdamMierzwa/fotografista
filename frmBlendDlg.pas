@@ -15,6 +15,9 @@ type
     cbEffectA: TComboBox;
     lblEffectB: TLabel;
     cbEffectB: TComboBox;
+    btnSwap: TButton;
+    lblMode: TLabel;
+    cbMode: TComboBox;
     lblMix: TLabel;
     tbMix: TTrackBar;
     lblMixVal: TLabel;
@@ -23,9 +26,13 @@ type
     procedure pboxPreviewPaint(Sender: TObject);
     procedure cbEffectAChange(Sender: TObject);
     procedure cbEffectBChange(Sender: TObject);
+    procedure cbModeChange(Sender: TObject);
+    procedure btnSwapClick(Sender: TObject);
     procedure tbMixChange(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
+  public
+    procedure RefitButtons; override;
   private
     FOriginalPreview: TBitmap;
     FWorkingPreview: TBitmap;
@@ -67,6 +74,15 @@ const
   FX_WORKBENCH1 = 10;
   FX_WORKBENCH2 = 11;
   FX_MAGICWB    = 12;
+
+  // Tryby mieszania (lista "Tryb:", 2026-10-23; klucze i18n 438-441 zostaly
+  // po usunietych Warstwach). Wynik trybu M(A, B), potem suwak:
+  // out = A + (M - A) * T - przy BM_NORMAL M = B, czyli jak dotad.
+  BM_NORMAL   = 0;
+  BM_MULTIPLY = 1;
+  BM_SCREEN   = 2;
+  BM_OVERLAY  = 3;
+  BM_DIFFERENCE = 4;
 
 function LumOf(R, G, B: Byte): Integer; inline;
 begin
@@ -327,8 +343,26 @@ begin
   end;
 end;
 
-procedure BlendTwo(SrcA, SrcB, Dst: TBitmap; T: Double);
-// Blend per-pixel: out = A + (B - A) * T (wg blend.hws).
+// Wynik trybu dla jednego kanalu (A = efekt A, B = efekt B, 0..255).
+function BlendChannel(A, B, Mode: Integer): Integer; inline;
+begin
+  case Mode of
+    BM_MULTIPLY: Result := (A * B + 127) div 255;
+    BM_SCREEN:   Result := 255 - ((255 - A) * (255 - B) + 127) div 255;
+    BM_OVERLAY:
+      if A < 128 then
+        Result := (2 * A * B + 127) div 255
+      else
+        Result := 255 - (2 * (255 - A) * (255 - B) + 127) div 255;
+    BM_DIFFERENCE: Result := Abs(A - B);
+  else
+    Result := B;   // BM_NORMAL
+  end;
+end;
+
+procedure BlendTwo(SrcA, SrcB, Dst: TBitmap; T: Double; Mode: Integer);
+// Blend per-pixel: out = A + (M - A) * T, M = wynik trybu (BlendChannel);
+// przy BM_NORMAL M = B, czyli out = A + (B - A) * T (wg blend.hws).
 var
   W, H, X, Y: Integer;
   RowA, RowB, RowD: PRGBTripleArray;
@@ -344,9 +378,9 @@ begin
     RowD := Dst.ScanLine[Y];
     for X := 0 to W - 1 do
     begin
-      Ro := RowA[X].R + Round((RowB[X].R - RowA[X].R) * T);
-      Go := RowA[X].G + Round((RowB[X].G - RowA[X].G) * T);
-      Bo := RowA[X].B + Round((RowB[X].B - RowA[X].B) * T);
+      Ro := RowA[X].R + Round((BlendChannel(RowA[X].R, RowB[X].R, Mode) - RowA[X].R) * T);
+      Go := RowA[X].G + Round((BlendChannel(RowA[X].G, RowB[X].G, Mode) - RowA[X].G) * T);
+      Bo := RowA[X].B + Round((BlendChannel(RowA[X].B, RowB[X].B, Mode) - RowA[X].B) * T);
       RowD[X].R := Byte(Max(0, Min(255, Ro)));
       RowD[X].G := Byte(Max(0, Min(255, Go)));
       RowD[X].B := Byte(Max(0, Min(255, Bo)));
@@ -419,7 +453,7 @@ begin
   cbEffectA.Items.Add(T('Cyanotype'));
   cbEffectA.Items.Add(T('Salt print'));
   cbEffectA.Items.Add(T('X-Ray'));
-  cbEffectA.Items.Add(T('False-color IR'));
+  cbEffectA.Items.Add(T('False-color infrared'));
   cbEffectA.Items.Add(T('Night vision'));
   cbEffectA.Items.Add(T('Thermal'));
   cbEffectA.Items.Add(T('Orton'));
@@ -429,6 +463,13 @@ begin
   cbEffectB.Items.Assign(cbEffectA.Items);
   cbEffectA.ItemIndex := FX_ORIGINAL;
   cbEffectB.ItemIndex := FX_GRAY;   // domyslnie: oryginal vs szarosc
+  // Kolejnosc = stale BM_*.
+  cbMode.Items.Add(T('Normal'));
+  cbMode.Items.Add(T('Multiply'));
+  cbMode.Items.Add(T('Screen'));
+  cbMode.Items.Add(T('Overlay'));
+  cbMode.Items.Add(T('Difference'));
+  cbMode.ItemIndex := BM_NORMAL;
   tbMix.Min := 0;
   tbMix.Max := 100;
   tbMix.Position := 50;
@@ -449,6 +490,31 @@ end;
 procedure TBlendDlg.cbEffectBChange(Sender: TObject);
 begin
   ApplyPreview;
+end;
+
+procedure TBlendDlg.cbModeChange(Sender: TObject);
+begin
+  ApplyPreview;
+end;
+
+// Tryby Mnozenie/Ekran/Nakladka zaleza od kolejnosci A i B - zamiana jednym
+// przyciskiem zamiast przestawiania dwoch list.
+procedure TBlendDlg.btnSwapClick(Sender: TObject);
+var
+  I: Integer;
+begin
+  I := cbEffectA.ItemIndex;
+  cbEffectA.ItemIndex := cbEffectB.ItemIndex;
+  cbEffectB.ItemIndex := I;
+  ApplyPreview;
+end;
+
+// Szerokosc przycisku z napisu (tlumaczenia), prawa krawedz rowno z lista B.
+procedure TBlendDlg.RefitButtons;
+begin
+  inherited;
+  FitButton(btnSwap);
+  btnSwap.Left := cbEffectB.Left + cbEffectB.Width - btnSwap.Width;
 end;
 
 procedure TBlendDlg.tbMixChange(Sender: TObject);
@@ -473,7 +539,7 @@ begin
     TmpB.PixelFormat := pf24bit;
     TmpB.Assign(FOriginalPreview);
     ApplyBlendEffect(TmpB, cbEffectB.ItemIndex);
-    BlendTwo(TmpA, TmpB, FWorkingPreview, T);
+    BlendTwo(TmpA, TmpB, FWorkingPreview, T, cbMode.ItemIndex);
   finally
     TmpA.Free;
     TmpB.Free;
@@ -496,7 +562,7 @@ begin
     TmpB.PixelFormat := pf24bit;
     TmpB.Assign(FSourceBmp);
     ApplyBlendEffect(TmpB, cbEffectB.ItemIndex);
-    BlendTwo(TmpA, TmpB, FSourceBmp, T);
+    BlendTwo(TmpA, TmpB, FSourceBmp, T, cbMode.ItemIndex);
   finally
     TmpA.Free;
     TmpB.Free;

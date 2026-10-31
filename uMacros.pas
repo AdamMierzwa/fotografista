@@ -53,7 +53,7 @@ function MacrosGet(Index: Integer): TMacro;
 implementation
 
 uses
-  System.IOUtils, frmComicDlg, frmReliefDlg;
+  System.IOUtils, frmComicDlg, frmReliefDlg, uRiso, uWatermark;
 
 type
   TLabelRec = record
@@ -62,7 +62,7 @@ type
   end;
 
 const
-  cMacroLabels: array[0..86] of TLabelRec = (
+  cMacroLabels: array[0..93] of TLabelRec = (
     (Code: 'BLUR';          LabelEN: 'Blur'),
     (Code: 'BRIGHTNESS';    LabelEN: 'Brightness'),
     (Code: 'GAMMA';         LabelEN: 'Gamma correction'),
@@ -72,18 +72,18 @@ const
     (Code: 'CONTRAST';      LabelEN: 'Contrast'),
     (Code: 'SHARPEN';       LabelEN: 'Sharpen'),
     (Code: 'EMBOSS';        LabelEN: 'Emboss'),
-    (Code: 'PIXELATE';      LabelEN: 'Pixelation'),
+    (Code: 'PIXELATE';      LabelEN: 'Pixelate'),
     (Code: 'VIGNETTE';      LabelEN: 'Vignette'),
     (Code: 'EDGE';          LabelEN: 'Edge detection'),
     (Code: 'FILMGRAIN';     LabelEN: 'Film grain'),
-    (Code: 'RELIEF';        LabelEN: 'Bas-relief'),
+    (Code: 'RELIEF';        LabelEN: 'Relief'),
     (Code: 'GLOW';          LabelEN: 'Glow'),
-    (Code: 'OILPAINT';      LabelEN: 'Oil painting'),
-    (Code: 'CROSSPROCESS';  LabelEN: 'Cross process'),
+    (Code: 'OILPAINT';      LabelEN: 'Oil paint'),
+    (Code: 'CROSSPROCESS';  LabelEN: 'Incorrect development'),
     (Code: 'BW';            LabelEN: 'Black & white'),
     (Code: 'GRAY';          LabelEN: 'Grayscale'),
     (Code: 'INVERT';        LabelEN: 'Negative'),
-    (Code: 'FALSEIR';       LabelEN: 'False-color IR'),
+    (Code: 'FALSEIR';       LabelEN: 'False-color infrared'),
     (Code: 'NIGHTVISION';   LabelEN: 'Night vision'),
     (Code: 'THERMAL';       LabelEN: 'Thermal'),
     (Code: 'ORTON';         LabelEN: 'Orton'),
@@ -91,25 +91,25 @@ const
     (Code: 'CYANOTYPE';     LabelEN: 'Cyanotype'),
     (Code: 'SALTPRINT';     LabelEN: 'Salt print'),
     (Code: 'EQUALIZE';      LabelEN: 'Histogram equalization'),
-    (Code: 'WB1';           LabelEN: 'WB 1.x palette'),
-    (Code: 'WB2';           LabelEN: 'WB 2.x/3.x palette'),
-    (Code: 'OCS32';         LabelEN: 'OCS 32 palette'),
-    (Code: 'EHB64';         LabelEN: 'EHB 64 palette'),
-    (Code: 'AGA256';        LabelEN: 'AGA 256 palette'),
-    (Code: 'WB256';         LabelEN: 'Workbench 256 palette'),
-    (Code: 'MAGICWB';       LabelEN: 'MagicWB palette'),
-    (Code: 'HAM6';          LabelEN: 'HAM6'),
-    (Code: 'HAM8';          LabelEN: 'HAM8'),
+    (Code: 'WB1';           LabelEN: 'Workbench 1.x palette (OCS)'),
+    (Code: 'WB2';           LabelEN: 'Workbench 2.x/3.x palette'),
+    (Code: 'OCS32';         LabelEN: 'OCS 32-color palette'),
+    (Code: 'EHB64';         LabelEN: 'EHB 64-color palette'),
+    (Code: 'AGA256';        LabelEN: 'AGA 256-color palette'),
+    (Code: 'WB256';         LabelEN: 'Workbench 256-color palette'),
+    (Code: 'MAGICWB';       LabelEN: 'MagicWB palette (8 colors)'),
+    (Code: 'HAM6';          LabelEN: 'HAM6 - 16 colors + Hold-Modify'),
+    (Code: 'HAM8';          LabelEN: 'HAM8 - 64 colors + Hold-Modify'),
     (Code: 'FLIPH';         LabelEN: 'Mirror horizontally'),
     (Code: 'FLIPV';         LabelEN: 'Mirror vertically'),
     (Code: 'ROTL';          LabelEN: 'Rotate left'),
     (Code: 'ROTR';          LabelEN: 'Rotate right'),
     (Code: 'ROT180';        LabelEN: 'Rotate 180'),
-    (Code: 'STRAIGHTEN';    LabelEN: 'Straighten'),
+    (Code: 'STRAIGHTEN';    LabelEN: 'Straighten scan'),
     (Code: 'STEREOGRAM';    LabelEN: 'Stereogram'),
     (Code: 'CHARCOAL';      LabelEN: 'Charcoal'),
     (Code: 'QUANTIZE';      LabelEN: 'Posterize'),
-    (Code: 'BOKEH';         LabelEN: 'Artificial bokeh'),
+    (Code: 'BOKEH';         LabelEN: 'Fake bokeh'),
     (Code: 'ENGRAVING';     LabelEN: 'Engraving'),
     (Code: 'LINERASTER';    LabelEN: 'Line raster'),
     (Code: 'CROSSHATCH';    LabelEN: 'Crosshatch'),
@@ -119,37 +119,44 @@ const
     (Code: 'STIPPLE';       LabelEN: 'Stipple'),
     (Code: 'DICE';          LabelEN: 'Dice'),
     (Code: 'DICEIMG';       LabelEN: 'Image from dice'),
-    (Code: 'RASTRCMYK';     LabelEN: 'Raster CMYK...'),
+    (Code: 'RASTRCMYK';     LabelEN: 'Raster CMYK'),
     (Code: 'COLORIZE';      LabelEN: 'Colorize'),
     (Code: 'EMERGO';        LabelEN: 'Emergo'),
     (Code: 'WHITEBAL';      LabelEN: 'White balance'),
     (Code: 'HSB';           LabelEN: 'HSB balance'),
-    (Code: 'VIVID';         LabelEN: 'Vividness'),
+    (Code: 'VIVID';         LabelEN: 'Vivid'),
     (Code: 'ENHANCE';       LabelEN: 'Photo enhancement'),
     (Code: 'OUTLINE';       LabelEN: 'Outline'),
     (Code: 'GLITCH';        LabelEN: 'Glitch'),
-    (Code: 'CMYKMISREG';    LabelEN: 'CMYK error'),
+    (Code: 'CMYKMISREG';    LabelEN: 'CMYK misregistration'),
     (Code: 'MIMEOGRAPH';    LabelEN: 'Mimeograph'),
-    (Code: 'C64';           LabelEN: 'Commodore 64'),
+    (Code: 'C64';           LabelEN: 'C64 — Pepto / Colodore'),
     (Code: 'ZXSPECTRUM';    LabelEN: 'ZX Spectrum'),
-    (Code: 'GAMEBOY';       LabelEN: 'Game Boy'),
-    (Code: 'NES';           LabelEN: 'NES - Nestopia'),
-    (Code: 'BARREL';        LabelEN: 'Barrel distortion'),
-    (Code: 'ARC';           LabelEN: 'Arc distortion'),
-    (Code: 'SWIRL';         LabelEN: 'Swirl'),
+    (Code: 'GAMEBOY';       LabelEN: 'Game Boy — DMG / Pocket'),
+    (Code: 'NES';           LabelEN: 'NES (Nestopia)'),
+    (Code: 'LENSDIST';      LabelEN: 'Barrel distortion'),
+    (Code: 'ARC2';          LabelEN: 'Arc distortion'),
+    (Code: 'SWIRL2';        LabelEN: 'Swirl'),
     (Code: 'POLAR';         LabelEN: 'Polar distortion'),
+    (Code: 'FISHEYE';       LabelEN: 'Fisheye'),
     (Code: 'WATERRIPPLE';   LabelEN: 'Water ripple'),
     (Code: 'DUOTONE';       LabelEN: 'Duotone'),
     (Code: 'TRITONE';       LabelEN: 'Tritone'),
     (Code: 'QUADTONE';      LabelEN: 'Quad-tone'),
     (Code: 'SCREENPRINT';   LabelEN: 'Screen print'),
-    (Code: 'MAKIETA';       LabelEN: 'Mockup'),
-    (Code: 'LINOCUT';       LabelEN: 'Linocut'),
+    (Code: 'MAKIETA';       LabelEN: 'Tilt-shift (miniature)'),
+    (Code: 'LINOCUT';       LabelEN: 'Threshold'),
+    (Code: 'LINOCUT2';      LabelEN: 'Linocut'),
+    (Code: 'WATERMARK';     LabelEN: 'Watermark'),
     (Code: 'AGONY';         LabelEN: 'Amiga gradient (Agony)'),
     (Code: 'AMIGAGRADIENT'; LabelEN: 'Amiga gradient'),
     (Code: 'AMIGABG';       LabelEN: 'Amiga background'),
     (Code: 'AMIGABGS';      LabelEN: 'Amiga background (stretched, MagicWB)'),
-    (Code: 'COMIC';         LabelEN: 'Comic')
+    (Code: 'COMIC';         LabelEN: 'Comic'),
+    (Code: 'RISO1';         LabelEN: 'Risograph v1'),
+    (Code: 'RISO2';         LabelEN: 'Risograph v2'),
+    (Code: 'RISO3';         LabelEN: 'Risograph v3'),
+    (Code: 'RESIZECROP';    LabelEN: 'Fit to size with crop')
   );
 
 var
@@ -278,27 +285,22 @@ function MultiParamDetails(const Code: string; P: TArray<string>;
 const
   cCrossPresets: array[0..4] of string = ('E-6 in C-41', 'C-41 in E-6',
     'Kodak in Fuji developer', 'Fuji in Kodak developer', 'ECN-2 in C-41');
-  // Warianty okna zniekształceń - kolejnosc i klucze jak w fMain
-  // (mnuBarrelClick, mnuArcClick, mnuSwirlClick, mnuPolarClick,
-  // mnuWaterRippleClick); zmiana tam = zmiana tutaj.
-  cBarrelPresets: array[0..5] of string = ('Weak barrel', 'Medium barrel',
-    'Strong barrel', 'Weak pincushion', 'Medium pincushion', 'Strong pincushion');
-  cArcPresets: array[0..5] of string = ('45°', '90°', '180°', '360°',
-    '90° + rotate', '180° + rotate');
-  cSwirlPresets: array[0..5] of string = ('Weak (45°)', 'Medium (90°)',
-    'Strong (180°)', 'Very strong (270°)', 'Full (360°)', 'Reverse');
-  cPolarPresets: array[0..11] of string = ('Full', 'Half angle', 'Quarter angle',
-    'Ring', 'Small radius', 'Smooth', 'Tunnel', 'Swirl', 'Fisheye',
-    'Outer stretch', 'Inverted tunnel', '30° slice');
-  cRipplePresets: array[0..5] of string = ('Light', 'Medium', 'Strong',
-    'Concentric', 'From corner', 'Dense');
+  cRippleSources: array[0..4] of string = ('Center', 'Top-left', 'Bottom-left',
+    'Top-right', 'Bottom-right');
   // Pozycje list wyboru okien C64 / Game Boy (frmC64Dlg.dfm, frmGameBoyDlg.dfm)
   cC64Palettes: array[0..1] of string = ('Pepto', 'Colodore');
   cC64Dither: array[0..2] of string = ('Floyd–Steinberg (smooth)',
     'Without dither', 'Pattern (retro)');
   cGameBoyPalettes: array[0..1] of string = ('DMG (green)', 'Pocket (gray)');
+  // Naroznik Dopasuj z przycieciem - numeracja ImageResizeCrop (uTransform),
+  // nie kolejnosc pozycji w oknie (frmResizeCropDlg.VisualToCorner)
+  cCropCorners: array[0..3] of string = ('Top-left', 'Top-right',
+    'Bottom-left', 'Bottom-right');
+  // Przyciski warstw okna Risografii v3 (frmRisoV3Dlg.dfm)
+  cRisoLayers: array[0..4] of string = ('Layer 1...', 'Layer 2...',
+    'Layer 3...', 'Layer 4...', 'Layer 5...');
 var
-  N: Integer;
+  N, L, Cnt: Integer;
 
   // pozycja listy z parametru Idx: „Etykieta: nazwa”; poza zakresem - liczba
   procedure Pick(const LabelEN: string; const List: array of string; Idx: Integer);
@@ -363,6 +365,13 @@ begin
       'CRT effect (0-100):', 'Block loss (0-100):', 'Horizontal band shifts (0-100):'])
   else if SameText(Code, 'CMYKMISREG') then
     Nums(['C:', 'M:', 'Y (px):'])
+  else if SameText(Code, 'LINOCUT2') then
+  begin
+    // prog|uproszczenie|min. powierzchnia (frmLinocut2Dlg); trzeci od 2026-10-25
+    Nums(['Threshold (1-100):', 'Simplification:']);
+    if Length(P) > 2 then
+      Add(MacroParamLabel('Min. area (px):') + ': ' + P[2]);
+  end
   else if SameText(Code, 'MIMEOGRAPH') then
   begin
     // zapis: ziarnistosc|krawedzie|toner|farba|zuzycie (frmStencilDlg)
@@ -382,17 +391,36 @@ begin
     Pick('Palette:', cGameBoyPalettes, 0);
     DitherOnOff(1);
   end
-  else if SameText(Code, 'BARREL') then
-    Pick('Preset:', cBarrelPresets, 0)
-  else if SameText(Code, 'ARC') then
-    Pick('Preset:', cArcPresets, 0)
-  else if SameText(Code, 'SWIRL') then
-    Pick('Preset:', cSwirlPresets, 0)
+  else if SameText(Code, 'LENSDIST') then
+  begin
+    if StrToIntDef(P[0], 0) < 0 then
+      Add(T('Barrel') + ': ' + IntToStr(Abs(StrToIntDef(P[0], 0))))
+    else
+      Add(T('Pincushion') + ': ' + P[0]);
+  end
+  else if SameText(Code, 'ARC2') then
+    Add(T('Angle') + ': ' + P[0] + '°')
+  else if SameText(Code, 'SWIRL2') then
+  begin
+    Add(T('Angle') + ': ' + P[0] + '°');
+    Add(T('Radius') + ': ' + P[1] + '%');
+  end
+  else if SameText(Code, 'FISHEYE') then
+  begin
+    Add(T('Strength') + ': ' + P[0] + '%');
+    Add(T('Circle') + ': ' + YesNo(P[1]));
+  end
   else if SameText(Code, 'POLAR') then
-    Pick('Preset:', cPolarPresets, 0)
+  begin
+    Add(T('Angle') + ': ' + P[0] + '°');
+    Add(T('Radius') + ': ' + P[1] + '%');
+    Add(T('Hole') + ': ' + P[2] + '%');
+    Add(T('Rotation') + ': ' + P[3] + '°');
+    Add(T('Inside out') + ': ' + YesNo(P[4]));
+  end
   else if SameText(Code, 'WATERRIPPLE') then
   begin
-    Pick('Preset:', cRipplePresets, 0);
+    Pick('Anchor:', cRippleSources, 0);
     Nums(['Strength', 'Wave density'], 1);
   end
   else if SameText(Code, 'DUOTONE') then
@@ -464,8 +492,35 @@ begin
     Add(T('Paper color') + ': ' + MacroColorStr(P[1]));
     Nums(['Ink amount (lighter = less):'], 2);
   end
+  else if SameText(Code, 'RISO1') or SameText(Code, 'RISO2') then
+  begin
+    // zapis: numer palety (frmRisoDlg, lista z uRiso)
+    N := StrToIntDef(P[0], -1);
+    if (N >= 0) and (N < GetRisoPaletteCount) then
+      Add(StripColon(T('Palette:')) + ': ' + GetRisoPaletteName(N))
+    else
+      Add(StripColon(T('Palette:')) + ': ' + P[0]);
+  end
+  else if SameText(Code, 'RISO3') then
+  begin
+    // zapis: liczba warstw|kolor 1|...|kolor N (frmRisoV3Dlg); etykiety
+    // przyciskow okna bez wielokropka („Warstwa 1...”, FR „Calque 1…”)
+    Cnt := StrToIntDef(P[0], 0);
+    if Cnt > 5 then Cnt := 5;
+    Add(StripColon(T('Number of layers:')) + ': ' + P[0]);
+    for L := 1 to Cnt do
+      Add(T(cRisoLayers[L - 1]).TrimRight(['.', '…']) + ': ' + MacroColorStr(P[L]));
+  end
+  else if SameText(Code, 'RESIZECROP') then
+  begin
+    // zapis: szerokosc|wysokosc|naroznik (fMain.mnuResizeCropClick)
+    Add(StripColon(T('Width (px):')) + ': ' + P[0]);
+    Add(StripColon(T('Height (px):')) + ': ' + P[1]);
+    Pick('Anchor:', cCropCorners, 2);
+  end
   else if SameText(Code, 'STRAIGHTEN') then
-    Add(MacroParamLabel('Straightening angle (-10 to +10 degrees):') + ': ' + P[0] + '°')
+    Add(MacroParamLabel('Straightening angle (-10 to +10 degrees):') + ': ' +
+      FloatToStr(StrToFloatDef(P[0], 0, TFormatSettings.Invariant)) + '°')
   else if SameText(Code, 'EQUALIZE') then
   begin
     if SameText(P[0], 'lum') then
@@ -477,6 +532,35 @@ begin
   end
   else
     Result := False;
+end;
+
+// Znak wodny: etykiety z okna (frmWatermarkDlg); czcionka i kolor pominiete -
+// ich jedyne klucze to napisy przyciskow.
+function WatermarkMacroDetails(const Params: string): TArray<string>;
+const
+  cAnchors: array[0..8] of string = ('Top-left', 'Top center', 'Top-right',
+    'Middle-left', 'Center', 'Middle-right',
+    'Bottom-left', 'Bottom center', 'Bottom-right');
+var
+  W: TWatermarkParams;
+begin
+  W := StrToWatermarkParams(Params);
+  if W.Kind = wkLogo then
+    Result := [T('Logo (PNG image)') + ': ' + ExtractFileName(W.LogoPath)]
+  else
+    Result := [T('Text') + ': ' + W.Text];
+  if W.Tiled then
+    Result := Result + [T('Repeat across the whole photo')]
+  else
+    Result := Result + [StripColon(T('Position:')) + ': ' + T(cAnchors[W.Anchor])];
+  Result := Result + [StripColon(T('Size:')) + ': ' + IntToStr(W.SizePct) + '%',
+    StripColon(T('Margin:')) + ': ' + IntToStr(W.MarginPct) + '%',
+    StripColon(T('Opacity:')) + ': ' + IntToStr(W.Opacity) + '%'];
+  if W.Kind = wkText then
+    if W.Shadow then
+      Result := Result + [T('Shadow under text') + ': ' + T('Yes')]
+    else
+      Result := Result + [T('Shadow under text') + ': ' + T('No')];
 end;
 
 // Wiersze panelu szczegolow wybranego kroku: Komiks z etykietami
@@ -491,6 +575,8 @@ begin
     Exit(ComicMacroDetails(Step.Params));
   Result := nil;
   if Step.Params = '' then Exit;
+  if SameText(Step.Code, 'WATERMARK') then
+    Exit(WatermarkMacroDetails(Step.Params));
   P := Step.Params.Split(['|']);
   if MultiParamDetails(Step.Code, P, Lines) then
   begin
@@ -543,14 +629,14 @@ const
     (Code: 'CYANOTYPE';   LabelEN: 'Cyanotype'),
     (Code: 'SALTPRINT';   LabelEN: 'Salt print'),
     (Code: 'XRAY';        LabelEN: 'X-Ray'),
-    (Code: 'FALSEIR';     LabelEN: 'False-color IR'),
+    (Code: 'FALSEIR';     LabelEN: 'False-color infrared'),   // = nazwa z FinishEffect (fMain)
     (Code: 'NIGHTVISION'; LabelEN: 'Night vision'),
     (Code: 'THERMAL';     LabelEN: 'Thermal'),
     (Code: 'ORTON';       LabelEN: 'Orton'),
-    (Code: 'WB1';         LabelEN: 'WB 1.x palette'),
-    (Code: 'WB2';         LabelEN: 'WB 2.x/3.x palette'),
-    (Code: 'HAM6';        LabelEN: 'HAM6'),
-    (Code: 'HAM8';        LabelEN: 'HAM8'),
+    (Code: 'WB1';         LabelEN: 'Workbench 1.x palette (OCS)'),
+    (Code: 'WB2';         LabelEN: 'Workbench 2.x/3.x palette'),
+    (Code: 'HAM6';        LabelEN: 'HAM6 - 16 colors + Hold-Modify'),
+    (Code: 'HAM8';        LabelEN: 'HAM8 - 64 colors + Hold-Modify'),
     (Code: 'FLIPH';       LabelEN: 'Mirror horizontally'),
     (Code: 'FLIPV';       LabelEN: 'Mirror vertically'),
     (Code: 'ROTL';        LabelEN: 'Rotate left'),

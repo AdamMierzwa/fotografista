@@ -1,6 +1,6 @@
 ﻿unit uComicCzarnoBialy;
 
-// Komiks - styl Pop-art - czern (Ben-Day mono, przebudowa dawnego
+// Komiks - styl Ben-Day - czern (dawniej Pop-art - czern; Ben-Day mono, przebudowa dawnego
 // Czarno-bialego 2026-10-20). Osobny efekt: laczy go z innymi stylami tylko okno
 // frmComicDlg. Przepis: tools\tmp\comic_proto\BENDAY_MONO.md, prototyp
 // benday_mono.py.
@@ -166,7 +166,7 @@ begin
     ComicBilateral(PY, PCb, PCr, Ww, Hw, Max(0.75, 3.0 * WS), cSigmaR, cBilatIter);
 
     // 2a. klucz plamy: sam poziom jasnosci, granice z rozkladu jasnosci obrazu
-    //     (ComicLevelKeys, wspolne z Pop-art - dwie farby)
+    //     (ComicLevelKeys, wspolne z Ben-Day - kolor)
     ComicLevelKeys(PY, cLevels, Key);
     SetLength(Stack, N);
     NLab := LabelEqual(Key, Lab);

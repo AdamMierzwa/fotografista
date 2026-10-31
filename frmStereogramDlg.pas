@@ -181,6 +181,7 @@ begin
   ColTop := Margin;
   rgMode.Left := ColLeft;
   rgMode.Top := ColTop;
+  FitRadioGroupHeight(rgMode);   // wysokosc z .dfm pod 9 pt
 
   RowTop := StackBelow(rgMode, SectionGap);
 
@@ -223,6 +224,7 @@ begin
   ButtonTop := Max(ColTop + ColH + SectionGap, pboxPreview.Top + PrevH + SectionGap);
   btnOK.Top := ButtonTop;
   btnCancel.Top := ButtonTop;
+  ButtonsToLeft([btnOK, btnCancel], CtrlGap * 3);
   FitToContent(CtrlGap * 3, CtrlGap * 3);
   AlignButtonsRight([btnOK, btnCancel], CtrlGap * 3);
   FitHeight(CtrlGap * 3);

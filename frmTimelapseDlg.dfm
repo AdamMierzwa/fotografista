@@ -21,16 +21,12 @@
     Caption = 'Source folder:'
     StyleElements = [seClient, seBorder]
   end
-  object lblSrcPath: TLabel
+  object edSrcPath: TEdit
     Left = 140
-    Top = 20
+    Top = 17
     Width = 220
-    Height = 15
-    AutoSize = False
-    Caption = '...'
-    EllipsisPosition = epPathEllipsis
-    ShowAccelChar = False
-    StyleElements = [seClient, seBorder]
+    Height = 23
+    TabOrder = 0
   end
   object lblDst: TLabel
     Left = 15
@@ -40,16 +36,12 @@
     Caption = 'Output folder:'
     StyleElements = [seClient, seBorder]
   end
-  object lblDstPath: TLabel
+  object edDstPath: TEdit
     Left = 140
-    Top = 104
+    Top = 101
     Width = 220
-    Height = 15
-    AutoSize = False
-    Caption = '...'
-    EllipsisPosition = epPathEllipsis
-    ShowAccelChar = False
-    StyleElements = [seClient, seBorder]
+    Height = 23
+    TabOrder = 3
   end
   object lblFileName: TLabel
     Left = 15
@@ -97,7 +89,7 @@
     Width = 90
     Height = 25
     Caption = 'Choose...'
-    TabOrder = 0
+    TabOrder = 1
     OnClick = btnSrcChoiceClick
   end
   object pnlSort: TPanel
@@ -107,7 +99,7 @@
     Height = 40
     BevelOuter = bvNone
     ParentColor = True
-    TabOrder = 1
+    TabOrder = 2
     object rbSortAlpha: TRadioButton
       Left = 0
       Top = 0
@@ -133,7 +125,7 @@
     Width = 90
     Height = 25
     Caption = 'Choose...'
-    TabOrder = 2
+    TabOrder = 4
     OnClick = btnDstChoiceClick
   end
   object edFileName: TEdit
@@ -141,7 +133,7 @@
     Top = 136
     Width = 220
     Height = 23
-    TabOrder = 3
+    TabOrder = 5
     Text = 'timelapse.mp4'
   end
   object edFps: TEdit
@@ -149,7 +141,7 @@
     Top = 170
     Width = 60
     Height = 23
-    TabOrder = 4
+    TabOrder = 6
     Text = '25'
   end
   object edHoldFirst: TEdit
@@ -157,7 +149,7 @@
     Top = 204
     Width = 60
     Height = 23
-    TabOrder = 5
+    TabOrder = 7
     Text = '0'
   end
   object edHoldLast: TEdit
@@ -165,7 +157,7 @@
     Top = 238
     Width = 60
     Height = 23
-    TabOrder = 6
+    TabOrder = 8
     Text = '0'
   end
   object cmbRes: TComboBox
@@ -174,7 +166,7 @@
     Width = 180
     Height = 23
     Style = csDropDownList
-    TabOrder = 7
+    TabOrder = 9
   end
   object pnlMode: TPanel
     Left = 15
@@ -183,7 +175,7 @@
     Height = 40
     BevelOuter = bvNone
     ParentColor = True
-    TabOrder = 8
+    TabOrder = 10
     object rbSave: TRadioButton
       Left = 0
       Top = 0
@@ -212,7 +204,7 @@
     Height = 40
     BevelOuter = bvNone
     ParentColor = True
-    TabOrder = 9
+    TabOrder = 11
     Visible = False
     object rbWindow: TRadioButton
       Left = 0
@@ -239,7 +231,7 @@
     Width = 85
     Height = 25
     Caption = 'Start'
-    TabOrder = 10
+    TabOrder = 12
     OnClick = btnStartClick
   end
   object btnClose: TButton
@@ -249,7 +241,7 @@
     Height = 25
     Cancel = True
     Caption = 'Close'
-    TabOrder = 11
+    TabOrder = 13
     OnClick = btnCloseClick
   end
 end

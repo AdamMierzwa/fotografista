@@ -294,14 +294,17 @@ begin
     Dlg.tbCell.Top := Dlg.lblCell.Top + Dlg.lblCell.Height + Dlg.RowGap;
     Dlg.lblCellVal.Top := Dlg.tbCell.Top + Dlg.tbCell.Height + Dlg.RowGap;
     Dlg.lblCount.Top := Dlg.lblCellVal.Top + Dlg.lblCellVal.Height + Dlg.RowGap * 2;
-    Dlg.lblCountVal.Top := Dlg.lblCount.Top + Dlg.lblCount.Height + Dlg.RowGap;
-    Dlg.btnOK.Top := Dlg.lblCountVal.Top + Dlg.lblCountVal.Height + Dlg.RowGap * 3;
+    // liczba kostek w wierszu etykiety „Liczba kostek:”, zaraz za nia
+    Dlg.lblCountVal.Top := Dlg.lblCount.Top;
+    Dlg.btnOK.Top := Dlg.lblCount.Top +
+      Max(Dlg.lblCount.Height, Dlg.lblCountVal.Height) + Dlg.RowGap * 3;
     Dlg.btnCancel.Top := Dlg.btnOK.Top;
 
     Dlg.FCell := Dlg.tbCell.Position * 2;
     Dlg.UpdateCount;
     Dlg.ApplyPreview;
 
+    Dlg.ButtonsToLeft([Dlg.btnOK, Dlg.btnCancel], Dlg.CtrlGap * 3);
     Dlg.FitToContent(Dlg.CtrlGap * 2, Dlg.CtrlGap * 3);
 
     Dlg.pboxPreview.Left := (Dlg.ClientWidth - (pw + Dlg.CtrlGap * 2 + pw)) div 2;
@@ -316,8 +319,8 @@ begin
     Dlg.lblCellVal.Left := Dlg.pboxPreview.Left;
     Dlg.lblCellVal.Width := Dlg.tbCell.Width;
     Dlg.lblCount.Left := Dlg.pboxPreview.Left;
-    Dlg.lblCountVal.Left := Dlg.pboxPreview.Left;
-    Dlg.lblCountVal.Width := Dlg.tbCell.Width;
+    Dlg.lblCountVal.Left := Dlg.lblCount.Left + Dlg.lblCount.Width + Dlg.CtrlGap;
+    Dlg.lblCountVal.Width := Dlg.tbCell.Left + Dlg.tbCell.Width - Dlg.lblCountVal.Left;
 
     Dlg.AlignButtonsRight([Dlg.btnOK, Dlg.btnCancel], Dlg.CtrlGap * 3);
 

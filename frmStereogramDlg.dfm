@@ -115,6 +115,7 @@
     Enabled = False
     TabOrder = 4
     Text = '0'
+    NumbersOnly = True
   end
   object btnOK: TButton
     Left = 15

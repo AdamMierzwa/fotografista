@@ -175,7 +175,7 @@
 177	Distorsione ad arco - incurva l'immagine
 178	Vortice - ruota l'immagine a spirale
 179	Effetto increspatura dell'acqua
-180	Distorsione polare - tunnel, occhio di pesce
+180	Distorsione polare - piccolo pianeta, tunnel, caleidoscopio
 181	Tavolozza a 4 colori - Workbench 1.x (OCS)
 182	Tavolozza a 4 colori - Workbench 2.x/3.x
 183	Tavolozza a 32 colori (4x4x2) - OCS
@@ -306,39 +306,6 @@
 321	Seleziona l'angolo dell'arco:
 322	Seleziona intensità:
 323	Seleziona variante:
-324	Barilotto debole
-325	Barilotto medio
-326	Barilotto forte
-327	Cuscinetto debole
-328	Cuscinetto medio
-329	Cuscinetto forte
-330	45°
-331	90°
-332	180°
-333	360°
-334	90° + ruota
-335	180° + ruota
-336	Debole (45°)
-337	Medio (90°)
-338	Forte (180°)
-339	Molto forte (270°)
-340	Completo (360°)
-341	Invertito
-342	Leggero
-343	Medio
-344	Forte
-345	Concentrico
-346	Dall'angolo
-347	Denso
-348	Completo
-349	Mezzo angolo
-350	Quarto di angolo
-351	Anello
-352	Raggio piccolo
-353	Morbido
-354	Tunnel
-356	Occhio di pesce
-357	Stiramento esterno
 358	Errore
 359	Formato file non supportato.
 360	Istantanea
@@ -484,7 +451,7 @@
 532	Interfaccia...
 533	Impostazioni dell'interfaccia
 534	Interfaccia
-535	Colore di sfondo dell'area di lavoro (solo con il tema standard di Windows):
+535	Colore di sfondo dell'area di lavoro (solo con il tema "Windows"):
 537	Apri immagine
 538	Tutti i file
 539	Appunti
@@ -626,10 +593,8 @@
 682	Floyd–Steinberg (uniforme)
 683	La modalità selezionata è molto lenta per immagini di grandi dimensioni.\nPer immagini superiori a 2 MP l'anteprima e l'applicazione dell'effetto possono richiedere diversi minuti.\nLe altre modalità sono molto più veloci.
 684	Prestazioni...
-685	Risoluzione massima di lavoro:
+685	Riduci le foto all'apertura a:
 687	Immagine
-688	Tunnel invertito
-689	Sezione di 30°
 690	Full HD (1920×1080)
 691	4K (3840×2160)
 692	Prestazioni e risoluzione massima di lavoro
@@ -696,7 +661,7 @@
 763	Perdita di blocchi:
 764	Spostamento orizzontale delle sezioni:
 765	Scurisce una riga sì e una no al rapporto PAL: valore più alto = spazi più scuri
-766	Documentazione online
+766	Sito del programma
 767	Apri il sito web di Fotografista nel tuo browser
 768	Cimeografo...
 769	Cimeografo: bordi a inchiostro su sfondo bianco
@@ -1026,7 +991,7 @@
 1095	Mostra maschera di protezione
 1096	Cancella maschera di protezione
 1097	Proteggi selezione
-1098	Rimuovi protezione selezione
+1098	Rimuovi protezione
 1099	Lazo
 1100	Bacchetta magica
 1101	Selezione...
@@ -1091,8 +1056,8 @@
 1162	Giornale
 1163	PRL – morbido
 1164	PRL – retino
-1165	Pop art – nero
-1166	Pop art – due inchiostri
+1165	Ben-Day – nero
+1166	Ben-Day – colore
 1167	Pop art – colore
 1168	Marrone (sbiadito)
 1169	Distribuzione dei colori
@@ -1100,3 +1065,66 @@
 1171	Nessuna equalizzazione
 1172	Equalizza i canali RGB
 1173	Equalizza la luminosità
+1174	Scambia A e B
+1175	Differenza
+1176	Tutti i formati supportati
+1177	Non è un file IFF.
+1178	Non è un file IFF ILBM.
+1179	Intestazione ILBM non valida (BMHD).
+1180	Dimensioni ILBM non valide.
+1181	L’immagine ILBM non ha il blocco BODY.
+1182	Compressione ILBM non supportata.
+1183	File non trovato: %s
+1184	Impossibile caricare: %s
+1185	Passaggi di annullamento:
+1186	Illimitato
+1187	Seleziona area protetta
+1188	Trasforma di nuovo l’area protetta in selezione
+1189	Deseleziona
+1190	Dimensione tessera
+1191	Tessere in orizzontale:
+1192	Soglia...
+1193	Soglia - forte contrasto in bianco e nero
+1194	Semplificazione:
+1195	Linoleografia - grandi campiture con bordi di taglio lisci
+1196	Usa la scheda grafica dove possibile
+1197	Reticolo CMYK
+1198	Tavolozza MagicWB (8 colori)
+1199	Scheda grafica:
+1200	Nessun codificatore video hardware (video codificato dal processore)
+1201	processore
+1202	scheda grafica
+1203	in uso
+1204	Originale (senza riduzione)
+1205	Filigrana...
+1206	Filigrana
+1207	Testo
+1208	Logo (immagine PNG)
+1209	Colore del testo...
+1210	Posizione:
+1211	Ripeti su tutta la foto
+1212	Margine:
+1213	Ombra sotto il testo
+1214	Impossibile caricare il file del logo.
+1215	In alto al centro
+1216	Al centro a sinistra
+1217	Al centro
+1218	Al centro a destra
+1219	In basso al centro
+1220	Foto successiva
+1221	Foto precedente
+1222	Apri la foto successiva di questa cartella
+1223	Apri la foto precedente di questa cartella
+1224	Campione a distanza dall'angolo
+1225	Distanza:
+1226	Barilotto
+1227	Cuscinetto
+1228	Foro
+1229	Rotazione
+1230	Al rovescio
+1231	Occhio di pesce...
+1232	Occhio di pesce
+1233	Occhio di pesce - gonfia il centro della foto
+1234	Cerchio
+1235	Rimuovi occhi rossi
+1236	Seleziona prima la pupilla.

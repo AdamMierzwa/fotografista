@@ -62,6 +62,7 @@ var
   S: string;
 begin
   FCanvasBG := RGB(80, 80, 80);
+  cmbTheme.Items.Add(T('Automatic'));   // pozycja 0 = cThemeAuto
   for S in TStyleManager.StyleNames do
     cmbTheme.Items.Add(S);
   cmbTheme.ItemIndex := 0;
@@ -145,6 +146,7 @@ begin
 
   btnOK.Top := Y;
   btnCancel.Top := Y;
+  ButtonsToLeft([btnOK, btnCancel], Margin);
   FitToContent(SectionGap, Margin);
   if ClientWidth < btnOK.Width + btnCancel.Width + CtrlGap * 2 + Margin * 2 then
     ClientWidth := btnOK.Width + btnCancel.Width + CtrlGap * 2 + Margin * 2;
@@ -205,7 +207,10 @@ begin
     Dlg.spinRecentCount.Value := ARecentCount;
     Dlg.chkRememberWin.Checked := ARememberWin;
     Dlg.Theme := ATheme;
-    Idx := Dlg.cmbTheme.Items.IndexOf(Dlg.Theme);
+    if Dlg.Theme = cThemeAuto then
+      Idx := 0
+    else
+      Idx := Dlg.cmbTheme.Items.IndexOf(Dlg.Theme);
     if Idx >= 0 then
       Dlg.cmbTheme.ItemIndex := Idx;
     Dlg.cmbBrushCursor.ItemIndex := ABrushCursorMode;
@@ -218,7 +223,9 @@ begin
       ARememberWin := Dlg.chkRememberWin.Checked;
       AFontSize := Dlg.spinFontSize.Value - Dlg.FBaseFont;
       ARecentCount := Dlg.spinRecentCount.Value;
-      if Dlg.cmbTheme.ItemIndex >= 0 then
+      if Dlg.cmbTheme.ItemIndex = 0 then
+        ATheme := cThemeAuto
+      else if Dlg.cmbTheme.ItemIndex > 0 then
         ATheme := Dlg.cmbTheme.Items[Dlg.cmbTheme.ItemIndex];
       ABrushCursorMode := Dlg.cmbBrushCursor.ItemIndex;
       ABrushCrosshairCenter := Dlg.chkBrushCrosshairCenter.Checked;

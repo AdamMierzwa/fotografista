@@ -18,6 +18,13 @@ const
   MinSize = 256;
   // Blur nakładany przed każdym połowieniem (wzorzec Hollywood BlurBrush(tmp, 2.0)).
   cBlurRadius = 2.0;
+  // Miękki poziom 0 (2026-10-26): przy zoom MinZoomForL0..1.0 ostre źródło dawało morę
+  // rastra (zdjęcie zmniejszone przy otwarciu do Full HD/4K mieści się w oknie przy
+  // ~80-90%). Pełnowymiarowa rozmyta kopia w dwóch pasmach; promień < 1.0 GR32 pomija
+  // (sigma < GaussianRadiusToSigma, GR32.Blur.RecursiveGaussian.pas:1437).
+  cSoftBandZoom = 0.8;        // granica pasm: słabe >= 0.8, mocne poniżej
+  cSoftRadiusWeak = 1.2;      // zoom 0.8..1.0
+  cSoftRadiusStrong = 1.8;    // zoom MinZoomForL0..0.8
 
 type
   // Piramida mip-map dla pre-filtra podglądu rastra. Rozwiązuje znaną lukę jednego
@@ -35,6 +42,8 @@ type
     FSourceHandle: THandle;
     FWidth, FHeight: Integer;
     FLevels: array of TBitmap32;
+    FSoft: TBitmap;               // miękki poziom 0 (pf24), w pamięci jedno pasmo naraz
+    FSoftBand: Integer;           // pasmo FSoft (0 = brak)
     function GetCount: Integer;
   public
     destructor Destroy; override;
@@ -46,6 +55,11 @@ type
     function LevelIndexForZoom(Zoom: Double): Integer;
     // Poziom piramidy; tylko Idx >= 1 (Idx=0 to Source jako TBitmap).
     function Level(Idx: Integer): TBitmap32;
+    // Pasmo miękkiego poziomu 0: 0 = brak (zoom >= 1.0 albo < MinZoomForL0),
+    // 1 = słabe rozmycie, 2 = mocne.
+    function SoftBandForZoom(Zoom: Double): Integer;
+    // Rozmyta pełnowymiarowa kopia źródła dla pasma 1/2 (liczona leniwie); nil poza pasmem.
+    function SoftLevel0(Band: Integer): TBitmap;
     property Source: TBitmap read FSource;
     property SourceHandle: THandle read FSourceHandle;
     property Count: Integer read GetCount;
@@ -75,6 +89,8 @@ begin
   for I := 0 to High(FLevels) do
     FLevels[I].Free;
   SetLength(FLevels, 0);
+  FreeAndNil(FSoft);
+  FSoftBand := 0;
   FSourceHandle := 0;
   FWidth := 0;
   FHeight := 0;
@@ -154,6 +170,43 @@ begin
   Result := nil;
   if (Idx >= 1) and (Idx <= High(FLevels)) then
     Result := FLevels[Idx - 1];
+end;
+
+function TMipPyramid.SoftBandForZoom(Zoom: Double): Integer;
+begin
+  if (Zoom >= 1.0) or (Zoom < MinZoomForL0) then
+    Result := 0
+  else if Zoom >= cSoftBandZoom then
+    Result := 1
+  else
+    Result := 2;
+end;
+
+function TMipPyramid.SoftLevel0(Band: Integer): TBitmap;
+var
+  Tmp: TBitmap32;
+begin
+  Result := nil;
+  if (FSource = nil) or (FSourceHandle = 0) or not (Band in [1, 2]) then
+    Exit;
+  if (FSoft <> nil) and (FSoftBand = Band) then
+    Exit(FSoft);
+  Tmp := TBitmap32.Create;
+  try
+    Tmp.Assign(FSource);
+    if Band = 1 then
+      Blur32(Tmp, cSoftRadiusWeak)
+    else
+      Blur32(Tmp, cSoftRadiusStrong);
+    if FSoft = nil then
+      FSoft := TBitmap.Create;
+    FSoft.Assign(Tmp);                // adapter GR32 -> pf32bit
+    FSoft.PixelFormat := pf24bit;     // jak FMipLevelBmp w fMain - 3 bajty/piksel
+    FSoftBand := Band;
+  finally
+    Tmp.Free;
+  end;
+  Result := FSoft;
 end;
 
 end.

@@ -57,7 +57,7 @@ uses
 
 const
   // BEGIN GENERATED TEXTABLE - nie edytować ręcznie, generuje tools\gen_i18n.ps1
-  TextTable: array[0..1101] of TTextRec = (
+  TextTable: array[0..1129] of TTextRec = (
     (EN: 'File'; PL: 'Plik'; CS: 'Soubor';
      FR: 'Fichier'; DE: 'Datei'; IT: 'File';
      ES: 'Archivo'; PT: 'Ficheiro'; AF: 'Lêer'),
@@ -238,7 +238,7 @@ const
     (EN: 'Sepia...'; PL: 'Sepia...'; CS: 'Sépie...';
      FR: 'Sépia…'; DE: 'Sepia...'; IT: 'Seppia...';
      ES: 'Sepia...'; PT: 'Sépia...'; AF: 'Sepia...'),
-    (EN: 'Cyanotype'; PL: 'Cyanotypia'; CS: 'Kyanotypie';
+    (EN: 'Cyanotype'; PL: 'Cyjanotypia'; CS: 'Kyanotypie';
      FR: 'Cyanotypie'; DE: 'Cyanotypie'; IT: 'Cianotipia';
      ES: 'Cianotipia'; PT: 'Cianotipia'; AF: 'Sianotipe'),
     (EN: 'Salt print'; PL: 'Fotografia solna'; CS: 'Sůl-tisk';
@@ -316,7 +316,7 @@ const
     (EN: 'Screen print...'; PL: 'Sitodruk...'; CS: 'Sítotisk...';
      FR: 'Sérigraphie…'; DE: 'Siebdruck...'; IT: 'Serigrafia...';
      ES: 'Serigrafía...'; PT: 'Serigrafia...'; AF: 'Sifdruk...'),
-    (EN: 'Barrel distortion...'; PL: 'Dystorsja beczkowa...'; CS: 'Soudkové zkreslení...';
+    (EN: 'Barrel distortion...'; PL: 'Dystorsja...'; CS: 'Soudkové zkreslení...';
      FR: 'Distorsion en barillet…'; DE: 'Tonnenverzerrung...'; IT: 'Distorsione a barilotto...';
      ES: 'Distorsión de barril...'; PT: 'Distorção de barril...'; AF: 'Vatvervorming...'),
     (EN: 'Arc distortion...'; PL: 'Dystorsja łukowa...'; CS: 'Obloukové zkreslení...';
@@ -589,9 +589,9 @@ const
     (EN: 'Water ripple effect'; PL: 'Fale wodne'; CS: 'Vodní vlnění';
      FR: 'Effet d’ondulation'; DE: 'Wasserwellen-Effekt'; IT: 'Effetto increspatura dell''acqua';
      ES: 'Efecto de ondulación del agua'; PT: 'Efeito de ondulação da água'; AF: 'Waterrimpel-effek'),
-    (EN: 'Polar distortion - tunnel, fisheye'; PL: 'Zniekształcenia biegunowe — tunel, rybie oko'; CS: 'Polární zkreslení - tunel, rybí oko';
-     FR: 'Distorsion polaire - tunnel, œil-de-poisson'; DE: 'Polarverzerrung - Tunnel, Fischauge'; IT: 'Distorsione polare - tunnel, occhio di pesce';
-     ES: 'Distorsión polar - túnel, ojo de pez'; PT: 'Distorção polar - túnel, olho de peixe'; AF: 'Polêre vervorming - tonnel, visoog'),
+    (EN: 'Polar distortion - little planet, tunnel, kaleidoscope'; PL: 'Zniekształcenia biegunowe — mała planeta, tunel, kalejdoskop'; CS: 'Polární zkreslení - malá planeta, tunel, kaleidoskop';
+     FR: 'Distorsion polaire - petite planète, tunnel, kaléidoscope'; DE: 'Polarverzerrung - kleiner Planet, Tunnel, Kaleidoskop'; IT: 'Distorsione polare - piccolo pianeta, tunnel, caleidoscopio';
+     ES: 'Distorsión polar - pequeño planeta, túnel, caleidoscopio'; PT: 'Distorção polar - pequeno planeta, túnel, caleidoscópio'; AF: 'Polêre vervorming - klein planeet, tonnel, kaleidoskoop'),
     (EN: '4-color palette - Workbench 1.x (OCS)'; PL: 'Paleta 4 kolorów — Workbench 1.x (OCS)'; CS: '4barevná paleta - Workbench 1.x (OCS)';
      FR: 'Palette 4 couleurs - Workbench 1.x (OCS)'; DE: '4-Farben-Palette - Workbench 1.x (OCS)'; IT: 'Tavolozza a 4 colori - Workbench 1.x (OCS)';
      ES: 'Paleta de 4 colores - Workbench 1.x (OCS)'; PT: 'Paleta de 4 cores - Workbench 1.x (OCS)'; AF: '4-kleurpalet - Workbench 1.x (OCS)'),
@@ -751,7 +751,7 @@ const
     (EN: 'Subcell dot size (3-8 px):'; PL: 'Rozmiar podkomórki kropki (3–8 px):'; CS: 'Velikost bodu v buňce (3-8 px):';
      FR: 'Taille des sous-points (3-8 px) :'; DE: 'Punktgröße (3-8 px):'; IT: 'Dimensione del punto della sottocella (3-8 px):';
      ES: 'Tamaño de punto de subcelda (3-8 px):'; PT: 'Tamanho do ponto da subcélula (3-8 px):'; AF: 'Subsel-puntgrootte (3-8 px):'),
-    (EN: 'Threshold (1-100):'; PL: 'Prog (1–100):'; CS: 'Práh (1-100):';
+    (EN: 'Threshold (1-100):'; PL: 'Próg (1-100):'; CS: 'Práh (1-100):';
      FR: 'Seuil (1-100) :'; DE: 'Schwellwert (1-100):'; IT: 'Soglia (1-100):';
      ES: 'Umbral (1-100):'; PT: 'Limiar (1-100):'; AF: 'Drempel (1-100):'),
     (EN: 'Ink amount (lighter = less):'; PL: 'Ilość tuszu (jaśniejsze = mniej):'; CS: 'Množství inkoustu (světlejší = méně):';
@@ -961,7 +961,7 @@ const
     (EN: 'Number of colors (2-64):'; PL: 'Liczba kolorów (2–64):'; CS: 'Počet barev (2-64):';
      FR: 'Nombre de couleurs (2-64) :'; DE: 'Farbanzahl (2-64):'; IT: 'Numero di colori (2-64):';
      ES: 'Número de colores (2-64):'; PT: 'Número de cores (2-64):'; AF: 'Aantal kleure (2-64):'),
-    (EN: 'Opacity:'; PL: 'Krycie'; CS: 'Krytí:';
+    (EN: 'Opacity:'; PL: 'Krycie:'; CS: 'Krytí:';
      FR: 'Opacité :'; DE: 'Deckkraft:'; IT: 'Opacità:';
      ES: 'Opacidad:'; PT: 'Opacidade:'; AF: 'Ondeursigtigheid:'),
     (EN: 'Mode:'; PL: 'Tryb:'; CS: 'Režim:';
@@ -982,105 +982,6 @@ const
     (EN: 'Select variant:'; PL: 'Wybierz wariant:'; CS: 'Vyberte variantu:';
      FR: 'Choisir la variante :'; DE: 'Variante auswählen:'; IT: 'Seleziona variante:';
      ES: 'Seleccionar variante:'; PT: 'Selecionar variante:'; AF: 'Kies variant:'),
-    (EN: 'Weak barrel'; PL: 'Słaba beczka'; CS: 'Slabý soudek';
-     FR: 'Barillet faible'; DE: 'Schwache Tonne'; IT: 'Barilotto debole';
-     ES: 'Barril suave'; PT: 'Barril fraco'; AF: 'Ligte vatvervorming'),
-    (EN: 'Medium barrel'; PL: 'Średnia beczka'; CS: 'Střední soudek';
-     FR: 'Barillet moyen'; DE: 'Mittlere Tonne'; IT: 'Barilotto medio';
-     ES: 'Barril medio'; PT: 'Barril médio'; AF: 'Medium vatvervorming'),
-    (EN: 'Strong barrel'; PL: 'Mocna beczka'; CS: 'Silný soudek';
-     FR: 'Barillet fort'; DE: 'Starke Tonne'; IT: 'Barilotto forte';
-     ES: 'Barril fuerte'; PT: 'Barril forte'; AF: 'Sterk vatvervorming'),
-    (EN: 'Weak pincushion'; PL: 'Słaba poduszka'; CS: 'Slabá poduška';
-     FR: 'Coussinet faible'; DE: 'Schwaches Kissen'; IT: 'Cuscinetto debole';
-     ES: 'Cojín suave'; PT: 'Almofada fraca'; AF: 'Ligte kussingvervorming'),
-    (EN: 'Medium pincushion'; PL: 'Średnia poduszka'; CS: 'Střední poduška';
-     FR: 'Coussinet moyen'; DE: 'Mittleres Kissen'; IT: 'Cuscinetto medio';
-     ES: 'Cojín medio'; PT: 'Almofada média'; AF: 'Medium kussingvervorming'),
-    (EN: 'Strong pincushion'; PL: 'Mocna poduszka'; CS: 'Silná poduška';
-     FR: 'Coussinet fort'; DE: 'Starkes Kissen'; IT: 'Cuscinetto forte';
-     ES: 'Cojín fuerte'; PT: 'Almofada forte'; AF: 'Sterk kussingvervorming'),
-    (EN: '45°'; PL: '45°'; CS: '45°';
-     FR: '45°'; DE: '45°'; IT: '45°';
-     ES: '45°'; PT: '45°'; AF: '45°'),
-    (EN: '90°'; PL: '90°'; CS: '90°';
-     FR: '90°'; DE: '90°'; IT: '90°';
-     ES: '90°'; PT: '90°'; AF: '90°'),
-    (EN: '180°'; PL: '180°'; CS: '180°';
-     FR: '180°'; DE: '180°'; IT: '180°';
-     ES: '180°'; PT: '180°'; AF: '180°'),
-    (EN: '360°'; PL: '360°'; CS: '360°';
-     FR: '360°'; DE: '360°'; IT: '360°';
-     ES: '360°'; PT: '360°'; AF: '360°'),
-    (EN: '90° + rotate'; PL: '90° + obrót'; CS: '90° + otočit';
-     FR: '90° + rotation'; DE: '90° + drehen'; IT: '90° + ruota';
-     ES: '90° + girar'; PT: '90° + rodar'; AF: '90° + draai'),
-    (EN: '180° + rotate'; PL: '180° + obrót'; CS: '180° + otočit';
-     FR: '180° + rotation'; DE: '180° + drehen'; IT: '180° + ruota';
-     ES: '180° + girar'; PT: '180° + rodar'; AF: '180° + draai'),
-    (EN: 'Weak (45°)'; PL: 'Słaby (45°)'; CS: 'Slabé (45°)';
-     FR: 'Faible (45°)'; DE: 'Schwach (45°)'; IT: 'Debole (45°)';
-     ES: 'Suave (45°)'; PT: 'Fraco (45°)'; AF: 'Lig (45°)'),
-    (EN: 'Medium (90°)'; PL: 'Średní (90°)'; CS: 'Střední (90°)';
-     FR: 'Moyen (90°)'; DE: 'Mittel (90°)'; IT: 'Medio (90°)';
-     ES: 'Medio (90°)'; PT: 'Médio (90°)'; AF: 'Medium (90°)'),
-    (EN: 'Strong (180°)'; PL: 'Silny (180°)'; CS: 'Silné (180°)';
-     FR: 'Fort (180°)'; DE: 'Stark (180°)'; IT: 'Forte (180°)';
-     ES: 'Fuerte (180°)'; PT: 'Forte (180°)'; AF: 'Sterk (180°)'),
-    (EN: 'Very strong (270°)'; PL: 'Bardzo mocny (270°)'; CS: 'Velmi silné (270°)';
-     FR: 'Très fort (270°)'; DE: 'Sehr stark (270°)'; IT: 'Molto forte (270°)';
-     ES: 'Muy fuerte (270°)'; PT: 'Muito forte (270°)'; AF: 'Baie sterk (270°)'),
-    (EN: 'Full (360°)'; PL: 'Pełny (360°)'; CS: 'Plné (360°)';
-     FR: 'Complet (360°)'; DE: 'Voll (360°)'; IT: 'Completo (360°)';
-     ES: 'Completo (360°)'; PT: 'Completo (360°)'; AF: 'Volledig (360°)'),
-    (EN: 'Reverse'; PL: 'Odwrócony'; CS: 'Obrátit';
-     FR: 'Inverser'; DE: 'Umgekehrt'; IT: 'Invertito';
-     ES: 'Invertido'; PT: 'Invertido'; AF: 'Omgekeer'),
-    (EN: 'Light'; PL: 'Delikatne'; CS: 'Světlé';
-     FR: 'Léger'; DE: 'Leicht'; IT: 'Leggero';
-     ES: 'Suave'; PT: 'Suave'; AF: 'Lig'),
-    (EN: 'Medium'; PL: 'Średnie'; CS: 'Střední';
-     FR: 'Moyen'; DE: 'Mittel'; IT: 'Medio';
-     ES: 'Medio'; PT: 'Médio'; AF: 'Medium'),
-    (EN: 'Strong'; PL: 'Silne'; CS: 'Silné';
-     FR: 'Fort'; DE: 'Stark'; IT: 'Forte';
-     ES: 'Fuerte'; PT: 'Forte'; AF: 'Sterk'),
-    (EN: 'Concentric'; PL: 'Koncentryczne'; CS: 'Soustředné';
-     FR: 'Concentrique'; DE: 'Konzentrisch'; IT: 'Concentrico';
-     ES: 'Concéntrico'; PT: 'Concêntrico'; AF: 'Konsentries'),
-    (EN: 'From corner'; PL: 'Od rogu'; CS: 'Z rohu';
-     FR: 'Depuis le coin'; DE: 'Von der Ecke'; IT: 'Dall''angolo';
-     ES: 'Desde la esquina'; PT: 'A partir do canto'; AF: 'Vanaf hoek'),
-    (EN: 'Dense'; PL: 'Gęste'; CS: 'Husté';
-     FR: 'Dense'; DE: 'Dicht'; IT: 'Denso';
-     ES: 'Denso'; PT: 'Denso'; AF: 'Dig'),
-    (EN: 'Full'; PL: 'Pełny'; CS: 'Plné';
-     FR: 'Complet'; DE: 'Voll'; IT: 'Completo';
-     ES: 'Completo'; PT: 'Completo'; AF: 'Volledig'),
-    (EN: 'Half angle'; PL: 'Połowa kąta'; CS: 'Poloviční úhel';
-     FR: 'Demi-angle'; DE: 'Halber Winkel'; IT: 'Mezzo angolo';
-     ES: 'Medio ángulo'; PT: 'Meio ângulo'; AF: 'Halwe hoek'),
-    (EN: 'Quarter angle'; PL: 'Ćwierć kąta'; CS: 'Čtvrtinový úhel';
-     FR: 'Quart d’angle'; DE: 'Viertelwinkel'; IT: 'Quarto di angolo';
-     ES: 'Cuarto de ángulo'; PT: 'Quarto de ângulo'; AF: 'Kwarthoek'),
-    (EN: 'Ring'; PL: 'Pierścień'; CS: 'Prstenec';
-     FR: 'Anneau'; DE: 'Ring'; IT: 'Anello';
-     ES: 'Anillo'; PT: 'Anel'; AF: 'Ring'),
-    (EN: 'Small radius'; PL: 'Mały promień'; CS: 'Malý poloměr';
-     FR: 'Petit rayon'; DE: 'Kleiner Radius'; IT: 'Raggio piccolo';
-     ES: 'Radio pequeño'; PT: 'Raio pequeno'; AF: 'Klein radius'),
-    (EN: 'Smooth'; PL: 'Wygładzony'; CS: 'Hladké';
-     FR: 'Lisse'; DE: 'Glatt'; IT: 'Morbido';
-     ES: 'Suave'; PT: 'Suave'; AF: 'Glad'),
-    (EN: 'Tunnel'; PL: 'Tunel'; CS: 'Tunel';
-     FR: 'Tunnel'; DE: 'Tunnel'; IT: 'Tunnel';
-     ES: 'Túnel'; PT: 'Túnel'; AF: 'Tonnel'),
-    (EN: 'Fisheye'; PL: 'Rybie oko'; CS: 'Rybí oko';
-     FR: 'Œil-de-poisson'; DE: 'Fischauge'; IT: 'Occhio di pesce';
-     ES: 'Ojo de pez'; PT: 'Olho de peixe'; AF: 'Visoog'),
-    (EN: 'Outer stretch'; PL: 'Rozciągnięcie zewnętrzne'; CS: 'Vnější roztažení';
-     FR: 'Étirement extérieur'; DE: 'Äußere Dehnung'; IT: 'Stiramento esterno';
-     ES: 'Estiramiento exterior'; PT: 'Estiramento exterior'; AF: 'Buite-uitrekking'),
     (EN: 'Error'; PL: 'Błąd'; CS: 'Chyba';
      FR: 'Erreur'; DE: 'Fehler'; IT: 'Errore';
      ES: 'Error'; PT: 'Erro'; AF: 'Fout'),
@@ -1516,9 +1417,9 @@ const
     (EN: 'Interface'; PL: 'Interfejs'; CS: 'Rozhraní';
      FR: 'Interface'; DE: 'Oberfläche'; IT: 'Interfaccia';
      ES: 'Interfaz'; PT: 'Interface'; AF: 'Koppelvlak'),
-    (EN: 'Canvas background color (only with standard Windows theme):'; PL: 'Kolor tła kanwy (tylko ze standardowym motywem Windows):'; CS: 'Barva pozadí plátna (pouze se standardním motivem Windows):';
-     FR: 'Couleur de fond de la zone de travail (uniquement avec le thème Windows standard) :'; DE: 'Hintergrundfarbe der Leinwand (nur mit dem standardmäßigen Windows-Design):'; IT: 'Colore di sfondo dell''area di lavoro (solo con il tema standard di Windows):';
-     ES: 'Color de fondo del lienzo (solo con el tema estándar de Windows):'; PT: 'Cor de fundo da área de trabalho (apenas com o tema padrão do Windows):'; AF: 'Doek agtergrondkleur (slegs met die standaard Windows-tema):'),
+    (EN: 'Canvas background color (only with the "Windows" theme):'; PL: 'Kolor tła kanwy (tylko z motywem „Windows”):'; CS: 'Barva pozadí plátna (pouze s motivem „Windows“):';
+     FR: 'Couleur de fond de la zone de travail (uniquement avec le thème « Windows ») :'; DE: 'Hintergrundfarbe der Leinwand (nur mit dem Design „Windows“):'; IT: 'Colore di sfondo dell''area di lavoro (solo con il tema "Windows"):';
+     ES: 'Color de fondo del lienzo (solo con el tema «Windows»):'; PT: 'Cor de fundo da área de trabalho (apenas com o tema "Windows"):'; AF: 'Doek agtergrondkleur (slegs met die "Windows"-tema):'),
     (EN: 'Open image'; PL: 'Otwórz obraz'; CS: 'Otevřít obrázek';
      FR: 'Ouvrir une image'; DE: 'Bild öffnen'; IT: 'Apri immagine';
      ES: 'Abrir imagen'; PT: 'Abrir imagem'; AF: 'Maak beeld oop'),
@@ -1942,18 +1843,12 @@ const
     (EN: 'Performance...'; PL: 'Wydajność...'; CS: 'Výkon...';
      FR: 'Performances…'; DE: 'Leistung...'; IT: 'Prestazioni...';
      ES: 'Rendimiento...'; PT: 'Desempenho...'; AF: 'Werkverrigting...'),
-    (EN: 'Maximum working resolution:'; PL: 'Maksymalna rozdzielczość robocza:'; CS: 'Maximální pracovní rozlišení:';
-     FR: 'Résolution maximale de fonctionnement :'; DE: 'Maximale Arbeitsauflösung:'; IT: 'Risoluzione massima di lavoro:';
-     ES: 'Resolución máxima de trabajo:'; PT: 'Resolução máxima de trabalho:'; AF: 'Maksimum werkresolusie:'),
+    (EN: 'Downscale photos on opening to:'; PL: 'Zmniejszaj zdjęcia przy otwieraniu do:'; CS: 'Při otevírání zmenšovat fotografie na:';
+     FR: 'Réduire les photos à l''ouverture à :'; DE: 'Fotos beim Öffnen verkleinern auf:'; IT: 'Riduci le foto all''apertura a:';
+     ES: 'Reducir las fotos al abrirlas a:'; PT: 'Reduzir as fotos ao abrir para:'; AF: 'Verklein foto''s by oopmaak na:'),
     (EN: 'Image'; PL: 'Obraz'; CS: 'Obrázek';
      FR: 'Image'; DE: 'Bild'; IT: 'Immagine';
      ES: 'Imagen'; PT: 'Imagem'; AF: 'Beeld'),
-    (EN: 'Inverted tunnel'; PL: 'Odwrócony tunel'; CS: 'Obrácený tunel';
-     FR: 'Tunnel inversé'; DE: 'Umgekehrter Tunnel'; IT: 'Tunnel invertito';
-     ES: 'Túnel invertido'; PT: 'Túnel invertido'; AF: 'Omgekeerde tonnel'),
-    (EN: '30° slice'; PL: 'Wycinek 30°'; CS: '30° výseč';
-     FR: 'Secteur de 30°'; DE: '30°-Ausschnitt'; IT: 'Sezione di 30°';
-     ES: 'Sector de 30°'; PT: 'Fatia de 30°'; AF: '30°-segment'),
     (EN: 'Full HD (1920×1080)'; PL: 'Full HD (1920×1080)'; CS: 'Full HD (1920×1080)';
      FR: 'Full HD (1920×1080)'; DE: 'Full HD (1920×1080)'; IT: 'Full HD (1920×1080)';
      ES: 'Full HD (1920×1080)'; PT: 'Full HD (1920×1080)'; AF: 'Volle HD (1920×1080)'),
@@ -2158,9 +2053,9 @@ const
     (EN: 'Darkens every other line at PAL ratio — higher value = darker gaps'; PL: 'Przyciemnia co drugą linię w proporcji PAL — im wyżej, tym ciemniejsze przerwy'; CS: 'Ztmaví každý druhý řádek při poměru PAL — vyšší hodnota = tmavší mezery';
      FR: 'Assombrit une ligne sur deux au ratio PAL — valeur plus élevée = espaces plus sombres'; DE: 'Verdunkelt jede zweite Zeile im PAL-Verhältnis – höherer Wert = dunklere Zwischenräume'; IT: 'Scurisce una riga sì e una no al rapporto PAL: valore più alto = spazi più scuri';
      ES: 'Oscurece una línea sí y otra no en relación PAL: valor más alto = espacios más oscuros'; PT: 'Escurece uma linha sim, uma linha não na proporção PAL — valor mais elevado = intervalos mais escuros'; AF: 'Verdonker elke ander lyn teen PAL-verhouding — hoër waarde = donkerder gapings'),
-    (EN: 'Online documentation'; PL: 'Dokumentacja online'; CS: 'Online dokumentace';
-     FR: 'Documentation en ligne'; DE: 'Online-Dokumentation'; IT: 'Documentazione online';
-     ES: 'Documentación en línea'; PT: 'Documentação online'; AF: 'Aanlyn dokumentasie'),
+    (EN: 'Program website'; PL: 'Strona programu'; CS: 'Webové stránky programu';
+     FR: 'Site du programme'; DE: 'Programm-Website'; IT: 'Sito del programma';
+     ES: 'Sitio web del programa'; PT: 'Site do programa'; AF: 'Programwebwerf'),
     (EN: 'Open the Fotografista website in your web browser'; PL: 'Otwórz dokumentację online w przeglądarce'; CS: 'Otevřete webové stránky Fotografista ve webovém prohlížeči';
      FR: 'Ouvrez le site web Fotografista dans votre navigateur'; DE: 'Öffnen Sie die Fotografista-Website in Ihrem Webbrowser.'; IT: 'Apri il sito web di Fotografista nel tuo browser';
      ES: 'Abre el sitio web de Fotografista en tu navegador'; PT: 'Abra o site do Fotografista no seu browser'; AF: 'Maak die Fotografista-webwerf in jou webblaaier oop'),
@@ -2450,8 +2345,8 @@ const
      FR: 'Contraste avant conversion (0-10) :'; DE: 'Kontrast vor der Umwandlung (0-10):'; IT: 'Contrasto prima della conversione (0-10):';
      ES: 'Contraste antes de la conversión (0-10):'; PT: 'Contraste antes da conversão (0-10):'; AF: 'Kontras voor omskakeling (0-10):'),
     (EN: 'Creating overprint'; PL: 'Tworzenie nadruku'; CS: 'Vytváření potisku';
-     FR: 'Création de l’impression'; DE: 'Druck wird erstellt'; IT: 'Creazione della stampa';
-     ES: 'Creando la estampación'; PT: 'A criar a estampagem'; AF: 'Skep van opdruk'),
+     FR: 'Création de l’impression'; DE: 'Aufdruck erstellen'; IT: 'Creazione della stampa';
+     ES: 'Creación de estampado'; PT: 'Criação de estampagem'; AF: 'Skep van opdruk'),
     (EN: 'Crosshatching'; PL: 'Kreskowanie'; CS: 'Křížové šrafování';
      FR: 'Hachures croisées'; DE: 'Kreuzschraffur'; IT: 'Tratteggio incrociato';
      ES: 'Sombreado cruzado'; PT: 'Sombreado cruzado'; AF: 'Kruisskadulyne'),
@@ -3142,9 +3037,9 @@ const
     (EN: 'Protect selection'; PL: 'Chroń zaznaczenie'; CS: 'Chránit výběr';
      FR: 'Protéger la sélection'; DE: 'Auswahl schützen'; IT: 'Proteggi selezione';
      ES: 'Proteger selección'; PT: 'Proteger seleção'; AF: 'Beskerm seleksie'),
-    (EN: 'Unprotect selection'; PL: 'Odwołaj ochronę w zaznaczeniu'; CS: 'Zrušit ochranu výběru';
-     FR: 'Déprotéger la sélection'; DE: 'Schutz der Auswahl aufheben'; IT: 'Rimuovi protezione selezione';
-     ES: 'Desproteger selección'; PT: 'Remover proteção da seleção'; AF: 'Verwyder beskerming van seleksie'),
+    (EN: 'Unprotect'; PL: 'Odwołaj ochronę'; CS: 'Zrušit ochranu';
+     FR: 'Déprotéger'; DE: 'Schutz aufheben'; IT: 'Rimuovi protezione';
+     ES: 'Desproteger'; PT: 'Remover proteção'; AF: 'Verwyder beskerming'),
     (EN: 'Lasso'; PL: 'Lasso'; CS: 'Laso';
      FR: 'Lasso'; DE: 'Lasso'; IT: 'Lazo';
      ES: 'Lazo'; PT: 'Laço'; AF: 'Lasso'),
@@ -3307,7 +3202,7 @@ const
     (EN: 'Tone curve (10-500, 100 = linear):'; PL: 'Krzywa tonalna (10–500, 100 = liniowa):'; CS: 'Tónová křivka (10–500, 100 = lineární):';
      FR: 'Courbe tonale (10–500, 100 = linéaire) :'; DE: 'Tonkurve (10–500, 100 = linear):'; IT: 'Curva tonale (10–500, 100 = lineare):';
      ES: 'Curva tonal (10–500, 100 = lineal):'; PT: 'Curva tonal (10–500, 100 = linear):'; AF: 'Toonkurwe (10–500, 100 = lineêr):'),
-    (EN: 'Dotted raster - scattered dots using Poisson distribution'; PL: 'Raster kropkowany - rozproszone kropki w rozkładzie Poissona'; CS: 'Tečkovaný raster - rozptýlené tečky v Poissonově rozdělení';
+    (EN: 'Dotted raster - scattered dots using Poisson distribution'; PL: 'Raster kropkowany - rozproszone kropki w rozkładzie Poissona'; CS: 'Kropkovaný raster - rozptýlené tečky v Poissonově rozdělení';
      FR: 'Trame pointillée - points dispersés selon une loi de Poisson'; DE: 'Punktierter Raster - verstreute Punkte nach Poisson-Verteilung'; IT: 'Retino a punti - punti sparsi con distribuzione di Poisson';
      ES: 'Trama de puntos - puntos dispersos con distribución de Poisson'; PT: 'Raster pontilhado - pontos dispersos com distribuição de Poisson'; AF: 'Stippelraster - verstrooide kolletjies met Poisson-verspreiding'),
     (EN: 'Comic...'; PL: 'Komiks...'; CS: 'Komiks...';
@@ -3337,12 +3232,12 @@ const
     (EN: 'PRL - halftone'; PL: 'PRL – raster'; CS: 'PRL – rastr';
      FR: 'PRL – trame'; DE: 'PRL – Raster'; IT: 'PRL – retino';
      ES: 'PRL – trama'; PT: 'PRL – retícula'; AF: 'PRL – raster'),
-    (EN: 'Pop art - black'; PL: 'Pop-art – czerń'; CS: 'Pop-art – černá';
-     FR: 'Pop art – noir'; DE: 'Pop-Art – Schwarz'; IT: 'Pop art – nero';
-     ES: 'Pop art – negro'; PT: 'Pop art – preto'; AF: 'Pop-art – swart'),
-    (EN: 'Pop art - two inks'; PL: 'Pop-art – dwie farby'; CS: 'Pop-art – dvě barvy';
-     FR: 'Pop art – deux encres'; DE: 'Pop-Art – zwei Farben'; IT: 'Pop art – due inchiostri';
-     ES: 'Pop art – dos tintas'; PT: 'Pop art – duas tintas'; AF: 'Pop-art – twee ink'),
+    (EN: 'Ben-Day - black'; PL: 'Ben-Day – czerń'; CS: 'Ben-Day – černá';
+     FR: 'Ben-Day – noir'; DE: 'Ben-Day – Schwarz'; IT: 'Ben-Day – nero';
+     ES: 'Ben-Day – negro'; PT: 'Ben-Day – preto'; AF: 'Ben-Day – swart'),
+    (EN: 'Ben-Day - color'; PL: 'Ben-Day – kolor'; CS: 'Ben-Day – barva';
+     FR: 'Ben-Day – couleur'; DE: 'Ben-Day – Farbe'; IT: 'Ben-Day – colore';
+     ES: 'Ben-Day – color'; PT: 'Ben-Day – cor'; AF: 'Ben-Day – kleur'),
     (EN: 'Pop art - color'; PL: 'Pop-art – kolor'; CS: 'Pop-art – barevný';
      FR: 'Pop art – couleur'; DE: 'Pop-Art – Farbe'; IT: 'Pop art – colore';
      ES: 'Pop art – color'; PT: 'Pop art – cor'; AF: 'Pop-art – kleur'),
@@ -3363,7 +3258,196 @@ const
      ES: 'Ecualizar canales RGB'; PT: 'Equalizar canais RGB'; AF: 'Egaliseer RGB-kanale'),
     (EN: 'Equalize brightness'; PL: 'Wyrównaj jasność'; CS: 'Vyrovnat jas';
      FR: 'Égaliser la luminosité'; DE: 'Helligkeit entzerren'; IT: 'Equalizza la luminosità';
-     ES: 'Ecualizar el brillo'; PT: 'Equalizar a luminosidade'; AF: 'Egaliseer helderheid')
+     ES: 'Ecualizar el brillo'; PT: 'Equalizar a luminosidade'; AF: 'Egaliseer helderheid'),
+    (EN: 'Swap A and B'; PL: 'Zamień A i B'; CS: 'Prohodit A a B';
+     FR: 'Inverser A et B'; DE: 'A und B tauschen'; IT: 'Scambia A e B';
+     ES: 'Intercambiar A y B'; PT: 'Trocar A e B'; AF: 'Ruil A en B om'),
+    (EN: 'Difference'; PL: 'Różnica'; CS: 'Rozdíl';
+     FR: 'Différence'; DE: 'Differenz'; IT: 'Differenza';
+     ES: 'Diferencia'; PT: 'Diferença'; AF: 'Verskil'),
+    (EN: 'All supported'; PL: 'Wszystkie obsługiwane'; CS: 'Všechny podporované';
+     FR: 'Tous les formats pris en charge'; DE: 'Alle unterstützten Formate'; IT: 'Tutti i formati supportati';
+     ES: 'Todos los formatos compatibles'; PT: 'Todos os formatos suportados'; AF: 'Alle ondersteunde formate'),
+    (EN: 'Not an IFF file.'; PL: 'To nie jest plik IFF.'; CS: 'Nejde o soubor IFF.';
+     FR: 'Ce n’est pas un fichier IFF.'; DE: 'Keine IFF-Datei.'; IT: 'Non è un file IFF.';
+     ES: 'No es un archivo IFF.'; PT: 'Não é um ficheiro IFF.'; AF: 'Nie ''n IFF-lêer nie.'),
+    (EN: 'Not an IFF ILBM file.'; PL: 'To nie jest plik IFF ILBM.'; CS: 'Nejde o soubor IFF ILBM.';
+     FR: 'Ce n’est pas un fichier IFF ILBM.'; DE: 'Keine IFF-ILBM-Datei.'; IT: 'Non è un file IFF ILBM.';
+     ES: 'No es un archivo IFF ILBM.'; PT: 'Não é um ficheiro IFF ILBM.'; AF: 'Nie ''n IFF-ILBM-lêer nie.'),
+    (EN: 'Invalid ILBM header (BMHD).'; PL: 'Nieprawidłowy nagłówek ILBM (BMHD).'; CS: 'Neplatná hlavička ILBM (BMHD).';
+     FR: 'En-tête ILBM non valide (BMHD).'; DE: 'Ungültiger ILBM-Header (BMHD).'; IT: 'Intestazione ILBM non valida (BMHD).';
+     ES: 'Encabezado ILBM no válido (BMHD).'; PT: 'Cabeçalho ILBM inválido (BMHD).'; AF: 'Ongeldige ILBM-kopstuk (BMHD).'),
+    (EN: 'Invalid ILBM dimensions.'; PL: 'Nieprawidłowe wymiary obrazu ILBM.'; CS: 'Neplatné rozměry ILBM.';
+     FR: 'Dimensions ILBM non valides.'; DE: 'Ungültige ILBM-Abmessungen.'; IT: 'Dimensioni ILBM non valide.';
+     ES: 'Dimensiones ILBM no válidas.'; PT: 'Dimensões ILBM inválidas.'; AF: 'Ongeldige ILBM-afmetings.'),
+    (EN: 'ILBM image has no BODY chunk.'; PL: 'Obraz ILBM nie ma bloku BODY.'; CS: 'Obrázek ILBM nemá blok BODY.';
+     FR: 'L’image ILBM n’a pas de bloc BODY.'; DE: 'ILBM-Bild hat keinen BODY-Block.'; IT: 'L’immagine ILBM non ha il blocco BODY.';
+     ES: 'La imagen ILBM no tiene bloque BODY.'; PT: 'A imagem ILBM não tem bloco BODY.'; AF: 'ILBM-beeld het geen BODY-blok nie.'),
+    (EN: 'Unsupported ILBM compression.'; PL: 'Nieobsługiwana kompresja ILBM.'; CS: 'Nepodporovaná komprese ILBM.';
+     FR: 'Compression ILBM non prise en charge.'; DE: 'Nicht unterstützte ILBM-Komprimierung.'; IT: 'Compressione ILBM non supportata.';
+     ES: 'Compresión ILBM no compatible.'; PT: 'Compressão ILBM não suportada.'; AF: 'Nie-ondersteunde ILBM-kompressie.'),
+    (EN: 'File not found: %s'; PL: 'Nie znaleziono pliku: %s'; CS: 'Soubor nenalezen: %s';
+     FR: 'Fichier introuvable : %s'; DE: 'Datei nicht gefunden: %s'; IT: 'File non trovato: %s';
+     ES: 'Archivo no encontrado: %s'; PT: 'Ficheiro não encontrado: %s'; AF: 'Lêer nie gevind nie: %s'),
+    (EN: 'Cannot load: %s'; PL: 'Nie można wczytać: %s'; CS: 'Nelze načíst: %s';
+     FR: 'Impossible de charger : %s'; DE: 'Laden nicht möglich: %s'; IT: 'Impossibile caricare: %s';
+     ES: 'No se puede cargar: %s'; PT: 'Não é possível carregar: %s'; AF: 'Kan nie laai nie: %s'),
+    (EN: 'Undo steps:'; PL: 'Kroki Cofnij:'; CS: 'Kroky Zpět:';
+     FR: 'Étapes d’annulation :'; DE: 'Rückgängig-Schritte:'; IT: 'Passaggi di annullamento:';
+     ES: 'Pasos de deshacer:'; PT: 'Passos de anulação:'; AF: 'Ontdoen-stappe:'),
+    (EN: 'Unlimited'; PL: 'Bez limitu'; CS: 'Bez omezení';
+     FR: 'Illimité'; DE: 'Unbegrenzt'; IT: 'Illimitato';
+     ES: 'Ilimitado'; PT: 'Ilimitado'; AF: 'Onbeperk'),
+    (EN: 'Select protected area'; PL: 'Zaznacz obszar chroniony'; CS: 'Vybrat chráněnou oblast';
+     FR: 'Sélectionner la zone protégée'; DE: 'Geschützten Bereich auswählen'; IT: 'Seleziona area protetta';
+     ES: 'Seleccionar área protegida'; PT: 'Selecionar área protegida'; AF: 'Kies beskermde gebied'),
+    (EN: 'Make the protected area a selection again'; PL: 'Zamień obszar chroniony z powrotem w zaznaczenie'; CS: 'Převést chráněnou oblast zpět na výběr';
+     FR: 'Retransformer la zone protégée en sélection'; DE: 'Geschützten Bereich wieder in eine Auswahl umwandeln'; IT: 'Trasforma di nuovo l’area protetta in selezione';
+     ES: 'Convertir de nuevo el área protegida en selección'; PT: 'Converter novamente a área protegida em seleção'; AF: 'Maak die beskermde gebied weer ''n seleksie'),
+    (EN: 'Deselect'; PL: 'Usuń zaznaczenie'; CS: 'Zrušit výběr';
+     FR: 'Désélectionner'; DE: 'Auswahl aufheben'; IT: 'Deseleziona';
+     ES: 'Deseleccionar'; PT: 'Desmarcar seleção'; AF: 'Verwyder seleksie'),
+    (EN: 'Tile size'; PL: 'Rozmiar kafelka'; CS: 'Velikost dlaždice';
+     FR: 'Taille des tuiles'; DE: 'Kachelgröße'; IT: 'Dimensione tessera';
+     ES: 'Tamaño del mosaico'; PT: 'Tamanho do ladrilho'; AF: 'Teëlgrootte'),
+    (EN: 'Tiles horizontally:'; PL: 'Kafelków w poziomie:'; CS: 'Dlaždic vodorovně:';
+     FR: 'Tuiles horizontales :'; DE: 'Kacheln horizontal:'; IT: 'Tessere in orizzontale:';
+     ES: 'Mosaicos en horizontal:'; PT: 'Ladrilhos na horizontal:'; AF: 'Teëls horisontaal:'),
+    (EN: 'Threshold...'; PL: 'Próg...'; CS: 'Práh...';
+     FR: 'Seuil…'; DE: 'Schwellwert...'; IT: 'Soglia...';
+     ES: 'Umbral...'; PT: 'Limiar...'; AF: 'Drempel...'),
+    (EN: 'Threshold - sharp B&W contrast'; PL: 'Próg — ostry, czarno-biały kontrast'; CS: 'Práh - ostrý ČB kontrast';
+     FR: 'Seuil - fort contraste noir et blanc'; DE: 'Schwellwert - scharfer S/W-Kontrast'; IT: 'Soglia - forte contrasto in bianco e nero';
+     ES: 'Umbral - fuerte contraste en blanco y negro'; PT: 'Limiar - forte contraste a preto e branco'; AF: 'Drempel - sterk swart-en-wit-kontras'),
+    (EN: 'Simplification:'; PL: 'Uproszczenie:'; CS: 'Zjednodušení:';
+     FR: 'Simplification :'; DE: 'Vereinfachung:'; IT: 'Semplificazione:';
+     ES: 'Simplificación:'; PT: 'Simplificação:'; AF: 'Vereenvoudiging:'),
+    (EN: 'Linocut - large shapes with smooth cut edges'; PL: 'Linoryt — duże płaszczyzny o gładkich krawędziach cięcia'; CS: 'Linoryt - velké plochy s hladkými okraji řezu';
+     FR: 'Linogravure - grands aplats aux bords de coupe lisses'; DE: 'Linolschnitt - große Flächen mit glatten Schnittkanten'; IT: 'Linoleografia - grandi campiture con bordi di taglio lisci';
+     ES: 'Linograbado - grandes superficies con bordes de corte suaves'; PT: 'Linogravura - grandes áreas com arestas de corte suaves'; AF: 'Linosnee - groot vlakke met gladde snyrande'),
+    (EN: 'Use the graphics card where possible'; PL: 'Korzystaj z karty graficznej tam, gdzie to możliwe'; CS: 'Používat grafickou kartu, kde je to možné';
+     FR: 'Utiliser la carte graphique lorsque c''est possible'; DE: 'Grafikkarte nutzen, wo möglich'; IT: 'Usa la scheda grafica dove possibile';
+     ES: 'Usar la tarjeta gráfica cuando sea posible'; PT: 'Usar a placa gráfica sempre que possível'; AF: 'Gebruik die grafiese kaart waar moontlik'),
+    (EN: 'Raster CMYK'; PL: 'Raster CMYK'; CS: 'Rastr CMYK';
+     FR: 'Trame CMJN'; DE: 'CMYK-Raster'; IT: 'Reticolo CMYK';
+     ES: 'Trama CMYK'; PT: 'Retícula CMYK'; AF: 'CMYK-raster'),
+    (EN: 'MagicWB palette (8 colors)'; PL: 'Paleta MagicWB (8 kolorów)'; CS: 'MagicWB paleta (8 barev)';
+     FR: 'Palette MagicWB (8 couleurs)'; DE: 'MagicWB-Palette (8 Farben)'; IT: 'Tavolozza MagicWB (8 colori)';
+     ES: 'Paleta MagicWB (8 colores)'; PT: 'Paleta MagicWB (8 cores)'; AF: 'MagicWB-palet (8 kleure)'),
+    (EN: 'Graphics card:'; PL: 'Karta graficzna:'; CS: 'Grafická karta:';
+     FR: 'Carte graphique :'; DE: 'Grafikkarte:'; IT: 'Scheda grafica:';
+     ES: 'Tarjeta gráfica:'; PT: 'Placa gráfica:'; AF: 'Grafiese kaart:'),
+    (EN: 'No hardware video encoder (video encoded by the processor)'; PL: 'Brak sprzętowego kodera wideo (wideo kodowane przez procesor)'; CS: 'Žádný hardwarový video kodér (video kóduje procesor)';
+     FR: 'Aucun encodeur vidéo matériel (vidéo encodée par le processeur)'; DE: 'Kein Hardware-Videoencoder (Video wird vom Prozessor codiert)'; IT: 'Nessun codificatore video hardware (video codificato dal processore)';
+     ES: 'Sin codificador de vídeo por hardware (vídeo codificado por el procesador)'; PT: 'Sem codificador de vídeo por hardware (vídeo codificado pelo processador)'; AF: 'Geen hardeware-video-enkodeerder nie (video deur die verwerker geënkodeer)'),
+    (EN: 'processor'; PL: 'procesor'; CS: 'procesor';
+     FR: 'processeur'; DE: 'Prozessor'; IT: 'processore';
+     ES: 'procesador'; PT: 'processador'; AF: 'verwerker'),
+    (EN: 'graphics card'; PL: 'karta graficzna'; CS: 'grafická karta';
+     FR: 'carte graphique'; DE: 'Grafikkarte'; IT: 'scheda grafica';
+     ES: 'tarjeta gráfica'; PT: 'placa gráfica'; AF: 'grafiese kaart'),
+    (EN: 'in use'; PL: 'używana'; CS: 'používaná';
+     FR: 'utilisée'; DE: 'verwendet'; IT: 'in uso';
+     ES: 'en uso'; PT: 'em uso'; AF: 'in gebruik'),
+    (EN: 'Original (no downscaling)'; PL: 'Oryginał (bez zmniejszania)'; CS: 'Originál (bez zmenšení)';
+     FR: 'Original (sans réduction)'; DE: 'Original (ohne Verkleinerung)'; IT: 'Originale (senza riduzione)';
+     ES: 'Original (sin reducción)'; PT: 'Original (sem redução)'; AF: 'Oorspronklik (sonder verkleining)'),
+    (EN: 'Watermark...'; PL: 'Znak wodny...'; CS: 'Vodoznak...';
+     FR: 'Filigrane…'; DE: 'Wasserzeichen...'; IT: 'Filigrana...';
+     ES: 'Marca de agua...'; PT: 'Marca d''água...'; AF: 'Watermerk...'),
+    (EN: 'Watermark'; PL: 'Znak wodny'; CS: 'Vodoznak';
+     FR: 'Filigrane'; DE: 'Wasserzeichen'; IT: 'Filigrana';
+     ES: 'Marca de agua'; PT: 'Marca d''água'; AF: 'Watermerk'),
+    (EN: 'Text'; PL: 'Tekst'; CS: 'Text';
+     FR: 'Texte'; DE: 'Text'; IT: 'Testo';
+     ES: 'Texto'; PT: 'Texto'; AF: 'Teks'),
+    (EN: 'Logo (PNG image)'; PL: 'Logo (obraz PNG)'; CS: 'Logo (obrázek PNG)';
+     FR: 'Logo (image PNG)'; DE: 'Logo (PNG-Bild)'; IT: 'Logo (immagine PNG)';
+     ES: 'Logotipo (imagen PNG)'; PT: 'Logótipo (imagem PNG)'; AF: 'Logo (PNG-beeld)'),
+    (EN: 'Text color...'; PL: 'Kolor tekstu...'; CS: 'Barva textu...';
+     FR: 'Couleur du texte…'; DE: 'Textfarbe...'; IT: 'Colore del testo...';
+     ES: 'Color del texto...'; PT: 'Cor do texto...'; AF: 'Tekskleur...'),
+    (EN: 'Position:'; PL: 'Położenie:'; CS: 'Umístění:';
+     FR: 'Position :'; DE: 'Position:'; IT: 'Posizione:';
+     ES: 'Posición:'; PT: 'Posição:'; AF: 'Posisie:'),
+    (EN: 'Repeat across the whole photo'; PL: 'Powtórz na całym zdjęciu'; CS: 'Opakovat přes celou fotografii';
+     FR: 'Répéter sur toute la photo'; DE: 'Über das ganze Foto wiederholen'; IT: 'Ripeti su tutta la foto';
+     ES: 'Repetir en toda la foto'; PT: 'Repetir em toda a foto'; AF: 'Herhaal oor die hele foto'),
+    (EN: 'Margin:'; PL: 'Margines:'; CS: 'Okraj:';
+     FR: 'Marge :'; DE: 'Rand:'; IT: 'Margine:';
+     ES: 'Margen:'; PT: 'Margem:'; AF: 'Kantlyn:'),
+    (EN: 'Shadow under text'; PL: 'Cień pod tekstem'; CS: 'Stín pod textem';
+     FR: 'Ombre sous le texte'; DE: 'Schatten unter dem Text'; IT: 'Ombra sotto il testo';
+     ES: 'Sombra bajo el texto'; PT: 'Sombra sob o texto'; AF: 'Skaduwee onder teks'),
+    (EN: 'The logo file could not be loaded.'; PL: 'Nie udało się wczytać pliku logo.'; CS: 'Soubor loga se nepodařilo načíst.';
+     FR: 'Impossible de charger le fichier du logo.'; DE: 'Die Logodatei konnte nicht geladen werden.'; IT: 'Impossibile caricare il file del logo.';
+     ES: 'No se pudo cargar el archivo del logotipo.'; PT: 'Não foi possível carregar o ficheiro do logótipo.'; AF: 'Die logo-lêer kon nie gelaai word nie.'),
+    (EN: 'Top center'; PL: 'Góra-środek'; CS: 'Nahoře uprostřed';
+     FR: 'Haut centre'; DE: 'Oben Mitte'; IT: 'In alto al centro';
+     ES: 'Arriba centro'; PT: 'Topo centro'; AF: 'Bo middel'),
+    (EN: 'Middle-left'; PL: 'Środek-lewo'; CS: 'Uprostřed vlevo';
+     FR: 'Milieu gauche'; DE: 'Mitte links'; IT: 'Al centro a sinistra';
+     ES: 'Centro izquierda'; PT: 'Centro esquerda'; AF: 'Middel links'),
+    (EN: 'Center'; PL: 'Środek'; CS: 'Uprostřed';
+     FR: 'Centre'; DE: 'Mitte'; IT: 'Al centro';
+     ES: 'Centro'; PT: 'Centro'; AF: 'Middel'),
+    (EN: 'Middle-right'; PL: 'Środek-prawo'; CS: 'Uprostřed vpravo';
+     FR: 'Milieu droite'; DE: 'Mitte rechts'; IT: 'Al centro a destra';
+     ES: 'Centro derecha'; PT: 'Centro direita'; AF: 'Middel regs'),
+    (EN: 'Bottom center'; PL: 'Dół-środek'; CS: 'Dole uprostřed';
+     FR: 'Bas centre'; DE: 'Unten Mitte'; IT: 'In basso al centro';
+     ES: 'Abajo centro'; PT: 'Fundo centro'; AF: 'Onder middel'),
+    (EN: 'Next photo'; PL: 'Następne zdjęcie'; CS: 'Další fotografie';
+     FR: 'Photo suivante'; DE: 'Nächstes Foto'; IT: 'Foto successiva';
+     ES: 'Foto siguiente'; PT: 'Fotografia seguinte'; AF: 'Volgende foto'),
+    (EN: 'Previous photo'; PL: 'Poprzednie zdjęcie'; CS: 'Předchozí fotografie';
+     FR: 'Photo précédente'; DE: 'Vorheriges Foto'; IT: 'Foto precedente';
+     ES: 'Foto anterior'; PT: 'Fotografia anterior'; AF: 'Vorige foto'),
+    (EN: 'Open the next photo in this folder'; PL: 'Otwórz następne zdjęcie z tego folderu'; CS: 'Otevřít další fotografii z této složky';
+     FR: 'Ouvrir la photo suivante de ce dossier'; DE: 'Nächstes Foto aus diesem Ordner öffnen'; IT: 'Apri la foto successiva di questa cartella';
+     ES: 'Abrir la foto siguiente de esta carpeta'; PT: 'Abrir a fotografia seguinte desta pasta'; AF: 'Maak die volgende foto in hierdie gids oop'),
+    (EN: 'Open the previous photo in this folder'; PL: 'Otwórz poprzednie zdjęcie z tego folderu'; CS: 'Otevřít předchozí fotografii z této složky';
+     FR: 'Ouvrir la photo précédente de ce dossier'; DE: 'Vorheriges Foto aus diesem Ordner öffnen'; IT: 'Apri la foto precedente di questa cartella';
+     ES: 'Abrir la foto anterior de esta carpeta'; PT: 'Abrir a fotografia anterior desta pasta'; AF: 'Maak die vorige foto in hierdie gids oop'),
+    (EN: 'Sample away from the corner'; PL: 'Próbka w oddaleniu od narożnika'; CS: 'Vzorek v odstupu od rohu';
+     FR: 'Échantillon à distance du coin'; DE: 'Probe im Abstand zur Ecke'; IT: 'Campione a distanza dall''angolo';
+     ES: 'Muestra alejada de la esquina'; PT: 'Amostra afastada do canto'; AF: 'Monster weg van die hoek'),
+    (EN: 'Distance:'; PL: 'Odległość:'; CS: 'Vzdálenost:';
+     FR: 'Distance :'; DE: 'Abstand:'; IT: 'Distanza:';
+     ES: 'Distancia:'; PT: 'Distância:'; AF: 'Afstand:'),
+    (EN: 'Barrel'; PL: 'Beczka'; CS: 'Soudek';
+     FR: 'Barillet'; DE: 'Tonne'; IT: 'Barilotto';
+     ES: 'Barril'; PT: 'Barril'; AF: 'Vat'),
+    (EN: 'Pincushion'; PL: 'Poduszka'; CS: 'Poduška';
+     FR: 'Coussinet'; DE: 'Kissen'; IT: 'Cuscinetto';
+     ES: 'Cojín'; PT: 'Almofada'; AF: 'Kussing'),
+    (EN: 'Hole'; PL: 'Otwór'; CS: 'Otvor';
+     FR: 'Trou'; DE: 'Loch'; IT: 'Foro';
+     ES: 'Agujero'; PT: 'Orifício'; AF: 'Gat'),
+    (EN: 'Rotation'; PL: 'Obrót'; CS: 'Otočení';
+     FR: 'Rotation'; DE: 'Drehung'; IT: 'Rotazione';
+     ES: 'Rotación'; PT: 'Rotação'; AF: 'Rotasie'),
+    (EN: 'Inside out'; PL: 'Na lewą stronę'; CS: 'Naruby';
+     FR: 'Retourné'; DE: 'Umgekehrt'; IT: 'Al rovescio';
+     ES: 'Del revés'; PT: 'Do avesso'; AF: 'Binne na buite'),
+    (EN: 'Fisheye...'; PL: 'Rybie oko...'; CS: 'Rybí oko...';
+     FR: 'Œil-de-poisson…'; DE: 'Fischauge...'; IT: 'Occhio di pesce...';
+     ES: 'Ojo de pez...'; PT: 'Olho de peixe...'; AF: 'Visoog...'),
+    (EN: 'Fisheye'; PL: 'Rybie oko'; CS: 'Rybí oko';
+     FR: 'Œil-de-poisson'; DE: 'Fischauge'; IT: 'Occhio di pesce';
+     ES: 'Ojo de pez'; PT: 'Olho de peixe'; AF: 'Visoog'),
+    (EN: 'Fisheye - bulge the middle of the photo'; PL: 'Rybie oko - uwypukla środek zdjęcia'; CS: 'Rybí oko - vyboulí střed fotografie';
+     FR: 'Œil-de-poisson - bombe le centre de la photo'; DE: 'Fischauge - wölbt die Bildmitte'; IT: 'Occhio di pesce - gonfia il centro della foto';
+     ES: 'Ojo de pez - abomba el centro de la foto'; PT: 'Olho de peixe - abaula o centro da fotografia'; AF: 'Visoog - bol die middel van die foto uit'),
+    (EN: 'Circle'; PL: 'Koło'; CS: 'Kruh';
+     FR: 'Cercle'; DE: 'Kreis'; IT: 'Cerchio';
+     ES: 'Círculo'; PT: 'Círculo'; AF: 'Sirkel'),
+    (EN: 'Remove red eye'; PL: 'Usuń czerwone oczy'; CS: 'Odstranit červené oči';
+     FR: 'Supprimer les yeux rouges'; DE: 'Rote Augen entfernen'; IT: 'Rimuovi occhi rossi';
+     ES: 'Eliminar ojos rojos'; PT: 'Remover olhos vermelhos'; AF: 'Verwyder rooi oë'),
+    (EN: 'Select the pupil first.'; PL: 'Najpierw zaznacz źrenicę.'; CS: 'Nejprve vyberte zornici.';
+     FR: 'Sélectionnez d''abord la pupille.'; DE: 'Wählen Sie zuerst die Pupille aus.'; IT: 'Seleziona prima la pupilla.';
+     ES: 'Selecciona primero la pupila.'; PT: 'Selecione primeiro a pupila.'; AF: 'Kies eers die pupil.')
   );
   // END GENERATED TEXTABLE
 type
@@ -3387,6 +3471,11 @@ var
   gMenuItemOriginals: TDictionary<TMenuItem, string>;
   gMenuItemHintOriginals: TDictionary<TMenuItem, string>;
   gControlOriginals: TDictionary<TControl, TControlTexts>;
+  // jezyk ostatniego TranslateForm danej formy - TranslateForm tlumaczy
+  // ponownie tylko po zmianie jezyka (2026-10-23, tlumaczenie juz w
+  // TFotoForm.AfterConstruction; ponowne przy aktywacji przywracaloby napisy
+  // z .dfm w miejsce ustawionych w funkcjach Show..., np. tytul Risografii v1)
+  gFormLang: TDictionary<TControl, TLanguage>;
   gDebugPath: string = '';
   gNotifier: TI18nNotifier;
 
@@ -3507,6 +3596,8 @@ begin
   begin
     if (gControlOriginals <> nil) and (AComponent is TControl) then
       gControlOriginals.Remove(TControl(AComponent));
+    if (gFormLang <> nil) and (AComponent is TControl) then
+      gFormLang.Remove(TControl(AComponent));
     if (gMenuItemOriginals <> nil) and (AComponent is TMenuItem) then
     begin
       gMenuItemOriginals.Remove(TMenuItem(AComponent));
@@ -3597,8 +3688,15 @@ var
   SBar: TStatusBar;
   S, N: string;
   FormTexts: TControlTexts;
+  L: TLanguage;
 begin
   if AForm = nil then Exit;
+  // Forma juz przetlumaczona w biezacym jezyku (TFotoForm.AfterConstruction):
+  // bez ponownego - przywracaloby napisy z .dfm w miejsce ustawionych po
+  // utworzeniu (tytul Risografii v1, okna znieksztalcen). Dotyczy kazdego
+  // wywolujacego, takze TfrmMain.FormActiveChanged, ktory zastepuje
+  // ActiveFormChanged ponizej. Po SetLanguage gLang jest inny - tlumaczy.
+  if gFormLang.TryGetValue(AForm, L) and (L = gLang) then Exit;
   if not gControlOriginals.TryGetValue(AForm, FormTexts) then
   begin
     FormTexts.Caption := AForm.Caption;
@@ -3608,6 +3706,7 @@ begin
   end;
   if FormTexts.Caption <> '' then
     AForm.Caption := T(FormTexts.Caption);
+  gFormLang.AddOrSetValue(AForm, gLang);
   if AForm.Menu <> nil then
     for I := 0 to AForm.Menu.Items.Count - 1 do
       TranslateMenuItem(AForm.Menu.Items[I]);
@@ -3675,6 +3774,7 @@ initialization
   gMenuItemOriginals := TDictionary<TMenuItem, string>.Create;
   gMenuItemHintOriginals := TDictionary<TMenuItem, string>.Create;
   gControlOriginals := TDictionary<TControl, TControlTexts>.Create;
+  gFormLang := TDictionary<TControl, TLanguage>.Create;
   gNotifier := TI18nNotifier.Create(nil);
   gI18nEvents := TI18nEvents.Create;
   Screen.OnActiveFormChange := gI18nEvents.ActiveFormChanged;
@@ -3694,6 +3794,8 @@ finalization
   gMenuItemHintOriginals := nil;
   gControlOriginals.Free;
   gControlOriginals := nil;
+  gFormLang.Free;
+  gFormLang := nil;
   // gNotifier celowo NIE jest zwalniany: formy (i ich kontrolki) żyją dłużej niż
   // ta sekcja finalization (Vcl.Forms kończy się później), a zniszczenie kontrolki
   // wywołuje Notification na gNotifier - zwolniony obiekt dałby AV przy wyjściu.

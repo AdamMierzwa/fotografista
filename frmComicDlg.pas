@@ -8,6 +8,24 @@ uses
   Vcl.StdCtrls, Vcl.ComCtrls, Vcl.ExtCtrls, uPreviewFit, uQuantize, uI18n, uTitleBar, uMacros;
 
 type
+  // Ustawienia okna, z ktorymi liczony jest wynik (porownanie: czy gotowy
+  // wynik w tle pasuje do biezacych ustawien).
+  TComicParams = record
+    Style, Colors, Edge, Thick, Accent: Integer;
+  end;
+
+  // Watek roboczy: DoComic na wlasnej kopii pelnego obrazu (podglad 100%
+  // i nawigator), zeby okno nie stalo w miejscu na czas liczenia. Kod stylow
+  // nie uzywa Canvas ani zmiennych globalnych (gComicAccent - threadvar).
+  TComicWorker = class(TThread)
+  public
+    Bmp: TBitmap;             // kopia robocza (pf24bit); po zakonczeniu wynik
+    Params: TComicParams;
+    constructor Create(ASource: TBitmap; const AParams: TComicParams);
+    destructor Destroy; override;
+    procedure Execute; override;
+  end;
+
   TComicDlg = class(TFotoForm)
     pboxPreview: TPaintBox;
     lblColors: TLabel;
@@ -42,8 +60,18 @@ type
     FFullBmp: TBitmap;      // wynik efektu na pelnym obrazie (zrodlo podgladu 100%)
     FFullValid: Boolean;
     FZoomTimer: TTimer;     // opoznione przeliczenie FFullBmp po zmianie parametrow
+    FFullParams: TComicParams;   // ustawienia, z ktorymi policzono FFullBmp
+    FWorker: TComicWorker;  // nil = brak liczenia w tle
+    FPending: Boolean;      // ustawienia zmienily sie w trakcie liczenia
+    FWorkTimer: TTimer;     // sprawdza koniec liczenia w tle (co 50 ms)
+    FStatus: TLabel;        // „Przetwarzanie…” - podglady pokazuja jeszcze stary wynik
     FNavW, FNavH: Integer;
     FZoomX, FZoomY, FZoomW, FZoomH: Integer;
+    procedure UpdateStatus;
+    function CurrentParams: TComicParams;
+    procedure StartFullWork;
+    procedure TakeWorkerResult;
+    procedure WorkTimerTick(Sender: TObject);
     procedure ApplyPreview;
     procedure ApplyFull;
     function CursorRect: TRect;
@@ -54,7 +82,7 @@ type
   end;
 
 function ShowComicDlg(Bitmap: TBitmap; out ElapsedSec: Double): Boolean;
-// Accent: farba akcentu stylu Pop-art - dwie farby (0 czerwona, 1 zielona, 2 niebieska,
+// Accent: farba akcentu stylu Ben-Day - kolor (0 czerwona, 1 zielona, 2 niebieska,
 // 3 zolta); inne style ja pomijaja.
 procedure DoComic(Bitmap: TBitmap; Style, Colors, EdgePct: Integer; ThickPct: Integer = -1;
   Accent: Integer = 0);
@@ -63,7 +91,7 @@ function ComicStyleName(Style: Integer): string;
 // Nazwa stylu ostatnio zatwierdzonego w oknie (pasek stanu, historia Cofnij).
 function ComicLastStyleName: string;
 // Krok makra COMIC w Zarzadzaniu makrami: nazwa na liscie krokow
-// („Komiks: Pop-art – dwie farby”) i wiersze panelu szczegolow
+// („Komiks: Ben-Day – kolor”) i wiersze panelu szczegolow
 // („Czulosc krawedzi: 50”, ...).
 function ComicMacroName(const Params: string): string;
 function ComicMacroDetails(const Params: string): TArray<string>;
@@ -86,7 +114,12 @@ type
 
 var
   gComicLastStyle: Integer = 0;
-  gComicAccent: Integer = 0;   // farba akcentu dla ComicGazetaProc (ustawia DoComic)
+
+// threadvar (2026-10-23): pelny podglad liczy DoComic w watku roboczym
+// (TComicWorker) rownolegle z miniatura w watku glownym - kazdy watek ma
+// wlasna farbe akcentu. Domyslnie 0, jak dotad.
+threadvar
+  gComicAccent: Integer;   // farba akcentu dla ComicGazetaProc (ustawia DoComic)
 
 // Posrednik stylu Gazeta: wspolna sygnatura tabeli nie ma pola farby, wiec
 // farba idzie przez gComicAccent (sygnatury pozostalych stylow bez zmian).
@@ -103,10 +136,12 @@ const
   // kolejnosci albo usuniecie ze srodka zmienia znaczenie zapisanych makr).
   // Zestaw zamkniety 2026-10-20 (przed wydaniem 1.3.0, makra COMIC z wersji
   // roboczych nie sa chronione): usuniete Kreskowka i Stary druk (wchlonela go
-  // Pop-art - dwie farby z wyborem farby).
+  // Pop-art - dwie farby z wyborem farby). 2026-10-24: Pop-art - czern / dwie
+  // farby przemianowane na Ben-Day - czern / kolor (czern + jeden kolor, nie
+  // dwie farby do wyboru; "pop-art" to nazwa potoczna).
   cComicStyles: array[0..3] of TComicStyle = (
-    (Name: 'Pop art - black';    Translate: True;  Proc: DoComicCzarnoBialy; UsesColors: False; UsesThick: True; UsesAccent: False),
-    (Name: 'Pop art - two inks'; Translate: True;  Proc: ComicGazetaProc;    UsesColors: False; UsesThick: True; UsesAccent: True),
+    (Name: 'Ben-Day - black';    Translate: True;  Proc: DoComicCzarnoBialy; UsesColors: False; UsesThick: True; UsesAccent: False),
+    (Name: 'Ben-Day - color';    Translate: True;  Proc: ComicGazetaProc;    UsesColors: False; UsesThick: True; UsesAccent: True),
     (Name: 'PRL - soft';         Translate: True;  Proc: DoComic1;           UsesColors: True;  UsesThick: True; UsesAccent: False),
     (Name: 'PRL - halftone';     Translate: True;  Proc: DoComic2;           UsesColors: True;  UsesThick: True; UsesAccent: False));
 
@@ -198,6 +233,34 @@ begin
   cComicStyles[Style].Proc(Bitmap, Colors, EdgePct, ThickPct);
 end;
 
+{ TComicWorker }
+
+constructor TComicWorker.Create(ASource: TBitmap; const AParams: TComicParams);
+begin
+  inherited Create(True);   // wstrzymany; Start po przypisaniu do FWorker
+  Params := AParams;
+  // Kopia tworzona w watku glownym. Assign wspoldzieli obraz ze zrodlem -
+  // dostep do ScanLine wymusza wlasna kopie pikseli, zanim ruszy watek.
+  Bmp := TBitmap.Create;
+  Bmp.Assign(ASource);
+  Bmp.PixelFormat := pf24bit;
+  // sam odczyt ScanLine wymusza kopie; wynik niepotrzebny (ScanLine nie jest nil)
+  if (Bmp.Height > 0) and (Bmp.ScanLine[0] = nil) then
+    Exit;
+end;
+
+destructor TComicWorker.Destroy;
+begin
+  Bmp.Free;
+  inherited;
+end;
+
+// Watek nie wywoluje metod VCL (Canvas, Invalidate) - tylko DoComic na Bmp.
+procedure TComicWorker.Execute;
+begin
+  DoComic(Bmp, Params.Style, Params.Colors, Params.Edge, Params.Thick, Params.Accent);
+end;
+
 function ShowComicDlg(Bitmap: TBitmap; out ElapsedSec: Double): Boolean;
 var
   Dlg: TComicDlg;
@@ -218,22 +281,93 @@ var
     Tw := 0;
     for J := 0 to G.Items.Count - 1 do
       Tw := Max(Tw, Dlg.Canvas.TextWidth(G.Items[J]));
+    // + CtrlGap * 3 miedzy kolumnami (bez tego „Pop-art – dwie farby”, obecnie „Ben-Day – kolor”,
+    // dochodzilo do kolka „PRL – raster”), CtrlGap * 2 przed prawa krawedzia
+    Result := G.Columns * (GetSystemMetrics(SM_CXMENUCHECK) + Dlg.CtrlGap + Tw) +
+      (G.Columns - 1) * Dlg.CtrlGap * 3 + Dlg.CtrlGap * 2 + 10;
+    // ramka co najmniej na swoj tytul (AF „Inkkleur” przy krotkich nazwach
+    // farb wchodzil na krawedz) - zapas jak w frmPerformanceDlg
+    Result := Max(Result, Dlg.Canvas.TextWidth(G.Caption) + Dlg.CtrlGap * 4);
     Dlg.Canvas.Font.Assign(Dlg.Font);
-    Result := G.Columns * (GetSystemMetrics(SM_CXMENUCHECK) + Dlg.CtrlGap + Tw) + 10;
   end;
 
-  // Para podgladow wysrodkowana w szerokosci okna (jak frmRastrCmykDlg),
-  // ramki w swoich kolumnach: Styl konczy sie przed kolumna podgladu 100%,
-  // Kolor tuszu na prawym marginesie okna (jak w FitToContent).
+  // Najkrotszy suwak w prawej kolumnie (przy malym obrazie podglady sa waskie).
+  function SliderMinW: Integer;
+  begin
+    Dlg.Canvas.Font.Assign(Dlg.Font);
+    Result := Dlg.Canvas.TextWidth('0') * 25;
+  end;
+
+  // Uklad (2026-10-23, decyzja wlasciciela): para podgladow wysrodkowana w
+  // szerokosci okna (jak frmRastrCmykDlg). Pod nawigatorem ramki Styl i Kolor
+  // tuszu OBOK SIEBIE, pozycje w jednej kolumnie: Kolor tuszu tak waski, jak
+  // wymagaja jego krotkie nazwy, Styl - reszta kolumny. Pod podgladem 100% trzy
+  // suwaki. Obie kolumny maja te sama gore i dol: suwaki rozlozone na wysokosc
+  // ramek, a gdy sie nie mieszcza - ramki wydluzone do wysokosci suwakow.
+  // Przyciski pod zawartoscia.
+  // Kolumny pod podgladami: po polowie szerokosci okna miedzy marginesami
+  // (SectionGap - ten sam margines z lewej, z prawej i na dole okna), odstep
+  // CtrlGap * 2 - przy oknie z szerokosci podgladow kolumna = szerokosc
+  // podgladu; przy poszerzeniu rosna obie.
+  function ColW: Integer;
+  begin
+    Result := (Dlg.ClientWidth - Dlg.SectionGap * 2 - Dlg.CtrlGap * 2) div 2;
+  end;
+
   procedure PlaceColumns;
+  var
+    Lbl, Val: array[0..2] of TLabel;
+    TB: array[0..2] of TTrackBar;
+    K, X, W, AccW, TH, ItemH, H, RowH, Gap, Y, Bottom: Integer;
   begin
     Dlg.pboxPreview.Left := (Dlg.ClientWidth - (pw + Dlg.CtrlGap * 2 + pw)) div 2;
     if Dlg.pboxPreview.Left < Dlg.CtrlGap then
       Dlg.pboxPreview.Left := Dlg.CtrlGap;
     Dlg.pboxZoom.Left := Dlg.pboxPreview.Left + pw + Dlg.CtrlGap * 2;
-    Dlg.rgAccent.Left := Dlg.pboxZoom.Left;
-    Dlg.rgStyle.Width := Dlg.pboxZoom.Left - Dlg.CtrlGap * 2 - Dlg.rgStyle.Left;
-    Dlg.rgAccent.Width := Dlg.ClientWidth - Dlg.CtrlGap * 3 - Dlg.rgAccent.Left;
+    W := ColW;
+
+    Lbl[0] := Dlg.lblColors; TB[0] := Dlg.tbColors; Val[0] := Dlg.lblCValue;
+    Lbl[1] := Dlg.lblEdge;   TB[1] := Dlg.tbEdge;   Val[1] := Dlg.lblEValue;
+    Lbl[2] := Dlg.lblThick;  TB[2] := Dlg.tbThick;  Val[2] := Dlg.lblTValue;
+
+    // Wysokosc ramek: 4 pozycje jak w TRadioGroup.ArrangeButtons (pozycja =
+    // (Height - tmHeight - 5) div liczba, wzorzec frmPerformanceDlg). Kolumna
+    // suwakow = suma wierszy (napis + suwak + odczyt) + co najmniej RowGap
+    // miedzy wierszami; wyzsza z nich wyznacza wspolna wysokosc.
+    Dlg.Canvas.Font.Assign(Dlg.Font);
+    TH := Dlg.Canvas.TextHeight('Wg');
+    ItemH := TH + Dlg.RowGap * 2;
+    H := TH + 5 + Max(Dlg.rgStyle.Items.Count, Dlg.rgAccent.Items.Count) * ItemH;
+    RowH := 0;
+    for K := 0 to 2 do
+      Inc(RowH, Lbl[K].Height + TB[K].Height + Val[K].Height);
+    H := Max(H, RowH + Dlg.RowGap * 2);
+    Gap := (H - RowH) div 2;
+
+    // lewa kolumna: Styl | Kolor tuszu, prawa krawedz = krawedz nawigatora
+    AccW := GroupNeedW(Dlg.rgAccent);
+    Dlg.rgStyle.SetBounds(Dlg.SectionGap, Dlg.rgStyle.Top,
+      W - AccW - Dlg.CtrlGap * 2, H);
+    Dlg.rgAccent.SetBounds(Dlg.rgStyle.Left + Dlg.rgStyle.Width + Dlg.CtrlGap * 2,
+      Dlg.rgStyle.Top, AccW, H);
+
+    // prawa kolumna: suwaki od gory ramek (napis na wysokosci tytulu ramki)
+    // do ich dolu (ostatni odczyt na dolnej krawedzi)
+    X := Dlg.rgStyle.Left + W + Dlg.CtrlGap * 2;
+    Y := Dlg.rgStyle.Top;
+    for K := 0 to 2 do
+    begin
+      Lbl[K].SetBounds(X, Y, Lbl[K].Width, Lbl[K].Height);
+      TB[K].SetBounds(X, Y + Lbl[K].Height, W, TB[K].Height);
+      Val[K].SetBounds(X, TB[K].Top + TB[K].Height, W, Val[K].Height);
+      Y := Val[K].Top + Val[K].Height + Gap;
+    end;
+
+    // przyciski pod kolumnami; pod Kolorem tuszu miejsce na Przetwarzanie...
+    Bottom := Max(Dlg.rgStyle.Top + H,
+      Dlg.rgAccent.Top + H + Dlg.RowGap + Dlg.FStatus.Height);
+    Dlg.btnOK.Top := Bottom + Dlg.SectionGap;
+    Dlg.btnCancel.Top := Dlg.btnOK.Top;
   end;
 
 begin
@@ -287,28 +421,27 @@ begin
     Dlg.pboxPreview.Left := Dlg.CtrlGap;
     Dlg.pboxZoom.SetBounds(Dlg.pboxPreview.Left + pw + Dlg.CtrlGap * 2,
       Dlg.pboxPreview.Top, pw, ph);
-    // Kolor tuszu: w wolnej kolumnie pod podgladem 100%, na wysokosci ramki Styl.
-    Dlg.rgAccent.SetBounds(Dlg.pboxZoom.Left, Dlg.rgStyle.Top, Dlg.rgStyle.Width,
-      Dlg.rgStyle.Height);
-
     Dlg.ApplyPreview;
 
-    Dlg.FitToContent(Dlg.CtrlGap * 2, Dlg.CtrlGap * 3);
-    // Przy obrazie pionowym (podglady wezsze niz 400 px) obie ramki mialy 400 px
-    // z .dfm: Kolor tuszu zaslanial prawa krawedz Stylu i wystawal poza okno.
+    // szerokosc z pary podgladow (suwaki z .dfm stoja jeszcze po lewej, wezsze)
+    Dlg.ButtonsToLeft([Dlg.btnOK, Dlg.btnCancel], Dlg.SectionGap);
+    Dlg.FitToContent(Dlg.SectionGap, Dlg.SectionGap);
+    Dlg.ClientWidth := pw + Dlg.CtrlGap * 2 + pw + Dlg.SectionGap * 2;
     PlaceColumns;
     // Gdy kolumna jest za waska na napisy przelacznikow (np. DE „Pop-Art – zwei
-    // Farben” przy zdjeciu pionowym), okno jest szersze - nie wyzsze, bo
-    // wysokosc ogranicza ekran. Poszerzenie o W daje kazdej kolumnie W/2
-    // (podglady sa wysrodkowane), stad 2 x wiekszy niedobor.
+    // Farben” przy zdjeciu pionowym) albo na suwak, okno jest szersze - nie
+    // wyzsze, bo wysokosc ogranicza ekran. Poszerzenie o W daje kazdej kolumnie
+    // W/2 (podglady sa wysrodkowane), stad 2 x wiekszy niedobor.
     Short := Max(GroupNeedW(Dlg.rgStyle) - Dlg.rgStyle.Width,
-      GroupNeedW(Dlg.rgAccent) - Dlg.rgAccent.Width);
+      SliderMinW - Dlg.tbColors.Width);
     if Short > 0 then
     begin
       Dlg.ClientWidth := Dlg.ClientWidth + Short * 2 + 1;
       PlaceColumns;
     end;
-    Dlg.AlignButtonsRight([Dlg.btnOK, Dlg.btnCancel], Dlg.CtrlGap * 3);
+    // wysokosc z zawartosci, margines dolny jak w innych oknach
+    Dlg.FitHeight(Dlg.SectionGap);
+    Dlg.AlignButtonsRight([Dlg.btnOK, Dlg.btnCancel], Dlg.SectionGap);
 
     if Dlg.ShowModal = mrOk then
     begin
@@ -357,10 +490,37 @@ begin
   FZoomTimer.Interval := 400;
   FZoomTimer.Enabled := False;
   FZoomTimer.OnTimer := ZoomTimerTick;
+  FWorkTimer := TTimer.Create(Self);
+  FWorkTimer.Interval := 50;
+  FWorkTimer.Enabled := False;
+  FWorkTimer.OnTimer := WorkTimerTick;
+  FStatus := TLabel.Create(Self);
+  FStatus.Parent := rgAccent.Parent;
+  FStatus.StyleElements := [seClient, seBorder];
+  FStatus.Caption := T('Processing...');
+  FStatus.Visible := False;
+end;
+
+// Napis „Przetwarzanie…” pod ramka Kolor tuszu, gdy podglady czekaja na nowy
+// pelny wynik (zmiana ustawien, liczenie w tle albo czekanie na start).
+procedure TComicDlg.UpdateStatus;
+begin
+  if FStatus = nil then Exit;
+  FStatus.SetBounds(rgAccent.Left, rgAccent.Top + rgAccent.Height + RowGap,
+    FStatus.Width, FStatus.Height);
+  FStatus.Visible := (FFullBmp <> nil) and
+    ((FWorker <> nil) or FPending or FZoomTimer.Enabled);
 end;
 
 procedure TComicDlg.FormDestroy(Sender: TObject);
 begin
+  // DoComic nie ma punktow przerwania - zamkniecie okna w trakcie liczenia
+  // czeka na koniec watku (watek pracuje na wlasnej kopii obrazu).
+  if FWorker <> nil then
+  begin
+    FWorker.WaitFor;
+    FreeAndNil(FWorker);
+  end;
   FOriginalPreview.Free;
   FWorkingPreview.Free;
   FZoomBmp.Free;
@@ -410,10 +570,17 @@ end;
 procedure TComicDlg.ApplyPreview;
 begin
   if not Assigned(FOriginalPreview) or not Assigned(FWorkingPreview) then Exit;
-  FWorkingPreview.Canvas.Draw(0, 0, FOriginalPreview);
-  DoComic(FWorkingPreview, rgStyle.ItemIndex, tbColors.Position, tbEdge.Position,
-    tbThick.Position, rgAccent.ItemIndex);
-  pboxPreview.Invalidate;
+  // Szybki podglad z miniatury tylko do pierwszego pelnego wyniku: ma inna
+  // skale (np. raster) niz wynik, wiec pozniej przeskakiwanie miniatura <->
+  // pelny wynik migotalo. Potem nawigator i podglad 100% zostaja przy
+  // ostatnim pelnym wyniku, a napis „Przetwarzanie…” mowi, ze sa stare.
+  if FFullBmp = nil then
+  begin
+    FWorkingPreview.Canvas.Draw(0, 0, FOriginalPreview);
+    DoComic(FWorkingPreview, rgStyle.ItemIndex, tbColors.Position, tbEdge.Position,
+      tbThick.Position, rgAccent.ItemIndex);
+    pboxPreview.Invalidate;
+  end;
   // Podglad 100% do przeliczenia - po ustaniu zmian (restart timera), bo
   // wymaga efektu na calym obrazie.
   FFullValid := False;
@@ -422,48 +589,102 @@ begin
     FZoomTimer.Enabled := False;
     FZoomTimer.Enabled := True;
   end;
+  UpdateStatus;
 end;
 
 // Efekt Komiksu nie jest lokalny (skala robocza, plamy i siatka rastra zaleza
 // od wymiarow calego obrazu), wiec - inaczej niz w frmRastrCmykDlg - wycinek
 // nie moze byc liczony osobno: wierny 1:1 to fragment wyniku na pelnym obrazie.
-// Liczony raz po zmianie parametrow; ruch myszy tylko kopiuje fragment.
+// Liczony raz po zmianie parametrow (w tle, TComicWorker); ruch myszy tylko
+// kopiuje fragment.
 procedure TComicDlg.ZoomTimerTick(Sender: TObject);
-var
-  OldCursor: TCursor;
 begin
   FZoomTimer.Enabled := False;
+  StartFullWork;
+  UpdateStatus;
+end;
+
+function TComicDlg.CurrentParams: TComicParams;
+begin
+  Result.Style := rgStyle.ItemIndex;
+  Result.Colors := tbColors.Position;
+  Result.Edge := tbEdge.Position;
+  Result.Thick := tbThick.Position;
+  Result.Accent := rgAccent.ItemIndex;
+end;
+
+function SameComicParams(const A, B: TComicParams): Boolean;
+begin
+  Result := (A.Style = B.Style) and (A.Colors = B.Colors) and (A.Edge = B.Edge) and
+    (A.Thick = B.Thick) and (A.Accent = B.Accent);
+end;
+
+// Start liczenia pelnego obrazu w tle. Gdy watek juz liczy - zapamietaj, ze
+// po nim trzeba policzyc jeszcze raz (biezace ustawienia).
+procedure TComicDlg.StartFullWork;
+begin
   if FSourceBmp = nil then Exit;
-  OldCursor := Screen.Cursor;
-  Screen.Cursor := crHourGlass;
-  try
-    if FFullBmp = nil then
-      FFullBmp := TBitmap.Create;
-    FFullBmp.Assign(FSourceBmp);
-    FFullBmp.PixelFormat := pf24bit;
-    DoComic(FFullBmp, rgStyle.ItemIndex, tbColors.Position, tbEdge.Position,
-      tbThick.Position, rgAccent.ItemIndex);
-    FFullValid := True;
-    // Nawigator = pomniejszony wynik pelnego obrazu (HALFTONE usrednia kropki).
-    // Efekt liczony na miniaturze ma inna skale - np. raster CMYK Komiksu 2
-    // dostaje tam siatke 2 px i falszywe kolory - wiec zostaje tylko szybkim
-    // podgladem na czas przeliczania.
-    SetStretchBltMode(FWorkingPreview.Canvas.Handle, HALFTONE);
-    SetBrushOrgEx(FWorkingPreview.Canvas.Handle, 0, 0, nil);
-    StretchBlt(FWorkingPreview.Canvas.Handle, 0, 0, FWorkingPreview.Width,
-      FWorkingPreview.Height, FFullBmp.Canvas.Handle, 0, 0, FFullBmp.Width,
-      FFullBmp.Height, SRCCOPY);
-  finally
-    Screen.Cursor := OldCursor;
+  if FWorker <> nil then
+  begin
+    FPending := True;
+    Exit;
   end;
+  FPending := False;
+  FWorker := TComicWorker.Create(FSourceBmp, CurrentParams);
+  FWorker.Start;
+  FWorkTimer.Enabled := True;
+end;
+
+// Odbior wyniku w watku glownym. Wynik dla nieaktualnych ustawien odrzucany.
+procedure TComicDlg.TakeWorkerResult;
+var
+  W: TComicWorker;
+begin
+  W := FWorker;
+  FWorker := nil;
+  if W = nil then Exit;
+  try
+    W.WaitFor;
+    if not SameComicParams(W.Params, CurrentParams) then Exit;
+    FFullBmp.Free;
+    FFullBmp := W.Bmp;
+    W.Bmp := nil;
+    FFullParams := W.Params;
+    FFullValid := True;
+  finally
+    W.Free;
+  end;
+  // Nawigator = pomniejszony wynik pelnego obrazu (HALFTONE usrednia kropki).
+  // Efekt liczony na miniaturze ma inna skale - np. raster CMYK Komiksu 2
+  // dostaje tam siatke 2 px i falszywe kolory - wiec zostaje tylko szybkim
+  // podgladem na czas przeliczania.
+  SetStretchBltMode(FWorkingPreview.Canvas.Handle, HALFTONE);
+  SetBrushOrgEx(FWorkingPreview.Canvas.Handle, 0, 0, nil);
+  StretchBlt(FWorkingPreview.Canvas.Handle, 0, 0, FWorkingPreview.Width,
+    FWorkingPreview.Height, FFullBmp.Canvas.Handle, 0, 0, FFullBmp.Width,
+    FFullBmp.Height, SRCCOPY);
   RenderFragment;
   pboxPreview.Invalidate;
   pboxZoom.Invalidate;
 end;
 
+procedure TComicDlg.WorkTimerTick(Sender: TObject);
+begin
+  if (FWorker <> nil) and FWorker.Finished then
+  begin
+    TakeWorkerResult;
+    if FPending then StartFullWork;
+  end;
+  if FWorker = nil then
+    FWorkTimer.Enabled := False;
+  UpdateStatus;
+end;
+
 procedure TComicDlg.RenderFragment;
 begin
-  if (FZoomBmp = nil) or (FFullBmp = nil) or not FFullValid then Exit;
+  // Fragment z ostatniego pelnego wyniku, takze w trakcie liczenia nowego
+  // (FFullValid = False) - ruch myszy dalej przesuwa fragment.
+  if (FZoomBmp = nil) or (FFullBmp = nil) then Exit;
   FZoomBmp.Canvas.CopyRect(Rect(0, 0, FZoomW, FZoomH), FFullBmp.Canvas,
     Rect(FZoomX, FZoomY, FZoomX + FZoomW, FZoomY + FZoomH));
 end;
@@ -538,10 +759,17 @@ begin
   end;
 end;
 
+// OK: gdy w tle liczy sie albo jest juz policzony wynik dla biezacych
+// ustawien - przejmij go zamiast liczyc drugi raz.
 procedure TComicDlg.ApplyFull;
 begin
-  DoComic(FSourceBmp, rgStyle.ItemIndex, tbColors.Position, tbEdge.Position,
-    tbThick.Position, rgAccent.ItemIndex);
+  if FWorker <> nil then
+    TakeWorkerResult;
+  if FFullValid and (FFullBmp <> nil) and SameComicParams(FFullParams, CurrentParams) then
+    FSourceBmp.Assign(FFullBmp)
+  else
+    DoComic(FSourceBmp, rgStyle.ItemIndex, tbColors.Position, tbEdge.Position,
+      tbThick.Position, rgAccent.ItemIndex);
 end;
 
 procedure TComicDlg.pboxPreviewPaint(Sender: TObject);

@@ -273,6 +273,7 @@ begin
     Dlg.FSoft := Dlg.tbSoft.Position;
     Dlg.ApplyPreview;
 
+    Dlg.ButtonsToLeft([Dlg.btnOK, Dlg.btnCancel], Dlg.CtrlGap * 3);
     Dlg.FitToContent(Dlg.CtrlGap * 2, Dlg.CtrlGap * 3);
 
     // Para podgladow wycentrowana w szerokosci okna.

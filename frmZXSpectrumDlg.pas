@@ -75,6 +75,12 @@ begin
     end;
 
     FitPreviewToDialog(Dlg, Dlg.pboxPreview, pw, ph);
+    // przyciski pod ostatnia ramka z odstepem - przy 12 pt ramka kleila sie
+    // do przyciskow (pozycje z .dfm pod 9 pt)
+    Dlg.FitRadioGroupHeight(Dlg.rgDither);
+    Dlg.btnOK.Top := Dlg.StackBelow(Dlg.rgDither, Dlg.SectionGap);
+    Dlg.btnCancel.Top := Dlg.btnOK.Top;
+    Dlg.FitHeight(Dlg.SectionGap);
 
     Dlg.ApplyPreview;
 

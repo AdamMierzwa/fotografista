@@ -482,292 +482,50 @@ begin
     [170, 0, 255, 187]);
 end;
 
-procedure ApplyMagicWB(Bitmap: TBitmap; Dither: Boolean);
+procedure RemapToPalette(Bitmap: TBitmap; const PalR, PalG, PalB: array of Byte;
+  Dither: Boolean);
+// Mapowanie do palety (odpowiednik Hollywood RemapBrush({Dither = dither})).
+// Efekty amigowe: Hollywood jest wzorcem wygladu (RemapBrush z biblioteki,
+// jedyny tryb roztrzasania Hollywood to Floyd-Steinberg - docs\06_Hollywood_
+// lib_object_string.txt:2852-2855). Od 2026-10-25 Floyd-Steinberg (7/16, 3/16,
+// 5/16, 1/16, raster L->R) zamiast Atkinsona. Blad kazdego kanalu obciety do
+// +-MaxErr: dobrane porownaniem z wynikiem RemapBrush (MagicWB na zdjeciu
+// testowym) - przy 32 udzialy 8 kolorow roznia sie lacznie o 1,4 pp, pelny
+// blad rozjasnial cienie (szarosc zamiast czerni i niebieskiego). Dobor
+// najblizszego koloru wazony percepcyjnie (ITU-R BT.601) w obu sciezkach.
 const
-  PalR: array[0..7] of Byte = ($95, $00, $FF, $3B, $7B, $AF, $AA, $FF);
-  PalG: array[0..7] of Byte = ($95, $00, $FF, $67, $7B, $AF, $90, $A9);
-  PalB: array[0..7] of Byte = ($95, $00, $FF, $A2, $7B, $AF, $7C, $97);
-  // Wazenie percepcyjne kanalow przy szukaniu najblizszego koloru palety,
-  // standard ITU-R BT.601 (luma): R*0.299 + G*0.587 + B*0.114 (skalowane
-  // x1000, liczby calkowite). Oko jest dużo czulsze na jasnosc (zielen) niz
-  // na barwe (niebieski) - naiwny, niewazony Euklides w RGB nie jest
-  // poprawnym dopasowaniem koloru do palety.
   WR = 299; WG = 587; WB = 114;
+  MaxErr = 32;
 var
-  W, H, X, Y, I, Best, BestD, D, PrR, PrG, PrB: Integer;
-  K, Col, Idx, Dir: Integer;
-  LTR: Boolean;
+  W, H, X, Y, I, N, Best, PrR, PrG, PrB, ErrR, ErrG, ErrB, Idx: Integer;
   Row: PRGBTripleArray;
-  Er, Eg, Eb, ErN, EgN, EbN, ErN2, EgN2, EbN2: array of Integer;
-begin
-  W := Bitmap.Width;
-  H := Bitmap.Height;
-  if (W = 0) or (H = 0) then Exit;
+  Er, Eg, Eb, ErN, EgN, EbN: array of Integer;
 
-  if Dither then
+  function Nearest(R, G, B: Integer): Integer;
+  var
+    J, DJ, BD: Integer;
   begin
-    // Dithering Atkinsona (Bill Atkinson, Apple, lata 80.) zamiast Floyd-Steinberga.
-    // Rozprasza tylko 6/8 bledu (2 piksele w prawo/lewo w tym samym wierszu az do
-    // Idx+-2, plus 3 piksele w nastepnym wierszu, plus 1 piksel dwa wiersze nizej) -
-    // reszte bledu (1/4) odrzuca, co daje jasniejszy, bardziej kontrastowy obraz
-    // niz FS. Skanowanie wezykiem jak poprzednio.
-    SetLength(Er, W + 4);
-    SetLength(Eg, W + 4);
-    SetLength(Eb, W + 4);
-    SetLength(ErN, W + 4);
-    SetLength(EgN, W + 4);
-    SetLength(EbN, W + 4);
-    SetLength(ErN2, W + 4);
-    SetLength(EgN2, W + 4);
-    SetLength(EbN2, W + 4);
-    for I := 0 to W + 3 do
+    Result := 0;
+    BD := MaxInt;
+    for J := 0 to N do
     begin
-      Er[I] := 0; Eg[I] := 0; Eb[I] := 0;
-      ErN[I] := 0; EgN[I] := 0; EbN[I] := 0;
-      ErN2[I] := 0; EgN2[I] := 0; EbN2[I] := 0;
-    end;
-
-    for Y := 0 to H - 1 do
-    begin
-      Row := Bitmap.ScanLine[Y];
-      LTR := (Y and 1) = 0;
-      if LTR then Dir := 1 else Dir := -1;
-      for K := 0 to W - 1 do
+      DJ := WR * (R - PalR[J]) * (R - PalR[J]) +
+            WG * (G - PalG[J]) * (G - PalG[J]) +
+            WB * (B - PalB[J]) * (B - PalB[J]);
+      if DJ < BD then
       begin
-        if LTR then Col := K else Col := W - 1 - K;
-        Idx := Col + 2;
-
-        PrR := Row[Col].rgbtRed + Er[Idx] div 8;
-        PrG := Row[Col].rgbtGreen + Eg[Idx] div 8;
-        PrB := Row[Col].rgbtBlue + Eb[Idx] div 8;
-        if PrR < 0 then PrR := 0 else if PrR > 255 then PrR := 255;
-        if PrG < 0 then PrG := 0 else if PrG > 255 then PrG := 255;
-        if PrB < 0 then PrB := 0 else if PrB > 255 then PrB := 255;
-
-        Best := 0;
-        BestD := MaxInt;
-        for I := 0 to 7 do
-        begin
-          D := (PrR - PalR[I]) * (PrR - PalR[I]) +
-               (PrG - PalG[I]) * (PrG - PalG[I]) +
-               (PrB - PalB[I]) * (PrB - PalB[I]);
-          if D < BestD then
-          begin
-            BestD := D;
-            Best := I;
-          end;
-        end;
-
-        // 6 sasiadow x 1/8, reszta bledu (1/4) odrzucona - charakterystyka Atkinsona.
-        Er[Idx + Dir]     := Er[Idx + Dir]     + (PrR - PalR[Best]);
-        Er[Idx + 2*Dir]   := Er[Idx + 2*Dir]   + (PrR - PalR[Best]);
-        ErN[Idx - Dir]    := ErN[Idx - Dir]    + (PrR - PalR[Best]);
-        ErN[Idx]          := ErN[Idx]          + (PrR - PalR[Best]);
-        ErN[Idx + Dir]    := ErN[Idx + Dir]    + (PrR - PalR[Best]);
-        ErN2[Idx]         := ErN2[Idx]         + (PrR - PalR[Best]);
-
-        Eg[Idx + Dir]     := Eg[Idx + Dir]     + (PrG - PalG[Best]);
-        Eg[Idx + 2*Dir]   := Eg[Idx + 2*Dir]   + (PrG - PalG[Best]);
-        EgN[Idx - Dir]    := EgN[Idx - Dir]    + (PrG - PalG[Best]);
-        EgN[Idx]          := EgN[Idx]          + (PrG - PalG[Best]);
-        EgN[Idx + Dir]    := EgN[Idx + Dir]    + (PrG - PalG[Best]);
-        EgN2[Idx]         := EgN2[Idx]         + (PrG - PalG[Best]);
-
-        Eb[Idx + Dir]     := Eb[Idx + Dir]     + (PrB - PalB[Best]);
-        Eb[Idx + 2*Dir]   := Eb[Idx + 2*Dir]   + (PrB - PalB[Best]);
-        EbN[Idx - Dir]    := EbN[Idx - Dir]    + (PrB - PalB[Best]);
-        EbN[Idx]          := EbN[Idx]          + (PrB - PalB[Best]);
-        EbN[Idx + Dir]    := EbN[Idx + Dir]    + (PrB - PalB[Best]);
-        EbN2[Idx]         := EbN2[Idx]         + (PrB - PalB[Best]);
-
-        Row[Col].rgbtRed := PalR[Best];
-        Row[Col].rgbtGreen := PalG[Best];
-        Row[Col].rgbtBlue := PalB[Best];
-      end;
-      for I := 0 to W + 3 do
-      begin
-        Er[I] := ErN[I]; ErN[I] := ErN2[I]; ErN2[I] := 0;
-        Eg[I] := EgN[I]; EgN[I] := EgN2[I]; EgN2[I] := 0;
-        Eb[I] := EbN[I]; EbN[I] := EbN2[I]; EbN2[I] := 0;
-      end;
-    end;
-  end
-  else
-  begin
-    // Plain nearest-match, no dither
-    for Y := 0 to H - 1 do
-    begin
-      Row := Bitmap.ScanLine[Y];
-      for X := 0 to W - 1 do
-      begin
-        Best := 0;
-        BestD := MaxInt;
-        for I := 0 to 7 do
-        begin
-          D := WR * (Row[X].rgbtRed - PalR[I]) * (Row[X].rgbtRed - PalR[I]) +
-               WG * (Row[X].rgbtGreen - PalG[I]) * (Row[X].rgbtGreen - PalG[I]) +
-               WB * (Row[X].rgbtBlue - PalB[I]) * (Row[X].rgbtBlue - PalB[I]);
-          if D < BestD then
-          begin
-            BestD := D;
-            Best := I;
-          end;
-        end;
-        Row[X].rgbtRed := PalR[Best];
-        Row[X].rgbtGreen := PalG[Best];
-        Row[X].rgbtBlue := PalB[Best];
+        BD := DJ;
+        Result := J;
       end;
     end;
   end;
-end;
 
-procedure RemapToPalette(Bitmap: TBitmap; const PalR, PalG, PalB: array of Byte;
-  Dither: Boolean);
-// Mapowanie do palety (odpowiednik Hollywood RemapBrush({Dither = dither})):
-// Dithering Atkinsona (6 sasiadow, waga 1/8 kazdy) gdy Dither, inaczej nearest-match.
-// Dobor najblizszego koloru wazony percepcyjnie (ITU-R BT.601), tak jak w ApplyMagicWB.
-const
-  WR = 299; WG = 587; WB = 114;
-  MaxErr = 48; // clamping bledu dithera (patrz komentarz przy uzyciu nizej)
-var
-  W, H, X, Y, I, N, Best, BestD, D, PrR, PrG, PrB: Integer;
-  K, Col, Idx, Dir, ErrR, ErrG, ErrB: Integer;
-  LTR: Boolean;
-  Row: PRGBTripleArray;
-  Er, Eg, Eb, ErN, EgN, EbN, ErN2, EgN2, EbN2: array of Integer;
 begin
   W := Bitmap.Width;
   H := Bitmap.Height;
   if (W = 0) or (H = 0) then Exit;
   if Bitmap.PixelFormat <> pf24bit then Bitmap.PixelFormat := pf24bit;
   N := High(PalR);
-
-  if Dither then
-  begin
-    // Dithering Atkinsona - patrz ApplyMagicWB. Ta sama funkcja RemapBrush
-    // w Hollywood obsluguje OCS/AGA/WB256/EHB co MagicWB, wiec ten sam
-    // algorytm dithering powinien tu obowiazywac.
-    SetLength(Er, W + 4); SetLength(Eg, W + 4); SetLength(Eb, W + 4);
-    SetLength(ErN, W + 4); SetLength(EgN, W + 4); SetLength(EbN, W + 4);
-    SetLength(ErN2, W + 4); SetLength(EgN2, W + 4); SetLength(EbN2, W + 4);
-    for I := 0 to W + 3 do
-    begin
-      Er[I] := 0; Eg[I] := 0; Eb[I] := 0;
-      ErN[I] := 0; EgN[I] := 0; EbN[I] := 0;
-      ErN2[I] := 0; EgN2[I] := 0; EbN2[I] := 0;
-    end;
-
-    for Y := 0 to H - 1 do
-    begin
-      Row := Bitmap.ScanLine[Y];
-      LTR := (Y and 1) = 0;
-      if LTR then Dir := 1 else Dir := -1;
-      for K := 0 to W - 1 do
-      begin
-        if LTR then Col := K else Col := W - 1 - K;
-        Idx := Col + 2;
-
-        PrR := Row[Col].rgbtRed + Er[Idx] div 8;
-        PrG := Row[Col].rgbtGreen + Eg[Idx] div 8;
-        PrB := Row[Col].rgbtBlue + Eb[Idx] div 8;
-        if PrR < 0 then PrR := 0 else if PrR > 255 then PrR := 255;
-        if PrG < 0 then PrG := 0 else if PrG > 255 then PrG := 255;
-        if PrB < 0 then PrB := 0 else if PrB > 255 then PrB := 255;
-
-        Best := 0; BestD := MaxInt;
-        for I := 0 to N do
-        begin
-          D := (PrR - PalR[I]) * (PrR - PalR[I]) +
-               (PrG - PalG[I]) * (PrG - PalG[I]) +
-               (PrB - PalB[I]) * (PrB - PalB[I]);
-          if D < BestD then
-          begin
-            BestD := D; Best := I;
-          end;
-        end;
-
-        // Clamping bledu przed rozproszeniem - przy rzadkich/nasyconych paletach
-        // (np. OCS32) pojedynczy piksel moze miec bardzo duzy blad kwantyzacji,
-        // co przy rozproszeniu tworzy nadmiernie widoczne smugi. Ograniczamy
-        // ekstremalne przypadki; wiekszosc pikseli (male bledy) nie jest dotknieta.
-        ErrR := PrR - PalR[Best];
-        ErrG := PrG - PalG[Best];
-        ErrB := PrB - PalB[Best];
-        if ErrR > MaxErr then ErrR := MaxErr else if ErrR < -MaxErr then ErrR := -MaxErr;
-        if ErrG > MaxErr then ErrG := MaxErr else if ErrG < -MaxErr then ErrG := -MaxErr;
-        if ErrB > MaxErr then ErrB := MaxErr else if ErrB < -MaxErr then ErrB := -MaxErr;
-        Er[Idx + Dir]     := Er[Idx + Dir]     + ErrR;
-        Er[Idx + 2*Dir]   := Er[Idx + 2*Dir]   + ErrR;
-        ErN[Idx - Dir]    := ErN[Idx - Dir]    + ErrR;
-        ErN[Idx]          := ErN[Idx]          + ErrR;
-        ErN[Idx + Dir]    := ErN[Idx + Dir]    + ErrR;
-        ErN2[Idx]         := ErN2[Idx]         + ErrR;
-        Eg[Idx + Dir]     := Eg[Idx + Dir]     + ErrG;
-        Eg[Idx + 2*Dir]   := Eg[Idx + 2*Dir]   + ErrG;
-        EgN[Idx - Dir]    := EgN[Idx - Dir]    + ErrG;
-        EgN[Idx]          := EgN[Idx]          + ErrG;
-        EgN[Idx + Dir]    := EgN[Idx + Dir]    + ErrG;
-        EgN2[Idx]         := EgN2[Idx]         + ErrG;
-        Eb[Idx + Dir]     := Eb[Idx + Dir]     + ErrB;
-        Eb[Idx + 2*Dir]   := Eb[Idx + 2*Dir]   + ErrB;
-        EbN[Idx - Dir]    := EbN[Idx - Dir]    + ErrB;
-        EbN[Idx]          := EbN[Idx]          + ErrB;
-        EbN[Idx + Dir]    := EbN[Idx + Dir]    + ErrB;
-        EbN2[Idx]         := EbN2[Idx]         + ErrB;
-
-        Row[Col].rgbtRed := PalR[Best];
-        Row[Col].rgbtGreen := PalG[Best];
-        Row[Col].rgbtBlue := PalB[Best];
-      end;
-      for I := 0 to W + 3 do
-      begin
-        Er[I] := ErN[I]; ErN[I] := ErN2[I]; ErN2[I] := 0;
-        Eg[I] := EgN[I]; EgN[I] := EgN2[I]; EgN2[I] := 0;
-        Eb[I] := EbN[I]; EbN[I] := EbN2[I]; EbN2[I] := 0;
-      end;
-    end;
-  end
-  else
-  begin
-    for Y := 0 to H - 1 do
-    begin
-      Row := Bitmap.ScanLine[Y];
-      for X := 0 to W - 1 do
-      begin
-        Best := 0; BestD := MaxInt;
-        for I := 0 to N do
-        begin
-          D := WR * (Row[X].rgbtRed - PalR[I]) * (Row[X].rgbtRed - PalR[I]) +
-               WG * (Row[X].rgbtGreen - PalG[I]) * (Row[X].rgbtGreen - PalG[I]) +
-               WB * (Row[X].rgbtBlue - PalB[I]) * (Row[X].rgbtBlue - PalB[I]);
-          if D < BestD then
-          begin
-            BestD := D; Best := I;
-          end;
-        end;
-        Row[X].rgbtRed := PalR[Best];
-        Row[X].rgbtGreen := PalG[Best];
-        Row[X].rgbtBlue := PalB[Best];
-      end;
-    end;
-  end;
-end;
-
-procedure ApplyOCS32(Bitmap: TBitmap; Dither: Boolean);
-const
-  WR = 299; WG = 587; WB = 114;
-  MaxErr = 48;
-var
-  W, H, X, Y, I, N, Best, BestD, D, PrR, PrG, PrB: Integer;
-  ErrR, ErrG, ErrB: Integer;
-  Row: PRGBTripleArray;
-  Er, Eg, Eb, ErN, EgN, EbN, ErN2, EgN2, EbN2: array of Integer;
-begin
-  W := Bitmap.Width;
-  H := Bitmap.Height;
-  if (W = 0) or (H = 0) then Exit;
-  if Bitmap.PixelFormat <> pf24bit then Bitmap.PixelFormat := pf24bit;
-  N := High(OCS32_R);
 
   if not Dither then
   begin
@@ -776,34 +534,23 @@ begin
       Row := Bitmap.ScanLine[Y];
       for X := 0 to W - 1 do
       begin
-        Best := 0; BestD := MaxInt;
-        for I := 0 to N do
-        begin
-          D := WR * (Row[X].rgbtRed - OCS32_R[I]) * (Row[X].rgbtRed - OCS32_R[I]) +
-               WG * (Row[X].rgbtGreen - OCS32_G[I]) * (Row[X].rgbtGreen - OCS32_G[I]) +
-               WB * (Row[X].rgbtBlue - OCS32_B[I]) * (Row[X].rgbtBlue - OCS32_B[I]);
-          if D < BestD then
-          begin
-            BestD := D; Best := I;
-          end;
-        end;
-        Row[X].rgbtRed := OCS32_R[Best];
-        Row[X].rgbtGreen := OCS32_G[Best];
-        Row[X].rgbtBlue := OCS32_B[Best];
+        Best := Nearest(Row[X].rgbtRed, Row[X].rgbtGreen, Row[X].rgbtBlue);
+        Row[X].rgbtRed := PalR[Best];
+        Row[X].rgbtGreen := PalG[Best];
+        Row[X].rgbtBlue := PalB[Best];
       end;
     end;
     Exit;
   end;
 
-  // Dithering Atkinsona - czysty raster L->R (bez serpentyny, eliminuje "wezyki")
-  SetLength(Er, W + 4); SetLength(Eg, W + 4); SetLength(Eb, W + 4);
-  SetLength(ErN, W + 4); SetLength(EgN, W + 4); SetLength(EbN, W + 4);
-  SetLength(ErN2, W + 4); SetLength(EgN2, W + 4); SetLength(EbN2, W + 4);
-  for I := 0 to W + 3 do
+  // Bledy w szesnastkach: wiersz biezacy (Er) i nastepny (ErN), z marginesem
+  // 1 piksela po obu stronach (Idx = X + 1).
+  SetLength(Er, W + 2); SetLength(Eg, W + 2); SetLength(Eb, W + 2);
+  SetLength(ErN, W + 2); SetLength(EgN, W + 2); SetLength(EbN, W + 2);
+  for I := 0 to W + 1 do
   begin
     Er[I] := 0; Eg[I] := 0; Eb[I] := 0;
     ErN[I] := 0; EgN[I] := 0; EbN[I] := 0;
-    ErN2[I] := 0; EgN2[I] := 0; EbN2[I] := 0;
   end;
 
   for Y := 0 to H - 1 do
@@ -811,68 +558,55 @@ begin
     Row := Bitmap.ScanLine[Y];
     for X := 0 to W - 1 do
     begin
-      var Idx := X + 2;
-
-      PrR := Row[X].rgbtRed + Er[Idx] div 8;
-      PrG := Row[X].rgbtGreen + Eg[Idx] div 8;
-      PrB := Row[X].rgbtBlue + Eb[Idx] div 8;
+      Idx := X + 1;
+      PrR := Row[X].rgbtRed + Er[Idx] div 16;
+      PrG := Row[X].rgbtGreen + Eg[Idx] div 16;
+      PrB := Row[X].rgbtBlue + Eb[Idx] div 16;
       if PrR < 0 then PrR := 0 else if PrR > 255 then PrR := 255;
       if PrG < 0 then PrG := 0 else if PrG > 255 then PrG := 255;
       if PrB < 0 then PrB := 0 else if PrB > 255 then PrB := 255;
 
-      Best := 0; BestD := MaxInt;
-      for I := 0 to N do
-      begin
-        D := WR * (PrR - OCS32_R[I]) * (PrR - OCS32_R[I]) +
-             WG * (PrG - OCS32_G[I]) * (PrG - OCS32_G[I]) +
-             WB * (PrB - OCS32_B[I]) * (PrB - OCS32_B[I]);
-        if D < BestD then
-        begin
-          BestD := D; Best := I;
-        end;
-      end;
-
-      ErrR := PrR - OCS32_R[Best];
-      ErrG := PrG - OCS32_G[Best];
-      ErrB := PrB - OCS32_B[Best];
+      Best := Nearest(PrR, PrG, PrB);
+      ErrR := PrR - PalR[Best];
+      ErrG := PrG - PalG[Best];
+      ErrB := PrB - PalB[Best];
       if ErrR > MaxErr then ErrR := MaxErr else if ErrR < -MaxErr then ErrR := -MaxErr;
       if ErrG > MaxErr then ErrG := MaxErr else if ErrG < -MaxErr then ErrG := -MaxErr;
       if ErrB > MaxErr then ErrB := MaxErr else if ErrB < -MaxErr then ErrB := -MaxErr;
 
-      // Rozproszenie Atkinsona L->R
-      Er[Idx + 1]     := Er[Idx + 1]     + ErrR;
-      Er[Idx + 2]     := Er[Idx + 2]     + ErrR;
-      ErN[Idx - 1]    := ErN[Idx - 1]    + ErrR;
-      ErN[Idx]        := ErN[Idx]        + ErrR;
-      ErN[Idx + 1]    := ErN[Idx + 1]    + ErrR;
-      ErN2[Idx]       := ErN2[Idx]       + ErrR;
+      // Floyd-Steinberg: prawo 7/16, lewo-dol 3/16, dol 5/16, prawo-dol 1/16
+      Inc(Er[Idx + 1], ErrR * 7);  Inc(Eg[Idx + 1], ErrG * 7);  Inc(Eb[Idx + 1], ErrB * 7);
+      Inc(ErN[Idx - 1], ErrR * 3); Inc(EgN[Idx - 1], ErrG * 3); Inc(EbN[Idx - 1], ErrB * 3);
+      Inc(ErN[Idx], ErrR * 5);     Inc(EgN[Idx], ErrG * 5);     Inc(EbN[Idx], ErrB * 5);
+      Inc(ErN[Idx + 1], ErrR);     Inc(EgN[Idx + 1], ErrG);     Inc(EbN[Idx + 1], ErrB);
 
-      Eg[Idx + 1]     := Eg[Idx + 1]     + ErrG;
-      Eg[Idx + 2]     := Eg[Idx + 2]     + ErrG;
-      EgN[Idx - 1]    := EgN[Idx - 1]    + ErrG;
-      EgN[Idx]        := EgN[Idx]        + ErrG;
-      EgN[Idx + 1]    := EgN[Idx + 1]    + ErrG;
-      EgN2[Idx]       := EgN2[Idx]       + ErrG;
-
-      Eb[Idx + 1]     := Eb[Idx + 1]     + ErrB;
-      Eb[Idx + 2]     := Eb[Idx + 2]     + ErrB;
-      EbN[Idx - 1]    := EbN[Idx - 1]    + ErrB;
-      EbN[Idx]        := EbN[Idx]        + ErrB;
-      EbN[Idx + 1]    := EbN[Idx + 1]    + ErrB;
-      EbN2[Idx]       := EbN2[Idx]       + ErrB;
-
-      Row[X].rgbtRed := OCS32_R[Best];
-      Row[X].rgbtGreen := OCS32_G[Best];
-      Row[X].rgbtBlue := OCS32_B[Best];
+      Row[X].rgbtRed := PalR[Best];
+      Row[X].rgbtGreen := PalG[Best];
+      Row[X].rgbtBlue := PalB[Best];
     end;
-
-    for I := 0 to W + 3 do
+    for I := 0 to W + 1 do
     begin
-      Er[I] := ErN[I]; ErN[I] := ErN2[I]; ErN2[I] := 0;
-      Eg[I] := EgN[I]; EgN[I] := EgN2[I]; EgN2[I] := 0;
-      Eb[I] := EbN[I]; EbN[I] := EbN2[I]; EbN2[I] := 0;
+      Er[I] := ErN[I]; ErN[I] := 0;
+      Eg[I] := EgN[I]; EgN[I] := 0;
+      Eb[I] := EbN[I]; EbN[I] := 0;
     end;
   end;
+end;
+
+procedure ApplyMagicWB(Bitmap: TBitmap; Dither: Boolean);
+const
+  PalR: array[0..7] of Byte = ($95, $00, $FF, $3B, $7B, $AF, $AA, $FF);
+  PalG: array[0..7] of Byte = ($95, $00, $FF, $67, $7B, $AF, $90, $A9);
+  PalB: array[0..7] of Byte = ($95, $00, $FF, $A2, $7B, $AF, $7C, $97);
+begin
+  // jak p_FxMagicWB: paleta 8 kolorow + RemapBrush({Dither = dither})
+  RemapToPalette(Bitmap, PalR, PalG, PalB, Dither);
+end;
+
+procedure ApplyOCS32(Bitmap: TBitmap; Dither: Boolean);
+begin
+  // jak p_FxOCS32: CreatePalette(#PALETTE_OCS) + RemapBrush({Dither = dither})
+  RemapToPalette(Bitmap, OCS32_R, OCS32_G, OCS32_B, Dither);
 end;
 
 procedure ApplyEHB(Bitmap: TBitmap; Dither: Boolean);

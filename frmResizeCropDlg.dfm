@@ -37,6 +37,7 @@
       Width = 70
       Height = 23
       TabOrder = 0
+      NumbersOnly = True
     end
     object lblHeight: TLabel
       Left = 14
@@ -52,6 +53,7 @@
       Width = 70
       Height = 23
       TabOrder = 1
+      NumbersOnly = True
     end
     object btnFullHD: TButton
       Left = 216

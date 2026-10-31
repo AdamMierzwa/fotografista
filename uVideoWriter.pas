@@ -13,7 +13,8 @@ interface
 
 uses
   System.SysUtils, System.Math,
-  Winapi.Windows,
+  Winapi.Windows, Winapi.ActiveX,
+  Winapi.DXGI, Winapi.D3D11, Winapi.D3DCommon,
   Vcl.Graphics,
   uMediaFoundation, uI18n;
 
@@ -33,16 +34,36 @@ type
     FStartupRefs: Integer;
     FFrameRateNum: Integer;
     FFrameRateDen: Integer;
-    procedure SetupWriter(const AOutputFile: string; const ASubtype: TGUID);
+    FHardware: Boolean;
+    FEncoderInfo: string;
+    FD3DDevice: IUnknown;                 // ID3D11Device wydajnej karty
+    FD3DManager: IMFDXGIDeviceManager;    // daje to urzadzenie koderowi
+    procedure QueryEncoderInfo;
+    function CreatePerformanceD3DManager: Boolean;
+    procedure SetupWriter(const AOutputFile: string; const ASubtype: TGUID;
+      AHardware, AD3D: Boolean);
     procedure FillNV12(ABmp: TBitmap; Dst: PByte);
   public
+    // AUseHardware: najpierw koder karty graficznej (Prefs.UseGPU); gdy go
+    // nie ma albo odrzuci ustawienia - koder programowy jak dotad.
     constructor Create(const AOutputPath: string; AWidth, AHeight: Integer;
-      AFPS: Double);
+      AFPS: Double; AUseHardware: Boolean = False);
     destructor Destroy; override;
     procedure AddFrame(ABmp: TBitmap);
     procedure Finalize;
     property OutputPath: string read FOutputPath;
+    // True = zapis z dopuszczonym koderem sprzetowym (Windows wybiera koder sam)
+    property Hardware: Boolean read FHardware;
+    // Czym faktycznie zakodowano film: T('graphics card') - koder sprzetowy,
+    // T('processor') - programowy, '' = nie wiadomo
+    property EncoderInfo: string read FEncoderInfo;
   end;
+
+// Karty graficzne z listy Windows (DXGI), bez programowej, kazda nazwa raz.
+// Chosen = indeks karty, ktora zapis wideo wskazuje koderowi (najwiecej
+// wlasnej pamieci graficznej - ta sama regula co CreatePerformanceD3DManager),
+// -1 = brak.
+function GraphicsAdapterNames(out Chosen: Integer): TArray<string>;
 
 implementation
 
@@ -50,7 +71,7 @@ const
   HNS_PER_SEC = 10000000;
 
 constructor TVideoWriter.Create(const AOutputPath: string; AWidth, AHeight: Integer;
-  AFPS: Double);
+  AFPS: Double; AUseHardware: Boolean);
 var
   Hr: HRESULT;
   FPS: Double;
@@ -89,8 +110,33 @@ begin
     raise EVideoWriterError.Create(T('Cannot initialize video encoding'));
   Inc(FStartupRefs);
 
+  FHardware := False;
+  // Koder sprzetowy: proba, a przy bledzie konfiguracji (brak kodera, limit
+  // rozmiaru, odrzucone ustawienia GOP/jakosci) - po cichu dalej programowo.
+  // Najpierw koder sprzetowy wydajnej karty (wskazanej przez program, bez
+  // ustawien grafiki w Windows), potem sprzetowy wybrany przez Windows.
+  if AUseHardware then
   try
-    SetupWriter(FOutputPath, MFVideoFormat_H264);
+    SetupWriter(FOutputPath, MFVideoFormat_H264, True, True);
+    FActive := True;
+    FHardware := True;
+  except
+    FSink := nil;
+    FD3DManager := nil;
+    FD3DDevice := nil;
+  end;
+  if AUseHardware and not FActive then
+  try
+    SetupWriter(FOutputPath, MFVideoFormat_H264, True, False);
+    FActive := True;
+    FHardware := True;
+  except
+    FSink := nil;
+  end;
+
+  if not FActive then
+  try
+    SetupWriter(FOutputPath, MFVideoFormat_H264, False, False);
     FActive := True;
   except
     on E: Exception do
@@ -98,7 +144,7 @@ begin
       FOutputPath := ChangeFileExt(FOutputPath, '.wmv');
       FSink := nil;
       try
-        SetupWriter(FOutputPath, MFVideoFormat_WMV3);
+        SetupWriter(FOutputPath, MFVideoFormat_WMV3, False, False);
         FActive := True;
       except
         on E2: Exception do
@@ -110,11 +156,164 @@ begin
       end;
     end;
   end;
+  QueryEncoderInfo;
+end;
+
+// Ktory koder Media Foundation faktycznie dobral: GetServiceForStream dla
+// strumienia z GUID_NULL pyta koder strumienia (MS Learn,
+// IMFSinkWriter::GetServiceForStream, Remarks). Koder sprzetowy ma w
+// GetAttributes atrybut MFT_ENUM_HARDWARE_URL_Attribute (MS Learn, "Hardware
+// MFTs"). Uzytkownik dostaje tylko to, co pewne i zrozumiale: karta graficzna
+// albo procesor (nazwy koderow - MFT, HMFT, Quick Sync - mylily, bo koder
+// posredniczacy Windows nie wystepuje na liscie koderow). Blad = ''.
+procedure TVideoWriter.QueryEncoderInfo;
+var
+  P: Pointer;
+  Mft: IMFTransform;
+  Attr: IMFAttributes;
+  W: PWideChar;
+  Len: DWORD;
+begin
+  FEncoderInfo := '';
+  if (FSink = nil) or not FActive then Exit;
+  P := nil;
+  if Failed(FSink.GetServiceForStream(FStreamIndex, GUID_NULL_MF, IID_IMFTransform, P))
+    or (P = nil) then Exit;
+  Pointer(Mft) := P;    // przejecie referencji zwroconej przez metode (bez AddRef)
+  if Failed(Mft.GetAttributes(Attr)) or (Attr = nil) then Exit;
+  if Succeeded(Attr.GetAllocatedString(MFT_ENUM_HARDWARE_URL_Attribute, W, Len)) then
+  begin
+    CoTaskMemFree(W);
+    FEncoderInfo := T('graphics card');
+  end
+  else
+    FEncoderInfo := T('processor');
+end;
+
+type
+  // Winapi.D3D10.pas:2612 ID3D10Multithread - lokalnie, bez calego Winapi.D3D10
+  ID3D10MultithreadLocal = interface(IUnknown)
+    ['{9B7E4E00-342C-4106-A19F-4F2704F689F0}']
+    procedure Enter; stdcall;
+    procedure Leave; stdcall;
+    function SetMultithreadProtected(bMTProtect: BOOL): BOOL; stdcall;
+    function GetMultithreadProtected: BOOL; stdcall;
+  end;
+
+const
+  cD3D11CreateDeviceVideoSupport = $800;   // d3d11.h:15011 (brak w Winapi.D3D11)
+  cDXGIAdapterFlagSoftware = 2;            // Winapi.DXGI.pas:527
+
+// Karty z listy Windows (DXGI), bez programowej; Best = najwiecej wlasnej
+// pamieci graficznej (IDXGIFactory6 z wyborem wg wydajnosci nie ma
+// w Winapi.DXGI). Jedna regula dla wyboru karty i dla okna Wydajnosc.
+function EnumPerformanceAdapters(out Adapters: TArray<IDXGIAdapter1>;
+  out Names: TArray<string>; out Best: Integer): Boolean;
+var
+  Factory: IDXGIFactory1;
+  Adapter: IDXGIAdapter1;
+  Desc: TDXGIAdapterDesc1;
+  BestMem: UInt64;
+  I: UINT;
+begin
+  Adapters := nil;
+  Names := nil;
+  Best := -1;
+  Result := False;
+  try
+    if Failed(CreateDXGIFactory1(IDXGIFactory1, Factory)) then Exit;
+    BestMem := 0;
+    I := 0;
+    while Succeeded(Factory.EnumAdapters1(I, Adapter)) do
+    begin
+      if Succeeded(Adapter.GetDesc1(Desc)) and
+         ((Desc.Flags and cDXGIAdapterFlagSoftware) = 0) then
+      begin
+        Adapters := Adapters + [Adapter];
+        Names := Names + [string(PWideChar(@Desc.Description[0]))];
+        if (Best < 0) or (UInt64(Desc.DedicatedVideoMemory) > BestMem) then
+        begin
+          Best := High(Adapters);
+          BestMem := UInt64(Desc.DedicatedVideoMemory);
+        end;
+      end;
+      Adapter := nil;
+      Inc(I);
+    end;
+    Result := Best >= 0;
+  except
+    // np. brak dxgi.dll (import opozniony)
+    Result := False;
+  end;
+end;
+
+function GraphicsAdapterNames(out Chosen: Integer): TArray<string>;
+var
+  Adapters: TArray<IDXGIAdapter1>;
+  Names: TArray<string>;
+  Best, I, K: Integer;
+  Dup: Boolean;
+begin
+  Result := nil;
+  Chosen := -1;
+  if not EnumPerformanceAdapters(Adapters, Names, Best) then Exit;
+  // wybrana karta pierwsza, reszta po kolei, kazda nazwa raz
+  Result := [Names[Best]];
+  Chosen := 0;
+  for I := 0 to High(Names) do
+  begin
+    Dup := False;
+    for K := 0 to High(Result) do
+      if CompareText(Result[K], Names[I]) = 0 then Dup := True;
+    if not Dup then
+      Result := Result + [Names[I]];
+  end;
+end;
+
+// Urzadzenie Direct3D 11 na wydajnej karcie i menedzer DXGI dla Sink Writera
+// (MF_SINK_WRITER_D3D_MANAGER). MFCreateDXGIDeviceManager przez GetProcAddress
+// (Windows 8+). Kazdy blad = False i dalej bez wskazania karty.
+function TVideoWriter.CreatePerformanceD3DManager: Boolean;
+var
+  CreateMgr: TMFCreateDXGIDeviceManager;
+  Adapters: TArray<IDXGIAdapter1>;
+  Names: TArray<string>;
+  Best: Integer;
+  Dev: ID3D11Device;
+  Ctx: ID3D11DeviceContext;
+  FL: D3D_FEATURE_LEVEL;
+  MT: ID3D10MultithreadLocal;
+  Token: UINT;
+  Mgr: IMFDXGIDeviceManager;
+begin
+  Result := False;
+  FD3DManager := nil;
+  FD3DDevice := nil;
+  @CreateMgr := GetProcAddress(GetModuleHandle('mfplat.dll'), 'MFCreateDXGIDeviceManager');
+  if not Assigned(CreateMgr) then Exit;
+  try
+    if not EnumPerformanceAdapters(Adapters, Names, Best) then Exit;
+    if Failed(D3D11CreateDevice(Adapters[Best], D3D_DRIVER_TYPE_UNKNOWN, 0,
+        cD3D11CreateDeviceVideoSupport, nil, 0, D3D11_SDK_VERSION, Dev, FL, Ctx)) then Exit;
+    // Media Foundation uzywa urzadzenia z wielu watkow
+    if Supports(Dev, ID3D10MultithreadLocal, MT) then
+      MT.SetMultithreadProtected(True);
+    if Failed(CreateMgr(Token, Mgr)) then Exit;
+    if Failed(Mgr.ResetDevice(Dev, Token)) then Exit;
+    FD3DDevice := Dev;
+    FD3DManager := Mgr;
+    Result := True;
+  except
+    // np. brak d3d11.dll / dxgi.dll (import opozniony) - bez wskazania karty
+    Result := False;
+  end;
 end;
 
 destructor TVideoWriter.Destroy;
 begin
   FSink := nil;
+  FD3DManager := nil;
+  FD3DDevice := nil;
   while FStartupRefs > 0 do
   begin
     MFShutdown;
@@ -123,19 +322,38 @@ begin
   inherited Destroy;
 end;
 
-procedure TVideoWriter.SetupWriter(const AOutputFile: string; const ASubtype: TGUID);
+procedure TVideoWriter.SetupWriter(const AOutputFile: string; const ASubtype: TGUID;
+  AHardware, AD3D: Boolean);
 var
   Hr: HRESULT;
   OutType: IMFMediaType;
   InType: IMFMediaType;
   Attr: IMFAttributes;
+  WriterAttr: IMFAttributes;
   FrameSize: Int64;
   FrameRate: Int64;
 begin
   FrameSize := (Int64(FWidth) shl 32) or FHeight;
   FrameRate := (Int64(FFrameRateNum) shl 32) or DWORD(FFrameRateDen);
 
-  Hr := MFCreateSinkWriterFromURL(PWideChar(AOutputFile), nil, nil, FSink);
+  WriterAttr := nil;
+  if AHardware then
+  begin
+    Hr := MFCreateAttributes(WriterAttr, 2);
+    if Succeeded(Hr) then
+      Hr := WriterAttr.SetUINT32(MF_READWRITE_ENABLE_HARDWARE_TRANSFORMS, 1);
+    if Failed(Hr) then
+      raise EVideoWriterError.Create(T('Cannot initialize video encoding') + ' (0x' +
+        IntToHex(Cardinal(Hr), 8) + ')');
+    // wskazanie wydajnej karty; bez niej (Windows 7, blad) koder wybiera Windows
+    if AD3D and CreatePerformanceD3DManager then
+      if Failed(WriterAttr.SetUnknown(MF_SINK_WRITER_D3D_MANAGER, FD3DManager)) then
+      begin
+        FD3DManager := nil;
+        FD3DDevice := nil;
+      end;
+  end;
+  Hr := MFCreateSinkWriterFromURL(PWideChar(AOutputFile), nil, WriterAttr, FSink);
   if Failed(Hr) then
     raise EVideoWriterError.Create(T('Cannot create output file') + ' (0x' +
       IntToHex(Cardinal(Hr), 8) + ')');

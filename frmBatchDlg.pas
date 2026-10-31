@@ -230,6 +230,7 @@ begin
 
   btnStart.Top := Y + SectionGap;
   btnClose.Top := btnStart.Top;
+  ButtonsToLeft([btnStart, btnClose], Margin);
   FitToContent(SectionGap, Margin);
   AlignButtonsRight([btnStart, btnClose], Margin);
 end;

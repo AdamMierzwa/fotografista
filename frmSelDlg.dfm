@@ -48,6 +48,57 @@
     TabOrder = 2
     OnClick = rbSelMaskClick
   end
+  object btnProtect: TSpeedButton
+    Left = 14
+    Top = 72
+    Width = 85
+    Height = 25
+    Caption = 'Protect selection'
+    OnClick = btnProtectClick
+  end
+  object btnUnprotect: TSpeedButton
+    Left = 106
+    Top = 72
+    Width = 85
+    Height = 25
+    Caption = 'Unprotect'
+    OnClick = btnUnprotectClick
+  end
+  object btnProtToSel: TButton
+    Left = 14
+    Top = 100
+    Width = 85
+    Height = 25
+    Caption = 'Select protected area'
+    TabOrder = 5
+    Visible = False
+    OnClick = btnProtToSelClick
+  end
+  object chkShowProt: TCheckBox
+    Left = 14
+    Top = 104
+    Width = 180
+    Height = 17
+    Caption = 'Show protection mask'
+    TabOrder = 6
+    OnClick = chkShowProtClick
+  end
+  object btnClearProt: TSpeedButton
+    Left = 14
+    Top = 126
+    Width = 85
+    Height = 25
+    Caption = 'Clear protection mask'
+    OnClick = btnClearProtClick
+  end
+  object btnDeselect: TSpeedButton
+    Left = 14
+    Top = 72
+    Width = 85
+    Height = 25
+    Caption = 'Deselect'
+    OnClick = btnDeselectClick
+  end
   object lblSelTol: TLabel
     Left = 14
     Top = 80
@@ -63,7 +114,7 @@
     Height = 25
     Max = 100
     Position = 20
-    TabOrder = 3
+    TabOrder = 8
 OnChange = tbrSelTolChange
       OnKeyUp = tbrSelTolKeyUp
   end

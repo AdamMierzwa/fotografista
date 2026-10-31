@@ -9,6 +9,7 @@ uses
 
 const
   MAX_RECENT = 20;
+  cThemeAuto = '*auto*';   // motyw zgodny z trybem jasnym/ciemnym Windows
 
 type
   TDuotonePreset = record
@@ -41,6 +42,10 @@ type
     { Performance }
     MaxResolution: string;
     SmoothPreview: Boolean;
+    UseGPU: Boolean;        // karta graficzna tam, gdzie funkcja ja obsluguje (dzis: koder wideo Timelapse)
+    UndoLimit: Integer;   // kroki Cofnij: 0 = bez limitu, 20 / 50 / 100
+    { Tools }
+    WatermarkParams: string;  // ostatnie ustawienia Znaku wodnego (uWatermark.WatermarkParamsToStr); '' = domyslne
     { Effects }
     DuotonePresets: array of TDuotonePreset;
   end;
@@ -56,8 +61,21 @@ procedure RestoreWindowPos(AForm: TObject);
 procedure AddRecentFile(const APath: string);
 procedure RebuildRecentMenu(AFileMenu: TMenuItem;
   AInsertBefore: TMenuItem; AClickEvent: TNotifyEvent);
+function ResolveThemeName(const AName: string): string;
 
 implementation
+
+uses
+  System.Win.Registry, System.NetEncoding;
+
+const
+  // Domyslny limit krokow Cofnij: Win64 bez limitu (jak w wersji Hollywood);
+  // Win32 - 2 GB przestrzeni adresowej procesu, domyslnie 20 jak dotad.
+  {$IFDEF WIN64}
+  cUndoLimitDefault = 0;
+  {$ELSE}
+  cUndoLimitDefault = 20;
+  {$ENDIF}
 
 function GetPrefsPath: string;
 var
@@ -90,7 +108,9 @@ begin
   Prefs.TIFFCompression := 0;
   Prefs.TIFFJPEGQuality := 85;
   Prefs.MaxResolution := 'original';
-  Prefs.SmoothPreview := False;
+  Prefs.SmoothPreview := True;
+  Prefs.UseGPU := True;
+  Prefs.UndoLimit := cUndoLimitDefault;
   Prefs.ThemeName := 'Windows';
   Prefs.Language := -1;
   Prefs.BrushCursorMode := 0;
@@ -117,6 +137,17 @@ begin
     Prefs.TIFFJPEGQuality := Ini.ReadInteger('Quality', 'TIFFJPEGQuality', Prefs.TIFFJPEGQuality);
     Prefs.MaxResolution := Ini.ReadString('Performance', 'MaxResolution', Prefs.MaxResolution);
     Prefs.SmoothPreview := Ini.ReadBool('Performance', 'SmoothPreview', Prefs.SmoothPreview);
+    Prefs.UseGPU := Ini.ReadBool('Performance', 'UseGPU', Prefs.UseGPU);
+    Prefs.UndoLimit := Ini.ReadInteger('Performance', 'UndoLimit', Prefs.UndoLimit);
+    // Base64 z UTF-8: TIniFile zapisuje ANSI, a tekst znaku moze miec dowolne litery
+    try
+      Prefs.WatermarkParams := TNetEncoding.Base64String.Decode(
+        Ini.ReadString('Tools', 'Watermark', ''));
+    except
+      Prefs.WatermarkParams := '';
+    end;
+    if not (Prefs.UndoLimit in [0, 20, 50, 100]) then
+      Prefs.UndoLimit := cUndoLimitDefault;
     Prefs.ThemeName := Ini.ReadString('Interface', 'ThemeName', Prefs.ThemeName);
     Prefs.Language := Ini.ReadInteger('Interface', 'Language', -1);
     if (Prefs.Language < -1) or (Prefs.Language > 8) then
@@ -167,6 +198,10 @@ begin
     Ini.WriteInteger('Quality', 'TIFFJPEGQuality', Prefs.TIFFJPEGQuality);
     Ini.WriteString('Performance', 'MaxResolution', Prefs.MaxResolution);
     Ini.WriteBool('Performance', 'SmoothPreview', Prefs.SmoothPreview);
+    Ini.WriteBool('Performance', 'UseGPU', Prefs.UseGPU);
+    Ini.WriteInteger('Performance', 'UndoLimit', Prefs.UndoLimit);
+    Ini.WriteString('Tools', 'Watermark',
+      TNetEncoding.Base64String.Encode(Prefs.WatermarkParams));
     Ini.WriteInteger('Window', 'Left', Prefs.WinLeft);
     Ini.WriteInteger('Window', 'Top', Prefs.WinTop);
     Ini.WriteInteger('Window', 'Width', Prefs.WinWidth);
@@ -290,7 +325,7 @@ begin
     end
     else
     begin
-      Item.Caption := '(none)';
+      Item.Caption := T('(none)');   // klucz ID 17 (do 2026-10-23 bez T())
       Item.Enabled := False;
       Item.Tag := -1;
     end;
@@ -299,6 +334,38 @@ begin
     TranslateMenuItem(Item);
     Inc(Idx);
   end;
+end;
+
+function SystemUsesLightTheme: Boolean;
+var
+  Reg: TRegistry;
+begin
+  Result := True;
+  Reg := TRegistry.Create(KEY_READ);
+  try
+    Reg.RootKey := HKEY_CURRENT_USER;
+    if Reg.OpenKeyReadOnly('Software\Microsoft\Windows\CurrentVersion\Themes\Personalize') then
+    begin
+      if Reg.ValueExists('AppsUseLightTheme') then
+        Result := Reg.ReadInteger('AppsUseLightTheme') <> 0;
+      Reg.CloseKey;
+    end;
+  finally
+    Reg.Free;
+  end;
+end;
+
+function ResolveThemeName(const AName: string): string;
+begin
+  if AName = cThemeAuto then
+  begin
+    if SystemUsesLightTheme then
+      Result := 'Windows11 Modern Light'
+    else
+      Result := 'Windows11 Modern Dark';
+  end
+  else
+    Result := AName;
 end;
 
 end.

@@ -43,7 +43,7 @@ const
   // Podbijać TYLKO przy realnej, funkcjonalnej zmianie (nowa funkcja / poprawka).
   // Niezależna od numeru paczki MSIX (licznik Store) - ten podbija się przy każdej
   // submisji, nawet przy odbiciu, i nie ma wpływu na tę stałą.
-  RealAppVersion = '1.3.0';
+  RealAppVersion = '1.5.0';
 
 procedure TfrmAbout.FormCreate(Sender: TObject);
 begin
