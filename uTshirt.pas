@@ -35,7 +35,11 @@ procedure TshirtWhiteToFabric(Bitmap: TBitmap);
 //    tkaniny, 1,0 -> naturalne krycie, 4,0 -> pełne krycie. Podział: najbliższy
 //    kolor PALETY (Palette[J]), kolor kropki: Inks[J] — wymiana farby nie zmienia
 //    podziału (2026-10-20; wcześniej podział liczony był od farb).
-procedure TshirtRender(Bitmap: TBitmap; const Palette, Inks: TShirtColors; CellMult: Double);
+//    MinArea: czyszczenie wysp na mapie farb PRZED rastrem (2026-11-08) — po
+//    rastrze każda kropka sita była osobną wyspą i znikała. Zwraca liczbę
+//    przemalowanych pikseli mapy; MinArea <= 1 = bez czyszczenia.
+function TshirtRender(Bitmap: TBitmap; const Palette, Inks: TShirtColors; CellMult: Double;
+  MinArea: Integer = 0): Integer;
 
 // Full-res apply (nielimitowana wersja posteryzacji) — QuantizeBrush(64),
 //    każdy piksel -> najbliższa WYBRANA farba. Farby dyktują podział,
@@ -583,17 +587,20 @@ begin
   Result := (Sqr(Fu - Tile.Center) + Sqr(Fv - Tile.Center)) / Tile.Dmax2;
 end;
 
-procedure TshirtRender(Bitmap: TBitmap; const Palette, Inks: TShirtColors; CellMult: Double);
+function TshirtRender(Bitmap: TBitmap; const Palette, Inks: TShirtColors; CellMult: Double;
+  MinArea: Integer = 0): Integer;
 var
   W, H, X, Y, N, I, BestI, T: Integer;
   Dr, Dg, Db, D, BestD, Lum, Coverage, Bias: Double;
-  Qb, SrcBmp: TBitmap;
-  QLines, DstLines: array of PRGBTripleArray;
+  Qb, SrcBmp, MapBmp: TBitmap;
+  QLines, DstLines, MapLines: array of PRGBTripleArray;
   InkRgb, PalRgb: array of Cardinal;
+  InkIdx: array of Integer;
   Tile: TTshirtTile;
   Painted: Boolean;
-  Qpx: Cardinal;
+  Qpx, Mpx: Cardinal;
 begin
+  Result := 0;
   W := Bitmap.Width;
   H := Bitmap.Height;
   N := Min(Length(Palette), Length(Inks));
@@ -621,6 +628,7 @@ begin
 
   Qb := TBitmap.Create;
   SrcBmp := TBitmap.Create;
+  MapBmp := TBitmap.Create;
   try
     SrcBmp.Assign(Bitmap);
     SrcBmp.PixelFormat := pf24bit;
@@ -643,15 +651,15 @@ begin
       for X := 0 to W - 1 do
         SetPixel(DstLines[Y], X, PackRgb24(248, 246, 240));
 
-    // Raster sitodruku radialnego (TTshirtTile, kąt 45°): najbliższy kolor
-    // palety (BestI) liczony dla piksela SKWANTOWANEGO (QLines), kropka
-    // w farbie InkRgb[BestI]. Pokrycie
-    // Coverage = 1 - Lum/255 z jasności piksela kwantowanego skorygowane
-    // suwakiem (Bias, przesunięcie — nie mnożenie, więc cienie nie znikają);
-    // piksel malowany, gdy Coverage >= progu kropki (TshirtThresh). Kolor
-    // farby = posteryzacja (BestI), tkanina w prześwicie.
+    // Mapa farb: najbliższy kolor palety (BestI) dla piksela SKWANTOWANEGO
+    // (QLines), zapisany jako PalRgb[BestI] w MapBmp i jako indeks w InkIdx.
+    MapBmp.PixelFormat := pf24bit;
+    MapBmp.SetSize(W, H);
+    SetLength(MapLines, H);
     for Y := 0 to H - 1 do
-    begin
+      MapLines[Y] := MapBmp.ScanLine[Y];
+    SetLength(InkIdx, W * H);
+    for Y := 0 to H - 1 do
       for X := 0 to W - 1 do
       begin
         BestI := -1;
@@ -669,6 +677,47 @@ begin
             BestI := I;
           end;
         end;
+        InkIdx[Y * W + X] := BestI;
+        if BestI >= 0 then
+          SetPixel(MapLines[Y], X, PalRgb[BestI]);
+      end;
+
+    // Czyszczenie wysp na mapie farb, przed rastrem: znikają małe plamy koloru,
+    // a nie kropki sita. TshirtClean przemalowuje plamę kolorem sąsiada, więc
+    // kolory zostają w palecie; piksel z innym kolorem dostaje jego indeks.
+    if MinArea > 1 then
+    begin
+      Result := TshirtClean(MapBmp, MinArea);
+      for Y := 0 to H - 1 do
+        MapLines[Y] := MapBmp.ScanLine[Y];
+      for Y := 0 to H - 1 do
+        for X := 0 to W - 1 do
+        begin
+          BestI := InkIdx[Y * W + X];
+          if BestI < 0 then Continue;
+          Mpx := GetPixel(MapLines[Y], X);
+          if Mpx = PalRgb[BestI] then Continue;
+          for I := 0 to N - 1 do
+            if PalRgb[I] = Mpx then
+            begin
+              InkIdx[Y * W + X] := I;
+              Break;
+            end;
+        end;
+    end;
+
+    // Raster sitodruku radialnego (TTshirtTile, kąt 45°): kropka w farbie
+    // InkRgb[BestI] z oczyszczonej mapy. Pokrycie
+    // Coverage = 1 - Lum/255 z jasności piksela kwantowanego skorygowane
+    // suwakiem (Bias, przesunięcie — nie mnożenie, więc cienie nie znikają);
+    // piksel malowany, gdy Coverage >= progu kropki (TshirtThresh). Kolor
+    // farby = posteryzacja (BestI), tkanina w prześwicie.
+    for Y := 0 to H - 1 do
+    begin
+      for X := 0 to W - 1 do
+      begin
+        BestI := InkIdx[Y * W + X];
+        Qpx := GetPixel(QLines[Y], X);
         if BestI >= 0 then
         begin
           Lum := (Rgb24R(Qpx) * 299 + Rgb24G(Qpx) * 587 + Rgb24B(Qpx) * 114) / 1000.0;
@@ -687,6 +736,7 @@ begin
   finally
     Qb.Free;
     SrcBmp.Free;
+    MapBmp.Free;
   end;
 end;
 

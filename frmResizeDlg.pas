@@ -81,6 +81,11 @@ begin
   rbAutoPct.Width := Self.Canvas.TextWidth(rbAutoPct.Caption) + ButtonPad;
   Self.Canvas.Font.Assign(chkAspect.Font);
   chkAspect.Width := Self.Canvas.TextWidth(chkAspect.Caption) + ButtonPad;
+  // wysokosc z czcionki - w .dfm 17 px, przy 12 pt tekst ma 21 px (kontrola
+  // ukladu 2026-11-08)
+  chkAspect.Height := Self.Canvas.TextHeight('Wg') + 4;
+  rbManual.Height := chkAspect.Height;
+  rbAutoPct.Height := chkAspect.Height;
 
   FitButtonGroup([btnOK, btnCancel]);
 

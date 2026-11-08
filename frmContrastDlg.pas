@@ -120,6 +120,12 @@ begin
     end;
 
     FitPreviewToDialog(Dlg, Dlg.pboxPreview, pw, ph);
+    // wysokosc przelacznikow z czcionki - w .dfm 20 px, przy 12 pt tekst ma
+    // 21 px (kontrola ukladu 2026-11-08); odstep gornych krawedzi w .dfm 26 px
+    Dlg.Canvas.Font.Assign(Dlg.rbIncrease.Font);
+    Dlg.rbIncrease.Height := Dlg.Canvas.TextHeight('Wg') + 4;
+    Dlg.rbDecrease.Height := Dlg.rbIncrease.Height;
+    Dlg.Canvas.Font.Assign(Dlg.Font);
 
     Dlg.ApplyPreview;
 

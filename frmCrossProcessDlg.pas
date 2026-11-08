@@ -136,7 +136,7 @@ function ShowCrossProcessDlg(Bitmap: TBitmap; out ElapsedSec: Double): Boolean;
 var
   Dlg: TCrossProcessDlg;
   Scale: Double;
-  pw, ph: Integer;
+  pw, ph, I, NeedW, Delta: Integer;
   Scaled: TBitmap;
   SW: TStopwatch;
 begin
@@ -175,6 +175,24 @@ begin
     FitPreviewToDialog(Dlg, Dlg.pboxPreview, pw, ph);
     // ramka z wysokoscia z czcionki, przyciski pod nia (wysokosc z .dfm pod 9 pt)
     Dlg.FitRadioGroupHeight(Dlg.rgPreset);
+    // ramka szersza tylko, gdy najdluzsza pozycja nie miesci sie w kolumnie
+    // (np. AF przy 12 pt; kontrola ukladu 2026-11-08). Kolumna wg VCL:
+    // (Width - 10) div Columns (Vcl.ExtCtrls.pas, ArrangeButtons).
+    Dlg.Canvas.Font.Assign(Dlg.rgPreset.Font);
+    NeedW := 0;
+    for I := 0 to Dlg.rgPreset.Items.Count - 1 do
+      NeedW := Max(NeedW, Dlg.Canvas.TextWidth(Dlg.rgPreset.Items[I]));
+    Dlg.Canvas.Font.Assign(Dlg.Font);
+    NeedW := Dlg.rgPreset.Columns * (NeedW + Dlg.ButtonPad) + 10;
+    Delta := NeedW - Dlg.rgPreset.Width;
+    if Delta > 0 then
+    begin
+      Dlg.ClientWidth := Dlg.ClientWidth + Delta;
+      Dlg.rgPreset.Width := NeedW;
+      Dlg.pboxPreview.Left := Dlg.pboxPreview.Left + Delta div 2;
+      Dlg.btnOK.Left := Dlg.btnOK.Left + Delta;
+      Dlg.btnCancel.Left := Dlg.btnCancel.Left + Delta;
+    end;
     Dlg.btnOK.Top := Dlg.StackBelow(Dlg.rgPreset, Dlg.SectionGap);
     Dlg.btnCancel.Top := Dlg.btnOK.Top;
     Dlg.FitHeight(Dlg.SectionGap);

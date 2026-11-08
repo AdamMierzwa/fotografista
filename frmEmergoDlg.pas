@@ -10,6 +10,9 @@ uses
 type
   TEmergoDlg = class(TFotoForm)
     pboxPreview: TPaintBox;
+    lblBrighten: TLabel;
+    tbBrighten: TTrackBar;
+    lblValBrighten: TLabel;
     lblIntensity: TLabel;
     tbIntensity: TTrackBar;
     lblValIntensity: TLabel;
@@ -17,6 +20,7 @@ type
     btnCancel: TButton;
     procedure pboxPreviewPaint(Sender: TObject);
     procedure tbIntensityChange(Sender: TObject);
+    procedure tbBrightenChange(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
   private
@@ -28,7 +32,9 @@ type
   end;
 
 function ShowEmergoDlg(Bitmap: TBitmap; out ElapsedSec: Double): Boolean;
-procedure DoEmergo(Bitmap: TBitmap; Saturation: Integer);
+// Brighten 0-100: udzial krzywej Kodaka w jasnosci (100 = pelne dzialanie, jak
+// przed 2026-11-08); jak p_FxLabLumScale w Hollywood (image_fx.hws:308).
+procedure DoEmergo(Bitmap: TBitmap; Saturation: Integer; Brighten: Integer = 100);
 
 implementation
 
@@ -73,12 +79,12 @@ begin
   else Result := Byte(V);
 end;
 
-procedure DoEmergo(Bitmap: TBitmap; Saturation: Integer);
+procedure DoEmergo(Bitmap: TBitmap; Saturation: Integer; Brighten: Integer);
 var
   W, H, X, Y: Integer;
   Row: PRGBTripleArray;
-  r, g, b, new_y: Byte;
-  yf, cb, cr: Double;
+  r, g, b: Byte;
+  yf, cb, cr, new_y: Double;
   sf: Double;
   nr, ng, nb: Integer;
 begin
@@ -102,8 +108,10 @@ begin
       cb := -0.169 * r - 0.331 * g + 0.500 * b + 128.0;
       cr :=  0.500 * r - 0.419 * g - 0.081 * b + 128.0;
 
-      // Apply Kodak LUT to luma
+      // Apply Kodak LUT to luma; Brighten < 100 = blizej jasnosci oryginalu
       new_y := KodakLUT[Max(0, Min(255, Trunc(yf)))];
+      if Brighten < 100 then
+        new_y := yf + (new_y - yf) * Brighten / 100.0;
 
       // Saturation boost
       if Saturation > 0 then
@@ -173,7 +181,9 @@ begin
       SW := TStopwatch.StartNew;
       Dlg.ApplyFull;
       gMacroPending.Code := 'EMERGO';
-      gMacroPending.Params := IntToStr(Dlg.tbIntensity.Position);
+      // intensywnosc|rozjasnienie (stare makra z jednym parametrem = 100)
+      gMacroPending.Params := IntToStr(Dlg.tbIntensity.Position) + '|' +
+        IntToStr(Dlg.tbBrighten.Position);
       ElapsedSec := SW.Elapsed.TotalSeconds;
       Result := True;
     end;
@@ -188,6 +198,8 @@ procedure TEmergoDlg.FormCreate(Sender: TObject);
 begin
   tbIntensity.Min := 0; tbIntensity.Max := 100; tbIntensity.Position := 0;
   lblValIntensity.Caption := '0';
+  tbBrighten.Min := 0; tbBrighten.Max := 100; tbBrighten.Position := 100;
+  lblValBrighten.Caption := '100';
 end;
 
 procedure TEmergoDlg.FormDestroy(Sender: TObject);
@@ -202,16 +214,22 @@ begin
   ApplyPreview;
 end;
 
+procedure TEmergoDlg.tbBrightenChange(Sender: TObject);
+begin
+  lblValBrighten.Caption := IntToStr(tbBrighten.Position);
+  ApplyPreview;
+end;
+
 procedure TEmergoDlg.ApplyPreview;
 begin
   FWorkingPreview.Assign(FOriginalPreview);
-  DoEmergo(FWorkingPreview, tbIntensity.Position);
+  DoEmergo(FWorkingPreview, tbIntensity.Position, tbBrighten.Position);
   pboxPreview.Invalidate;
 end;
 
 procedure TEmergoDlg.ApplyFull;
 begin
-  DoEmergo(FSourceBmp, tbIntensity.Position);
+  DoEmergo(FSourceBmp, tbIntensity.Position, tbBrighten.Position);
 end;
 
 procedure TEmergoDlg.pboxPreviewPaint(Sender: TObject);

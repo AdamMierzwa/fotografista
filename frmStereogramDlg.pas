@@ -26,6 +26,7 @@ type
     procedure tbPeriodChange(Sender: TObject);
     procedure tbDepthChange(Sender: TObject);
     procedure chkRandomSeedClick(Sender: TObject);
+    procedure edSeedChange(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
   private
@@ -173,7 +174,13 @@ begin
   if ColW < tbDepth.Width then ColW := tbDepth.Width;
   if ColW < lblPeriod.Width then ColW := lblPeriod.Width;
   if ColW < lblDepth.Width then ColW := lblDepth.Width;
-  if ColW < chkRandomSeed.Width then ColW := chkRandomSeed.Width;
+  // pole wyboru mierzone z napisu; w tym samym wierszu po prawej pole liczby -
+  // kolumna musi zmiescic oba (AF przy 12 pt nachodzily; kontrola ukladu 2026-11-08)
+  Self.Canvas.Font.Assign(chkRandomSeed.Font);
+  chkRandomSeed.Width := Self.Canvas.TextWidth(chkRandomSeed.Caption) + ButtonPad;
+  Self.Canvas.Font.Assign(Font);
+  if ColW < chkRandomSeed.Width + CtrlGap * 2 + edSeed.Width then
+    ColW := chkRandomSeed.Width + CtrlGap * 2 + edSeed.Width;
   rgMode.Width := ColW;
   tbPeriod.Width := ColW;
   tbDepth.Width := ColW;
@@ -263,6 +270,14 @@ end;
 procedure TStereogramDlg.chkRandomSeedClick(Sender: TObject);
 begin
   edSeed.Enabled := not chkRandomSeed.Checked;
+  // podglad czyta zasiew z pola i z tego przelacznika - bez odswiezenia OK dawal
+  // inny wzor niz podglad (kontrola parametrow 2026-11-08)
+  ApplyPreview;
+end;
+
+procedure TStereogramDlg.edSeedChange(Sender: TObject);
+begin
+  ApplyPreview;
 end;
 
 procedure TStereogramDlg.ApplyPreview;

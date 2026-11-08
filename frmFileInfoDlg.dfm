@@ -37,7 +37,7 @@
     Left = 0
     Top = 458
     Width = 700
-    Height = 42
+    Height = 41
     Align = alBottom
     BevelOuter = bvNone
     TabOrder = 1

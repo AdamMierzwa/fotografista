@@ -218,7 +218,9 @@ begin
 
     CheckText(C, Issues, Infos);
 
-    if (C is TButton) and (C.Height <> ButtonH) then
+    // btnFullHD (Kafelkowanie, Dopasuj do rozmiaru z przycieciem) celowo na
+    // wysokosc dwoch pol - decyzja wlasciciela 2026-11-08
+    if (C is TButton) and (C.Height <> ButtonH) and not SameText(C.Name, 'btnFullHD') then
       Issues.Add(Format('PRZYCISK-H %s: wysokosc %d, domyslna %d', [CtlName(C), C.Height, ButtonH]));
 
     if (C.Align = alNone) and not IsBackground(C) then

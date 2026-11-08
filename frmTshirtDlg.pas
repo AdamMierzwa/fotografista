@@ -88,10 +88,49 @@ type
   end;
 
 function ShowTshirtDlg(Bitmap: TBitmap; out ElapsedSec: Double): Boolean;
+// Krok makra TSHIRT: paleta liczona od nowa z miniatury 400 px (jak w oknie),
+// farby = kolory palety (domyslne przy otwarciu okna). CellPos = pozycja suwaka
+// mnoznika 1..16 (x0,25).
+procedure DoTshirt(Bitmap: TBitmap; N: Integer; Raster: Boolean; CellPos, MinArea: Integer);
 
 implementation
 
+uses
+  uMacros;
+
 {$R *.dfm}
+
+procedure DoTshirt(Bitmap: TBitmap; N: Integer; Raster: Boolean; CellPos, MinArea: Integer);
+var
+  Scale: Double;
+  pw, ph: Integer;
+  Small: TBitmap;
+  Pal: TShirtColors;
+begin
+  if (Bitmap = nil) or (Bitmap.Width = 0) or (Bitmap.Height = 0) then Exit;
+  Scale := Min(400.0 / Bitmap.Width, 400.0 / Bitmap.Height);
+  if Scale > 1.0 then Scale := 1.0;
+  pw := Max(1, Round(Bitmap.Width * Scale));
+  ph := Max(1, Round(Bitmap.Height * Scale));
+  Small := TBitmap.Create;
+  try
+    Small.PixelFormat := pf24bit;
+    Small.SetSize(pw, ph);
+    Small.Canvas.StretchDraw(Rect(0, 0, pw, ph), Bitmap);
+    Pal := TshirtExtractPalette(Small, N);
+  finally
+    Small.Free;
+  end;
+  if Length(Pal) = 0 then Exit;
+  if Raster then
+    TshirtRender(Bitmap, Pal, Copy(Pal), CellPos * 0.25, MinArea)
+  else
+  begin
+    TshirtMapToInks(Bitmap, Pal);
+    TshirtClean(Bitmap, MinArea);
+    TshirtWhiteToFabric(Bitmap);
+  end;
+end;
 
 function ShowTshirtDlg(Bitmap: TBitmap; out ElapsedSec: Double): Boolean;
 var
@@ -104,6 +143,7 @@ begin
   ElapsedSec := 0;
   Result := False;
   if (Bitmap = nil) or (Bitmap.Width = 0) then Exit;
+  gMacroPending.Code := '';
   Dlg := TTshirtDlg.Create(Application);
   try
     Dlg.FSourceBmp := Bitmap;
@@ -140,6 +180,11 @@ begin
       SW := TStopwatch.StartNew;
       Dlg.ApplyFull;
       ElapsedSec := SW.Elapsed.TotalSeconds;
+      // krok makra: kolory|raster|mnoznik (pozycja 1..16)|min. obszar
+      gMacroPending.Code := 'TSHIRT';
+      gMacroPending.Params := IntToStr(Dlg.cmbColors.ItemIndex + 2) + '|' +
+        IntToStr(Ord(Dlg.chkRaster.Checked)) + '|' + IntToStr(Dlg.tbCellMult.Position) + '|' +
+        IntToStr(Dlg.tbMinArea.Position);
       Result := True;
     end;
   finally
@@ -240,7 +285,9 @@ begin
     LblInk.Left := Btn.Left + Btn.Width + Gap * 2;
     LblInk.AutoSize := False;
     LblInk.Height := Self.Canvas.TextHeight('Wg');
-    LblInk.Width := Self.Canvas.TextWidth('Ink: R=255 G=255 B=255') + 10;
+    // przetlumaczone 'Ink:' (DE 'Farbe:', PL 'Farba:' dluzsze niz EN - ucinalo
+    // ostatnia cyfre; 2026-11-08)
+    LblInk.Width := Self.Canvas.TextWidth(T('Ink:') + ' R=255 G=255 B=255') + 10;
     LblInk.Top := RowTop + (24 - LblInk.Height) div 2;
 
     RowTop := RowTop + RowPitch;
@@ -280,6 +327,10 @@ begin
   // --- grpStage4: checkbox, etykieta + suwak, odczyt ---
   RowTop := CapH;
   chkRaster.Left := 10;
+  // wysokosc z czcionki - w .dfm 17 px, przy 12 pt tekst ma 21 px (kontrola
+  // ukladu 2026-11-08)
+  Self.Canvas.Font.Assign(chkRaster.Font);
+  chkRaster.Height := Self.Canvas.TextHeight('Wg') + 4;
   chkRaster.Top := RowTop;
   RowTop := RowTop + chkRaster.Height + Gap;
   lblCellMult.Left := 10;
@@ -457,8 +508,8 @@ begin
   if chkRaster.Checked then
   begin
     EnsurePalette(Bitmap, N);
-    TshirtRender(Bitmap, FPalette, FInks, GetCellMultValue);
-    CleanCount := TshirtClean(Bitmap, MinArea);
+    // czyszczenie wysp na mapie farb przed rastrem (wewnatrz TshirtRender)
+    CleanCount := TshirtRender(Bitmap, FPalette, FInks, GetCellMultValue, MinArea);
     lblCleanCount.Caption := T('Islands removed:') + ' ' + IntToStr(CleanCount);
   end
   else
@@ -489,8 +540,7 @@ begin
   if chkRaster.Checked then
   begin
     EnsurePalette(FSourceBmp, cmbColors.ItemIndex + 2);
-    TshirtRender(FSourceBmp, FPalette, FInks, GetCellMultValue);
-    TshirtClean(FSourceBmp, tbMinArea.Position);
+    TshirtRender(FSourceBmp, FPalette, FInks, GetCellMultValue, tbMinArea.Position);
   end
   else
   begin

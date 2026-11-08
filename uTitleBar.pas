@@ -339,9 +339,12 @@ begin
   end;
   inherited DoShow;
   RefitButtons;
-  if FindComponent('btnOK') is TButton then
+  // tylko przycisk, ktory moze przyjac fokus - wylaczony OK (np. Znak wodny bez
+  // tekstu i logo) dawal EInvalidOperation 'Cannot focus a disabled or invisible
+  // window' (Vcl.Forms.pas SetActiveControl; kontrola ukladu 2026-11-08)
+  if (FindComponent('btnOK') is TButton) and TButton(FindComponent('btnOK')).CanFocus then
     ActiveControl := TButton(FindComponent('btnOK'))
-  else if FindComponent('btnClose') is TButton then
+  else if (FindComponent('btnClose') is TButton) and TButton(FindComponent('btnClose')).CanFocus then
     ActiveControl := TButton(FindComponent('btnClose'));
 end;
 

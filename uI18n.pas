@@ -57,7 +57,7 @@ uses
 
 const
   // BEGIN GENERATED TEXTABLE - nie edytować ręcznie, generuje tools\gen_i18n.ps1
-  TextTable: array[0..1129] of TTextRec = (
+  TextTable: array[0..1130] of TTextRec = (
     (EN: 'File'; PL: 'Plik'; CS: 'Soubor';
      FR: 'Fichier'; DE: 'Datei'; IT: 'File';
      ES: 'Archivo'; PT: 'Ficheiro'; AF: 'Lêer'),
@@ -3447,7 +3447,10 @@ const
      ES: 'Eliminar ojos rojos'; PT: 'Remover olhos vermelhos'; AF: 'Verwyder rooi oë'),
     (EN: 'Select the pupil first.'; PL: 'Najpierw zaznacz źrenicę.'; CS: 'Nejprve vyberte zornici.';
      FR: 'Sélectionnez d''abord la pupille.'; DE: 'Wählen Sie zuerst die Pupille aus.'; IT: 'Seleziona prima la pupilla.';
-     ES: 'Selecciona primero la pupila.'; PT: 'Selecione primeiro a pupila.'; AF: 'Kies eers die pupil.')
+     ES: 'Selecciona primero la pupila.'; PT: 'Selecione primeiro a pupila.'; AF: 'Kies eers die pupil.'),
+    (EN: 'Brightening (0-100):'; PL: 'Rozjaśnienie (0–100):'; CS: 'Zesvětlení (0-100):';
+     FR: 'Éclaircissement (0-100) :'; DE: 'Aufhellung (0-100):'; IT: 'Schiarimento (0-100):';
+     ES: 'Aclarado (0-100):'; PT: 'Clareamento (0-100):'; AF: 'Verheldering (0-100):')
   );
   // END GENERATED TEXTABLE
 type

@@ -7,7 +7,7 @@
 ; ============================================================
 
 #define AppName    "Fotografista"
-#define AppVersion "1.5.0"
+#define AppVersion "1.5.1"
 #define Root       AddBackslash(SourcePath) + ".."
 #define Release    Root + "\Win64\Release"
 

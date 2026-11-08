@@ -88,7 +88,7 @@ function ShowPoissonDlg(Bitmap: TBitmap; out ElapsedSec: Double): Boolean;
 implementation
 
 uses
-  uPoissonStipple, uI18n;
+  uPoissonStipple, uI18n, uMacros;
 
 {$R *.dfm}
 
@@ -161,6 +161,7 @@ begin
   ElapsedSec := 0;
   Result := False;
   if (Bitmap = nil) or (Bitmap.Width = 0) then Exit;
+  gMacroPending.Code := '';
   Dlg := TPoissonDlg.Create(Application);
   try
     Dlg.FSourceBmp := Bitmap;
@@ -237,6 +238,9 @@ begin
     if Dlg.ShowModal = mrOk then
     begin
       ElapsedSec := Dlg.FFullElapsed;
+      // krok makra: rozmiar (dziesiate % krotszego boku) | krzywa tonalna
+      gMacroPending.Code := 'POISSON';
+      gMacroPending.Params := IntToStr(Dlg.FSize) + '|' + IntToStr(Dlg.FGamma);
       Result := True;
     end;
   finally

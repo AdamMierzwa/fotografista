@@ -62,7 +62,7 @@ type
   end;
 
 const
-  cMacroLabels: array[0..93] of TLabelRec = (
+  cMacroLabels: array[0..95] of TLabelRec = (
     (Code: 'BLUR';          LabelEN: 'Blur'),
     (Code: 'BRIGHTNESS';    LabelEN: 'Brightness'),
     (Code: 'GAMMA';         LabelEN: 'Gamma correction'),
@@ -115,6 +115,8 @@ const
     (Code: 'CROSSHATCH';    LabelEN: 'Crosshatch'),
     (Code: 'RASTERKRZ';     LabelEN: 'Cross raster'),
     (Code: 'RASTERPUNKT';   LabelEN: 'Dot raster'),
+    (Code: 'POISSON';       LabelEN: 'Dotted raster'),
+    (Code: 'TSHIRT';        LabelEN: 'T-Shirt Design'),
     (Code: 'HALFTONE';      LabelEN: 'Halftone'),
     (Code: 'STIPPLE';       LabelEN: 'Stipple'),
     (Code: 'DICE';          LabelEN: 'Dice'),
@@ -478,6 +480,25 @@ begin
     // zapis w dziesiatych czesciach px, okno pokazuje 0.0-2.0
     Add(MacroParamLabel('Edge smoothing (0.0-2.0 px):') + ': ' +
       FormatFloat('0.0', StrToIntDef(P[4], 0) / 10.0));
+  end
+  else if SameText(Code, 'POISSON') then
+  begin
+    // zapis w dziesiatych czesciach %, okno pokazuje 0.1-10.0%
+    Add(MacroParamLabel('Dot size (0.1-10.0% of short side):') + ': ' +
+      FormatFloat('0.0', StrToIntDef(P[0], 0) / 10.0) + '%');
+    Nums(['Tone curve (10-500, 100 = linear):'], 1);
+  end
+  else if SameText(Code, 'EMERGO') and (Length(P) > 1) then
+    // zapis: intensywnosc|rozjasnienie
+    Nums(['Intensity (0-100):', 'Brightening (0-100):'])
+  else if SameText(Code, 'TSHIRT') then
+  begin
+    // zapis: kolory|raster|mnoznik (pozycja suwaka 1..16, x0,25)|min. obszar
+    Nums(['Number of colors:']);
+    Add(T('Simulate screenprint raster') + ': ' + YesNo(P[1]));
+    Add(MacroParamLabel('Dot size multiplier:') + ': ' +
+      FormatFloat('0.00×', StrToIntDef(P[2], 4) * 0.25));
+    Nums(['Min. area (px):'], 3);
   end
   else if SameText(Code, 'RASTRCMYK') then
     Nums(['Cell size (1-32 px):', 'Dot scale [%]:'])

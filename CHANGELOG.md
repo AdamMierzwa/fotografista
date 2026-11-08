@@ -1,5 +1,119 @@
 ﻿# Changelog — Fotografista (wersja Delphi)
 
+## [08-11.2026] — wersja 1.5.1
+
+### Added
+
+**Raster kropkowany w makrach** (`frmPoissonDlg.pas`, `uMacros.pas`, `fMain.pas`) —
+krok `POISSON` (rozmiar kropki w dziesiątych częściach % krótszego boku | krzywa
+tonalna), panel szczegółów kroku pokazuje oba suwaki jak w oknie. Bez nowych
+kluczy i18n (nazwa i napisy suwaków już były). Ziarno losowania jest stałe
+(`uPoissonStipple.pas`), więc makro daje ten sam wynik co okno.
+
+**Tworzenie nadruku w makrach** (`frmTshirtDlg.pas`, `uMacros.pas`, `fMain.pas`) —
+krok `TSHIRT` (liczba kolorów | raster | mnożnik rozmiaru punktu | min. obszar).
+Decyzja właściciela: paleta liczona od nowa na każdym zdjęciu, z miniatury
+400 px jak w oknie (`DoTshirt`), a farbami są kolory tej palety, czyli farby
+domyślne z chwili otwarcia okna. Farby wybrane ręcznie nie są zapisywane:
+makro odtwarza wtedy farby domyślne, nie wybrane. Konsekwencje do opisania
+w instrukcji. Bez nowych kluczy i18n.
+
+**Emergo — suwak Rozjaśnienie** (`frmEmergoDlg.pas`, `frmEmergoDlg.dfm`,
+`fMain.pas`, `uMacros.pas`, `i18n/*.tsv`, `uI18n.pas`, `tools/i18n_common.ps1`) —
+jak w wersji Hollywood (`p_FxLabLumScale`, `image_fx.hws:308`): nad
+Intensywnością suwak 0–100, start 100. Udział krzywej Kodaka w jasności:
+100 = pełne działanie jak dotąd (wynik bit w bit), mniej = bliżej jasności
+oryginału. Krok makra `EMERGO` to intensywność|rozjaśnienie; stare makra
+z jednym parametrem działają jak dotąd. Klucz 1237 „Brightening (0-100):”
+(tłumaczenia z katalogu Hollywood, klucz 922), limit 1130 → 1131.
+
+### Changed
+
+**Palety Commodore 64** (`uAmiga.pas`) — prawdziwe wartości Pepto i Colodore
+w kolejności VIC-II. Dawne tablice nie miały żółtego ani cyjanu, a nazwy palet
+były zamienione. Efekt C64 wygląda inaczej, także w istniejących makrach.
+
+**Paleta NES (Nestopia)** (`uAmiga.pas`) — prawdziwa paleta Nestopii
+(`pc10Palette` z `NstVideoRenderer.cpp`), 64 wpisy w kolejności PPU, 53 różne
+barwy. Dawna tablica miała 56 wpisów z dużą ilością czerni, około 37 barw,
+i była przybliżeniem. Efekt NES wygląda inaczej, także w istniejących makrach.
+
+**Tworzenie nadruku — czyszczenie wysp przy włączonym rastrze** (`uTshirt.pas`,
+`frmTshirtDlg.pas`) — wyspy były czyszczone po rastrze, a wtedy każda kropka
+sita to osobna mała wyspa: większy próg zjadał kropki i zostawały lite plamy.
+Teraz `TshirtRender` najpierw buduje mapę farb, na niej czyści małe plamy
+(`TshirtClean`, kolor sąsiedniej plamy), a dopiero potem nakłada kropki; krycie
+jak dotąd z jasności piksela. Licznik „Usunięte wyspy:” liczy piksele
+przemalowane na mapie farb, nie kropki, więc pokazuje mniejsze liczby. Próg 0 i 1
+oraz tryb bez rastra bez zmian.
+
+**Skrócona instrukcja — Płynne skalowanie podglądu**
+(`instrukcja/skrocona-instrukcja.html`, `instrukcja/skrocona-instrukcja.pdf`) —
+w „Oglądaniu” opis opcji z menu Widok: włączona pokazuje wygładzone tony,
+wyłączona fakturę kropek rastra; zapisany plik bez zmian. PDF dalej 7 stron.
+
+**Skrócona instrukcja — Komiks**
+(`instrukcja/skrocona-instrukcja.html`, `instrukcja/skrocona-instrukcja.pdf`) —
+w rozdziale 3 za „Efektami”: cztery style (Ben-Day – czerń, Ben-Day – kolor
+z kolorem tuszu, PRL – łagodny, PRL – raster), raster PRL rosnący z
+rozdzielczością, dwa podglądy (cały wynik i fragment 100% za kursorem),
+wskazówka: przy Ben-Day najpierw Emergo. PDF dalej 7 stron.
+
+**Skrócona instrukcja — makro Tworzenia nadruku**
+(`instrukcja/skrocona-instrukcja.html`, `instrukcja/skrocona-instrukcja.pdf`) —
+w rozdziale 10 uwaga: makro dobiera paletę na nowo do każdego zdjęcia i używa
+farb domyślnych, farby wybrane ręcznie nie są zapamiętywane. PDF dalej 7 stron.
+
+**Znak wodny — błąd przy otwarciu bez tekstu i logo** (`uTitleBar.pas`) —
+okno otwierane bez zapamiętanego tekstu i logo (np. za pierwszym razem) ma
+wyłączony przycisk OK, a wspólne `TFotoForm.DoShow` ustawiało na nim fokus;
+VCL zgłaszało wtedy „Cannot focus a disabled or invisible window”. Fokus trafia
+teraz na OK/Zamknij tylko, gdy przycisk może go przyjąć — dotyczy wszystkich
+okien.
+
+**Układ okien przy 12 pt i długich językach** (`frmResizeDlg.pas`,
+`frmResizeCropDlg.pas`, `frmCrossProcessDlg.pas`, `frmTshirtDlg.pas`,
+`frmStereogramDlg.pas`, `frmContrastDlg.pas`, `frmDistortDlg.pas`,
+`frmFileInfoDlg.dfm`, `frmWaterRippleDlg.pas`) — znalezione kontrolą układu
+w działającym programie (afrykanerski i niemiecki, 12 pt):
+- Zmiana rozmiaru, Kontrast, Tworzenie nadruku: wysokość przełączników i pól
+  wyboru z czcionki (ucinało dół liter);
+- Dopasuj do rozmiaru z przycięciem: przycisk Full HD na wysokość obu pól,
+  pole Wysokość nie wychodzi już poza panel;
+- Błędne wywołanie i Fala na wodzie: ramka wyboru poszerza się (razem z oknem),
+  gdy najdłuższa pozycja nie mieści się w kolumnie;
+- Tworzenie nadruku: szerokość napisu farby liczona z przetłumaczonego tekstu
+  (po niemiecku i polsku ucinało ostatnią cyfrę);
+- Stereogram: pole Losowy zasiew nie nachodzi na pole liczby;
+- Zniekształcenie biegunowe: odczyt mieści „100%”; Informacje o pliku: przycisk
+  Zamknij 25 px.
+
+**Kontrola układu, etap 2 — tylko build Debug** (`fMain.pas`) — w menu Pomoc
+pozycja „Kontrola układu – otwórz po kolei wszystkie okna”: klika 96 pozycji
+menu z oknami (bez Testu wydajności), każde okno zamyka przez Anuluj, wynik
+w `kontrola_ukladu.txt`. Bez klucza i18n, bez wpływu na wersję sklepową.
+
+**Stereogram — podgląd po zmianie zasiewu** (`frmStereogramDlg.pas`,
+`frmStereogramDlg.dfm`) — przełączenie „Losowy zasiew” i wpisanie liczby
+zasiewu nie odświeżały podglądu, a OK liczył już z nowym ustawieniem: podgląd
+pokazywał inny wzór niż wynik. Teraz obie kontrolki przeliczają podgląd.
+
+**Kontrola parametrów — tylko build Debug** (`uParamCheck.pas`, `fMain.pas`,
+`uLayoutCheck.pas`) — w menu Pomoc pozycja „Kontrola parametrów – zmień po
+kolei każdą kontrolkę”: to samo przejście po oknach, ale w oknie z podglądem
+przed Anuluj zmieniane są po kolei suwaki, pola wyboru, przełączniki i listy;
+porównanie pikseli podglądu z ekranu, wynik w `kontrola_parametrow.txt`.
+Gdy podgląd się nie zmienia — druga próba z pozostałymi suwakami na 3/4
+zakresu. Pomija okna z wyłączonym OK (np. Znak wodny bez logo i tekstu);
+kontrola układu nie zgłasza już celowo wyższych przycisków Full HD.
+Znalazła błąd Stereogramu (wyżej). Bez wpływu na wersję sklepową.
+
+**Wersja 1.5.1** (`Fotografista.dproj`, `AboutBoxUnit.pas`, `tools/build_msix.cmd`,
+`tools/setup_win32.iss`, `tools/setup_win64.iss`,
+`instrukcja/skrocona-instrukcja.html`, `instrukcja/skrocona-instrukcja.pdf`,
+`packaging/x64/AppxManifest.xml` poza gitem) — numer ustawiony we wszystkich
+miejscach, w dproj dodane `VerInfo_Release` = 1. `check_version.ps1`: zgodne.
+
 ## [31-10.2026] — wersja 1.5.0
 
 ### Added

@@ -393,7 +393,9 @@ begin
   X0 := lbPresets.Left;
   RowW := lbPresets.Width;
   LblW := Max(Max(lblAngle.Width, lblRadius.Width), Max(lblHole.Width, lblRotation.Width));
-  ValW := Canvas.TextWidth('-180°');
+  // odczyty: katy do -180 stopni i procenty do 100% ('100%' o 1 px szersze;
+  // kontrola ukladu 2026-11-08)
+  ValW := Max(Canvas.TextWidth('-180°'), Canvas.TextWidth('100%'));
   Y := pboxPreview.Top + pboxPreview.Height + SectionGap;
   PlaceRow(lblAngle, tbAngle, lblAngleVal);
   PlaceRow(lblRadius, tbRadius, lblRadiusVal);

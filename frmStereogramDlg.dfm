@@ -116,6 +116,7 @@
     TabOrder = 4
     Text = '0'
     NumbersOnly = True
+    OnChange = edSeedChange
   end
   object btnOK: TButton
     Left = 15

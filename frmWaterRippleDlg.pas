@@ -189,7 +189,7 @@ end;
 // Srodek w pierwszym wierszu, narozniki 2 x 2 pod nim; wysokosc z czcionki.
 procedure TWaterRippleDlg.LayoutSource;
 var
-  RowH, X1, X2, ColW, Y0: Integer;
+  RowH, X1, X2, ColW, Y0, NeedCol, Delta: Integer;
 
   procedure Place(Rb: TRadioButton; AX, ARow: Integer);
   begin
@@ -203,6 +203,20 @@ begin
   RowH := Canvas.TextHeight('Wg') + CtrlGap;
   Y0 := CtrlGap * 2;
   X1 := CtrlGap * 2;
+  // kolumna z najdluzszego napisu; ramka, panel i okno szersze tylko, gdy
+  // trzeba (DE 'Unten rechts' przy 12 pt; kontrola ukladu 2026-11-08)
+  Canvas.Font.Assign(rbCenter.Font);
+  NeedCol := Max(Max(Canvas.TextWidth(rbCenter.Caption), Canvas.TextWidth(rbTopLeft.Caption)),
+    Max(Max(Canvas.TextWidth(rbTopRight.Caption), Canvas.TextWidth(rbBottomLeft.Caption)),
+      Canvas.TextWidth(rbBottomRight.Caption))) + ButtonPad;
+  Canvas.Font.Assign(Font);
+  Delta := X1 * 2 + NeedCol * 2 - grpSource.ClientWidth;
+  if Delta > 0 then
+  begin
+    grpSource.Width := grpSource.Width + Delta;
+    pnlSliders.Width := pnlSliders.Width + Delta;
+    ClientWidth := ClientWidth + Delta;
+  end;
   ColW := (grpSource.ClientWidth - X1 * 2) div 2;
   X2 := X1 + ColW;
   Place(rbCenter, X1, 0);

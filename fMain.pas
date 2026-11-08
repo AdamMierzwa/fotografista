@@ -12,7 +12,7 @@ uses
   frmQualityDlg, frmPerformanceDlg, frmStraightenDlg, frmPerspectiveDlg, frmHistogramDlg, frmContrastDlg,
   frmCmykDlg,
   frmLinocutDlg,
-  frmLinocut2Dlg, uLinocut, frmWatermarkDlg, uWatermark,
+  frmLinocut2Dlg, uLinocut, frmWatermarkDlg, uWatermark, uPoissonStipple,
   frmStencilDlg,
   frmEngravingDlg,
   frmLineRasterDlg,
@@ -40,7 +40,7 @@ uses
       frmC64Dlg, frmZXSpectrumDlg, frmGameBoyDlg, frmNESDlg, uDistort, frmDistortDlg,
       frmWaterRippleDlg, frmLauncherDlg, frmShortcutsDlg, frmBenchmarkDlg, uTitleBar,
       uCanvasTools, frmToolsDlg, frmUsunTloDlg, frmSelDlg
-      {$IFDEF DEBUG}, uLayoutCheck{$ENDIF};
+      {$IFDEF DEBUG}, uLayoutCheck, uParamCheck{$ENDIF};
 
 type
   { Narzędzia kanwy dostępne w panelu Narzędzi. Rozszerzany przy dodawaniu
@@ -632,6 +632,20 @@ type
     procedure AssignMenuMeasure(AItem: TMenuItem);
     procedure InitMenuMeasure;
     procedure ApplyCanvasGap;
+    {$IFDEF DEBUG}
+  private
+    // kontrola ukladu, etap 2: otwieranie po kolei wszystkich okien
+    FWalkTimer: TTimer;
+    FWalkClosed: Integer;
+    FWalkParams: Boolean;  // przejscie z kontrola parametrow (uParamCheck.pas)
+    procedure AddLayoutWalkItem;
+    procedure LayoutWalkClick(Sender: TObject);
+    procedure ParamWalkClick(Sender: TObject);
+    procedure LayoutWalkTimer(Sender: TObject);
+    procedure LayoutWalkOne(AItem: TMenuItem);
+    procedure LayoutWalkMenu(AItem: TMenuItem; Names, Done: TStringList;
+      var Clicked, Skipped: Integer);
+    {$ENDIF}
   public
     FSelection: TSelection;
     FSelectionView: TSelectionView;
@@ -2725,6 +2739,9 @@ begin
   mnuViewSmooth.Checked := Prefs.SmoothPreview;
   RestoreWindowPos(Self);
   RebuildRecentMenu(mnuFile, mnuFileSepRecent, HandleRecentFileClick);
+  {$IFDEF DEBUG}
+  AddLayoutWalkItem;  // przed InitMenuMeasure - pomiar jak inne pozycje
+  {$ENDIF}
   InitMenuMeasure;
   ApplyCanvasGap;
   UpdateStatusBar;
@@ -2758,6 +2775,224 @@ procedure TfrmMain.InitMenuMeasure;
 begin
   AssignMenuMeasure(MainMenu.Items);
 end;
+
+{$IFDEF DEBUG}
+// Kontrola ukladu, etap 2 (ZADANIA.md) - tylko build Debug, bez klucza i18n.
+// Pozycja w menu Pomoc klika po kolei pozycje menu z listy (kolejnosc jak w
+// menu). Okno modalne zamyka timer przez Anuluj (ModalResult = mrCancel) po
+// aktywacji, czyli po zapisie kontroli do kontrola_ukladu.txt
+// (FormActiveChanged -> CheckFormLayout); okno niemodalne (Wyrzutnia, panele)
+// jest chowane po otwarciu. Efekty nie sa stosowane, preferencje zapisuja sie
+// tylko po OK. Jezyk i czcionke ustawia sie przed uruchomieniem.
+procedure TfrmMain.AddLayoutWalkItem;
+var
+  Item: TMenuItem;
+begin
+  Item := TMenuItem.Create(Self);
+  Item.Caption := 'Kontrola układu – otwórz po kolei wszystkie okna';
+  Item.OnClick := LayoutWalkClick;
+  mnuHelp.Add(Item);
+  Item := TMenuItem.Create(Self);
+  Item.Caption := 'Kontrola parametrów – zmień po kolei każdą kontrolkę';
+  Item.OnClick := ParamWalkClick;
+  mnuHelp.Add(Item);
+end;
+
+// to samo przejscie, ale w kazdym oknie z podgladem przed Anuluj zmieniane sa
+// po kolei kontrolki (uParamCheck.pas, wynik w kontrola_parametrow.txt)
+procedure TfrmMain.ParamWalkClick(Sender: TObject);
+begin
+  FWalkParams := True;
+  try
+    LayoutWalkClick(Sender);
+  finally
+    FWalkParams := False;
+  end;
+end;
+
+procedure TfrmMain.LayoutWalkTimer(Sender: TObject);
+var
+  F: TCustomForm;
+begin
+  F := Screen.ActiveForm;
+  if (F <> nil) and (F <> Self) and (fsModal in F.FormState) then
+  begin
+    if FWalkParams then
+    begin
+      FWalkTimer.Enabled := False;  // kontrola trwa sekundy i pompuje komunikaty
+      try
+        CheckFormParams(F);
+      finally
+        FWalkTimer.Enabled := True;
+      end;
+    end;
+    F.ModalResult := mrCancel;
+    Inc(FWalkClosed);
+  end;
+end;
+
+procedure TfrmMain.LayoutWalkOne(AItem: TMenuItem);
+var
+  Before: TList;
+  F: TCustomForm;
+  J: Integer;
+begin
+  Before := TList.Create;
+  try
+    for J := 0 to Screen.FormCount - 1 do
+      if Screen.Forms[J].Visible then
+        Before.Add(Screen.Forms[J]);
+    FWalkTimer.Enabled := True;
+    try
+      AItem.Click;
+    finally
+      FWalkTimer.Enabled := False;
+    end;
+    Application.ProcessMessages;
+    // okno niemodalne otwarte przez pozycje - schowac (sprawdzone przy aktywacji)
+    for J := Screen.FormCount - 1 downto 0 do
+    begin
+      F := Screen.Forms[J];
+      if (F <> Self) and F.Visible and (Before.IndexOf(F) < 0) then
+      begin
+        F.Hide;
+        Inc(FWalkClosed);
+      end;
+    end;
+  finally
+    Before.Free;
+  end;
+end;
+
+procedure TfrmMain.LayoutWalkMenu(AItem: TMenuItem; Names, Done: TStringList;
+  var Clicked, Skipped: Integer);
+var
+  I: Integer;
+  It: TMenuItem;
+  N: string;
+begin
+  for I := 0 to AItem.Count - 1 do
+  begin
+    It := AItem[I];
+    if It.Count > 0 then
+    begin
+      LayoutWalkMenu(It, Names, Done, Clicked, Skipped);
+      Continue;
+    end;
+    if not Assigned(It.OnClick) then Continue;
+    N := MethodName(TMethod(It.OnClick).Code);
+    if (N = '') or (Names.IndexOf(N) < 0) or (Done.IndexOf(N) >= 0) then Continue;
+    Done.Add(N);
+    if not It.Enabled then
+    begin
+      Inc(Skipped);
+      Continue;
+    end;
+    Inc(Clicked);
+    LayoutWalkOne(It);
+  end;
+end;
+
+procedure TfrmMain.LayoutWalkClick(Sender: TObject);
+var
+  Names, Done, Log: TStringList;
+  Clicked, Skipped, LogBefore, OkCnt, BadCnt, I: Integer;
+  Path, Missing, Msg: string;
+begin
+  if (FBitmap = nil) or (FBitmap.Width = 0) then
+  begin
+    MessageDlg('Kontrola układu: najpierw otwórz zdjęcie.', mtInformation, [mbOK], 0);
+    Exit;
+  end;
+  Path := ExtractFilePath(Application.ExeName) + 'kontrola_ukladu.txt';
+  Names := TStringList.Create;
+  Done := TStringList.Create;
+  Log := TStringList.Create;
+  try
+    if FileExists(Path) then
+      Log.LoadFromFile(Path, TEncoding.UTF8);
+    LogBefore := Log.Count;
+
+    Names.CaseSensitive := False;
+    Names.Sorted := True;
+    Names.Duplicates := dupIgnore;
+    // pozycje menu z oknami (lista zaakceptowana 2026-11-08; bez Testu
+    // wydajnosci - uruchamia pomiar)
+    Names.CommaText :=
+      'mnuAGA256Click,mnuAmigaBGClick,mnuAmigaBGSClick,mnuAmigaGradientAgonyClick,' +
+      'mnuAmigaGradientClick,mnuArcClick,mnuBWClick,mnuBarrelClick,' +
+      'mnuBatchClick,mnuBlendClick,mnuBlurClick,mnuBokehClick,' +
+      'mnuBrightnessClick,mnuC64Click,mnuCMYKClick,mnuCharcoalClick,' +
+      'mnuComicClick,mnuContrastClick,mnuCrossProcessClick,mnuCrosshatchClick,' +
+      'mnuDiceClick,mnuDuotoneClick,mnuEHBClick,mnuEdgeClick,' +
+      'mnuEmbossClick,mnuEmergoClick,mnuEngravingClick,mnuFilmGrainClick,' +
+      'mnuFisheyeClick,mnuGameBoyClick,mnuGammaClick,mnuGlitchClick,' +
+      'mnuGlowClick,mnuHDR1Click,mnuHDR2Click,mnuHSBClick,' +
+      'mnuHalftoneClick,mnuImageFromDiceClick,mnuLevelsClick,mnuLineRasterClick,' +
+      'mnuLinocut2Click,mnuLinocutClick,mnuMagicWBClick,mnuMakietaClick,' +
+      'mnuNESClick,mnuOCS32Click,mnuObrysClick,mnuOleoClick,' +
+      'mnuPerspectiveClick,mnuPixelateClick,mnuPoissonClick,mnuPolarClick,' +
+      'mnuQuadtoneClick,mnuQuantizeClick,mnuRasterKrzyzowyClick,mnuRasterPunktowyClick,' +
+      'mnuRastrCMYKClick,mnuReliefClick,mnuRemoveBackgroundClick,mnuResizeClick,' +
+      'mnuResizeCropClick,mnuRisoClick,mnuRisoV2Click,mnuRisoV3Click,' +
+      'mnuScreenPrintClick,mnuSelSizeClick,mnuSepiaClick,mnuSettingsInterfaceClick,' +
+      'mnuSettingsLangClick,mnuSettingsPerformanceClick,mnuSettingsQualityClick,mnuSharpenClick,' +
+      'mnuSolarizeClick,mnuStencilClick,mnuStereogramClick,mnuStippleClick,' +
+      'mnuStraightenClick,mnuSwirlClick,mnuTilesClick,mnuTimelapseClick,' +
+      'mnuTintClick,mnuTritoneClick,mnuTshirtClick,mnuVignetteClick,' +
+      'mnuWB256Click,mnuWBClick,mnuWaterRippleClick,mnuWatermarkClick,' +
+      'mnuZXSpectrumClick,mnuFileInfoClick,mnuHistogramClick,mnuHelpAboutClick,' +
+      'mnuHelpShortcutsClick,mnuLauncherClick,mnuToolsPanelClick,mnuSelPanelClick';
+    Done.CaseSensitive := False;
+    Done.Sorted := True;
+    Done.Duplicates := dupIgnore;
+
+    if FWalkParams then
+      ParamCheckStart;
+    FWalkClosed := 0;
+    Clicked := 0;
+    Skipped := 0;
+    FWalkTimer := TTimer.Create(nil);
+    try
+      FWalkTimer.Enabled := False;
+      FWalkTimer.Interval := 700;
+      FWalkTimer.OnTimer := LayoutWalkTimer;
+      LayoutWalkMenu(MainMenu.Items, Names, Done, Clicked, Skipped);
+    finally
+      FreeAndNil(FWalkTimer);
+    end;
+
+    Missing := '';
+    for I := 0 to Names.Count - 1 do
+      if Done.IndexOf(Names[I]) < 0 then
+        Missing := Missing + ' ' + Names[I];
+
+    Log.Clear;
+    if FileExists(Path) then
+      Log.LoadFromFile(Path, TEncoding.UTF8);
+    OkCnt := 0;
+    BadCnt := 0;
+    for I := LogBefore to Log.Count - 1 do
+      if Copy(Log[I], 1, 4) = '[OK]' then
+        Inc(OkCnt)
+      else if Copy(Log[I], 1, 1) = '[' then
+        Inc(BadCnt);
+
+    Msg := Format('Kontrola układu: kliknięte pozycje %d, wyłączone (pominięte) %d, ' +
+      'zamknięte okna %d.'#13#10'Nowe wpisy w logu: bez uwag %d, z uwagami %d.' +
+      #13#10'Log: %s', [Clicked, Skipped, FWalkClosed, OkCnt, BadCnt, Path]);
+    if Missing <> '' then
+      Msg := Msg + #13#10'Nie znalezione w menu:' + Missing;
+    if FWalkParams then
+      Msg := ParamCheckSummary + #13#10#13#10 + Msg;
+    MessageDlg(Msg, mtInformation, [mbOK], 0);
+  finally
+    Log.Free;
+    Done.Free;
+    Names.Free;
+  end;
+end;
+{$ENDIF}
 
 // Odstep miedzy paskiem menu a polem obrazu (wczesniej obraz zaczynal sie
 // tuz pod paskiem i litery menu stykaly sie ze zdjeciem). Pas ma kolor tla
@@ -6460,6 +6695,8 @@ begin
   P := Step.Params.Split(['|']);
   if SameText(Step.Code, 'RASTERKRZ') and (Length(P) < 4) then SetLength(P, 4);   // brakujace = domyslne
   if SameText(Step.Code, 'RASTERPUNKT') and (Length(P) < 5) then SetLength(P, 5);   // brakujace = domyslne
+  if SameText(Step.Code, 'POISSON') and (Length(P) < 2) then SetLength(P, 2);
+  if SameText(Step.Code, 'TSHIRT') and (Length(P) < 4) then SetLength(P, 4);
   if SameText(Step.Code, 'WATERRIPPLE') and (Length(P) < 3) then SetLength(P, 3);
   if SameText(Step.Code, 'POLAR') and (Length(P) < 5) then SetLength(P, 5);
   if SameText(Step.Code, 'FISHEYE') and (Length(P) < 2) then SetLength(P, 2);
@@ -6602,13 +6839,21 @@ begin
   else if SameText(Step.Code, 'CROSSHATCH') then DoCrosshatch(Bitmap, StrToIntDef(P[0], 0), StrToIntDef(P[1], 0))
   else if SameText(Step.Code, 'RASTERKRZ') then DoRasterKrzyzowy(Bitmap, StrToIntDef(P[0], 8), StrToIntDef(P[1], 4), StrToIntDef(P[2], 45), StrToIntDef(P[3], 135))
   else if SameText(Step.Code, 'RASTERPUNKT') then DoRasterPunktowy(Bitmap, StrToIntDef(P[0], 8), StrToIntDef(P[1], 45), StrToIntDef(P[2], 70), StrToIntDef(P[3], 100), StrToIntDef(P[4], 10))
+  else if SameText(Step.Code, 'POISSON') then DoPoissonStipple(Bitmap, StrToIntDef(P[0], 4), StrToIntDef(P[1], 100))
+  else if SameText(Step.Code, 'TSHIRT') then DoTshirt(Bitmap, StrToIntDef(P[0], 2), P[1] = '1', StrToIntDef(P[2], 4), StrToIntDef(P[3], 0))
   else if SameText(Step.Code, 'HALFTONE') then DoHalftone(Bitmap, StrToIntDef(P[0], 0))
   else if SameText(Step.Code, 'STIPPLE') then DoStipple(Bitmap, StrToIntDef(P[0], 0))
   else if SameText(Step.Code, 'DICE') then DoDice(Bitmap, StrToIntDef(P[0], 0))
   else if SameText(Step.Code, 'DICEIMG') then DoDiceImage(Bitmap, StrToIntDef(P[0], 0))
   else if SameText(Step.Code, 'RASTRCMYK') then DoRastrCmyk(Bitmap, StrToIntDef(P[0], 0), StrToIntDef(P[1], 0))
   else if SameText(Step.Code, 'COLORIZE') then DoTint(Bitmap, TColor(StrToIntDef(P[0], 0)), StrToIntDef(P[1], 0))
-  else if SameText(Step.Code, 'EMERGO') then DoEmergo(Bitmap, StrToIntDef(P[0], 0))
+  else if SameText(Step.Code, 'EMERGO') then
+  begin
+    if Length(P) > 1 then
+      DoEmergo(Bitmap, StrToIntDef(P[0], 0), StrToIntDef(P[1], 100))
+    else
+      DoEmergo(Bitmap, StrToIntDef(P[0], 0));
+  end
   else if SameText(Step.Code, 'WHITEBAL') then DoWhiteBalance(Bitmap, StrToIntDef(P[0], 100), StrToIntDef(P[1], 100), StrToIntDef(P[2], 100))
   else if SameText(Step.Code, 'HSB') then DoHSB(Bitmap, StrToIntDef(P[0], 100), StrToIntDef(P[1], 100), StrToIntDef(P[2], 100))
   else if SameText(Step.Code, 'VIVID') then DoHDR1(Bitmap, StrToIntDef(P[0], 60), StrToIntDef(P[1], 50), StrToIntDef(P[2], 40), StrToIntDef(P[3], 2))

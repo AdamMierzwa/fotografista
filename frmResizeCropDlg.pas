@@ -104,6 +104,9 @@ begin
   lblHeight.Top := edHeight.Top + (edHeight.Height - lblHeight.Height) div 2;
   btnFullHD.Left := EditLeft + edWidth.Width + CtrlGap * 2;
   btnFullHD.Top := PadT;
+  // przycisk na wysokosc obu pol (w .dfm 50 px - przy 12 pt pola sa wyzsze
+  // i Wysokosc wychodzila poza panel; kontrola ukladu 2026-11-08)
+  btnFullHD.Height := edHeight.Top + edHeight.Height - btnFullHD.Top;
   pnlTop.Height := StackBelow(btnFullHD, PadT);
 
   pnlAnchor.Left := 0;

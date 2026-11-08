@@ -882,14 +882,14 @@ end;
 
 const
   // C64 — Pepto (pal_type = 0), 16 kolorów
-  C64Pepto_R: array[0..15] of Byte = ($00,$FF,$81,$75,$8E,$6B,$AB,$A7,$6B,$5A,$29,$32,$89,$55,$A3,$AC);
-  C64Pepto_G: array[0..15] of Byte = ($00,$FF,$33,$CE,$54,$32,$32,$A7,$6B,$B3,$6B,$4F,$A3,$A3,$4B,$AC);
-  C64Pepto_B: array[0..15] of Byte = ($00,$FF,$38,$48,$29,$96,$32,$A7,$6B,$4A,$A3,$AA,$AD,$49,$4B,$AC);
+  C64Pepto_R: array[0..15] of Byte = ($00,$FF,$68,$70,$6F,$58,$35,$B8,$6F,$43,$9A,$44,$6C,$9A,$6C,$95);
+  C64Pepto_G: array[0..15] of Byte = ($00,$FF,$37,$A4,$3D,$8D,$28,$C7,$4F,$39,$67,$44,$6C,$D2,$5E,$95);
+  C64Pepto_B: array[0..15] of Byte = ($00,$FF,$2B,$B2,$86,$43,$79,$6F,$25,$00,$59,$44,$6C,$84,$B5,$95);
 
   // C64 — Colodore (pal_type = 1)
-  C64Colo_R: array[0..15] of Byte = ($00,$FF,$68,$70,$6E,$40,$86,$9B,$44,$5E,$2D,$41,$65,$4E,$8C,$91);
-  C64Colo_G: array[0..15] of Byte = ($00,$FF,$37,$A4,$3C,$31,$41,$A5,$44,$B8,$6D,$4B,$95,$9A,$3F,$91);
-  C64Colo_B: array[0..15] of Byte = ($00,$FF,$2B,$41,$34,$8D,$2E,$9B,$44,$45,$A4,$9C,$95,$4E,$3F,$91);
+  C64Colo_R: array[0..15] of Byte = ($00,$FF,$81,$75,$8E,$56,$2E,$ED,$8E,$55,$C4,$4A,$7B,$A9,$70,$B2);
+  C64Colo_G: array[0..15] of Byte = ($00,$FF,$33,$CE,$3C,$AC,$2C,$F1,$50,$38,$6C,$4A,$7B,$FF,$6D,$B2);
+  C64Colo_B: array[0..15] of Byte = ($00,$FF,$38,$C8,$97,$4D,$9B,$71,$29,$00,$71,$4A,$7B,$9F,$EB,$B2);
 
   // ZX Spectrum — 8 normalnych + 8 bright (bright black = czarny)
   ZX_R: array[0..15] of Byte = ($00,$00,$D7,$D7,$00,$00,$D7,$D7,$00,$00,$FF,$FF,$00,$00,$FF,$FF);
@@ -906,22 +906,23 @@ const
   GBPocket_G: array[0..3] of Byte = ($AA,$66,$33,$00);
   GBPocket_B: array[0..3] of Byte = ($AA,$66,$33,$00);
 
-  // NES Nestopia — 56 kolorów (4 wiersze po 14)
-  NES_R: array[0..55] of Byte = (
-    $80,$00,$37,$84,$BB,$B7,$B7,$8F,$54,$1C,$00,$00,$00,$00,
-    $BB,$00,$47,$AA,$FF,$FF,$FF,$CC,$66,$00,$00,$00,$00,$00,
-    $FF,$00,$33,$B3,$FF,$FF,$FF,$FF,$99,$00,$00,$00,$00,$00,
-    $FF,$55,$88,$CC,$FF,$FF,$FF,$FF,$CC,$00,$00,$00,$00,$00);
-  NES_G: array[0..55] of Byte = (
-    $80,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,$00,
-    $BB,$55,$00,$00,$00,$00,$00,$33,$33,$00,$00,$00,$00,$00,
-    $FF,$66,$33,$33,$33,$33,$66,$99,$99,$00,$00,$00,$00,$00,
-    $FF,$AA,$88,$88,$88,$88,$AA,$CC,$CC,$00,$00,$00,$00,$00);
-  NES_B: array[0..55] of Byte = (
-    $80,$BB,$BF,$A6,$6A,$1E,$00,$00,$00,$00,$00,$00,$00,$00,
-    $BB,$FF,$FF,$FF,$BB,$66,$19,$00,$00,$00,$00,$00,$00,$00,
-    $FF,$FF,$FF,$FF,$FF,$99,$33,$19,$00,$00,$00,$00,$00,$00,
-    $FF,$FF,$FF,$FF,$FF,$BB,$66,$55,$44,$00,$00,$00,$00,$00);
+  // NES Nestopia — pc10Palette z source/core/NstVideoRenderer.cpp
+  // (github.com/0ldsk00l/nestopia): 64 wpisy w kolejności PPU, 4 wiersze po 16
+  NES_R: array[0..63] of Byte = (
+    $6D,$00,$00,$6D,$92,$B6,$B6,$92,$6D,$24,$00,$00,$00,$00,$00,$00,
+    $B6,$00,$00,$92,$B6,$FF,$FF,$DB,$92,$24,$00,$00,$00,$24,$00,$00,
+    $FF,$6D,$92,$DB,$FF,$FF,$FF,$FF,$DB,$6D,$00,$49,$00,$49,$00,$00,
+    $FF,$B6,$DB,$FF,$FF,$FF,$FF,$FF,$FF,$B6,$92,$49,$92,$92,$00,$00);
+  NES_G: array[0..63] of Byte = (
+    $6D,$24,$00,$49,$00,$00,$24,$49,$49,$49,$6D,$92,$49,$00,$00,$00,
+    $B6,$6D,$49,$00,$00,$00,$00,$6D,$6D,$92,$92,$B6,$92,$24,$00,$00,
+    $FF,$B6,$92,$6D,$00,$6D,$92,$B6,$DB,$DB,$FF,$FF,$FF,$49,$00,$00,
+    $FF,$DB,$B6,$B6,$92,$B6,$DB,$FF,$FF,$FF,$FF,$FF,$DB,$92,$00,$00);
+  NES_B: array[0..63] of Byte = (
+    $6D,$92,$DB,$DB,$6D,$6D,$00,$00,$00,$00,$24,$00,$49,$00,$00,$00,
+    $B6,$DB,$FF,$FF,$FF,$92,$00,$00,$00,$00,$00,$6D,$92,$24,$00,$00,
+    $FF,$FF,$FF,$FF,$FF,$FF,$00,$00,$00,$00,$00,$DB,$FF,$49,$00,$00,
+    $FF,$FF,$FF,$FF,$FF,$B6,$92,$49,$6D,$49,$6D,$DB,$FF,$92,$00,$00);
 
 procedure ApplyC64(Bitmap: TBitmap; PalType, DitherMode: Integer);
 // 1:1 z p_FxC64 (image_fx_effects.hws:1123).
@@ -1023,7 +1024,7 @@ begin
 end;
 
 procedure ApplyNES(Bitmap: TBitmap; Dither: Boolean);
-// 1:1 z p_FxNESNestopia (image_fx_effects.hws:1225).
+// Paleta jak w p_FxNESNestopia (Hollywood, poprawiona 2026-11-07).
 begin
   RemapToPalette(Bitmap, NES_R, NES_G, NES_B, Dither);
 end;
